@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+  <string name="app_name">Heeler</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
 
-    <string name="app_name">mellow-heeler</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
+  <string name="button_start">Start Task</string>
+  <string name="button_stop">Stop Task</string>
+  <string name="button_upload">Upload Log</string>
 </resources>

@@ -8,9 +8,22 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.digiburo.mellow.heeler.app.MainActivity">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+  <TextView
+    android:text="@string/hello_world"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+  <Button
+    android:id="@+id/buttonTask"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_start"/>
+
+  <Button
+    android:id="@+id/buttonUpload"
+    android:layout_below="@id/buttonTask"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/button_upload"/>
 
 </RelativeLayout>
