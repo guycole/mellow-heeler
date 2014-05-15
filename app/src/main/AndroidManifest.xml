@@ -26,6 +26,8 @@
       </intent-filter>
     </activity>
 
+    <activity android:name=".app.MenuActivity" android:label="@string/app_name"/>
+
     <provider android:name=".lib.content.DataBaseProvider" android:authorities="com.digiburo.mellow.heeler.authority" />
 
     <receiver android:name=".lib.service.ScanReceiver">

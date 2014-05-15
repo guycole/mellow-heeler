@@ -18,7 +18,9 @@ public class Constant {
   public static final String AUTHORITY = "com.digiburo.mellow.heeler.authority";
 
   //
+  public static final String INTENT_ACTION_ABOUT = "INTENT_ACTION_ABOUT";
   public static final String INTENT_ACTION_ALARM = "INTENT_ACTION_ALARM";
+  public static final String INTENT_ACTION_PREFERENCE = "INTENT_ACTION_PREFERENCE";
 
   //
   public static final int SQL_TRUE = 1;

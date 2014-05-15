@@ -12,6 +12,12 @@ import org.slf4j.LoggerFactory;
 public class DataBaseFacade {
   private static final Logger LOG = LoggerFactory.getLogger(DataBaseFacade.class);
 
+  public boolean newLocation(LocationModel model, Context context) {
+    Uri result = context.getContentResolver().insert(LocationTable.CONTENT_URI, model.toContentValues(context));
+    LOG.debug("new location:" + result);
+    return true;
+  }
+
   public boolean newObservation(ObservationModel model, Context context) {
     Uri result = context.getContentResolver().insert(ObservationTable.CONTENT_URI, model.toContentValues(context));
     LOG.debug("new observation:" + result);

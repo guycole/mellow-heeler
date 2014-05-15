@@ -99,9 +99,9 @@ public final class TimeWrapper {
     monthDay = time.monthDay;
     year = time.year;
 
-    System.err.println("hour:" + time.hour);
-    System.err.println("weekDay:" + time.weekDay);
-    System.err.println("yearDay:" + time.yearDay);
+//    System.err.println("hour:" + time.hour);
+//    System.err.println("weekDay:" + time.weekDay);
+//    System.err.println("yearDay:" + time.yearDay);
     
     weekDay = time.weekDay;
     if (weekDay == 0) {

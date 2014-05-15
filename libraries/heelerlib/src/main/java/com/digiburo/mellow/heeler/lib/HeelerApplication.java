@@ -20,7 +20,6 @@ import ch.qos.logback.classic.android.BasicLogcatConfigurator;
  * @author gsc
  */
 public class HeelerApplication extends Application {
-
   private static final Logger LOG = LoggerFactory.getLogger(HeelerApplication.class);
 
   /**

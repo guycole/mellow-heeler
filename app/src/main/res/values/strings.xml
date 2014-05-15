@@ -8,4 +8,15 @@
   <string name="button_start">Start Task</string>
   <string name="button_stop">Stop Task</string>
   <string name="button_upload">Upload Log</string>
+
+  <string name="main_menu_about">About</string>
+  <string name="main_menu_preference">Preference</string>
+
+  <string name="preference_audio">Audio</string>
+  <string name="preference_audio_summary">Audio Summary</string>
+  <string name="preference_poll">Poll</string>
+  <string name="preference_poll_dialog">Poll Dialog</string>
+  <string name="preference_poll_summary">Poll Summary</string>
+  <string name="preference_title01">Preference1</string>
+  <string name="preference_title02">Preference2</string>
 </resources>

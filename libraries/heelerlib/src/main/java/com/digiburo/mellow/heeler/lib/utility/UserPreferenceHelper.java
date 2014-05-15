@@ -29,6 +29,9 @@ public class UserPreferenceHelper {
   //installation identifier
   public static final String USER_PREF_INSTALL_ID = "installId";
 
+  //WiFi scan interval
+  public static final String USER_PREF_POLL_FREQUENCY = "pollFrequency";
+
   //web service root version
   public static final String USER_PREF_WS_CONFIG_VERSION = "wsConfigVersion";
 
@@ -62,6 +65,8 @@ public class UserPreferenceHelper {
     editor.putString(USER_PREF_INSTALL_ID, UUID.randomUUID().toString());
 
     editor.putLong(USER_PREF_FIRST_RUN_TIMESTAMP, TimeUtility.timeMillis());
+
+    editor.putString(USER_PREF_POLL_FREQUENCY, "60");
 
     editor.putInt(USER_PREF_WS_CONFIG_VERSION, 0);
     editor.putString(USER_PREF_WS_REGISTER_URL, "");
@@ -98,6 +103,25 @@ public class UserPreferenceHelper {
    */
   public void setAudioCue(Context context, boolean arg) {
     setPreference(context, USER_PREF_AUDIO_CUE, arg);
+  }
+
+  /**
+   * return WiFi scan interval in seconds, must be String to pacify PreferenceFragment
+   * @param context
+   * @return WiFi scan interval in seconds
+   */
+  public String getPollFrequency(Context context) {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    return(sp.getString(USER_PREF_POLL_FREQUENCY, "0"));
+  }
+
+  /**
+   * define WiFi scan interval in seconds, must be String to pacify PreferenceFragment
+   * @param context
+   * @param WiFi scan interval in seconds
+   */
+  public void setPollFrequency(Context context, String arg) {
+    setPreference(context, USER_PREF_POLL_FREQUENCY, arg);
   }
 
   /**

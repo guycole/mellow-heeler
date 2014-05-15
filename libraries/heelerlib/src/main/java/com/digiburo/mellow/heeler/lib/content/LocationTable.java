@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * @author gsc
  */
-public class ObservationTable implements DataBaseTableIf {
+public class LocationTable implements DataBaseTableIf {
 
   @Override
   public String getTableName() {
@@ -25,7 +25,7 @@ public class ObservationTable implements DataBaseTableIf {
 
   @Override
   public String[] getDefaultProjection() {
-    Set<String> keySet = ObservationTable.PROJECTION_MAP.keySet();
+    Set<String> keySet = LocationTable.PROJECTION_MAP.keySet();
     String[] result = (String[]) keySet.toArray(new String[keySet.size()]);
     return(result);
   }
@@ -33,12 +33,6 @@ public class ObservationTable implements DataBaseTableIf {
   public static final class Columns implements BaseColumns {
 
     // column names
-    public static final String SSID = "ssid";
-    public static final String BSSID = "bssid";
-    public static final String CAPABILITY = "capability";
-    public static final String FREQUENCY = "frequency";
-    public static final String LEVEL = "level";
-
     public static final String ACCURACY = "accuracy";
     public static final String ALTITUDE = "altitude";
     public static final String LATITUDE = "latitude";
@@ -51,7 +45,7 @@ public class ObservationTable implements DataBaseTableIf {
   }
 
   //
-  public static final String TABLE_NAME = "observation";
+  public static final String TABLE_NAME = "location";
 
   //
   public static final Uri CONTENT_URI = Uri.parse("content://" + Constant.AUTHORITY + "/" + TABLE_NAME);
@@ -68,17 +62,12 @@ public class ObservationTable implements DataBaseTableIf {
   //
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
       + Columns._ID + " INTEGER PRIMARY KEY,"
-      + Columns.SSID + " TEXT NOT NULL,"
-      + Columns.BSSID + " TEXT NOT NULL,"
-      + Columns.CAPABILITY + " TEXT NOT NULL,"
-      + Columns.FREQUENCY + " INTEGER NOT NULL,"
-      + Columns.LEVEL + " INTEGER NOT NULL,"
       + Columns.ACCURACY + " REAL NOT NULL,"
       + Columns.ALTITUDE + " REAL NOT NULL,"
       + Columns.LATITUDE + " REAL NOT NULL,"
       + Columns.LONGITUDE + " REAL NOT NULL,"
-      + Columns.TIME_STAMP + " TEXT NOT NULL,"
-      + Columns.TIME_STAMP_MS + " INTEGER NOT NULL,"
+      + Columns.TIME_STAMP + " INTEGER NOT NULL,"
+      + Columns.TIME_STAMP_MS + " TEXT NOT NULL,"
       + Columns.UPLOAD_FLAG + " INTEGER NOT NULL,"
       + Columns.TASK_ID + " TEXT NOT NULL"
       + ");";
@@ -88,20 +77,15 @@ public class ObservationTable implements DataBaseTableIf {
 
   static {
     PROJECTION_MAP = new HashMap<String, String>();
-    PROJECTION_MAP.put(ObservationTable.Columns._ID, ObservationTable.Columns._ID);
-    PROJECTION_MAP.put(ObservationTable.Columns.SSID, ObservationTable.Columns.SSID);
-    PROJECTION_MAP.put(ObservationTable.Columns.BSSID, ObservationTable.Columns.BSSID);
-    PROJECTION_MAP.put(ObservationTable.Columns.CAPABILITY, ObservationTable.Columns.CAPABILITY);
-    PROJECTION_MAP.put(ObservationTable.Columns.FREQUENCY, ObservationTable.Columns.FREQUENCY);
-    PROJECTION_MAP.put(ObservationTable.Columns.LEVEL, ObservationTable.Columns.LEVEL);
-    PROJECTION_MAP.put(ObservationTable.Columns.ACCURACY, ObservationTable.Columns.ACCURACY);
-    PROJECTION_MAP.put(ObservationTable.Columns.ALTITUDE, ObservationTable.Columns.ALTITUDE);
-    PROJECTION_MAP.put(ObservationTable.Columns.LATITUDE, ObservationTable.Columns.LATITUDE);
-    PROJECTION_MAP.put(ObservationTable.Columns.LONGITUDE, ObservationTable.Columns.LONGITUDE);
-    PROJECTION_MAP.put(ObservationTable.Columns.TIME_STAMP, ObservationTable.Columns.TIME_STAMP);
-    PROJECTION_MAP.put(ObservationTable.Columns.TIME_STAMP_MS, ObservationTable.Columns.TIME_STAMP_MS);
-    PROJECTION_MAP.put(ObservationTable.Columns.UPLOAD_FLAG, ObservationTable.Columns.UPLOAD_FLAG);
-    PROJECTION_MAP.put(ObservationTable.Columns.TASK_ID, ObservationTable.Columns.TASK_ID);
+    PROJECTION_MAP.put(LocationTable.Columns._ID, LocationTable.Columns._ID);
+    PROJECTION_MAP.put(LocationTable.Columns.ACCURACY, LocationTable.Columns.ACCURACY);
+    PROJECTION_MAP.put(LocationTable.Columns.ALTITUDE, LocationTable.Columns.ALTITUDE);
+    PROJECTION_MAP.put(LocationTable.Columns.LATITUDE, LocationTable.Columns.LATITUDE);
+    PROJECTION_MAP.put(LocationTable.Columns.LONGITUDE, LocationTable.Columns.LONGITUDE);
+    PROJECTION_MAP.put(LocationTable.Columns.TIME_STAMP, LocationTable.Columns.TIME_STAMP);
+    PROJECTION_MAP.put(LocationTable.Columns.TIME_STAMP_MS, LocationTable.Columns.TIME_STAMP_MS);
+    PROJECTION_MAP.put(LocationTable.Columns.UPLOAD_FLAG, LocationTable.Columns.UPLOAD_FLAG);
+    PROJECTION_MAP.put(LocationTable.Columns.TASK_ID, LocationTable.Columns.TASK_ID);
   }
 }
 /*

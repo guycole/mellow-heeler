@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="@string/preference_title02">
+    <CheckBoxPreference
+      android:key="audioCheckBox"
+      android:title="@string/preference_audio"
+      android:summary="@string/preference_audio_summary" />
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/preference_title01">
+    <ListPreference
+      android:key="pollFrequency"
+      android:title="@string/preference_poll"
+      android:summary="@string/preference_poll_summary"
+      android:entries="@array/poll_option"
+      android:entryValues="@array/poll_option_values"
+      android:dialogTitle="@string/preference_poll_dialog"
+      android:defaultValue="60"/>
+  </PreferenceCategory>
+</PreferenceScreen>

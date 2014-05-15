@@ -23,14 +23,17 @@ public class DataBaseProvider extends ContentProvider {
 
   //
   private static final UriMatcher uriMatcher;
-
   //URI Matcher Targets
-  private static final int URI_MATCH_OBSERVATIONS = 10;
-  private static final int URI_MATCH_OBSERVATION_ID = 11;
+  private static final int URI_MATCH_LOCATIONS = 10;
+  private static final int URI_MATCH_LOCATION_ID = 11;
+  private static final int URI_MATCH_OBSERVATIONS = 20;
+  private static final int URI_MATCH_OBSERVATION_ID = 21;
 
   static {
     uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+    uriMatcher.addURI(Constant.AUTHORITY, LocationTable.TABLE_NAME, URI_MATCH_LOCATIONS);
+    uriMatcher.addURI(Constant.AUTHORITY, LocationTable.TABLE_NAME + "/#", URI_MATCH_LOCATION_ID);
     uriMatcher.addURI(Constant.AUTHORITY, ObservationTable.TABLE_NAME, URI_MATCH_OBSERVATIONS);
     uriMatcher.addURI(Constant.AUTHORITY, ObservationTable.TABLE_NAME + "/#", URI_MATCH_OBSERVATION_ID);
   }
@@ -47,6 +50,10 @@ public class DataBaseProvider extends ContentProvider {
   @Override
   public String getType(Uri uri) {
     switch (uriMatcher.match(uri)) {
+      case URI_MATCH_LOCATIONS:
+        return(LocationTable.CONTENT_TYPE);
+      case URI_MATCH_LOCATION_ID:
+        return(LocationTable.CONTENT_ITEM_TYPE);
       case URI_MATCH_OBSERVATIONS:
         return(ObservationTable.CONTENT_TYPE);
       case URI_MATCH_OBSERVATION_ID:
@@ -63,6 +70,13 @@ public class DataBaseProvider extends ContentProvider {
     String id = "";
 
     switch (uriMatcher.match(uri)) {
+      case URI_MATCH_LOCATIONS:
+        count = db.delete(LocationTable.TABLE_NAME, selection, selectionArgs);
+        break;
+      case URI_MATCH_LOCATION_ID:
+        id = uri.getPathSegments().get(1);
+        count = db.delete(LocationTable.TABLE_NAME, LocationTable.Columns._ID + "=" + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+        break;
       case URI_MATCH_OBSERVATIONS:
         count = db.delete(ObservationTable.TABLE_NAME, selection, selectionArgs);
         break;
@@ -84,6 +98,14 @@ public class DataBaseProvider extends ContentProvider {
     long rowId = 0;
 
     switch (uriMatcher.match(uri)) {
+      case URI_MATCH_LOCATIONS:
+        rowId = db.insert(LocationTable.TABLE_NAME, null, values);
+        if (rowId > 0) {
+          Uri result = ContentUris.withAppendedId(LocationTable.CONTENT_URI, rowId);
+          getContext().getContentResolver().notifyChange(LocationTable.CONTENT_URI, null);
+          return(result);
+        }
+        break;
       case URI_MATCH_OBSERVATIONS:
         rowId = db.insert(ObservationTable.TABLE_NAME, null, values);
         if (rowId > 0) {
@@ -105,6 +127,21 @@ public class DataBaseProvider extends ContentProvider {
     String orderBy = sortOrder;
 
     switch (uriMatcher.match(uri)) {
+      case URI_MATCH_LOCATIONS:
+        qb.setTables(LocationTable.TABLE_NAME);
+        qb.setProjectionMap(LocationTable.PROJECTION_MAP);
+        if (sortOrder == null) {
+          orderBy = LocationTable.DEFAULT_SORT_ORDER;
+        }
+        break;
+      case URI_MATCH_LOCATION_ID:
+        qb.setTables(LocationTable.TABLE_NAME);
+        qb.setProjectionMap(LocationTable.PROJECTION_MAP);
+        qb.appendWhere(LocationTable.Columns._ID + "=" + uri.getPathSegments().get(1));
+        if (sortOrder == null) {
+          orderBy = LocationTable.DEFAULT_SORT_ORDER;
+        }
+        break;
       case URI_MATCH_OBSERVATIONS:
         qb.setTables(ObservationTable.TABLE_NAME);
         qb.setProjectionMap(ObservationTable.PROJECTION_MAP);
@@ -140,6 +177,13 @@ public class DataBaseProvider extends ContentProvider {
     String id = "";
 
     switch (uriMatcher.match(uri)) {
+      case URI_MATCH_LOCATIONS:
+        count = db.update(LocationTable.TABLE_NAME, values, selection, selectionArgs);
+        break;
+      case URI_MATCH_LOCATION_ID:
+        id = uri.getPathSegments().get(1);
+        count = db.update(LocationTable.TABLE_NAME, values, LocationTable.Columns._ID + "=" + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+        break;
       case URI_MATCH_OBSERVATIONS:
         count = db.update(ObservationTable.TABLE_NAME, values, selection, selectionArgs);
         break;

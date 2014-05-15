@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 
 import com.digiburo.mellow.heeler.lib.Personality;
+import com.digiburo.mellow.heeler.lib.content.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.content.LocationModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,13 @@ public class LocationService extends Service implements LocationListener {
   public void onLocationChanged(Location location) {
     LOG.debug("xxx xxx Location Change:" + location.toString());
     Personality.setCurrentLocation(location);
+
+    LocationModel locationModel = new LocationModel();
+    locationModel.setDefault(this);
+    locationModel.setLocation(location);
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade();
+    dataBaseFacade.newLocation(locationModel, this);
   }
 
   public void onProviderDisabled(String provider) {
