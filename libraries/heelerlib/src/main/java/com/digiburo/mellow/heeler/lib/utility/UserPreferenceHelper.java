@@ -36,8 +36,8 @@ public class UserPreferenceHelper {
   public static final String USER_PREF_WS_CONFIG_VERSION = "wsConfigVersion";
 
   //URL from web service
-  public static final String USER_PREF_WS_REGISTER_URL = "wsRegisterUrl";
-  public static final String USER_PREF_WS_SCORE_URL = "wsScoreUrl";
+  public static final String USER_PREF_WS_LOCATION_URL = "wsLocationUrl";
+  public static final String USER_PREF_WS_OBSERVATION_URL = "wsObservationUrl";
 
   /**
    * ctor
@@ -56,7 +56,7 @@ public class UserPreferenceHelper {
    * seed default database - should only invoke once for fresh install
    * @param context
    */
-  public void writeDefaults(Context context) {
+  private void writeDefaults(Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sp.edit();
 
@@ -69,8 +69,8 @@ public class UserPreferenceHelper {
     editor.putString(USER_PREF_POLL_FREQUENCY, "60");
 
     editor.putInt(USER_PREF_WS_CONFIG_VERSION, 0);
-    editor.putString(USER_PREF_WS_REGISTER_URL, "");
-    editor.putString(USER_PREF_WS_SCORE_URL, "");
+    editor.putString(USER_PREF_WS_LOCATION_URL, "");
+    editor.putString(USER_PREF_WS_OBSERVATION_URL, "");
 
     editor.commit();
   }
@@ -144,22 +144,41 @@ public class UserPreferenceHelper {
   }
 
   /**
-   * URL to register for Google Cloud Messaging
+   * URL to POST locations
    * @param context
-   * @return registry URL or empty string if undefined
+   * @return location URL or empty string if undefined
    */
-  public String getRegistrationUrl(Context context) {
+  public String getLocationUrl(Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_WS_REGISTER_URL, ""));
+    return(sp.getString(USER_PREF_WS_LOCATION_URL, ""));
   }
 
   /**
-   * define URL for Google Cloud Messaging registration
+   * define URL to POST locations
    * @param context
-   * @param arg registry URL
+   * @param arg location URL
    */
-  public void setRegistrationUrl(Context context, String arg) {
-    setPreference(context, USER_PREF_WS_REGISTER_URL, arg);
+  public void setLocationUrl(Context context, String arg) {
+    setPreference(context, USER_PREF_WS_LOCATION_URL, arg);
+  }
+
+  /**
+   * URL to POST observations
+   * @param context
+   * @return observation URL or empty string if undefined
+   */
+  public String getObservationUrl(Context context) {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    return(sp.getString(USER_PREF_WS_OBSERVATION_URL, ""));
+  }
+
+  /**
+   * define URL to POST observations
+   * @param context
+   * @param arg observation URL
+   */
+  public void setObservationUrl(Context context, String arg) {
+    setPreference(context, USER_PREF_WS_OBSERVATION_URL, arg);
   }
 
   /**

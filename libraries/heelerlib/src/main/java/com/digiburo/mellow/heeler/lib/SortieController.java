@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 /**
  * @author gsc
  */
-public class TaskController {
-  private static final Logger LOG = LoggerFactory.getLogger(TaskController.class);
+public class SortieController {
+  private static final Logger LOG = LoggerFactory.getLogger(SortieController.class);
 
   private AlarmManager alarmManager;
 
@@ -27,14 +27,14 @@ public class TaskController {
    *
    * @param context
    */
-  public void startTask(Context context) {
-    LOG.debug("startTask");
+  public void startSortie(Context context) {
+    LOG.debug("startSortie");
 
     gracefulShutDown(context);
 
-    context.startService(new Intent(context, LocationService.class));
+    Personality.setCurrentSortie(new Sortie());
 
-    Personality.setCurrentTask(new Task());
+    context.startService(new Intent(context, LocationService.class));
 
     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     wifiManager.startScan();
@@ -45,15 +45,15 @@ public class TaskController {
     intent.setAction(Constant.INTENT_ACTION_ALARM);
     PendingIntent pending = PendingIntent.getBroadcast(context, 0, intent, 0);
     alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), timeOut, pending);
-    Personality.setPendingIntent(pending);
+    Personality.setAlarmIntent(pending);
   }
 
   /**
    *
    * @param context
    */
-  public void stopTask(Context context) {
-    LOG.debug("stopTask");
+  public void stopSortie(Context context) {
+    LOG.debug("stopSortie");
     gracefulShutDown(context);
   }
 
@@ -64,8 +64,8 @@ public class TaskController {
   private void gracefulShutDown(Context context) {
     context.stopService(new Intent(context, LocationService.class));
 
-    if (Personality.getPendingIntent() != null) {
-      alarmManager.cancel(Personality.getPendingIntent());
+    if (Personality.getAlarmIntent() != null) {
+      alarmManager.cancel(Personality.getAlarmIntent());
     }
   }
 }

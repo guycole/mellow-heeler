@@ -4,21 +4,21 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * task container
+ * sortie container
  * @author gsc
  */
-public class Task {
-  private UUID taskId = UUID.randomUUID();
+public class Sortie {
+  private UUID sortieId = UUID.randomUUID();
   private Date startTimeStamp = new Date();
   private Date stopTimeStamp;
   private String note = "No Note";
 
-  public UUID getTaskId() {
-    return taskId;
+  public UUID getSortieId() {
+    return sortieId;
   }
 
-  public void setTaskId(UUID taskId) {
-    this.taskId = taskId;
+  public void setSortieId(UUID taskId) {
+    this.sortieId = taskId;
   }
 
   public Date getStartTimeStamp() {

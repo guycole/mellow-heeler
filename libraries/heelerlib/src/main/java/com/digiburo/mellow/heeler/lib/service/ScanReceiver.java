@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.content.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.content.LocationModel;
 import com.digiburo.mellow.heeler.lib.content.ObservationModel;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
+ * invoked to process WiFi scan results (start scanning or collect results)
  * @author gsc
  */
 public class ScanReceiver extends BroadcastReceiver {
@@ -31,8 +33,8 @@ public class ScanReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     LOG.debug("xxx xxx onReceive xxx xxx:" + intent.getAction());
 
-    if (Personality.getCurrentTask() == null) {
-      LOG.error("unknown task skipping observation");
+    if (Personality.getCurrentSortie() == null) {
+      LOG.debug("no sortie - ignoring intent");
       return;
     }
 
@@ -43,8 +45,8 @@ public class ScanReceiver extends BroadcastReceiver {
       return;
     }
 
-    Location location = Personality.getCurrentLocation();
-    if (location == null) {
+    LocationModel locationModel = Personality.getCurrentLocation();
+    if (locationModel == null) {
       LOG.error("unknown location skipping observation");
       return;
     }
@@ -56,7 +58,6 @@ public class ScanReceiver extends BroadcastReceiver {
     for (ScanResult scanResult:scanList) {
       ObservationModel observationModel = new ObservationModel();
       observationModel.setDefault(context);
-      observationModel.setLocation(location);
       observationModel.setScanResult(scanResult);
       dataBaseFacade.newObservation(observationModel, context);
     }

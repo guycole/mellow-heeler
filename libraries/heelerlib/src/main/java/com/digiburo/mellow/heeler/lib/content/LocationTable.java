@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * device location history (within SQLite)
  * @author gsc
  */
 public class LocationTable implements DataBaseTableIf {
@@ -41,7 +42,8 @@ public class LocationTable implements DataBaseTableIf {
     public static final String TIME_STAMP = "time_stamp";
     public static final String TIME_STAMP_MS = "time_stamp_ms";
     public static final String UPLOAD_FLAG = "upload_flag";
-    public static final String TASK_ID = "task_id";
+    public static final String LOCATION_ID = "location_id";
+    public static final String SORTIE_ID = "sortie_id";
   }
 
   //
@@ -57,7 +59,7 @@ public class LocationTable implements DataBaseTableIf {
   public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.digiburo." + TABLE_NAME;
 
   //
-  public static final String DEFAULT_SORT_ORDER = "TIME_STAMP ASC";
+  public static final String DEFAULT_SORT_ORDER = "TIME_STAMP_MS ASC";
 
   //
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
@@ -69,7 +71,8 @@ public class LocationTable implements DataBaseTableIf {
       + Columns.TIME_STAMP + " INTEGER NOT NULL,"
       + Columns.TIME_STAMP_MS + " TEXT NOT NULL,"
       + Columns.UPLOAD_FLAG + " INTEGER NOT NULL,"
-      + Columns.TASK_ID + " TEXT NOT NULL"
+      + Columns.LOCATION_ID + " TEXT NOT NULL,"
+      + Columns.SORTIE_ID + " TEXT NOT NULL"
       + ");";
 
   //
@@ -85,7 +88,8 @@ public class LocationTable implements DataBaseTableIf {
     PROJECTION_MAP.put(LocationTable.Columns.TIME_STAMP, LocationTable.Columns.TIME_STAMP);
     PROJECTION_MAP.put(LocationTable.Columns.TIME_STAMP_MS, LocationTable.Columns.TIME_STAMP_MS);
     PROJECTION_MAP.put(LocationTable.Columns.UPLOAD_FLAG, LocationTable.Columns.UPLOAD_FLAG);
-    PROJECTION_MAP.put(LocationTable.Columns.TASK_ID, LocationTable.Columns.TASK_ID);
+    PROJECTION_MAP.put(LocationTable.Columns.LOCATION_ID, LocationTable.Columns.LOCATION_ID);
+    PROJECTION_MAP.put(LocationTable.Columns.SORTIE_ID, LocationTable.Columns.SORTIE_ID);
   }
 }
 /*

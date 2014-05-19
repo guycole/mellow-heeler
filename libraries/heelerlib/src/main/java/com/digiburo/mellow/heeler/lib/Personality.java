@@ -3,6 +3,9 @@ package com.digiburo.mellow.heeler.lib;
 import android.app.PendingIntent;
 import android.location.Location;
 
+import com.digiburo.mellow.heeler.lib.content.LocationModel;
+import com.octo.android.robospice.SpiceManager;
+
 /**
  * @author gsc
  */
@@ -18,14 +21,27 @@ public class Personality {
   /**
    * alarm manager
    */
-  private static PendingIntent pendingIntent;
+  private static PendingIntent alarmIntent;
 
-  public static synchronized PendingIntent getPendingIntent() {
-    return pendingIntent;
+  public static synchronized PendingIntent getAlarmIntent() {
+    return alarmIntent;
   }
 
-  public static synchronized void setPendingIntent(PendingIntent arg) {
-    pendingIntent = arg;
+  public static synchronized void setAlarmIntent(PendingIntent arg) {
+    alarmIntent = arg;
+  }
+
+  /**
+   * spice manager
+   */
+  private static SpiceManager spiceManager;
+
+  public static synchronized SpiceManager getSpiceManager() {
+    return spiceManager;
+  }
+
+  public static synchronized void setSpiceManager(SpiceManager arg) {
+    spiceManager = arg;
   }
 
   /**
@@ -44,27 +60,27 @@ public class Personality {
   /**
    * current geographic location
    */
-  private static Location currentLocation;
+  private static LocationModel currentLocation;
 
-  public static synchronized Location getCurrentLocation() {
+  public static synchronized LocationModel getCurrentLocation() {
     return currentLocation;
   }
 
-  public static synchronized void setCurrentLocation(Location arg) {
+  public static synchronized void setCurrentLocation(LocationModel arg) {
     currentLocation = arg;
   }
 
   /**
-   * current collection task
+   * current detection sortie
    */
-  private static Task currentTask;
+  private static Sortie currentSortie;
 
-  public static synchronized Task getCurrentTask() {
-    return currentTask;
+  public static synchronized Sortie getCurrentSortie() {
+    return currentSortie;
   }
 
-  public static synchronized void setCurrentTask(Task arg) {
-    currentTask = arg;
+  public static synchronized void setCurrentSortie(Sortie arg) {
+    currentSortie = arg;
   }
 }
 /*

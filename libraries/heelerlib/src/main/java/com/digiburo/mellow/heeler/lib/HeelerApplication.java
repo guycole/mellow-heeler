@@ -8,6 +8,8 @@ import com.digiburo.mellow.heeler.lib.content.DataBaseHelper;
 import com.digiburo.mellow.heeler.lib.service.LocationService;
 import com.digiburo.mellow.heeler.lib.utility.PackageUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
+import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
+import com.octo.android.robospice.SpiceManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,8 @@ public class HeelerApplication extends Application {
     new UserPreferenceHelper(this);
 
     Personality.setApplicationVersion(PackageUtility.getAppVersion(this));
+
+    startRoboSpice();
   }
 
   @Override
@@ -51,6 +55,17 @@ public class HeelerApplication extends Application {
   public void onTerminate() {
     LOG.info("onTerminate");
     super.onTerminate();
+
+    SpiceManager spiceManager = Personality.getSpiceManager();
+    if (spiceManager.isStarted()) {
+      spiceManager.shouldStop();
+    }
+  }
+
+  private void startRoboSpice() {
+    SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
+    spiceManager.start(this);
+    Personality.setSpiceManager(spiceManager);
   }
 
   private void logConfiguration() {

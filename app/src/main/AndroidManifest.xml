@@ -19,7 +19,7 @@
       android:name=".lib.HeelerApplication"
       android:theme="@style/AppTheme" >
 
-    <activity android:name=".app.MainActivity" android:label="@string/app_name" >
+    <activity android:name=".app.MainActivity" android:screenOrientation="portrait" android:label="@string/app_name" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -37,5 +37,7 @@
     </receiver>
 
     <service android:name=".lib.service.LocationService" />
+
+    <service android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService" android:exported="false" />
   </application>
 </manifest>

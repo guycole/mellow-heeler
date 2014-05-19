@@ -19,7 +19,7 @@ public class TimeUtility {
    * @return return current time
    */
   public static Time timeNow() {
-    Time time = new Time();
+    Time time = new Time("UTC");
     time.setToNow();
     return(time);
   }
@@ -48,7 +48,7 @@ public class TimeUtility {
    * @return
    */
   public static Time timeMillis(long arg) {
-    Time time = new Time();
+    Time time = new Time("UTC");
     time.set(arg);
     time.normalize(Constant.IGNORE_DST);
     return(time);

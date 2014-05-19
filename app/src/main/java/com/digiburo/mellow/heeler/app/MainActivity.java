@@ -11,7 +11,8 @@ import android.widget.ToggleButton;
 
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
-import com.digiburo.mellow.heeler.lib.TaskController;
+import com.digiburo.mellow.heeler.lib.SortieController;
+import com.digiburo.mellow.heeler.lib.UploadController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,9 @@ public class MainActivity extends ActionBarActivity {
   private Button taskButton;
   private Button uploadButton;
 
-  private boolean taskRun = false;
-  private final TaskController taskController = new TaskController();
+  private boolean sortieRun = false;
+  private final SortieController sortieController = new SortieController();
+  private final UploadController uploadController = new UploadController();
 
   /**
    *
@@ -33,11 +35,11 @@ public class MainActivity extends ActionBarActivity {
     boolean flag = ((ToggleButton) view).isChecked();
 
     if (flag) {
-      taskRun = true;
-      taskController.startTask(getBaseContext());
+      sortieRun = true;
+      sortieController.startSortie(getBaseContext());
     } else {
-      taskRun = false;
-      taskController.stopTask(getBaseContext());
+      sortieRun = false;
+      sortieController.stopSortie(getBaseContext());
     }
   }
 
@@ -50,15 +52,7 @@ public class MainActivity extends ActionBarActivity {
     uploadButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        System.out.println("ryryryryry");
-        /*
-        taskRun = !taskRun;
-        if (taskRun) {
-          taskButton.setText(R.string.button_stop);
-        } else {
-          taskButton.setText(R.string.button_start);
-        }
-        */
+        uploadController.uploadAll(getBaseContext());
       }
     });
   }

@@ -28,7 +28,11 @@ public class LocationService extends Service implements LocationListener {
 
   public void onLocationChanged(Location location) {
     LOG.debug("xxx xxx Location Change:" + location.toString());
-    Personality.setCurrentLocation(location);
+
+    if (Personality.getCurrentSortie() == null) {
+      LOG.debug("no sortie - ignoring location update");
+      return;
+    }
 
     LocationModel locationModel = new LocationModel();
     locationModel.setDefault(this);
@@ -36,6 +40,8 @@ public class LocationService extends Service implements LocationListener {
 
     DataBaseFacade dataBaseFacade = new DataBaseFacade();
     dataBaseFacade.newLocation(locationModel, this);
+
+    Personality.setCurrentLocation(locationModel);
   }
 
   public void onProviderDisabled(String provider) {
@@ -70,13 +76,11 @@ public class LocationService extends Service implements LocationListener {
     super.onCreate();
     LOG.debug("xxx xxx onCreate xxx xxx ");
 
-    int oneKm = 1000;
+    int distance = 100;
     long timeOut = 60 * 1000L;
 
     LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeOut, oneKm, this);
-
-    Personality.setCurrentLocation(lm.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, timeOut, distance, this);
   }
 
   @Override

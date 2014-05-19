@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/heelerlib/heelerlib.iml" filepath="$PROJECT_DIR$/libraries/heelerlib/heelerlib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mellow-heeler.iml" filepath="$PROJECT_DIR$/mellow-heeler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mellow-heeler-android.iml" filepath="$PROJECT_DIR$/mellow-heeler-android.iml" />
     </modules>
   </component>
 </project>

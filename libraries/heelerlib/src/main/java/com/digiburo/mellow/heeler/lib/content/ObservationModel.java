@@ -10,61 +10,48 @@ import android.text.format.Time;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
-import com.digiburo.mellow.heeler.lib.utility.TimeWrapper;
+
+import java.util.UUID;
 
 /**
+ * observation history
  * @author gsc
  */
 public class ObservationModel implements DataBaseModelIf {
-
   private Long id;
   private String ssid;
   private String bssid;
   private String capability;
-  private String taskId;
-  private String timeStamp;
+  private String locationUuid;
+  private String sortieUuid;
 
   private boolean uploadFlag;
+
+  private String timeStamp;
+  private long timeStampMs;
 
   private int frequency;
   private int level;
 
-  private long timeStampMs;
-
-  private float accuracy;
-
-  private double altitude;
-  private double latitude;
-  private double longitude;
-
   @Override
   public void setDefault(Context context) {
+    locationUuid = Personality.getCurrentLocation().getLocationUuid().toString();
+    sortieUuid = Personality.getCurrentSortie().getSortieId().toString();
+
+    uploadFlag = false;
+
+    Time timeNow = TimeUtility.timeNow();
+    timeStamp = timeNow.format3339(false);
+    timeStampMs = timeNow.toMillis(Constant.IGNORE_DST);
+
     ssid = "unknown";
     bssid = "unknown";
     capability = "unknown";
-    taskId = Personality.getCurrentTask().getTaskId().toString();
 
     uploadFlag = false;
 
     frequency = 0;
     level = 0;
-
-    timeStampMs = TimeUtility.timeMillis();
-    TimeWrapper timeWrapper = new TimeWrapper(timeStampMs);
-    timeStamp = timeWrapper.dateTimeFormat();
-
-    accuracy = -1.0f;
-
-    altitude = 0.0;
-    latitude = 0.0;
-    longitude = 0.0;
-  }
-
-  public void setLocation(Location arg) {
-    accuracy = arg.getAccuracy();
-    altitude = arg.getAltitude();
-    latitude = arg.getLatitude();
-    longitude = arg.getLongitude();
   }
 
   public void setScanResult(ScanResult arg) {
@@ -79,16 +66,13 @@ public class ObservationModel implements DataBaseModelIf {
   public ContentValues toContentValues(Context context) {
     ContentValues cv = new ContentValues();
 
-    cv.put(ObservationTable.Columns.ACCURACY, accuracy);
-    cv.put(ObservationTable.Columns.ALTITUDE, altitude);
     cv.put(ObservationTable.Columns.BSSID, bssid);
     cv.put(ObservationTable.Columns.CAPABILITY, capability);
     cv.put(ObservationTable.Columns.FREQUENCY, frequency);
-    cv.put(ObservationTable.Columns.LATITUDE, latitude);
     cv.put(ObservationTable.Columns.LEVEL, level);
-    cv.put(ObservationTable.Columns.LONGITUDE, longitude);
+    cv.put(ObservationTable.Columns.LOCATION_ID, locationUuid);
     cv.put(ObservationTable.Columns.SSID, ssid);
-    cv.put(ObservationTable.Columns.TASK_ID, taskId);
+    cv.put(ObservationTable.Columns.SORTIE_ID, sortieUuid);
     cv.put(ObservationTable.Columns.TIME_STAMP, timeStamp);
     cv.put(ObservationTable.Columns.TIME_STAMP_MS, timeStampMs);
 
@@ -104,16 +88,13 @@ public class ObservationModel implements DataBaseModelIf {
   @Override
   public void fromCursor(Cursor cursor) {
     id = cursor.getLong(cursor.getColumnIndex(ObservationTable.Columns._ID));
-    accuracy = cursor.getFloat(cursor.getColumnIndex(ObservationTable.Columns.ACCURACY));
-    altitude = cursor.getDouble(cursor.getColumnIndex(ObservationTable.Columns.ALTITUDE));
     bssid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.BSSID));
     capability = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.CAPABILITY));
     frequency = cursor.getInt(cursor.getColumnIndex(ObservationTable.Columns.FREQUENCY));
-    latitude = cursor.getDouble(cursor.getColumnIndex(ObservationTable.Columns.LATITUDE));
     level = cursor.getInt(cursor.getColumnIndex(ObservationTable.Columns.LEVEL));
-    longitude = cursor.getDouble(cursor.getColumnIndex(ObservationTable.Columns.LONGITUDE));
+    locationUuid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.LOCATION_ID));
     ssid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.SSID));
-    taskId = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.TASK_ID));
+    sortieUuid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.SORTIE_ID));
     timeStamp = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.TIME_STAMP));
     timeStampMs = cursor.getLong(cursor.getColumnIndex(ObservationTable.Columns.TIME_STAMP_MS));
 
@@ -138,6 +119,38 @@ public class ObservationModel implements DataBaseModelIf {
   @Override
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getSsid() {
+    return ssid;
+  }
+
+  public String getBssid() {
+    return bssid;
+  }
+
+  public String getCapability() {
+    return capability;
+  }
+
+  public int getFrequency() {
+    return frequency;
+  }
+
+  public int getLevel() {
+    return level;
+  }
+
+  public long getTimeStampMs() {
+    return timeStampMs;
+  }
+
+  public String getLocationUuid() {
+    return locationUuid;
+  }
+
+  public String getSortieUuid() {
+    return sortieUuid;
   }
 }
 /*

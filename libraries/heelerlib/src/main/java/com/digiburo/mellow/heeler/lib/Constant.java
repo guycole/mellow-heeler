@@ -23,8 +23,8 @@ public class Constant {
   public static final String INTENT_ACTION_PREFERENCE = "INTENT_ACTION_PREFERENCE";
 
   //
-  public static final int SQL_TRUE = 1;
-  public static final int SQL_FALSE = 0;
+  public static final Integer SQL_TRUE = 1;
+  public static final Integer SQL_FALSE = 0;
 
   // daylight savings time is not important
   public static final boolean IGNORE_DST = false;

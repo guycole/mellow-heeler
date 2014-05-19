@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * detection history (within SQLite)
  * @author gsc
  */
 public class ObservationTable implements DataBaseTableIf {
@@ -39,15 +40,11 @@ public class ObservationTable implements DataBaseTableIf {
     public static final String FREQUENCY = "frequency";
     public static final String LEVEL = "level";
 
-    public static final String ACCURACY = "accuracy";
-    public static final String ALTITUDE = "altitude";
-    public static final String LATITUDE = "latitude";
-    public static final String LONGITUDE = "longitude";
-
     public static final String TIME_STAMP = "time_stamp";
     public static final String TIME_STAMP_MS = "time_stamp_ms";
     public static final String UPLOAD_FLAG = "upload_flag";
-    public static final String TASK_ID = "task_id";
+    public static final String LOCATION_ID = "location_id";
+    public static final String SORTIE_ID = "sortie_id";
   }
 
   //
@@ -63,7 +60,7 @@ public class ObservationTable implements DataBaseTableIf {
   public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.digiburo." + TABLE_NAME;
 
   //
-  public static final String DEFAULT_SORT_ORDER = "TIME_STAMP ASC";
+  public static final String DEFAULT_SORT_ORDER = "TIME_STAMP_MS ASC";
 
   //
   public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
@@ -73,14 +70,11 @@ public class ObservationTable implements DataBaseTableIf {
       + Columns.CAPABILITY + " TEXT NOT NULL,"
       + Columns.FREQUENCY + " INTEGER NOT NULL,"
       + Columns.LEVEL + " INTEGER NOT NULL,"
-      + Columns.ACCURACY + " REAL NOT NULL,"
-      + Columns.ALTITUDE + " REAL NOT NULL,"
-      + Columns.LATITUDE + " REAL NOT NULL,"
-      + Columns.LONGITUDE + " REAL NOT NULL,"
       + Columns.TIME_STAMP + " TEXT NOT NULL,"
       + Columns.TIME_STAMP_MS + " INTEGER NOT NULL,"
       + Columns.UPLOAD_FLAG + " INTEGER NOT NULL,"
-      + Columns.TASK_ID + " TEXT NOT NULL"
+      + Columns.LOCATION_ID + " TEXT NOT NULL,"
+      + Columns.SORTIE_ID + " TEXT NOT NULL"
       + ");";
 
   //
@@ -94,14 +88,11 @@ public class ObservationTable implements DataBaseTableIf {
     PROJECTION_MAP.put(ObservationTable.Columns.CAPABILITY, ObservationTable.Columns.CAPABILITY);
     PROJECTION_MAP.put(ObservationTable.Columns.FREQUENCY, ObservationTable.Columns.FREQUENCY);
     PROJECTION_MAP.put(ObservationTable.Columns.LEVEL, ObservationTable.Columns.LEVEL);
-    PROJECTION_MAP.put(ObservationTable.Columns.ACCURACY, ObservationTable.Columns.ACCURACY);
-    PROJECTION_MAP.put(ObservationTable.Columns.ALTITUDE, ObservationTable.Columns.ALTITUDE);
-    PROJECTION_MAP.put(ObservationTable.Columns.LATITUDE, ObservationTable.Columns.LATITUDE);
-    PROJECTION_MAP.put(ObservationTable.Columns.LONGITUDE, ObservationTable.Columns.LONGITUDE);
     PROJECTION_MAP.put(ObservationTable.Columns.TIME_STAMP, ObservationTable.Columns.TIME_STAMP);
     PROJECTION_MAP.put(ObservationTable.Columns.TIME_STAMP_MS, ObservationTable.Columns.TIME_STAMP_MS);
     PROJECTION_MAP.put(ObservationTable.Columns.UPLOAD_FLAG, ObservationTable.Columns.UPLOAD_FLAG);
-    PROJECTION_MAP.put(ObservationTable.Columns.TASK_ID, ObservationTable.Columns.TASK_ID);
+    PROJECTION_MAP.put(ObservationTable.Columns.LOCATION_ID, ObservationTable.Columns.LOCATION_ID);
+    PROJECTION_MAP.put(ObservationTable.Columns.SORTIE_ID, ObservationTable.Columns.SORTIE_ID);
   }
 }
 /*
