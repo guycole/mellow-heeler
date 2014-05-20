@@ -36,6 +36,7 @@ public class UserPreferenceHelper {
   public static final String USER_PREF_WS_CONFIG_VERSION = "wsConfigVersion";
 
   //URL from web service
+  public static final String USER_PREF_WS_AUTHORIZE_URL = "wsAuthorizeUrl";
   public static final String USER_PREF_WS_LOCATION_URL = "wsLocationUrl";
   public static final String USER_PREF_WS_OBSERVATION_URL = "wsObservationUrl";
 
@@ -69,6 +70,7 @@ public class UserPreferenceHelper {
     editor.putString(USER_PREF_POLL_FREQUENCY, "60");
 
     editor.putInt(USER_PREF_WS_CONFIG_VERSION, 0);
+    editor.putString(USER_PREF_WS_AUTHORIZE_URL, "");
     editor.putString(USER_PREF_WS_LOCATION_URL, "");
     editor.putString(USER_PREF_WS_OBSERVATION_URL, "");
 
@@ -80,7 +82,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return true if user preferences are empty
    */
-  public boolean isEmptyPreferences(Context context) {
+  private boolean isEmptyPreferences(Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     Map<String, ?> map = sp.getAll();
     return(map.isEmpty());
@@ -112,7 +114,7 @@ public class UserPreferenceHelper {
    */
   public String getPollFrequency(Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_POLL_FREQUENCY, "0"));
+    return(sp.getString(USER_PREF_POLL_FREQUENCY, "60"));
   }
 
   /**
@@ -141,6 +143,25 @@ public class UserPreferenceHelper {
    */
   public void setWebServiceConfigVersion(Context context, int arg) {
     setPreference(context, USER_PREF_WS_CONFIG_VERSION, arg);
+  }
+
+  /**
+   * URL to POST post authorization
+   * @param context
+   * @return authorize URL or empty string if undefined
+   */
+  public String getAuthorizeUrl(Context context) {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    return(sp.getString(USER_PREF_WS_AUTHORIZE_URL, ""));
+  }
+
+  /**
+   * define URL to POST authorization
+   * @param context
+   * @param arg authorize URL
+   */
+  public void setAuthorizeUrl(Context context, String arg) {
+    setPreference(context, USER_PREF_WS_AUTHORIZE_URL, arg);
   }
 
   /**
