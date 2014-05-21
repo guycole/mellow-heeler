@@ -23,7 +23,7 @@ public class NetworkUtility {
    * @param context
    * @return true if network connectivity is available
    */
-  public static boolean isNetworkAvailable(Context context) {
+  public static boolean isNetworkAvailable(final Context context) {
     ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     if (cm == null) {
       //mobile packet data not enabled

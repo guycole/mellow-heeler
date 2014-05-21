@@ -16,16 +16,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
   //
   public final String LOG_TAG = getClass().getName();
 
+  /*
   //
   public DataBaseHelper(Context context) {
-    // super(context, DATABASE_FILE_NAME, null, DATABASE_VERSION);
-    super(context, context.getExternalFilesDir(null).getAbsolutePath() + File.separator + DATABASE_FILE_NAME, null, DATABASE_VERSION);
+    super(context, DATABASE_FILE_NAME, null, DATABASE_VERSION);
+    //super(context, context.getExternalFilesDir(null).getAbsolutePath() + File.separator + DATABASE_FILE_NAME, null, DATABASE_VERSION);
+  }
+  */
+
+  public DataBaseHelper(Context context, String fileName) {
+    super(context, fileName, null, DATABASE_VERSION);
   }
 
   @Override
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(LocationTable.CREATE_TABLE);
     db.execSQL(ObservationTable.CREATE_TABLE);
+    db.execSQL(SortieTable.CREATE_TABLE);
   }
 
   @Override

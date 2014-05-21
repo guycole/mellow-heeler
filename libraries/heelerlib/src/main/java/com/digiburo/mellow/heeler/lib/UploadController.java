@@ -41,7 +41,7 @@ public class UploadController {
   private void uploadLocation(Context context) {
     LOG.debug("uploadLocation");
 
-    DataBaseFacade dataBaseFacade = new DataBaseFacade();
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
     StringList sorties = dataBaseFacade.selectLocationSorties(context);
     for (String sortie:sorties) {
       // each sortie is a separate upload
@@ -59,7 +59,7 @@ public class UploadController {
   private void uploadObservation(Context context) {
     LOG.debug("uploadObservation");
 
-    DataBaseFacade dataBaseFacade = new DataBaseFacade();
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
     StringList sorties = dataBaseFacade.selectObservationSorties(context);
     for (String sortie:sorties) {
       // each sortie is a separate upload

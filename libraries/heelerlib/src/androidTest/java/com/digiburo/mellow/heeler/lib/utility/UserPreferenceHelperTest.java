@@ -1,22 +1,13 @@
 package com.digiburo.mellow.heeler.lib.utility;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.test.ApplicationTestCase;
 
 import com.digiburo.mellow.heeler.lib.HeelerApplication;
+import com.digiburo.mellow.heeler.lib.TestHelper;
 
 /**
  * @author gsc
  */
-
-
-/* 
- * Copyright 2014 Digital Burro, INC
- * Created 5/19/14 by gsc
- */
-
 public class UserPreferenceHelperTest extends ApplicationTestCase<HeelerApplication> {
   private TestHelper testHelper = new TestHelper();
 
@@ -27,7 +18,7 @@ public class UserPreferenceHelperTest extends ApplicationTestCase<HeelerApplicat
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    new UserPreferenceHelper(getContext());
+    createApplication();
   }
 
   public void testInstallationId() {
@@ -76,8 +67,8 @@ public class UserPreferenceHelperTest extends ApplicationTestCase<HeelerApplicat
   public void testWebServiceConfigVersion() {
     Integer temp = testHelper.randomInteger();
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(getContext());
-    userPreferenceHelper.setWebServiceConfigVersion(getContext(), temp);
-    assertEquals(temp, userPreferenceHelper.getWebServiceConfigVersion(getContext()));
+    userPreferenceHelper.setRemoteConfigurationVersion(getContext(), temp);
+    assertEquals(temp, userPreferenceHelper.getRemoteConfigurationVersion(getContext()));
   }
 }
 /*

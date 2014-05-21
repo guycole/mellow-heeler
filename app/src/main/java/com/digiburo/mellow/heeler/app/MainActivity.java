@@ -13,6 +13,11 @@ import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.SortieController;
 import com.digiburo.mellow.heeler.lib.UploadController;
+import com.digiburo.mellow.heeler.lib.content.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.content.SortieModel;
+import com.digiburo.mellow.heeler.lib.network.NetworkFacade;
+import com.digiburo.mellow.heeler.lib.network.RemoteConfiguration;
+import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +57,9 @@ public class MainActivity extends ActionBarActivity {
     uploadButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        uploadController.uploadAll(getBaseContext());
+//        uploadController.uploadAll(getBaseContext());
+        NetworkFacade networkFacade = new NetworkFacade();
+        networkFacade.readRemoteConfiguration(getBaseContext());
       }
     });
   }

@@ -32,6 +32,21 @@ public class Personality {
   }
 
   /**
+   * true, use database on internal file system else external
+   * production deployment is on external file system
+   * unit tests execute on internal file system
+   */
+  private static Boolean databaseFileSystemFlag = false;
+
+  public static synchronized Boolean isInternalDataBaseFileSystem() {
+    return databaseFileSystemFlag;
+  }
+
+  public static synchronized void setInternalDataBaseFileSystem(boolean arg) {
+    databaseFileSystemFlag = arg;
+  }
+
+  /**
    * spice manager
    */
   private static SpiceManager spiceManager;

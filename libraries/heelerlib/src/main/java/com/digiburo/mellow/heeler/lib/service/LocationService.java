@@ -35,11 +35,11 @@ public class LocationService extends Service implements LocationListener {
     }
 
     LocationModel locationModel = new LocationModel();
-    locationModel.setDefault(this);
-    locationModel.setLocation(location);
+    locationModel.setDefault();
+    locationModel.setLocation(location, Personality.getCurrentSortie().getSortieId().toString());
 
-    DataBaseFacade dataBaseFacade = new DataBaseFacade();
-    dataBaseFacade.newLocation(locationModel, this);
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(this);
+    dataBaseFacade.insert(locationModel, this);
 
     Personality.setCurrentLocation(locationModel);
   }

@@ -1,13 +1,12 @@
 package com.digiburo.mellow.heeler.lib.content;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
 import android.text.format.Time;
 
 import com.digiburo.mellow.heeler.lib.Constant;
-import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 
 import java.util.UUID;
@@ -18,40 +17,39 @@ import java.util.UUID;
  */
 public class LocationModel implements DataBaseModelIf {
   private Long id;
+  private boolean uploadFlag;
+
   private String locationUuid;
   private String sortieUuid;
-
-  private boolean uploadFlag;
 
   private String timeStamp;
   private long timeStampMs;
 
-  private float accuracy;
-
+  private double accuracy;
   private double altitude;
   private double latitude;
   private double longitude;
 
   @Override
-  public void setDefault(Context context) {
-    locationUuid = UUID.randomUUID().toString();
-    sortieUuid = Personality.getCurrentSortie().getSortieId().toString();
-
+  public void setDefault() {
+    id = 0L;
     uploadFlag = false;
+
+    locationUuid = UUID.randomUUID().toString();
+    sortieUuid = UUID.randomUUID().toString();
 
     Time timeNow = TimeUtility.timeNow();
     timeStamp = timeNow.format3339(false);
     timeStampMs = timeNow.toMillis(Constant.IGNORE_DST);
 
     accuracy = -1.0f;
-
     altitude = 0.0;
     latitude = 0.0;
     longitude = 0.0;
   }
 
   @Override
-  public ContentValues toContentValues(Context context) {
+  public ContentValues toContentValues() {
     ContentValues cv = new ContentValues();
 
     cv.put(LocationTable.Columns.ACCURACY, accuracy);
@@ -76,7 +74,7 @@ public class LocationModel implements DataBaseModelIf {
   @Override
   public void fromCursor(Cursor cursor) {
     id = cursor.getLong(cursor.getColumnIndex(LocationTable.Columns._ID));
-    accuracy = cursor.getFloat(cursor.getColumnIndex(LocationTable.Columns.ACCURACY));
+    accuracy = cursor.getDouble(cursor.getColumnIndex(LocationTable.Columns.ACCURACY));
     altitude = cursor.getDouble(cursor.getColumnIndex(LocationTable.Columns.ALTITUDE));
     latitude = cursor.getDouble(cursor.getColumnIndex(LocationTable.Columns.LATITUDE));
     longitude = cursor.getDouble(cursor.getColumnIndex(LocationTable.Columns.LONGITUDE));
@@ -99,6 +97,11 @@ public class LocationModel implements DataBaseModelIf {
   }
 
   @Override
+  public Uri getTableUri() {
+    return(LocationTable.CONTENT_URI);
+  }
+
+  @Override
   public Long getId() {
     return id;
   }
@@ -108,7 +111,12 @@ public class LocationModel implements DataBaseModelIf {
     this.id = id;
   }
 
-  public void setLocation(Location arg) {
+  /**
+   *
+   * @param arg
+   * @param sortieId
+   */
+  public void setLocation(Location arg, String sortieId) {
     accuracy = arg.getAccuracy();
     altitude = arg.getAltitude();
     latitude = arg.getLatitude();
@@ -119,6 +127,8 @@ public class LocationModel implements DataBaseModelIf {
     timeStamp = time.format3339(false);
 
     timeStampMs = arg.getTime();
+
+    sortieUuid = sortieId;
   }
 
   public String getLocationUuid() {
@@ -145,20 +155,60 @@ public class LocationModel implements DataBaseModelIf {
     return timeStampMs;
   }
 
-  public float getAccuracy() {
+  public Double getAccuracy() {
     return accuracy;
   }
 
-  public double getAltitude() {
+  public Double getAltitude() {
     return altitude;
   }
 
-  public double getLatitude() {
+  public Double getLatitude() {
     return latitude;
   }
 
-  public double getLongitude() {
+  public Double getLongitude() {
     return longitude;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    LocationModel that = (LocationModel) o;
+
+    if (Double.compare(that.accuracy, accuracy) != 0) return false;
+    if (Double.compare(that.altitude, altitude) != 0) return false;
+    if (Double.compare(that.latitude, latitude) != 0) return false;
+    if (Double.compare(that.longitude, longitude) != 0) return false;
+    if (timeStampMs != that.timeStampMs) return false;
+    if (uploadFlag != that.uploadFlag) return false;
+    if (!locationUuid.equals(that.locationUuid)) return false;
+    if (!sortieUuid.equals(that.sortieUuid)) return false;
+    if (!timeStamp.equals(that.timeStamp)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result;
+    long temp;
+    result = (uploadFlag ? 1 : 0);
+    result = 31 * result + locationUuid.hashCode();
+    result = 31 * result + sortieUuid.hashCode();
+    result = 31 * result + timeStamp.hashCode();
+    result = 31 * result + (int) (timeStampMs ^ (timeStampMs >>> 32));
+    temp = Double.doubleToLongBits(accuracy);
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    temp = Double.doubleToLongBits(altitude);
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    temp = Double.doubleToLongBits(latitude);
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    temp = Double.doubleToLongBits(longitude);
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    return result;
   }
 }
 /*

@@ -28,8 +28,6 @@
 
     <activity android:name=".app.MenuActivity" android:label="@string/app_name"/>
 
-    <provider android:name=".lib.content.DataBaseProvider" android:authorities="com.digiburo.mellow.heeler.authority" />
-
     <receiver android:name=".lib.service.ScanReceiver">
       <intent-filter>
         <action android:name="android.net.wifi.SCAN_RESULTS"/>

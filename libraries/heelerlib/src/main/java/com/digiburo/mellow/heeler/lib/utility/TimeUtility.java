@@ -38,7 +38,7 @@ public class TimeUtility {
    * @param arg
    * @return
    */
-  public static long timeMillis(Time arg) {
+  public static long timeMillis(final Time arg) {
     return(arg.toMillis(Constant.IGNORE_DST));
   }
 
@@ -61,7 +61,7 @@ public class TimeUtility {
    * @param arg2
    * @return
    */
-  public static boolean timeEquals(Time arg1, Time arg2) {
+  public static boolean timeEquals(final Time arg1, final Time arg2) {
     if ((arg1 == null) || (arg2 == null)) {
       return(false);
     }
@@ -79,7 +79,7 @@ public class TimeUtility {
    * @param arg
    * @return
    */
-  public static String dateFormat(Time arg) {
+  public static String dateFormat(final Time arg) {
     Date date = new Date();
     date.setTime(arg.toMillis(Constant.IGNORE_DST));
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

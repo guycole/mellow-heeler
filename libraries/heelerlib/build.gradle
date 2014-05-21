@@ -40,7 +40,7 @@ dependencies {
   compile 'com.github.tony19:logback-android-classic:1.1.1-2'
 
   compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-  compile 'com.octo.android.robospice:robospice-spring-android:1.4.11'
+  compile 'com.octo.android.robospice:robospice-spring-android:1.4.12'
 
   compile 'com.android.support:support-v4:19.1.0'
   compile 'com.android.support:appcompat-v7:19.1.0'

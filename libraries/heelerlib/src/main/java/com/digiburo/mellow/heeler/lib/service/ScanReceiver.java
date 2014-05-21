@@ -51,15 +51,15 @@ public class ScanReceiver extends BroadcastReceiver {
       return;
     }
 
-    DataBaseFacade dataBaseFacade = new DataBaseFacade();
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
 
     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     List<ScanResult> scanList = wifiManager.getScanResults();
     for (ScanResult scanResult:scanList) {
       ObservationModel observationModel = new ObservationModel();
-      observationModel.setDefault(context);
-      observationModel.setScanResult(scanResult);
-      dataBaseFacade.newObservation(observationModel, context);
+      observationModel.setDefault();
+      //observationModel.setScanResult(scanResult);
+      dataBaseFacade.insert(observationModel, context);
     }
   }
 }

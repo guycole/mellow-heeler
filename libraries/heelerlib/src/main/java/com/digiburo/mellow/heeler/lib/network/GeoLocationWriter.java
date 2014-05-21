@@ -41,7 +41,7 @@ public class GeoLocationWriter {
     ArrayList<GeoLocationElement> locationList = new ArrayList<GeoLocationElement>();
     for(LocationModel locationModel:locationModelList) {
       GeoLocationElement geoLocationElement = new GeoLocationElement();
-      geoLocationElement.setAccuracy(locationModel.getAccuracy());
+//      geoLocationElement.setAccuracy(locationModel.getAccuracy());
       geoLocationElement.setAltitude(locationModel.getAltitude());
       geoLocationElement.setLatitude(locationModel.getLatitude());
       geoLocationElement.setLongitude(locationModel.getLongitude());
@@ -76,7 +76,7 @@ public class GeoLocationWriter {
       public void onRequestSuccess(GeoLocationResponse geoLocationResponse) {
         LOG.info("geoloc write success:" + geoLocationResponse.getStatus() + ":" + geoLocationResponse.getRemoteIpAddress());
 
-        DataBaseFacade dataBaseFacade = new DataBaseFacade();
+        DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
         for(LocationModel locationModel:locationModelList) {
           dataBaseFacade.setLocationUpload(locationModel.getId(), context);
         }

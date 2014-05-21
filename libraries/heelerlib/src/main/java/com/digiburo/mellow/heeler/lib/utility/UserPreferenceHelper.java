@@ -32,7 +32,7 @@ public class UserPreferenceHelper {
   //WiFi scan interval
   public static final String USER_PREF_POLL_FREQUENCY = "pollFrequency";
 
-  //web service root version
+  //web service configuration version
   public static final String USER_PREF_WS_CONFIG_VERSION = "wsConfigVersion";
 
   //URL from web service
@@ -44,7 +44,7 @@ public class UserPreferenceHelper {
    * ctor
    * @param context
    */
-  public UserPreferenceHelper(Context context) {
+  public UserPreferenceHelper(final Context context) {
     if (isEmptyPreferences(context)) {
       writeDefaults(context);
     }
@@ -57,7 +57,7 @@ public class UserPreferenceHelper {
    * seed default database - should only invoke once for fresh install
    * @param context
    */
-  private void writeDefaults(Context context) {
+  private void writeDefaults(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sp.edit();
 
@@ -82,7 +82,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return true if user preferences are empty
    */
-  private boolean isEmptyPreferences(Context context) {
+  private boolean isEmptyPreferences(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     Map<String, ?> map = sp.getAll();
     return(map.isEmpty());
@@ -93,7 +93,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return true, audio cue enabled
    */
-  public boolean isAudioCue(Context context) {
+  public boolean isAudioCue(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getBoolean(USER_PREF_AUDIO_CUE, true));
   }
@@ -103,7 +103,7 @@ public class UserPreferenceHelper {
    * @param context
    * @param arg true, audio cue enabled
    */
-  public void setAudioCue(Context context, boolean arg) {
+  public void setAudioCue(final Context context, boolean arg) {
     setPreference(context, USER_PREF_AUDIO_CUE, arg);
   }
 
@@ -112,7 +112,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return WiFi scan interval in seconds
    */
-  public String getPollFrequency(Context context) {
+  public String getPollFrequency(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getString(USER_PREF_POLL_FREQUENCY, "60"));
   }
@@ -122,26 +122,26 @@ public class UserPreferenceHelper {
    * @param context
    * @param WiFi scan interval in seconds
    */
-  public void setPollFrequency(Context context, String arg) {
+  public void setPollFrequency(final Context context, final String arg) {
     setPreference(context, USER_PREF_POLL_FREQUENCY, arg);
   }
 
   /**
-   * return web service config version
+   * return remote web service configuration version
    * @param context
-   * @return web service config version
+   * @return remote web service configuration version
    */
-  public Integer getWebServiceConfigVersion(Context context) {
+  public Integer getRemoteConfigurationVersion(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getInt(USER_PREF_WS_CONFIG_VERSION, 0));
   }
 
   /**
-   * define web service config version
+   * define remote web service configuration version
    * @param context
-   * @param web service config version
+   * @param remote web service configuration version
    */
-  public void setWebServiceConfigVersion(Context context, int arg) {
+  public void setRemoteConfigurationVersion(final Context context, int arg) {
     setPreference(context, USER_PREF_WS_CONFIG_VERSION, arg);
   }
 
@@ -150,7 +150,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return authorize URL or empty string if undefined
    */
-  public String getAuthorizeUrl(Context context) {
+  public String getAuthorizeUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getString(USER_PREF_WS_AUTHORIZE_URL, ""));
   }
@@ -160,7 +160,7 @@ public class UserPreferenceHelper {
    * @param context
    * @param arg authorize URL
    */
-  public void setAuthorizeUrl(Context context, String arg) {
+  public void setAuthorizeUrl(final Context context, final String arg) {
     setPreference(context, USER_PREF_WS_AUTHORIZE_URL, arg);
   }
 
@@ -169,7 +169,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return location URL or empty string if undefined
    */
-  public String getLocationUrl(Context context) {
+  public String getLocationUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getString(USER_PREF_WS_LOCATION_URL, ""));
   }
@@ -179,7 +179,7 @@ public class UserPreferenceHelper {
    * @param context
    * @param arg location URL
    */
-  public void setLocationUrl(Context context, String arg) {
+  public void setLocationUrl(final Context context, final String arg) {
     setPreference(context, USER_PREF_WS_LOCATION_URL, arg);
   }
 
@@ -188,7 +188,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return observation URL or empty string if undefined
    */
-  public String getObservationUrl(Context context) {
+  public String getObservationUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getString(USER_PREF_WS_OBSERVATION_URL, ""));
   }
@@ -198,7 +198,7 @@ public class UserPreferenceHelper {
    * @param context
    * @param arg observation URL
    */
-  public void setObservationUrl(Context context, String arg) {
+  public void setObservationUrl(final Context context, final String arg) {
     setPreference(context, USER_PREF_WS_OBSERVATION_URL, arg);
   }
 
@@ -207,7 +207,7 @@ public class UserPreferenceHelper {
    * @param context
    * @return installation ID or empty string if undefined
    */
-  public String getInstallationId(Context context) {
+  public String getInstallationId(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getString(USER_PREF_INSTALL_ID, ""));
   }
@@ -218,7 +218,7 @@ public class UserPreferenceHelper {
    * @param key key
    * @param arg value
    */
-  private void setPreference(Context context, String key, boolean arg) {
+  private void setPreference(final Context context, final String key, boolean arg) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sp.edit();
     editor.putBoolean(key, arg);
@@ -231,7 +231,7 @@ public class UserPreferenceHelper {
    * @param key key
    * @param arg value
    */
-  private void setPreference(Context context, String key, int arg) {
+  private void setPreference(final Context context, final String key, int arg) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sp.edit();
     editor.putInt(key, arg);
@@ -244,7 +244,7 @@ public class UserPreferenceHelper {
    * @param key key
    * @param arg value
    */
-  private void setPreference(Context context, String key, long arg) {
+  private void setPreference(final Context context, final String key, long arg) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sp.edit();
     editor.putLong(key, arg);
@@ -257,7 +257,7 @@ public class UserPreferenceHelper {
    * @param key key
    * @param arg value
    */
-  private void setPreference(Context context, String key, String arg) {
+  private void setPreference(final Context context, final String key, final String arg) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sp.edit();
     editor.putString(key, arg);

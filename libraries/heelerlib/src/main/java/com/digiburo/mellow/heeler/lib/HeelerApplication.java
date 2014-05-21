@@ -58,7 +58,11 @@ public class HeelerApplication extends Application {
 
     SpiceManager spiceManager = Personality.getSpiceManager();
     if (spiceManager.isStarted()) {
-      spiceManager.shouldStop();
+      try {
+        spiceManager.shouldStop();
+      } catch(Exception exception) {
+        //empty
+      }
     }
   }
 

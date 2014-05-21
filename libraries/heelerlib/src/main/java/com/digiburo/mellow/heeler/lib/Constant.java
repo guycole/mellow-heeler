@@ -15,7 +15,12 @@ public class Constant {
   }
 
   //
+  public static final String DEFAULT_SORTIE_NAME = "Default Sortie";
+
+  //
   public static final String AUTHORITY = "com.digiburo.mellow.heeler.authority";
+
+  public static final String UNKNOWN = "Unknown";
 
   //
   public static final String INTENT_ACTION_ABOUT = "INTENT_ACTION_ABOUT";
@@ -25,6 +30,9 @@ public class Constant {
   //
   public static final Integer SQL_TRUE = 1;
   public static final Integer SQL_FALSE = 0;
+
+  //
+  public static final double EPSILON = 0.000001;
 
   // daylight savings time is not important
   public static final boolean IGNORE_DST = false;

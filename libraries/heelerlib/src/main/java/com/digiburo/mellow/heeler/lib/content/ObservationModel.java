@@ -3,7 +3,7 @@ package com.digiburo.mellow.heeler.lib.content;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.text.format.Time;
 
@@ -34,36 +34,58 @@ public class ObservationModel implements DataBaseModelIf {
   private int level;
 
   @Override
-  public void setDefault(Context context) {
-    locationUuid = Personality.getCurrentLocation().getLocationUuid().toString();
-    sortieUuid = Personality.getCurrentSortie().getSortieId().toString();
-
+  public void setDefault() {
+    id = 0L;
     uploadFlag = false;
+
+    locationUuid = UUID.randomUUID().toString();
+    sortieUuid = UUID.randomUUID().toString();
 
     Time timeNow = TimeUtility.timeNow();
     timeStamp = timeNow.format3339(false);
     timeStampMs = timeNow.toMillis(Constant.IGNORE_DST);
 
-    ssid = "unknown";
-    bssid = "unknown";
-    capability = "unknown";
-
-    uploadFlag = false;
+    ssid = Constant.UNKNOWN;
+    bssid = Constant.UNKNOWN;
+    capability = Constant.UNKNOWN;
 
     frequency = 0;
     level = 0;
   }
 
-  public void setScanResult(ScanResult arg) {
-    ssid = arg.SSID;
-    bssid = arg.BSSID;
-    capability = arg.capabilities;
-    frequency = arg.frequency;
-    level = arg.level;
+  /**
+   *
+   * @param ssid
+   * @param bssid
+   * @param capability
+   * @param frequency
+   * @param level
+   * @param locationId
+   * @param sortieId
+   */
+  public void setScanResult(String ssid, String bssid, String capability, int frequency, int level, String locationId, String sortieId) {
+    this.ssid = ssid;
+    this.bssid = bssid;
+    this.capability = capability;
+    this.frequency = frequency;
+    this.level = level;
+
+    locationUuid = locationId;
+    sortieUuid = sortieId;
+  }
+
+  /**
+   *
+   * @param arg
+   * @param locationId
+   * @param sortieId
+   */
+  public void setScanResult(ScanResult arg, String locationId, String sortieId) {
+    setScanResult(arg.SSID, arg.BSSID, arg.capabilities, arg.frequency, arg.level, locationId, sortieId);
   }
 
   @Override
-  public ContentValues toContentValues(Context context) {
+  public ContentValues toContentValues() {
     ContentValues cv = new ContentValues();
 
     cv.put(ObservationTable.Columns.BSSID, bssid);
@@ -112,6 +134,11 @@ public class ObservationModel implements DataBaseModelIf {
   }
 
   @Override
+  public Uri getTableUri() {
+    return(ObservationTable.CONTENT_URI);
+  }
+
+  @Override
   public Long getId() {
     return id;
   }
@@ -145,12 +172,60 @@ public class ObservationModel implements DataBaseModelIf {
     return timeStampMs;
   }
 
+  public String getTimeStamp() {
+    return timeStamp;
+  }
+
   public String getLocationUuid() {
     return locationUuid;
   }
 
   public String getSortieUuid() {
     return sortieUuid;
+  }
+
+  public boolean isUploadFlag() {
+    return uploadFlag;
+  }
+
+  public void setUploadFlag() {
+    uploadFlag = true;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ObservationModel that = (ObservationModel) o;
+
+    if (frequency != that.frequency) return false;
+    if (level != that.level) return false;
+    if (timeStampMs != that.timeStampMs) return false;
+    if (uploadFlag != that.uploadFlag) return false;
+    if (!bssid.equals(that.bssid)) return false;
+    if (!capability.equals(that.capability)) return false;
+    if (!locationUuid.equals(that.locationUuid)) return false;
+    if (!sortieUuid.equals(that.sortieUuid)) return false;
+    if (!ssid.equals(that.ssid)) return false;
+    if (!timeStamp.equals(that.timeStamp)) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = ssid.hashCode();
+    result = 31 * result + bssid.hashCode();
+    result = 31 * result + capability.hashCode();
+    result = 31 * result + locationUuid.hashCode();
+    result = 31 * result + sortieUuid.hashCode();
+    result = 31 * result + (uploadFlag ? 1 : 0);
+    result = 31 * result + timeStamp.hashCode();
+    result = 31 * result + (int) (timeStampMs ^ (timeStampMs >>> 32));
+    result = 31 * result + frequency;
+    result = 31 * result + level;
+    return result;
   }
 }
 /*

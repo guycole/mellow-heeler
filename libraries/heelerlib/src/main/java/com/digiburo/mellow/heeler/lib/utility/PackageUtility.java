@@ -15,7 +15,7 @@ public class PackageUtility {
    * @param context
    * @return version code
    */
-  public static int getAppVersion(Context context) {
+  public static int getAppVersion(final Context context) {
     try {
       PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
       return packageInfo.versionCode;
