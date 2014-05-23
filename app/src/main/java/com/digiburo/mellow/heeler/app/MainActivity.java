@@ -81,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
   };
 
   /**
-   * Collection might need to stop because of user preference changes.
+   * Collection might need to stop because of user preference changes or database uploads.
    * This implies the user preference display is active (and not main activity).
    * Stop collection and force the start/stop button to reset.
    * Display will update when onResume is invoked.
@@ -166,6 +166,7 @@ public class MainActivity extends ActionBarActivity {
   public void onResume() {
     super.onResume();
     updateStatusLabel();
+    updateDetectionDisplay(0);
     updateLocationDisplay();
     registerReceiver(broadcastReceiver, new IntentFilter(Constant.FRESH_UPDATE));
   }
@@ -211,6 +212,7 @@ public class MainActivity extends ActionBarActivity {
         intent.setAction(Constant.INTENT_ACTION_PREFERENCE);
         break;
       case R.id.menu_upload:
+        stopCollection();
         intent.setAction(Constant.INTENT_ACTION_UPLOAD);
         break;
       default:
@@ -242,11 +244,19 @@ public class MainActivity extends ActionBarActivity {
 
   private void updateDetectionDisplay(long rowKey) {
     DataBaseFacade dataBaseFacade = new DataBaseFacade(this);
-    ObservationModel observationModel = dataBaseFacade.selectObservation(rowKey, this);
     int observationPopulation = dataBaseFacade.countObservationRows(this);
 
-    textLastSsid.setText(observationModel.getSsid());
-    textLastSsidTime.setText(observationModel.getTimeStamp());
+    String ssid = "Unknown";
+    String timeStamp = "Unknown";
+
+    if (rowKey > 0) {
+      ObservationModel observationModel = dataBaseFacade.selectObservation(rowKey, this);
+      ssid = observationModel.getSsid();
+      timeStamp = observationModel.getTimeStamp();
+    }
+
+    textLastSsid.setText(ssid);
+    textLastSsidTime.setText(timeStamp);
     textObservationRowCount.setText(Integer.toString(observationPopulation));
   }
 

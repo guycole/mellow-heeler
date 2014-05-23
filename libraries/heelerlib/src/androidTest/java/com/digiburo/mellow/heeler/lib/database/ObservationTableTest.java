@@ -73,6 +73,7 @@ public class ObservationTableTest extends ApplicationTestCase<HeelerApplication>
     String sortieId = UUID.randomUUID().toString();
 
     model.setScanResult(ssid, bssid, capability, frequency, level, locationId, sortieId);
+    model.setUploadFlag();
 
     int count = dataBaseFacade.updateObservation(model, getContext());
     assertEquals(1, count);
@@ -88,6 +89,8 @@ public class ObservationTableTest extends ApplicationTestCase<HeelerApplication>
 
     assertTrue(locationId.equals(selected.getLocationUuid()));
     assertTrue(sortieId.equals(selected.getSortieUuid()));
+
+    assertTrue(selected.isUploadFlag());
   }
 
   public void testDelete() {

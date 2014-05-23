@@ -19,6 +19,7 @@ public class AuthorizationRequest extends SpringAndroidSpiceRequest<Authorizatio
   private static final Logger LOG = LoggerFactory.getLogger(AuthorizationRequest.class);
 
   private final String url;
+//  private final String url = "https://mellow-heeler.appspot.com/diagnostic";
   private final Map<String, String> parameters = new HashMap<String, String>();
 
   public AuthorizationRequest(final Context context) {

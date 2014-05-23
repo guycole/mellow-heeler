@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * test for authorization
  * @author gsc
  */
-public class Authorization {
-  private static final Logger LOG = LoggerFactory.getLogger(Authorization.class);
+public class AuthorizationWriter {
+  private static final Logger LOG = LoggerFactory.getLogger(AuthorizationWriter.class);
 
   /**
    * discover if this installation is authorized to use remote server

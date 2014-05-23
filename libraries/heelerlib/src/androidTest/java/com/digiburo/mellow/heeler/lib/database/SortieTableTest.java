@@ -74,6 +74,7 @@ public class SortieTableTest extends ApplicationTestCase<HeelerApplication> {
     model.setTimeStampMs(timeNow);
     model.setSortieName(freshName);
     model.setSortieUuid(freshUuid);
+    model.setUploadFlag();
 
     int count = dataBaseFacade.updateSortie(model, getContext());
     assertEquals(1, count);
@@ -83,6 +84,7 @@ public class SortieTableTest extends ApplicationTestCase<HeelerApplication> {
     assertEquals(timeNow, selected.getTimeStampMs());
     assertTrue(freshName.equals(selected.getSortieName()));
     assertTrue(freshUuid.equals(selected.getSortieUuid()));
+    assertTrue(selected.isUploadFlag());
   }
 
   public void testDelete() {

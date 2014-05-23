@@ -8,14 +8,15 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * @author gsc
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ObservationResponse {
+public class SortieResponse {
   private String receipt;
   private String remoteIpAddress;
   private String sortieId;
   private String status;
   private String timeStamp;
-  private Integer rowCount;
-  private Integer version;
+
+  private Integer rowCount = 0;
+  private Integer version = 0;
 
   public String getReceipt() {
     return receipt;
@@ -33,20 +34,20 @@ public class ObservationResponse {
     this.remoteIpAddress = remoteIpAddress;
   }
 
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
   public String getSortieId() {
     return sortieId;
   }
 
   public void setSortieId(String sortieId) {
     this.sortieId = sortieId;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   public String getTimeStamp() {
@@ -110,5 +111,5 @@ public class ObservationResponse {
 }
 /*
  * Copyright 2014 Digital Burro, INC
- * Created on May 17, 2014 by gsc
+ * Created on May 23, 2014 by gsc
  */

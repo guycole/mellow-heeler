@@ -445,6 +445,19 @@ public class DataBaseFacade {
   }
 
   /**
+   * mark sortie as uploaded
+   * @param target row key
+   * @param context
+   */
+  public void setSortieUpload(final Long target, final Context context) {
+    SortieModel sortieModel = selectSortie(target, context);
+    if (sortieModel.getId().longValue() == target.longValue()) {
+      sortieModel.setUploadFlag();
+      updateSortie(sortieModel, context);
+    }
+  }
+
+  /**
    * simple delete
    * @param tableName
    * @param where
@@ -530,11 +543,23 @@ public class DataBaseFacade {
   }
 
   /**
+   * delete uploaded items from specified table
+   * @param tableName
+   * @param columnName
+   * @return
+   */
+  public int deleteUploaded(final String tableName, final String columnName, final Context context) {
+    String where = columnName + "=?";
+    String[] whereArgs = new String[] {Constant.SQL_TRUE.toString()};
+    return simpleDelete(tableName, where, whereArgs, context);
+  }
+
+  /**
    *
    * @param context
    * @return
    */
-  private SQLiteDatabase getReadableDataBase(Context context) {
+  private SQLiteDatabase getReadableDataBase(final Context context) {
     DataBaseHelper dataBaseHelper = new DataBaseHelper(context, dataBaseFileName);
     return dataBaseHelper.getReadableDatabase();
   }
@@ -544,7 +569,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  private SQLiteDatabase getWritableDataBase(Context context) {
+  private SQLiteDatabase getWritableDataBase(final Context context) {
     DataBaseHelper dataBaseHelper = new DataBaseHelper(context, dataBaseFileName);
     return dataBaseHelper.getWritableDatabase();
   }

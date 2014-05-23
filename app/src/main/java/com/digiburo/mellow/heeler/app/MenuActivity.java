@@ -52,7 +52,7 @@ public class MenuActivity extends Activity {
       if (Constant.INTENT_ACTION_ABOUT.equals(action)) {
         fragment = new AboutFragment();
       } else if (Constant.INTENT_ACTION_CLEAN.equals(action)) {
-        //
+        fragment = new CleanFragment();
       } else if (Constant.INTENT_ACTION_PREFERENCE.equals(action)) {
         fragment = new PrefFragment();
       } else if (Constant.INTENT_ACTION_UPLOAD.equals(action)) {

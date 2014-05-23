@@ -2,15 +2,12 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
-import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.LocationModelList;
 import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * @author gsc
@@ -34,8 +31,8 @@ public class NetworkFacade implements NetworkListener {
    * @param context
    */
   public void testAuthorization(final Context context) {
-    Authorization authorization = new Authorization();
-    authorization.doJsonPost(context);
+    AuthorizationWriter authorizationWriter = new AuthorizationWriter();
+    authorizationWriter.doJsonPost(context);
   }
 
   /**
@@ -65,7 +62,8 @@ public class NetworkFacade implements NetworkListener {
    * @param context
    */
   public void writeSortie(final SortieModel sortieModel, final Context context) {
-    //empty
+    SortieWriter sortieWriter = new SortieWriter();
+    sortieWriter.doJsonPost(sortieModel, context);
   }
 }
 /*

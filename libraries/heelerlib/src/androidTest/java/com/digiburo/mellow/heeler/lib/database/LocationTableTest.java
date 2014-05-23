@@ -75,6 +75,8 @@ public class LocationTableTest extends ApplicationTestCase<HeelerApplication> {
     String sortieId = UUID.randomUUID().toString();
 
     model.setLocation(location, sortieId);
+    model.setSpecialFlag();
+    model.setUploadFlag();
 
     int count = dataBaseFacade.updateLocation(model, getContext());
     assertEquals(1, count);
@@ -89,6 +91,8 @@ public class LocationTableTest extends ApplicationTestCase<HeelerApplication> {
 
     assertNotNull(selected.getTimeStamp());
     assertTrue(sortieId.equals(selected.getSortieUuid()));
+    assertTrue(selected.isSpecialFlag());
+    assertTrue(selected.isUploadFlag());
   }
 
   public void testDelete() {

@@ -9,6 +9,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GeoLocationResponse {
+  private String receipt;
   private String remoteIpAddress;
   private String sortieId;
   private String status;
@@ -16,6 +17,14 @@ public class GeoLocationResponse {
 
   private Integer rowCount = 0;
   private Integer version;
+
+  public String getReceipt() {
+    return receipt;
+  }
+
+  public void setReceipt(String arg) {
+    receipt = arg;
+  }
 
   public String getRemoteIpAddress() {
     return remoteIpAddress;

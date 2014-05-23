@@ -57,9 +57,7 @@ public class ObservationWriter {
 
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(context);
     String installationUuid = userPreferenceHelper.getInstallationId(context);
-    String locationUrl = userPreferenceHelper.getLocationUrl(context);
-    //TODO get URL from json configuration
-    locationUrl = "https://mellow-heeler.appspot.com/ws/v1/observation";
+    String observationUrl = userPreferenceHelper.getObservationUrl(context);
 
     Observation observation = new Observation();
     observation.setInstallationId(installationUuid);
@@ -67,7 +65,7 @@ public class ObservationWriter {
     observation.setSortieId(sortieUuid);
     observation.setObservationList(observationList);
 
-    ObservationRequest request = new ObservationRequest(locationUrl, observation);
+    ObservationRequest request = new ObservationRequest(observationUrl, observation);
     String cacheKey = Integer.toString(random.nextInt());
 
     SpiceManager spiceManager = Personality.getSpiceManager();

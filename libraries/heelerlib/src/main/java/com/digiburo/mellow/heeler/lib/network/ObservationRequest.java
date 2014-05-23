@@ -14,10 +14,11 @@ import org.springframework.http.MediaType;
 public class ObservationRequest extends SpringAndroidSpiceRequest<ObservationResponse> {
   private static final Logger LOG = LoggerFactory.getLogger(ObservationRequest.class);
 
-  private Observation observation;
-  private String url;
+  private final String url;
+  //  private final String url = "https://mellow-heeler.appspot.com/diagnostic";
+  private final Observation observation;
 
-  public ObservationRequest(String url, Observation observation) {
+  public ObservationRequest(final String url, final Observation observation) {
     super(ObservationResponse.class);
 
     this.url = url;
@@ -26,9 +27,6 @@ public class ObservationRequest extends SpringAndroidSpiceRequest<ObservationRes
 
   @Override
   public ObservationResponse loadDataFromNetwork() throws Exception {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
     return getRestTemplate().postForObject(url, observation, ObservationResponse.class);
   }
 }

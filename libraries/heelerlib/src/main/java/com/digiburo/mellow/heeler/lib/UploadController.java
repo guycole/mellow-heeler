@@ -38,6 +38,7 @@ public class UploadController {
 
     dataBaseFacade = new DataBaseFacade(context);
     SortieModelList sortieModelList = dataBaseFacade.selectAllSorties(false, context);
+    LOG.debug("sortie list size:" + sortieModelList.size());
     for (SortieModel sortieModel:sortieModelList) {
       LOG.debug("current sortie:" + sortieModel.getSortieName() + ":" + sortieModel.getSortieUuid());
       uploadLocation(sortieModel.getSortieUuid(), context);

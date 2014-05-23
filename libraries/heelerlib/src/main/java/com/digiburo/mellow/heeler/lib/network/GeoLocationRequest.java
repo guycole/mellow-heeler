@@ -16,10 +16,11 @@ import java.util.Map;
 public class GeoLocationRequest extends SpringAndroidSpiceRequest<GeoLocationResponse> {
   private static final Logger LOG = LoggerFactory.getLogger(GeoLocationRequest.class);
 
-  private GeoLocation geoLocation;
-  private String url = "https://mellow-heeler.appspot.com/diagnostic";
+  private final String url;
+  //private final String url = "https://mellow-heeler.appspot.com/diagnostic";
+  private final GeoLocation geoLocation;
 
-  public GeoLocationRequest(String url, GeoLocation geoLocation) {
+  public GeoLocationRequest(final String url, final GeoLocation geoLocation) {
     super(GeoLocationResponse.class);
 
     this.url = url;
