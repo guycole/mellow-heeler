@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.TestHelper;

@@ -1,9 +1,9 @@
 package com.digiburo.mellow.heeler.lib;
 
 import android.app.PendingIntent;
-import android.location.Location;
 
-import com.digiburo.mellow.heeler.lib.content.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.octo.android.robospice.SpiceManager;
 
 /**
@@ -88,13 +88,13 @@ public class Personality {
   /**
    * current detection sortie
    */
-  private static Sortie currentSortie;
+  private static SortieModel currentSortie;
 
-  public static synchronized Sortie getCurrentSortie() {
+  public static synchronized SortieModel getCurrentSortie() {
     return currentSortie;
   }
 
-  public static synchronized void setCurrentSortie(Sortie arg) {
+  public static synchronized void setCurrentSortie(SortieModel arg) {
     currentSortie = arg;
   }
 }

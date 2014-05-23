@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -17,6 +17,7 @@ import java.util.UUID;
  */
 public class LocationModel implements DataBaseModelIf {
   private Long id;
+  private boolean specialFlag;
   private boolean uploadFlag;
 
   private String locationUuid;
@@ -33,6 +34,7 @@ public class LocationModel implements DataBaseModelIf {
   @Override
   public void setDefault() {
     id = 0L;
+    specialFlag = false;
     uploadFlag = false;
 
     locationUuid = UUID.randomUUID().toString();
@@ -62,6 +64,12 @@ public class LocationModel implements DataBaseModelIf {
     cv.put(LocationTable.Columns.LOCATION_ID, locationUuid);
     cv.put(LocationTable.Columns.SORTIE_ID, sortieUuid);
 
+    if (specialFlag) {
+      cv.put(LocationTable.Columns.SPECIAL_FLAG, Constant.SQL_TRUE);
+    } else {
+      cv.put(LocationTable.Columns.SPECIAL_FLAG, Constant.SQL_FALSE);
+    }
+
     if (uploadFlag) {
       cv.put(LocationTable.Columns.UPLOAD_FLAG, Constant.SQL_TRUE);
     } else {
@@ -72,7 +80,7 @@ public class LocationModel implements DataBaseModelIf {
   }
 
   @Override
-  public void fromCursor(Cursor cursor) {
+  public void fromCursor(final Cursor cursor) {
     id = cursor.getLong(cursor.getColumnIndex(LocationTable.Columns._ID));
     accuracy = cursor.getDouble(cursor.getColumnIndex(LocationTable.Columns.ACCURACY));
     altitude = cursor.getDouble(cursor.getColumnIndex(LocationTable.Columns.ALTITUDE));
@@ -83,7 +91,14 @@ public class LocationModel implements DataBaseModelIf {
     timeStamp = cursor.getString(cursor.getColumnIndex(LocationTable.Columns.TIME_STAMP));
     timeStampMs = cursor.getLong(cursor.getColumnIndex(LocationTable.Columns.TIME_STAMP_MS));
 
-    int temp = cursor.getInt(cursor.getColumnIndex(LocationTable.Columns.UPLOAD_FLAG));
+    int temp = cursor.getInt(cursor.getColumnIndex(LocationTable.Columns.SPECIAL_FLAG));
+    if (temp == Constant.SQL_TRUE) {
+      specialFlag = true;
+    } else {
+      specialFlag = false;
+    }
+
+    temp = cursor.getInt(cursor.getColumnIndex(LocationTable.Columns.UPLOAD_FLAG));
     if (temp == Constant.SQL_TRUE) {
       uploadFlag = true;
     } else {
@@ -107,7 +122,7 @@ public class LocationModel implements DataBaseModelIf {
   }
 
   @Override
-  public void setId(Long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -116,7 +131,7 @@ public class LocationModel implements DataBaseModelIf {
    * @param arg
    * @param sortieId
    */
-  public void setLocation(Location arg, String sortieId) {
+  public void setLocation(final Location arg, final String sortieId) {
     accuracy = arg.getAccuracy();
     altitude = arg.getAltitude();
     latitude = arg.getLatitude();
@@ -137,6 +152,14 @@ public class LocationModel implements DataBaseModelIf {
 
   public String getSortieUuid() {
     return sortieUuid;
+  }
+
+  public boolean isSpecialFlag() {
+    return specialFlag;
+  }
+
+  public void setSpecialFlag() {
+    specialFlag = true;
   }
 
   public boolean isUploadFlag() {
@@ -182,6 +205,7 @@ public class LocationModel implements DataBaseModelIf {
     if (Double.compare(that.altitude, altitude) != 0) return false;
     if (Double.compare(that.latitude, latitude) != 0) return false;
     if (Double.compare(that.longitude, longitude) != 0) return false;
+    if (specialFlag != that.specialFlag) return false;
     if (timeStampMs != that.timeStampMs) return false;
     if (uploadFlag != that.uploadFlag) return false;
     if (!locationUuid.equals(that.locationUuid)) return false;
@@ -195,7 +219,8 @@ public class LocationModel implements DataBaseModelIf {
   public int hashCode() {
     int result;
     long temp;
-    result = (uploadFlag ? 1 : 0);
+    result = (specialFlag ? 1 : 0);
+    result = 31 * result + (uploadFlag ? 1 : 0);
     result = 31 * result + locationUuid.hashCode();
     result = 31 * result + sortieUuid.hashCode();
     result = 31 * result + timeStamp.hashCode();

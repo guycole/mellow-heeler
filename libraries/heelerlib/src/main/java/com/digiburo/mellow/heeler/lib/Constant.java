@@ -25,7 +25,15 @@ public class Constant {
   //
   public static final String INTENT_ACTION_ABOUT = "INTENT_ACTION_ABOUT";
   public static final String INTENT_ACTION_ALARM = "INTENT_ACTION_ALARM";
+  public static final String INTENT_ACTION_CLEAN = "INTENT_ACTION_CLEAN";
   public static final String INTENT_ACTION_PREFERENCE = "INTENT_ACTION_PREFERENCE";
+  public static final String INTENT_ACTION_UPLOAD = "INTENT_ACTION_UPLOAD";
+
+  //
+  public static final String INTENT_ROW_KEY = "INTENT_ROW_KEY";
+
+  // intent filter
+  public static final String FRESH_UPDATE = "com.digiburo.mellow.heeler.update";
 
   //
   public static final Integer SQL_TRUE = 1;

@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.net.wifi.ScanResult;
 import android.test.ApplicationTestCase;
@@ -46,10 +46,10 @@ public class ObservationTableTest extends ApplicationTestCase<HeelerApplication>
     assertEquals(rowKey.longValue(), selected.getId().longValue());
     assertTrue(original.equals(selected));
 
-    ObservationModelList modelList = dataBaseFacade.selectAllObservations(true, getContext());
+    ObservationModelList modelList = dataBaseFacade.selectAllObservations(true, original.getSortieUuid(), getContext());
     assertEquals(1, modelList.size());
 
-    modelList = dataBaseFacade.selectAllObservations(false, getContext());
+    modelList = dataBaseFacade.selectAllObservations(false, original.getSortieUuid(), getContext());
     assertEquals(1, modelList.size());
   }
 
@@ -102,6 +102,27 @@ public class ObservationTableTest extends ApplicationTestCase<HeelerApplication>
 
     int count = dataBaseFacade.deleteObservation(rowKey, getContext());
     assertEquals(1, count);
+  }
+
+  public void testUploadFlag() {
+    ObservationModel model = new ObservationModel();
+    model.setDefault();
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getContext());
+    Long rowKey = dataBaseFacade.insert(model, getContext());
+    assertNotNull(rowKey);
+    assertTrue(rowKey.longValue() > 0);
+
+    assertFalse(model.isUploadFlag());
+    model.setUploadFlag();
+    assertTrue(model.isUploadFlag());
+
+    int count = dataBaseFacade.updateObservation(model, getContext());
+    assertEquals(1, count);
+
+    ObservationModel selected = dataBaseFacade.selectObservation(rowKey, getContext());
+    assertEquals(rowKey.longValue(), selected.getId().longValue());
+    assertTrue(selected.isUploadFlag());
   }
 }
 /*

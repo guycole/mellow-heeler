@@ -29,6 +29,9 @@ public class UserPreferenceHelper {
   //installation identifier
   public static final String USER_PREF_INSTALL_ID = "installId";
 
+  //location radius
+  public static final String USER_PREF_POLL_DISTANCE = "pollDistance";
+
   //WiFi scan interval
   public static final String USER_PREF_POLL_FREQUENCY = "pollFrequency";
 
@@ -39,6 +42,7 @@ public class UserPreferenceHelper {
   public static final String USER_PREF_WS_AUTHORIZE_URL = "wsAuthorizeUrl";
   public static final String USER_PREF_WS_LOCATION_URL = "wsLocationUrl";
   public static final String USER_PREF_WS_OBSERVATION_URL = "wsObservationUrl";
+  public static final String USER_PREF_WS_SORTIE_URL = "wsSortieUrl";
 
   /**
    * ctor
@@ -49,8 +53,8 @@ public class UserPreferenceHelper {
       writeDefaults(context);
     }
 
-    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    sp.registerOnSharedPreferenceChangeListener(listener);
+//    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//    sp.registerOnSharedPreferenceChangeListener(listener);
   }
 
   /**
@@ -67,12 +71,14 @@ public class UserPreferenceHelper {
 
     editor.putLong(USER_PREF_FIRST_RUN_TIMESTAMP, TimeUtility.timeMillis());
 
-    editor.putString(USER_PREF_POLL_FREQUENCY, "60");
+    editor.putString(USER_PREF_POLL_DISTANCE, "10");
+    editor.putString(USER_PREF_POLL_FREQUENCY, "30");
 
     editor.putInt(USER_PREF_WS_CONFIG_VERSION, 0);
     editor.putString(USER_PREF_WS_AUTHORIZE_URL, "");
     editor.putString(USER_PREF_WS_LOCATION_URL, "");
     editor.putString(USER_PREF_WS_OBSERVATION_URL, "");
+    editor.putString(USER_PREF_WS_SORTIE_URL, "");
 
     editor.commit();
   }
@@ -108,13 +114,32 @@ public class UserPreferenceHelper {
   }
 
   /**
+   * return distance radius, must be String to pacify PreferenceFragment
+   * @param context
+   * @return distance radius in meters
+   */
+  public String getPollDistance(final Context context) {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    return(sp.getString(USER_PREF_POLL_DISTANCE, "10"));
+  }
+
+  /**
+   * define distance radius, must be String to pacify PreferenceFragment
+   * @param context
+   * @param distance radius in meters
+   */
+  public void setPollDistance(final Context context, final String arg) {
+    setPreference(context, USER_PREF_POLL_DISTANCE, arg);
+  }
+
+  /**
    * return WiFi scan interval in seconds, must be String to pacify PreferenceFragment
    * @param context
    * @return WiFi scan interval in seconds
    */
   public String getPollFrequency(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_POLL_FREQUENCY, "60"));
+    return(sp.getString(USER_PREF_POLL_FREQUENCY, "30"));
   }
 
   /**
@@ -200,6 +225,25 @@ public class UserPreferenceHelper {
    */
   public void setObservationUrl(final Context context, final String arg) {
     setPreference(context, USER_PREF_WS_OBSERVATION_URL, arg);
+  }
+
+  /**
+   * URL to POST sorties
+   * @param context
+   * @return sorties URL or empty string if undefined
+   */
+  public String getSortieUrl(final Context context) {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    return(sp.getString(USER_PREF_WS_SORTIE_URL, ""));
+  }
+
+  /**
+   * define URL to POST sorties
+   * @param context
+   * @param arg sorties URL
+   */
+  public void setSortieUrl(final Context context, final String arg) {
+    setPreference(context, USER_PREF_WS_SORTIE_URL, arg);
   }
 
   /**

@@ -17,7 +17,7 @@ public class GeoLocationRequest extends SpringAndroidSpiceRequest<GeoLocationRes
   private static final Logger LOG = LoggerFactory.getLogger(GeoLocationRequest.class);
 
   private GeoLocation geoLocation;
-  private String url;
+  private String url = "https://mellow-heeler.appspot.com/diagnostic";
 
   public GeoLocationRequest(String url, GeoLocation geoLocation) {
     super(GeoLocationResponse.class);
@@ -28,9 +28,6 @@ public class GeoLocationRequest extends SpringAndroidSpiceRequest<GeoLocationRes
 
   @Override
   public GeoLocationResponse loadDataFromNetwork() throws Exception {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
     return getRestTemplate().postForObject(url, geoLocation, GeoLocationResponse.class);
   }
 }

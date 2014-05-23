@@ -5,18 +5,27 @@ package com.digiburo.mellow.heeler.lib.network;
  * @author gsc
  */
 public class GeoLocationElement {
-  private float accuracy;
+  private boolean special = false;
+  private double accuracy;
   private double altitude;
   private double latitude;
   private double longitude;
   private long timeStampMs;
   private String locationId;
 
-  public float getAccuracy() {
+  public boolean isSpecialFlag() {
+    return special;
+  }
+
+  public void setSpecialFlag(boolean arg) {
+    special = arg;
+  }
+
+  public double getAccuracy() {
     return accuracy;
   }
 
-  public void setAccuracy(float accuracy) {
+  public void setAccuracy(double accuracy) {
     this.accuracy = accuracy;
   }
 

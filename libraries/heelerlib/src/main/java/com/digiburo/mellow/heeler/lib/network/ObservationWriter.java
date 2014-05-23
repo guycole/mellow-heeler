@@ -3,9 +3,9 @@ package com.digiburo.mellow.heeler.lib.network;
 import android.content.Context;
 
 import com.digiburo.mellow.heeler.lib.Personality;
-import com.digiburo.mellow.heeler.lib.content.DataBaseFacade;
-import com.digiburo.mellow.heeler.lib.content.LocationModel;
-import com.digiburo.mellow.heeler.lib.content.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.SpiceManager;
@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * write observation rows to remote server
@@ -26,13 +27,15 @@ import java.util.List;
 public class ObservationWriter {
   private static final Logger LOG = LoggerFactory.getLogger(ObservationWriter.class);
 
+  private Random random = new Random();
+
   /**
    * write observation rows to remote server
-   * @param context
    * @param sortieUuid
    * @param observationModelList
+   * @param context
    */
-  public void writer(final Context context, final String sortieUuid, final List<ObservationModel> observationModelList) {
+  public void doJsonPost(final String sortieUuid, final List<ObservationModel> observationModelList, final Context context) {
     LOG.debug("writer:" + observationModelList.size() + ":" + sortieUuid);
 
     if (observationModelList.isEmpty()) {
@@ -65,7 +68,7 @@ public class ObservationWriter {
     observation.setObservationList(observationList);
 
     ObservationRequest request = new ObservationRequest(locationUrl, observation);
-    String cacheKey = TimeUtility.timeNow().toString();
+    String cacheKey = Integer.toString(random.nextInt());
 
     SpiceManager spiceManager = Personality.getSpiceManager();
     spiceManager.execute(request, cacheKey, DurationInMillis.ALWAYS_EXPIRED, new RequestListener<ObservationResponse>() {
@@ -78,12 +81,10 @@ public class ObservationWriter {
       public void onRequestSuccess(ObservationResponse observationResponse) {
         LOG.info("observation write success:" + observationResponse.getStatus() + ":" + observationResponse.getRemoteIpAddress());
 
-        /*
-        DataBaseFacade dataBaseFacade = new DataBaseFacade();
-        for(LocationModel locationModel:locationModelList) {
-          dataBaseFacade.setLocationUpload(locationModel.getId(), context);
+        DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
+        for (ObservationModel observationModel:observationModelList) {
+          dataBaseFacade.setObservationUpload(observationModel.getId(), context);
         }
-        */
       }
     });
   }

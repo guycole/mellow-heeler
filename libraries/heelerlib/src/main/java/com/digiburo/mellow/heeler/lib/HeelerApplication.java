@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.res.Configuration;
 
-import com.digiburo.mellow.heeler.lib.content.DataBaseHelper;
+import com.digiburo.mellow.heeler.lib.database.DataBaseHelper;
 import com.digiburo.mellow.heeler.lib.service.LocationService;
 import com.digiburo.mellow.heeler.lib.utility.PackageUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;

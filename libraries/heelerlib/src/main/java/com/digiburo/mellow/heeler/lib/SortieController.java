@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.SystemClock;
 
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.service.LocationService;
 import com.digiburo.mellow.heeler.lib.service.ScanReceiver;
 
@@ -14,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Manage WiFi detection/collection.
  * @author gsc
  */
 public class SortieController {
@@ -24,20 +27,27 @@ public class SortieController {
   private long timeOut = 60 * 1000L;
 
   /**
-   *
+   * create/start a fresh sortie
+   * @param sortieName
    * @param context
    */
-  public void startSortie(Context context) {
+  public void startSortie(final String sortieName, final Context context) {
     LOG.debug("startSortie");
 
-    gracefulShutDown(context);
+    SortieModel sortieModel = new SortieModel();
+    sortieModel.setDefault();
+    sortieModel.setSortieName(sortieName);
 
-    Personality.setCurrentSortie(new Sortie());
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
+    dataBaseFacade.insert(sortieModel, context);
+
+    Personality.setCurrentSortie(sortieModel);
+
+    if (Personality.getAlarmIntent() != null) {
+      alarmManager.cancel(Personality.getAlarmIntent());
+    }
 
     context.startService(new Intent(context, LocationService.class));
-
-    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-    wifiManager.startScan();
 
     alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -49,19 +59,11 @@ public class SortieController {
   }
 
   /**
-   *
+   * terminate existing sortie
    * @param context
    */
-  public void stopSortie(Context context) {
+  public void stopSortie(final Context context) {
     LOG.debug("stopSortie");
-    gracefulShutDown(context);
-  }
-
-  /**
-   *
-   * @param context
-   */
-  private void gracefulShutDown(Context context) {
     context.stopService(new Intent(context, LocationService.class));
 
     if (Personality.getAlarmIntent() != null) {

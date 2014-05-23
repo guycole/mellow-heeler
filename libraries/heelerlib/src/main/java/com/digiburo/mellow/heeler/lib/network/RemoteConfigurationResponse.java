@@ -14,7 +14,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
     "self": { "href": "http://digiburo.com/hal/mellow_heeler.json" },
     "authorize": { "href": "https://mellow-heeler.appspot.com/ws/v1/authorize" },
     "location": { "href": "https://mellow-heeler.appspot.com/ws/v1/location" },
-    "observation": { "href": "https://mellow-heeler.appspot.com/ws/v1/observation" }
+    "observation": { "href": "https://mellow-heeler.appspot.com/ws/v1/observation" },
+    "sortie": { "href": "https://mellow-heeler.appspot.com/ws/v1/sortie" }
   },
   "version":1,
   "revisionDate":"2014-05-19T02:18:51Z"
@@ -58,6 +59,7 @@ public class RemoteConfigurationResponse {
     Authorize authorize;
     Location location;
     Observation observation;
+    Sortie sortie;
 
     public Self getSelf() {
       return self;
@@ -90,6 +92,14 @@ public class RemoteConfigurationResponse {
     public void setObservation(Observation observation) {
       this.observation = observation;
     }
+
+    public Sortie getSortie() {
+      return sortie;
+    }
+
+    public void setSortie(Sortie sortie) {
+      this.sortie = sortie;
+    }
   }
 
   public static class Self extends HrefContainer {
@@ -105,6 +115,10 @@ public class RemoteConfigurationResponse {
   }
 
   public static class Observation extends HrefContainer {
+    //empty
+  }
+
+  public static class Sortie extends HrefContainer {
     //empty
   }
 }

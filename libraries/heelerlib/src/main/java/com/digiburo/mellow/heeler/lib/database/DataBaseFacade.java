@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -31,7 +31,7 @@ public class DataBaseFacade {
    *
    * @param context
    */
-  public DataBaseFacade(Context context) {
+  public DataBaseFacade(final Context context) {
     if (Personality.isInternalDataBaseFileSystem()) {
       dataBaseFileName = DataBaseHelper.DATABASE_FILE_NAME;
     } else {
@@ -45,7 +45,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public Long insert(DataBaseModelIf model, Context context) {
+  public Long insert(final DataBaseModelIf model, final Context context) {
     Long rowId = 0L;
     SQLiteDatabase sqlDb = getWritableDataBase(context);
 
@@ -68,7 +68,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int deleteLocation(long rowKey, Context context) {
+  public int deleteLocation(long rowKey, final Context context) {
     String where = LocationTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {Long.toString(rowKey)};
     return simpleDelete(LocationTable.TABLE_NAME, where, whereArgs, context);
@@ -80,7 +80,7 @@ public class DataBaseFacade {
    * @param context
    * @return selected model
    */
-  public LocationModel selectLocation(Long target, Context context) {
+  public LocationModel selectLocation(final Long target, final Context context) {
     LocationModel model = new LocationModel();
     LocationTable table = new LocationTable();
 
@@ -93,12 +93,40 @@ public class DataBaseFacade {
   }
 
   /**
-   * select all locations
-   * @param allRows true return all rows else only uploadFlag false
+   *
    * @param context
    * @return
    */
-  public LocationModelList selectAllLocations(boolean allRows, Context context) {
+  public int countLocationRows(final Context context) {
+    int population = 0;
+    Cursor cursor = null;
+    SQLiteDatabase sqlDb = null;
+
+    try {
+      sqlDb = getReadableDataBase(context);
+      cursor = sqlDb.query(LocationTable.TABLE_NAME, null, null, null, null, null, null);
+      population = cursor.getCount();
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+
+      if (sqlDb != null) {
+        sqlDb.close();
+      }
+    }
+
+    return population;
+  }
+
+  /**
+   * select all locations
+   * @param allRows true return all rows else only uploadFlag false
+   * @param sortieUuid
+   * @param context
+   * @return
+   */
+  public LocationModelList selectAllLocations(boolean allRows, final String sortieUuid, final Context context) {
     LocationModelList results = new LocationModelList();
 
     LocationTable table = new LocationTable();
@@ -107,9 +135,12 @@ public class DataBaseFacade {
     String selection = null;
     String[] selectionArgs = null;
 
-    if (!allRows) {
-      selection = LocationTable.Columns.UPLOAD_FLAG + "=?";
-      selectionArgs = new String[]{Constant.SQL_FALSE.toString()};
+    if (allRows) {
+      selection = LocationTable.Columns.SORTIE_ID + "=?";
+      selectionArgs = new String[]{sortieUuid};
+    } else {
+      selection = LocationTable.Columns.SORTIE_ID + "=? and " + LocationTable.Columns.UPLOAD_FLAG + "=?";
+      selectionArgs = new String[]{sortieUuid, Constant.SQL_FALSE.toString()};
     }
 
     Cursor cursor = null;
@@ -144,7 +175,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int updateLocation(LocationModel model, Context context) {
+  public int updateLocation(final LocationModel model, final Context context) {
     String where = LocationTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {model.getId().toString()};
     return simpleUpdate(model, where, whereArgs, context);
@@ -156,10 +187,63 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int deleteObservation(long rowKey, Context context) {
+  public int deleteObservation(long rowKey, final Context context) {
     String where = ObservationTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {Long.toString(rowKey)};
     return simpleDelete(ObservationTable.TABLE_NAME, where, whereArgs, context);
+  }
+
+  /**
+   * mark location as special interest
+   * @param target row key
+   * @param context
+   */
+  public void setLocationSpecial(final Long target, final Context context) {
+    LocationModel locationModel = selectLocation(target, context);
+    if (locationModel.getId().longValue() == target.longValue()) {
+      locationModel.setSpecialFlag();
+      updateLocation(locationModel, context);
+    }
+  }
+
+  /**
+   * mark location as uploaded
+   * @param target row key
+   * @param context
+   */
+  public void setLocationUpload(final Long target, final Context context) {
+    LocationModel locationModel = selectLocation(target, context);
+    if (locationModel.getId().longValue() == target.longValue()) {
+      locationModel.setUploadFlag();
+      updateLocation(locationModel, context);
+    }
+  }
+
+  /**
+   *
+   * @param context
+   * @return
+   */
+  public int countObservationRows(final Context context) {
+    int population = 0;
+    Cursor cursor = null;
+    SQLiteDatabase sqlDb = null;
+
+    try {
+      sqlDb = getReadableDataBase(context);
+      cursor = sqlDb.query(ObservationTable.TABLE_NAME, null, null, null, null, null, null);
+      population = cursor.getCount();
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+
+      if (sqlDb != null) {
+        sqlDb.close();
+      }
+    }
+
+    return population;
   }
 
   /**
@@ -168,7 +252,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public ObservationModelList selectAllObservations(boolean allRows, Context context) {
+  public ObservationModelList selectAllObservations(boolean allRows, final String sortieUuid, final Context context) {
     ObservationModelList results = new ObservationModelList();
 
     ObservationTable table = new ObservationTable();
@@ -177,9 +261,12 @@ public class DataBaseFacade {
     String selection = null;
     String[] selectionArgs = null;
 
-    if (!allRows) {
-      selection = ObservationTable.Columns.UPLOAD_FLAG + "=?";
-      selectionArgs = new String[]{Constant.SQL_FALSE.toString()};
+    if (allRows) {
+      selection = ObservationTable.Columns.SORTIE_ID + "=?";
+      selectionArgs = new String[]{sortieUuid};
+    } else {
+      selection = ObservationTable.Columns.SORTIE_ID + "=? and " + ObservationTable.Columns.UPLOAD_FLAG + "=?";
+      selectionArgs = new String[]{sortieUuid, Constant.SQL_FALSE.toString()};
     }
 
     Cursor cursor = null;
@@ -214,7 +301,7 @@ public class DataBaseFacade {
    * @param context
    * @return selected observation
    */
-  public ObservationModel selectObservation(Long target, Context context) {
+  public ObservationModel selectObservation(final Long target, final Context context) {
     ObservationModel model = new ObservationModel();
     ObservationTable table = new ObservationTable();
 
@@ -232,10 +319,23 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int updateObservation(ObservationModel model, Context context) {
+  public int updateObservation(final ObservationModel model, final Context context) {
     String where = ObservationTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {model.getId().toString()};
     return simpleUpdate(model, where, whereArgs, context);
+  }
+
+  /**
+   * mark observation as uploaded
+   * @param target row key
+   * @param context
+   */
+  public void setObservationUpload(final Long target, final Context context) {
+    ObservationModel observationModel = selectObservation(target, context);
+    if (observationModel.getId().longValue() == target.longValue()) {
+      observationModel.setUploadFlag();
+      updateObservation(observationModel, context);
+    }
   }
 
   /**
@@ -244,7 +344,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int deleteSortie(long rowKey, Context context) {
+  public int deleteSortie(long rowKey, final Context context) {
     String where = SortieTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {Long.toString(rowKey)};
     return simpleDelete(SortieTable.TABLE_NAME, where, whereArgs, context);
@@ -256,7 +356,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public SortieModelList selectAllSorties(boolean allRows, Context context) {
+  public SortieModelList selectAllSorties(boolean allRows, final Context context) {
     SortieModelList results = new SortieModelList();
 
     SortieTable table = new SortieTable();
@@ -302,7 +402,7 @@ public class DataBaseFacade {
    * @param context
    * @return selected model
    */
-  public SortieModel selectSortie(Long target, Context context) {
+  public SortieModel selectSortie(final Long target, final Context context) {
     SortieModel model = new SortieModel();
     SortieTable table = new SortieTable();
 
@@ -320,7 +420,7 @@ public class DataBaseFacade {
    * @param context
    * @return selected model
    */
-  public SortieModel selectSortie(String target, Context context) {
+  public SortieModel selectSortie(final String target, final Context context) {
     SortieModel model = new SortieModel();
     SortieTable table = new SortieTable();
 
@@ -338,7 +438,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int updateSortie(SortieModel model, Context context) {
+  public int updateSortie(final SortieModel model, final Context context) {
     String where = SortieTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {model.getId().toString()};
     return simpleUpdate(model, where, whereArgs, context);
@@ -352,7 +452,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  private int simpleDelete(String tableName, String where, String[] whereArgs, Context context) {
+  private int simpleDelete(final String tableName, final String where, final String[] whereArgs, final Context context) {
     int count = 0;
 
     SQLiteDatabase sqlDb = getWritableDataBase(context);
@@ -378,7 +478,7 @@ public class DataBaseFacade {
    * @param context
    * @return true success
    */
-  private boolean simpleSelect(String selection, String[] selectionArgs, DataBaseTableIf table, DataBaseModelIf model, Context context) {
+  private boolean simpleSelect(final String selection, final String[] selectionArgs, final DataBaseTableIf table, final DataBaseModelIf model, final Context context) {
     model.setDefault();
 
     String[] projection = table.getDefaultProjection();
@@ -412,7 +512,7 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  private int simpleUpdate(DataBaseModelIf model, String where, String[] whereArgs, Context context) {
+  private int simpleUpdate(final DataBaseModelIf model, final String where, final String[] whereArgs, final Context context) {
     int count = 0;
 
     SQLiteDatabase sqlDb = getWritableDataBase(context);
@@ -429,174 +529,21 @@ public class DataBaseFacade {
     return count;
   }
 
-    ///////////////////
-
   /**
-   * mark locations as uploaded
-   * @param target
+   *
    * @param context
-   */
-  public void setLocationUpload(Long target, Context context) {
-    LocationModel model = new LocationModel();
-    model.setDefault();
-
-    SQLiteDatabase sqlDb = getWritableDataBase(context);
-
-    String selection = "_id=?";
-    String[] selectionArgs = new String[] {Long.toString(target)};
-
-    Cursor cursor = sqlDb.query(LocationTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-    if (cursor.moveToFirst()) {
-      model.fromCursor(cursor);
-      model.setUploadFlag();
-    }
-
-    cursor.close();
-
-    if (model.getId().longValue() > 0) {
-      LOG.debug("location selected:" + target);
-      sqlDb.update(LocationTable.TABLE_NAME, model.toContentValues(), selection, selectionArgs);
-    } else {
-      LOG.debug("location not found:" + target);
-    }
-
-    sqlDb.close();
-  }
-
-
-  /**
-   * discover sorties
-   * @param context
-   * @return list of sorties w/location rows to upload
-   */
-  public StringList selectLocationSorties(Context context) {
-    StringList results = new StringList();
-
-    SQLiteDatabase sqlDb = getReadableDataBase(context);
-
-    String[] projection = new String[]{LocationTable.Columns.SORTIE_ID};
-
-    String selection = LocationTable.Columns.UPLOAD_FLAG + "=?";
-    String[] selectionArgs = new String[]{Constant.SQL_FALSE.toString()};
-
-    //select distinct
-    Cursor cursor = sqlDb.query(true, LocationTable.TABLE_NAME, projection, selection, selectionArgs, LocationTable.Columns.SORTIE_ID, null, null, null, null);
-    if (cursor.moveToFirst()) {
-      do {
-        results.add(cursor.getString(0));
-      } while (cursor.moveToNext());
-    }
-
-    cursor.close();
-    sqlDb.close();
-
-    return results;
-  }
-
-  /**
-   * discover sorties
-   * @param context
-   * @return list of sorties w/observation rows to upload
-   */
-  public StringList selectObservationSorties(Context context) {
-    StringList results = new StringList();
-
-    SQLiteDatabase sqlDb = getReadableDataBase(context);
-
-    String[] projection = new String[]{ObservationTable.Columns.SORTIE_ID};
-
-    String selection = ObservationTable.Columns.UPLOAD_FLAG + "=?";
-    String[] selectionArgs = new String[]{Constant.SQL_FALSE.toString()};
-
-    //select distinct
-    Cursor cursor = sqlDb.query(true, ObservationTable.TABLE_NAME, projection, selection, selectionArgs, ObservationTable.Columns.SORTIE_ID, null, null, null, null);
-    if (cursor.moveToFirst()) {
-      do {
-        results.add(cursor.getString(0));
-      } while (cursor.moveToNext());
-    }
-
-    cursor.close();
-    sqlDb.close();
-
-    return results;
-  }
-
-  /**
-   * select rows by sortie
-   * @param context
-   * @param sortie
    * @return
    */
-  public List<LocationModel> selectLocationsBySortie(Context context, String sortie) {
-    ArrayList<LocationModel> results = new ArrayList<LocationModel>();
-
-    SQLiteDatabase sqlDb = getReadableDataBase(context);
-
-    String selection = LocationTable.Columns.UPLOAD_FLAG + "=? and " + LocationTable.Columns.SORTIE_ID + "=?";
-    String[] selectionArgs = new String[]{Constant.SQL_FALSE.toString(), sortie};
-
-    Cursor cursor = context.getContentResolver().query(LocationTable.CONTENT_URI, null, selection, selectionArgs, LocationTable.DEFAULT_SORT_ORDER);
-    if (cursor.moveToFirst()) {
-      do {
-        LocationModel locationModel = new LocationModel();
-        locationModel.fromCursor(cursor);
-        results.add(locationModel);
-      } while(cursor.moveToNext());
-    }
-
-    cursor.close();
-    sqlDb.close();
-
-    return results;
-  }
-
-  /**
-   * select rows by sortie
-   * @param context
-   * @param sortie
-   * @return
-   */
-  public List<ObservationModel> selectObservationsBySortie(Context context, String sortie) {
-    ArrayList<ObservationModel> results = new ArrayList<ObservationModel>();
-
-    SQLiteDatabase sqlDb = getReadableDataBase(context);
-
-    String selection = ObservationTable.Columns.UPLOAD_FLAG + "=? and " + ObservationTable.Columns.SORTIE_ID + "=?";
-    String[] selectionArgs = new String[]{Constant.SQL_FALSE.toString(), sortie};
-
-    Cursor cursor = context.getContentResolver().query(ObservationTable.CONTENT_URI, null, selection, selectionArgs, ObservationTable.DEFAULT_SORT_ORDER);
-    if (cursor.moveToFirst()) {
-      do {
-        ObservationModel observationModel = new ObservationModel();
-        observationModel.fromCursor(cursor);
-        results.add(observationModel);
-      } while(cursor.moveToNext());
-    }
-
-    cursor.close();
-    sqlDb.close();
-
-    return results;
-  }
-
-  public void deleteLocations(Context context, List<LocationModel> locationModelList) {
-    SQLiteDatabase sqlDb = getReadableDataBase(context);
-
-    for(LocationModel locationModel:locationModelList) {
-      String whereClause = "_id=?";
-      String[] whereArgs = new String[]{locationModel.getId().toString()};
-      sqlDb.delete(LocationTable.TABLE_NAME, whereClause, whereArgs);
-    }
-
-    sqlDb.close();
-  }
-
   private SQLiteDatabase getReadableDataBase(Context context) {
     DataBaseHelper dataBaseHelper = new DataBaseHelper(context, dataBaseFileName);
     return dataBaseHelper.getReadableDatabase();
   }
 
+  /**
+   *
+   * @param context
+   * @return
+   */
   private SQLiteDatabase getWritableDataBase(Context context) {
     DataBaseHelper dataBaseHelper = new DataBaseHelper(context, dataBaseFileName);
     return dataBaseHelper.getWritableDatabase();

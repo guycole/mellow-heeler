@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -49,10 +49,10 @@ public class LocationTableTest extends ApplicationTestCase<HeelerApplication> {
     assertEquals(rowKey.longValue(), selected.getId().longValue());
     assertTrue(original.equals(selected));
 
-    LocationModelList modelList = dataBaseFacade.selectAllLocations(true, getContext());
+    LocationModelList modelList = dataBaseFacade.selectAllLocations(true, original.getSortieUuid(), getContext());
     assertEquals(1, modelList.size());
 
-    modelList = dataBaseFacade.selectAllLocations(false, getContext());
+    modelList = dataBaseFacade.selectAllLocations(false, original.getSortieUuid(), getContext());
     assertEquals(1, modelList.size());
   }
 
@@ -103,6 +103,48 @@ public class LocationTableTest extends ApplicationTestCase<HeelerApplication> {
 
     int count = dataBaseFacade.deleteLocation(rowKey, getContext());
     assertEquals(1, count);
+  }
+
+  public void testSpecialFlag() {
+    LocationModel model = new LocationModel();
+    model.setDefault();
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getContext());
+    Long rowKey = dataBaseFacade.insert(model, getContext());
+    assertNotNull(rowKey);
+    assertTrue(rowKey.longValue() > 0);
+
+    assertFalse(model.isSpecialFlag());
+    model.setSpecialFlag();
+    assertTrue(model.isSpecialFlag());
+
+    int count = dataBaseFacade.updateLocation(model, getContext());
+    assertEquals(1, count);
+
+    LocationModel selected = dataBaseFacade.selectLocation(rowKey, getContext());
+    assertEquals(rowKey.longValue(), selected.getId().longValue());
+    assertTrue(selected.isSpecialFlag());
+  }
+
+  public void testUploadFlag() {
+    LocationModel model = new LocationModel();
+    model.setDefault();
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getContext());
+    Long rowKey = dataBaseFacade.insert(model, getContext());
+    assertNotNull(rowKey);
+    assertTrue(rowKey.longValue() > 0);
+
+    assertFalse(model.isUploadFlag());
+    model.setUploadFlag();
+    assertTrue(model.isUploadFlag());
+
+    int count = dataBaseFacade.updateLocation(model, getContext());
+    assertEquals(1, count);
+
+    LocationModel selected = dataBaseFacade.selectLocation(rowKey, getContext());
+    assertEquals(rowKey.longValue(), selected.getId().longValue());
+    assertTrue(selected.isUploadFlag());
   }
 }
 /*

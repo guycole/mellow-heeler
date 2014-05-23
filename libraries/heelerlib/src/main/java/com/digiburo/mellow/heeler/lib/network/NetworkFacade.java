@@ -2,7 +2,10 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
-import com.digiburo.mellow.heeler.lib.content.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.LocationModelList;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +26,47 @@ public class NetworkFacade implements NetworkListener {
    */
   public void readRemoteConfiguration(final Context context) {
     RemoteConfiguration remoteConfiguration = new RemoteConfiguration();
-    remoteConfiguration.readRemoteConfiguration(context);
+    remoteConfiguration.doJsonGet(context);
   }
 
-//  public void writeSorties(final Context, final String sortieUuid, final List<LocationModel> locationModelList))
+  /**
+   * Discover if this installation is authorized to use remote server
+   * @param context
+   */
+  public void testAuthorization(final Context context) {
+    Authorization authorization = new Authorization();
+    authorization.doJsonPost(context);
+  }
 
+  /**
+   *
+   * @param locationModelList
+   * @param context
+   */
+  public void writeLocations(final String sortieUuid, final LocationModelList locationModelList, final Context context) {
+    GeoLocationWriter geoLocationWriter = new GeoLocationWriter();
+    geoLocationWriter.doJsonPost(sortieUuid, locationModelList, context);
+  }
+
+  /**
+   *
+   * @param sortieUuid
+   * @param observationModelList
+   * @param context
+   */
+  public void writeObservations(final String sortieUuid, final ObservationModelList observationModelList, final Context context) {
+    ObservationWriter observationWriter = new ObservationWriter();
+    observationWriter.doJsonPost(sortieUuid, observationModelList, context);
+  }
+
+  /**
+   *
+   * @param sortieModel
+   * @param context
+   */
+  public void writeSortie(final SortieModel sortieModel, final Context context) {
+    //empty
+  }
 }
 /*
  * Copyright 2014 Digital Burro, INC

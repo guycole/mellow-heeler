@@ -1,12 +1,12 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import java.util.ArrayList;
 
 /**
- * sortie list container
+ * location model list
  * @author gsc
  */
-public class SortieModelList extends ArrayList<SortieModel> {
+public class LocationModelList extends ArrayList<LocationModel> {
   //empty
 }
 /*

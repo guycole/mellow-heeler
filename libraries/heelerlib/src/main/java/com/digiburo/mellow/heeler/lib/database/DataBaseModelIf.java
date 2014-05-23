@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,7 +27,7 @@ public interface DataBaseModelIf {
    * convert from cursor to model
    * @param cursor points to model datum
    */
-  public void fromCursor(Cursor cursor);
+  public void fromCursor(final Cursor cursor);
 
   /**
    * return associated table name
@@ -43,7 +43,7 @@ public interface DataBaseModelIf {
 
   //for BaseColumns
   public Long getId();
-  public void setId(Long id);
+  public void setId(final Long id);
 }
 /*
  * Copyright 2014 Digital Burro, INC

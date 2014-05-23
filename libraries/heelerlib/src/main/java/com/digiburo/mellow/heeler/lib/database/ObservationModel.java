@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -63,7 +63,7 @@ public class ObservationModel implements DataBaseModelIf {
    * @param locationId
    * @param sortieId
    */
-  public void setScanResult(String ssid, String bssid, String capability, int frequency, int level, String locationId, String sortieId) {
+  public void setScanResult(final String ssid, final String bssid, final String capability, int frequency, int level, final String locationId, final String sortieId) {
     this.ssid = ssid;
     this.bssid = bssid;
     this.capability = capability;
@@ -80,7 +80,7 @@ public class ObservationModel implements DataBaseModelIf {
    * @param locationId
    * @param sortieId
    */
-  public void setScanResult(ScanResult arg, String locationId, String sortieId) {
+  public void setScanResult(final ScanResult arg, final String locationId, final String sortieId) {
     setScanResult(arg.SSID, arg.BSSID, arg.capabilities, arg.frequency, arg.level, locationId, sortieId);
   }
 
@@ -108,7 +108,7 @@ public class ObservationModel implements DataBaseModelIf {
   }
 
   @Override
-  public void fromCursor(Cursor cursor) {
+  public void fromCursor(final Cursor cursor) {
     id = cursor.getLong(cursor.getColumnIndex(ObservationTable.Columns._ID));
     bssid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.BSSID));
     capability = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.CAPABILITY));
@@ -144,7 +144,7 @@ public class ObservationModel implements DataBaseModelIf {
   }
 
   @Override
-  public void setId(Long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 

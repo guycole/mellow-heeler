@@ -51,8 +51,12 @@ public class MenuActivity extends Activity {
       String action = intent.getAction();
       if (Constant.INTENT_ACTION_ABOUT.equals(action)) {
         fragment = new AboutFragment();
+      } else if (Constant.INTENT_ACTION_CLEAN.equals(action)) {
+        //
       } else if (Constant.INTENT_ACTION_PREFERENCE.equals(action)) {
         fragment = new PrefFragment();
+      } else if (Constant.INTENT_ACTION_UPLOAD.equals(action)) {
+        fragment = new UploadFragment();
       } else {
         LOG.error("onConfigurationChanged");
         finish();

@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.Context;
 import android.test.ApplicationTestCase;
@@ -97,6 +97,27 @@ public class SortieTableTest extends ApplicationTestCase<HeelerApplication> {
 
     int count = dataBaseFacade.deleteSortie(rowKey, getContext());
     assertEquals(1, count);
+  }
+
+  public void testUploadFlag() {
+    SortieModel model = new SortieModel();
+    model.setDefault();
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getContext());
+    Long rowKey = dataBaseFacade.insert(model, getContext());
+    assertNotNull(rowKey);
+    assertTrue(rowKey.longValue() > 0);
+
+    assertFalse(model.isUploadFlag());
+    model.setUploadFlag();
+    assertTrue(model.isUploadFlag());
+
+    int count = dataBaseFacade.updateSortie(model, getContext());
+    assertEquals(1, count);
+
+    SortieModel selected = dataBaseFacade.selectSortie(rowKey, getContext());
+    assertEquals(rowKey.longValue(), selected.getId().longValue());
+    assertTrue(selected.isUploadFlag());
   }
 }
 /*

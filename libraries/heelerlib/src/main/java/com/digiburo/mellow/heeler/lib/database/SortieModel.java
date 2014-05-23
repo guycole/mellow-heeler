@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -92,7 +92,7 @@ public class SortieModel implements DataBaseModelIf {
   }
 
   @Override
-  public void setId(Long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -100,15 +100,19 @@ public class SortieModel implements DataBaseModelIf {
     return sortieName;
   }
 
-  public void setSortieName(String sortieName) {
-    this.sortieName = sortieName;
+  public void setSortieName(final String arg) {
+    if ((arg == null) || (arg.isEmpty())) {
+      sortieName = Constant.DEFAULT_SORTIE_NAME;
+    } else {
+      sortieName = arg;
+    }
   }
 
   public String getSortieUuid() {
     return sortieUuid;
   }
 
-  public void setSortieUuid(String sortieUuid) {
+  public void setSortieUuid(final String sortieUuid) {
     this.sortieUuid = sortieUuid;
   }
 
@@ -124,7 +128,7 @@ public class SortieModel implements DataBaseModelIf {
     return timeStamp;
   }
 
-  public void setTimeStamp(String timeStamp) {
+  public void setTimeStamp(final String timeStamp) {
     this.timeStamp = timeStamp;
   }
 

@@ -26,7 +26,7 @@ public class RemoteConfiguration {
    * If the configuration version has changed, then load fresh values into user preferences.
    * @param context
    */
-  public void readRemoteConfiguration(final Context context) {
+  public void doJsonGet(final Context context) {
     LOG.debug("remote configuration read");
 
     RemoteConfigurationRequest request = new RemoteConfigurationRequest();
@@ -53,6 +53,7 @@ public class RemoteConfiguration {
           uph.setAuthorizeUrl(context, remoteConfigurationResponse.getLinks().getAuthorize().getHref());
           uph.setLocationUrl(context, remoteConfigurationResponse.getLinks().getLocation().getHref());
           uph.setObservationUrl(context, remoteConfigurationResponse.getLinks().getObservation().getHref());
+          uph.setSortieUrl(context, remoteConfigurationResponse.getLinks().getSortie().getHref());
           uph.setRemoteConfigurationVersion(context, freshVersion);
         }
       }

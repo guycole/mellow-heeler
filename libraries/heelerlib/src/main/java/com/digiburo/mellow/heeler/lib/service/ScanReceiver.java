@@ -3,15 +3,15 @@ package com.digiburo.mellow.heeler.lib.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
-import com.digiburo.mellow.heeler.lib.content.DataBaseFacade;
-import com.digiburo.mellow.heeler.lib.content.LocationModel;
-import com.digiburo.mellow.heeler.lib.content.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +33,15 @@ public class ScanReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     LOG.debug("xxx xxx onReceive xxx xxx:" + intent.getAction());
 
-    if (Personality.getCurrentSortie() == null) {
+    SortieModel sortieModel = Personality.getCurrentSortie();
+    if (sortieModel == null) {
       LOG.debug("no sortie - ignoring intent");
+      return;
+    }
+
+    LocationModel locationModel = Personality.getCurrentLocation();
+    if (locationModel == null) {
+      LOG.debug("unknown location skipping observation");
       return;
     }
 
@@ -45,12 +52,7 @@ public class ScanReceiver extends BroadcastReceiver {
       return;
     }
 
-    LocationModel locationModel = Personality.getCurrentLocation();
-    if (locationModel == null) {
-      LOG.error("unknown location skipping observation");
-      return;
-    }
-
+    long rowKey = 0;
     DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
 
     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -58,8 +60,18 @@ public class ScanReceiver extends BroadcastReceiver {
     for (ScanResult scanResult:scanList) {
       ObservationModel observationModel = new ObservationModel();
       observationModel.setDefault();
-      //observationModel.setScanResult(scanResult);
+      observationModel.setScanResult(scanResult, locationModel.getLocationUuid(), sortieModel.getSortieUuid());
       dataBaseFacade.insert(observationModel, context);
+      rowKey = observationModel.getId();
+    }
+
+    if (rowKey < 1) {
+      LOG.debug("empty scanlist");
+    } else {
+      LOG.debug("broadcast scan update");
+      Intent notifier = new Intent(Constant.FRESH_UPDATE);
+      notifier.putExtra(Constant.INTENT_ROW_KEY, rowKey);
+      context.sendBroadcast(notifier);
     }
   }
 }

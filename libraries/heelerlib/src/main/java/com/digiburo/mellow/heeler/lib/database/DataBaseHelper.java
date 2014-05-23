@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,19 +24,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
   }
   */
 
-  public DataBaseHelper(Context context, String fileName) {
+  public DataBaseHelper(final Context context, final String fileName) {
     super(context, fileName, null, DATABASE_VERSION);
   }
 
   @Override
-  public void onCreate(SQLiteDatabase db) {
+  public void onCreate(final SQLiteDatabase db) {
     db.execSQL(LocationTable.CREATE_TABLE);
     db.execSQL(ObservationTable.CREATE_TABLE);
     db.execSQL(SortieTable.CREATE_TABLE);
   }
 
   @Override
-  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+  public void onUpgrade(final SQLiteDatabase db, int oldVersion, int newVersion) {
     //empty
   }
 }

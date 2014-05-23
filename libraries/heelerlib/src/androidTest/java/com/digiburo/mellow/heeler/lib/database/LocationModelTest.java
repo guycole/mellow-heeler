@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.lib.content;
+package com.digiburo.mellow.heeler.lib.database;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -26,6 +26,7 @@ public class LocationModelTest extends TestCase {
     model.setDefault();
 
     assertEquals(0L, model.getId().longValue());
+    assertFalse(model.isSpecialFlag());
     assertFalse(model.isUploadFlag());
 
     assertNotNull(model.getLocationUuid());
@@ -71,6 +72,13 @@ public class LocationModelTest extends TestCase {
 
     assertNotNull(model.getTimeStamp());
     assertTrue(sortieId.equals(model.getSortieUuid()));
+  }
+
+  public void testSpecialFlag() {
+    LocationModel model = new LocationModel();
+    assertFalse(model.isSpecialFlag());
+    model.setSpecialFlag();
+    assertTrue(model.isSpecialFlag());
   }
 
   public void testUploadFlag() {
