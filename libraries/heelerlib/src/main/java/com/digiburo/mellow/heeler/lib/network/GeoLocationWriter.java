@@ -2,6 +2,7 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
@@ -29,18 +30,19 @@ public class GeoLocationWriter {
 
   /**
    * write location rows to remote server
-   * @param context
    * @param sortieUuid
    * @param locationModelList
+   * @param networkListener
+   * @param context
    */
-  public void doJsonPost(final String sortieUuid, final List<LocationModel> locationModelList, final Context context) {
+  public void doJsonPost(final String sortieUuid, final List<LocationModel> locationModelList, final NetworkListener networkListener, final Context context) {
     LOG.debug("doJsonPost:" + locationModelList.size() + ":" + sortieUuid);
 
     if (locationModelList.isEmpty()) {
       return;
     }
 
-    ArrayList<GeoLocationElement> locationList = new ArrayList<GeoLocationElement>();
+    final ArrayList<GeoLocationElement> locationList = new ArrayList<GeoLocationElement>();
     for(LocationModel locationModel:locationModelList) {
       GeoLocationElement geoLocationElement = new GeoLocationElement();
       geoLocationElement.setAccuracy(locationModel.getAccuracy());
@@ -74,12 +76,31 @@ public class GeoLocationWriter {
 
       @Override
       public void onRequestSuccess(GeoLocationResponse geoLocationResponse) {
-        LOG.info("geoloc write success:" + geoLocationResponse.getStatus() + ":" + geoLocationResponse.getRemoteIpAddress());
-        LOG.info("geoloc write success:" + geoLocationResponse.getRowCount() + ":" + geoLocationResponse.getSortieId());
+        LOG.info("geoloc write success:" + geoLocationResponse.getRemoteIpAddress() + ":" + geoLocationResponse.getVersion() + ":" + geoLocationResponse.getStatus());
+
+        if (!Constant.OK.equals(geoLocationResponse.getStatus())) {
+          LOG.error("bad remote status:" + geoLocationResponse.getStatus());
+        }
+
+        if (!sortieUuid.equals(geoLocationResponse.getSortieId())) {
+          LOG.error("bad remote sortie UUID");
+        }
+
+        int rowCount = geoLocationResponse.getRowCount();
+        if (rowCount != locationModelList.size()) {
+          LOG.error("bad remote row count:" + rowCount + ":" + locationModelList.size());
+        }
 
         DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
         for (LocationModel locationModel:locationModelList) {
           dataBaseFacade.setLocationUpload(locationModel.getId(), context);
+        }
+
+        if (networkListener == null) {
+          LOG.debug("skipping listener");
+        } else {
+          LOG.debug("invoking listener");
+          networkListener.freshGeoLocation(geoLocationResponse);
         }
       }
     });

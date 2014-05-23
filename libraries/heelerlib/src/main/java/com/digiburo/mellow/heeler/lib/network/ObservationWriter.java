@@ -2,6 +2,7 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
@@ -33,16 +34,17 @@ public class ObservationWriter {
    * write observation rows to remote server
    * @param sortieUuid
    * @param observationModelList
+   * @param networkListener
    * @param context
    */
-  public void doJsonPost(final String sortieUuid, final List<ObservationModel> observationModelList, final Context context) {
+  public void doJsonPost(final String sortieUuid, final List<ObservationModel> observationModelList, final NetworkListener networkListener, final Context context) {
     LOG.debug("writer:" + observationModelList.size() + ":" + sortieUuid);
 
     if (observationModelList.isEmpty()) {
       return;
     }
 
-    ArrayList<ObservationElement> observationList = new ArrayList<ObservationElement>();
+    final ArrayList<ObservationElement> observationList = new ArrayList<ObservationElement>();
     for (ObservationModel observationModel:observationModelList) {
       ObservationElement observationElement = new ObservationElement();
       observationElement.setBssid(observationModel.getBssid());
@@ -77,11 +79,31 @@ public class ObservationWriter {
 
       @Override
       public void onRequestSuccess(ObservationResponse observationResponse) {
-        LOG.info("observation write success:" + observationResponse.getStatus() + ":" + observationResponse.getRemoteIpAddress());
+        LOG.info("observation write success:" + observationResponse.getRemoteIpAddress() + ":" + observationResponse.getVersion() + ":" + observationResponse.getStatus());
+
+        if (!Constant.OK.equals(observationResponse.getStatus())) {
+          LOG.error("bad remote status:" + observationResponse.getStatus());
+        }
+
+        if (!sortieUuid.equals(observationResponse.getSortieId())) {
+          LOG.error("bad remote sortie UUID");
+        }
+
+        int rowCount = observationResponse.getRowCount();
+        if (rowCount != observationList.size()) {
+          LOG.error("bad remote row count:" + rowCount + ":" + observationList.size());
+        }
 
         DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
         for (ObservationModel observationModel:observationModelList) {
           dataBaseFacade.setObservationUpload(observationModel.getId(), context);
+        }
+
+        if (networkListener == null) {
+          LOG.debug("skipping listener");
+        } else {
+          LOG.debug("invoking listener");
+          networkListener.freshObservation(observationResponse);
         }
       }
     });

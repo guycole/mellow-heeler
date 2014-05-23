@@ -4,15 +4,15 @@ import android.test.ApplicationTestCase;
 
 import com.digiburo.mellow.heeler.lib.HeelerApplication;
 import com.digiburo.mellow.heeler.lib.TestHelper;
-import com.digiburo.mellow.heeler.lib.network.RemoteConfiguration;
+import com.digiburo.mellow.heeler.lib.network.RemoteConfigurationWriter;
 
 /**
  * @author gsc
  */
-public class RemoteConfigurationTest extends ApplicationTestCase<HeelerApplication> {
+public class RemoteConfigurationWriterTest extends ApplicationTestCase<HeelerApplication> {
   private TestHelper testHelper = new TestHelper();
 
-  public RemoteConfigurationTest() {
+  public RemoteConfigurationWriterTest() {
     super(HeelerApplication.class);
   }
 
@@ -23,7 +23,7 @@ public class RemoteConfigurationTest extends ApplicationTestCase<HeelerApplicati
   }
 
   public void test01() {
-    RemoteConfiguration remoteConfiguration = new RemoteConfiguration();
+    RemoteConfigurationWriter remoteConfigurationWriter = new RemoteConfigurationWriter();
 // E/AndroidRuntime(25812): android.app.RemoteServiceException: Bad notification for startForeground: java.lang.RuntimeException: icon must be non-zero
 //    remoteConfiguration.readRemoteConfiguration(getContext());
   }

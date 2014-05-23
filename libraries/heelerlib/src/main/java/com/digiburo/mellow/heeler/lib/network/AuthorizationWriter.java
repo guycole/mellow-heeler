@@ -2,6 +2,7 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.octo.android.robospice.SpiceManager;
@@ -21,9 +22,10 @@ public class AuthorizationWriter {
 
   /**
    * discover if this installation is authorized to use remote server
+   * @param networkListener
    * @param context
    */
-  public void doJsonPost(final Context context) {
+  public void doJsonPost(final NetworkListener networkListener, final Context context) {
     LOG.debug("test authorization");
 
     AuthorizationRequest request = new AuthorizationRequest(context);
@@ -38,7 +40,18 @@ public class AuthorizationWriter {
 
       @Override
       public void onRequestSuccess(final AuthorizationResponse authorizationResponse) {
-        LOG.debug("authorize success:" + authorizationResponse.getStatus());
+        LOG.debug("authorize success:" + authorizationResponse.getRemoteIpAddress() + ":" + authorizationResponse.getVersion() + ":" + authorizationResponse.getStatus());
+
+        if (!Constant.OK.equals(authorizationResponse.getStatus())) {
+          LOG.error("bad remote status:" + authorizationResponse.getStatus());
+        }
+
+        if (networkListener == null) {
+          LOG.debug("skipping listener");
+        } else {
+          LOG.debug("invoking listener");
+          networkListener.freshAuthorization(authorizationResponse);
+        }
       }
     });
   }

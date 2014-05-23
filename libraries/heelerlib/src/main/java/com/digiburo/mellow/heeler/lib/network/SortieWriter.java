@@ -2,6 +2,7 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
@@ -30,11 +31,11 @@ public class SortieWriter {
 
   /**
    * write sortie rows to remote server
-   * @param sortieUuid
-   * @param observationModelList
+   * @param sortieModel
+   * @param networkListener
    * @param context
    */
-  public void doJsonPost(final SortieModel sortieModel, final Context context) {
+  public void doJsonPost(final SortieModel sortieModel, final NetworkListener networkListener, final Context context) {
     LOG.debug("writer:" + sortieModel.getSortieUuid());
 
     SortieRequest request = new SortieRequest(sortieModel.getSortieUuid(), sortieModel.getSortieName(), sortieModel.getTimeStampMs(), context);
@@ -49,10 +50,29 @@ public class SortieWriter {
 
       @Override
       public void onRequestSuccess(SortieResponse sortieResponse) {
-        LOG.info("sortie write success:" + sortieResponse.getStatus() + ":" + sortieResponse.getRemoteIpAddress());
+        LOG.info("sortie write success:" + sortieResponse.getRemoteIpAddress() + ":" + sortieResponse.getVersion() + ":" + sortieResponse.getStatus());
+
+        if (!Constant.OK.equals(sortieResponse.getStatus())) {
+          LOG.error("bad remote status:" + sortieResponse.getStatus());
+        }
+
+        if (!sortieModel.getSortieUuid().equals(sortieResponse.getSortieId())) {
+          LOG.error("bad remote sortie UUID");
+        }
+
+        if (sortieResponse.getRowCount() != 1) {
+          LOG.error("bad remote row count:" + sortieResponse.getRowCount());
+        }
 
         DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
         dataBaseFacade.setSortieUpload(sortieModel.getId(), context);
+
+        if (networkListener == null) {
+          LOG.debug("skipping listener");
+        } else {
+          LOG.debug("invoking listener");
+          networkListener.freshSortie(sortieResponse);
+        }
       }
     });
   }

@@ -20,6 +20,7 @@ public class Constant {
   //
   public static final String AUTHORITY = "com.digiburo.mellow.heeler.authority";
 
+  public static final String OK = "OK";
   public static final String UNKNOWN = "Unknown";
 
   //

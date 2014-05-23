@@ -2,6 +2,7 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
@@ -17,16 +18,37 @@ import org.slf4j.LoggerFactory;
  * read remote configuration
  * @author gsc
  */
-public class RemoteConfiguration {
-  private static final Logger LOG = LoggerFactory.getLogger(RemoteConfiguration.class);
+public class RemoteConfigurationWriter {
+  private static final Logger LOG = LoggerFactory.getLogger(RemoteConfigurationWriter.class);
+
+  /**
+   *
+   * @param remoteConfigurationResponse
+   */
+  private void loadResponse(final RemoteConfigurationResponse remoteConfigurationResponse, final Context context) {
+    UserPreferenceHelper uph = new UserPreferenceHelper(context);
+    int knownVersion = uph.getRemoteConfigurationVersion(context);
+    int freshVersion = remoteConfigurationResponse.getVersion().intValue();
+    if (freshVersion == knownVersion) {
+      LOG.debug("skipping update, same version:" + knownVersion);
+    } else {
+      LOG.debug("must update remote configuration to version:" + freshVersion);
+      uph.setAuthorizeUrl(context, remoteConfigurationResponse.getLinks().getAuthorize().getHref());
+      uph.setLocationUrl(context, remoteConfigurationResponse.getLinks().getLocation().getHref());
+      uph.setObservationUrl(context, remoteConfigurationResponse.getLinks().getObservation().getHref());
+      uph.setSortieUrl(context, remoteConfigurationResponse.getLinks().getSortie().getHref());
+      uph.setRemoteConfigurationVersion(context, freshVersion);
+    }
+  }
 
   /**
    * Remote service configuration is obtained from a remote server.
    * Configuration rarely changes.  Should be read prior to uploading collected datum.
    * If the configuration version has changed, then load fresh values into user preferences.
+   * @param networkListener
    * @param context
    */
-  public void doJsonGet(final Context context) {
+  public void doJsonGet(final NetworkListener networkListener, final Context context) {
     LOG.debug("remote configuration read");
 
     RemoteConfigurationRequest request = new RemoteConfigurationRequest();
@@ -43,18 +65,13 @@ public class RemoteConfiguration {
       public void onRequestSuccess(final RemoteConfigurationResponse remoteConfigurationResponse) {
         LOG.debug("request success");
 
-        UserPreferenceHelper uph = new UserPreferenceHelper(context);
-        int knownVersion = uph.getRemoteConfigurationVersion(context);
-        int freshVersion = remoteConfigurationResponse.getVersion().intValue();
-        if (freshVersion == knownVersion) {
-          LOG.debug("skipping update, same version:" + knownVersion);
+        loadResponse(remoteConfigurationResponse, context);
+
+        if (networkListener == null) {
+          LOG.debug("skipping listener");
         } else {
-          LOG.debug("must update remote configuration to version:" + freshVersion);
-          uph.setAuthorizeUrl(context, remoteConfigurationResponse.getLinks().getAuthorize().getHref());
-          uph.setLocationUrl(context, remoteConfigurationResponse.getLinks().getLocation().getHref());
-          uph.setObservationUrl(context, remoteConfigurationResponse.getLinks().getObservation().getHref());
-          uph.setSortieUrl(context, remoteConfigurationResponse.getLinks().getSortie().getHref());
-          uph.setRemoteConfigurationVersion(context, freshVersion);
+          LOG.debug("invoking listener");
+          networkListener.freshRemoteConfiguration(remoteConfigurationResponse);
         }
       }
     });
