@@ -10,19 +10,19 @@ public interface DataBaseTableIf {
    * return associated table name
    * @return associated table name
    */
-  public String getTableName();
+  String getTableName();
 
   /**
    * return default sort order
    * @return default sort order
    */
-  public String getDefaultSortOrder();
+  String getDefaultSortOrder();
 
   /**
    * return default projection (column names)
    * @return return default projection (column names)
    */
-  public String[] getDefaultProjection();
+  String[] getDefaultProjection();
 }
 
 /*

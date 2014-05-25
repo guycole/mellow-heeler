@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.digiburo.mellow.heeler.app.MainActivity">
+
+  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableStatus"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1">
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_sortie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+      <EditText style="@style/EditView01"
+        android:id="@+id/editSortieName"
+        android:hint="@string/hint_sortie_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <ToggleButton
+        android:id="@+id/toggleStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dip"
+        android:textOff="@string/button_start"
+        android:textOn="@string/button_stop"
+        android:onClick="onToggleClicked"/>
+
+      <TextView style="@style/EditView01"
+        android:id="@+id/textStatus"
+        android:text="@string/text_idle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+          android:text="@string/text_location"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView style="@style/EditView01"
+          android:id="@+id/textLastLocation"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+          android:text="@string/text_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView style="@style/EditView01"
+          android:id="@+id/textLastLocationTime"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+          android:text="@string/text_row_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView style="@style/EditView01"
+          android:id="@+id/textLocationRowCount"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+          android:text="@string/text_ssid"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView style="@style/EditView01"
+          android:id="@+id/textLastSsid"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+          android:text="@string/text_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView style="@style/EditView01"
+          android:id="@+id/textLastSsidTime"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+          android:text="@string/text_row_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <TextView style="@style/EditView01"
+          android:id="@+id/textObservationRowCount"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+    </TableRow>
+  </TableLayout>
+
+  <Button
+    android:id="@+id/buttonSpecialLocation"
+    android:text="@string/button_special"
+    android:layout_below="@id/tableStatus"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"/>
+</RelativeLayout>

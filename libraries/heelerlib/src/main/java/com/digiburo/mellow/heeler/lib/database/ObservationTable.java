@@ -44,6 +44,7 @@ public class ObservationTable implements DataBaseTableIf {
     public static final String TIME_STAMP_MS = "time_stamp_ms";
     public static final String UPLOAD_FLAG = "upload_flag";
     public static final String LOCATION_ID = "location_id";
+    public static final String OBSERVATION_ID = "observation_id";
     public static final String SORTIE_ID = "sortie_id";
   }
 
@@ -74,6 +75,7 @@ public class ObservationTable implements DataBaseTableIf {
       + Columns.TIME_STAMP_MS + " INTEGER NOT NULL,"
       + Columns.UPLOAD_FLAG + " INTEGER NOT NULL,"
       + Columns.LOCATION_ID + " TEXT NOT NULL,"
+      + Columns.OBSERVATION_ID + " TEXT NOT NULL,"
       + Columns.SORTIE_ID + " TEXT NOT NULL"
       + ");";
 
@@ -92,6 +94,7 @@ public class ObservationTable implements DataBaseTableIf {
     PROJECTION_MAP.put(ObservationTable.Columns.TIME_STAMP_MS, ObservationTable.Columns.TIME_STAMP_MS);
     PROJECTION_MAP.put(ObservationTable.Columns.UPLOAD_FLAG, ObservationTable.Columns.UPLOAD_FLAG);
     PROJECTION_MAP.put(ObservationTable.Columns.LOCATION_ID, ObservationTable.Columns.LOCATION_ID);
+    PROJECTION_MAP.put(ObservationTable.Columns.OBSERVATION_ID, ObservationTable.Columns.OBSERVATION_ID);
     PROJECTION_MAP.put(ObservationTable.Columns.SORTIE_ID, ObservationTable.Columns.SORTIE_ID);
   }
 }

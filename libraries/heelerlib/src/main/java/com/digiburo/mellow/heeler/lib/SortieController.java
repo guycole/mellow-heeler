@@ -31,12 +31,11 @@ public class SortieController {
    * @param sortieName
    * @param context
    */
-  public void startSortie(final String sortieName, final Context context) {
+  public void startSortie(final Context context) {
     LOG.debug("startSortie");
 
     SortieModel sortieModel = new SortieModel();
     sortieModel.setDefault();
-    sortieModel.setSortieName(sortieName);
 
     DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
     dataBaseFacade.insert(sortieModel, context);
@@ -56,6 +55,10 @@ public class SortieController {
     PendingIntent pending = PendingIntent.getBroadcast(context, 0, intent, 0);
     alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), timeOut, pending);
     Personality.setAlarmIntent(pending);
+
+    Intent notifier = new Intent(Constant.FRESH_UPDATE);
+    notifier.putExtra(Constant.INTENT_MODE_FLAG, true);
+    context.sendBroadcast(notifier);
   }
 
   /**
@@ -69,6 +72,10 @@ public class SortieController {
     if (Personality.getAlarmIntent() != null) {
       alarmManager.cancel(Personality.getAlarmIntent());
     }
+
+    Intent notifier = new Intent(Constant.FRESH_UPDATE);
+    notifier.putExtra(Constant.INTENT_MODE_FLAG, false);
+    context.sendBroadcast(notifier);
   }
 }
 /*

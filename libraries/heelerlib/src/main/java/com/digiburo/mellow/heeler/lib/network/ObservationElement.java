@@ -13,6 +13,7 @@ public class ObservationElement {
 
   private long timeStampMs;
   private String locationId;
+  private String observationId;
 
   public String getSsid() {
     return ssid;
@@ -68,6 +69,14 @@ public class ObservationElement {
 
   public void setLocationId(String locationId) {
     this.locationId = locationId;
+  }
+
+  public String getObservationId() {
+    return observationId;
+  }
+
+  public void setObservationId(String observationId) {
+    this.observationId = observationId;
   }
 }
 /*

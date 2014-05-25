@@ -54,6 +54,7 @@ public class ObservationWriter {
       observationElement.setStrength(observationModel.getLevel());
       observationElement.setTimeStampMs(observationModel.getTimeStampMs());
       observationElement.setLocationId(observationModel.getLocationUuid());
+      observationElement.setObservationId(observationModel.getObservationUuid());
       observationList.add(observationElement);
     }
 

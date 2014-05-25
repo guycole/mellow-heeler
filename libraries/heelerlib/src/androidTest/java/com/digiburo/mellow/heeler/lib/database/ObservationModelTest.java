@@ -30,6 +30,8 @@ public class ObservationModelTest extends TestCase {
 
     assertNotNull(model.getLocationUuid());
     assertEquals(36, model.getLocationUuid().length());
+    assertNotNull(model.getObservationUuid());
+    assertEquals(36, model.getObservationUuid().length());
     assertNotNull(model.getSortieUuid());
     assertEquals(36, model.getSortieUuid().length());
 

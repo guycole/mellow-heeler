@@ -18,6 +18,9 @@ public class Constant {
   public static final String DEFAULT_SORTIE_NAME = "Default Sortie";
 
   //
+  public static final String DEFAULT_SSID = "MH Default SSID";
+
+  //
   public static final String AUTHORITY = "com.digiburo.mellow.heeler.authority";
 
   public static final String OK = "OK";
@@ -32,6 +35,7 @@ public class Constant {
 
   //
   public static final String INTENT_ROW_KEY = "INTENT_ROW_KEY";
+  public static final String INTENT_MODE_FLAG = "INTENT_MODE_FLAG";
 
   // intent filter
   public static final String FRESH_UPDATE = "com.digiburo.mellow.heeler.update";

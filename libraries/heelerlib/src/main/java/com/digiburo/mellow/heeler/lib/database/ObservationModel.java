@@ -23,6 +23,7 @@ public class ObservationModel implements DataBaseModelIf {
   private String bssid;
   private String capability;
   private String locationUuid;
+  private String observationUuid;
   private String sortieUuid;
 
   private boolean uploadFlag;
@@ -39,6 +40,7 @@ public class ObservationModel implements DataBaseModelIf {
     uploadFlag = false;
 
     locationUuid = UUID.randomUUID().toString();
+    observationUuid = UUID.randomUUID().toString();
     sortieUuid = UUID.randomUUID().toString();
 
     Time timeNow = TimeUtility.timeNow();
@@ -64,7 +66,17 @@ public class ObservationModel implements DataBaseModelIf {
    * @param sortieId
    */
   public void setScanResult(final String ssid, final String bssid, final String capability, int frequency, int level, final String locationId, final String sortieId) {
-    this.ssid = ssid;
+    if (ssid == null) {
+      this.ssid = Constant.DEFAULT_SSID;
+    } else {
+      String trimSsid = ssid.trim();
+      if (trimSsid.isEmpty()) {
+        this.ssid = Constant.DEFAULT_SSID;
+      } else {
+        this.ssid = trimSsid;
+      }
+    }
+
     this.bssid = bssid;
     this.capability = capability;
     this.frequency = frequency;
@@ -93,6 +105,7 @@ public class ObservationModel implements DataBaseModelIf {
     cv.put(ObservationTable.Columns.FREQUENCY, frequency);
     cv.put(ObservationTable.Columns.LEVEL, level);
     cv.put(ObservationTable.Columns.LOCATION_ID, locationUuid);
+    cv.put(ObservationTable.Columns.OBSERVATION_ID, observationUuid);
     cv.put(ObservationTable.Columns.SSID, ssid);
     cv.put(ObservationTable.Columns.SORTIE_ID, sortieUuid);
     cv.put(ObservationTable.Columns.TIME_STAMP, timeStamp);
@@ -115,6 +128,7 @@ public class ObservationModel implements DataBaseModelIf {
     frequency = cursor.getInt(cursor.getColumnIndex(ObservationTable.Columns.FREQUENCY));
     level = cursor.getInt(cursor.getColumnIndex(ObservationTable.Columns.LEVEL));
     locationUuid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.LOCATION_ID));
+    observationUuid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.OBSERVATION_ID));
     ssid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.SSID));
     sortieUuid = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.SORTIE_ID));
     timeStamp = cursor.getString(cursor.getColumnIndex(ObservationTable.Columns.TIME_STAMP));
@@ -180,6 +194,10 @@ public class ObservationModel implements DataBaseModelIf {
     return locationUuid;
   }
 
+  public String getObservationUuid() {
+    return observationUuid;
+  }
+
   public String getSortieUuid() {
     return sortieUuid;
   }
@@ -206,6 +224,7 @@ public class ObservationModel implements DataBaseModelIf {
     if (!bssid.equals(that.bssid)) return false;
     if (!capability.equals(that.capability)) return false;
     if (!locationUuid.equals(that.locationUuid)) return false;
+    if (!observationUuid.equals(that.observationUuid)) return false;
     if (!sortieUuid.equals(that.sortieUuid)) return false;
     if (!ssid.equals(that.ssid)) return false;
     if (!timeStamp.equals(that.timeStamp)) return false;
@@ -219,6 +238,7 @@ public class ObservationModel implements DataBaseModelIf {
     result = 31 * result + bssid.hashCode();
     result = 31 * result + capability.hashCode();
     result = 31 * result + locationUuid.hashCode();
+    result = 31 * result + observationUuid.hashCode();
     result = 31 * result + sortieUuid.hashCode();
     result = 31 * result + (uploadFlag ? 1 : 0);
     result = 31 * result + timeStamp.hashCode();

@@ -24,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
   }
   */
 
-  public DataBaseHelper(final Context context, final String fileName) {
+  public DataBaseHelper(final String fileName, final Context context) {
     super(context, fileName, null, DATABASE_VERSION);
   }
 

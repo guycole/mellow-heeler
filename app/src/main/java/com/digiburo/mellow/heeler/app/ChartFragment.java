@@ -4,26 +4,45 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.LocationModelList;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModelList;
+import com.google.android.gms.maps.SupportMapFragment;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/*
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+*/
 
 /**
  * Service the "map" tab - display google maps
  * Attempt to display all known stations
  * Center on favorite station if defined
  */
-public class ChartFragment extends MapFragment {
+public class ChartFragment extends SupportMapFragment {
+  private static final Logger LOG = LoggerFactory.getLogger(ChartFragment.class);
+  public static final String FRAGMENT_TAG = "TAG_CHART";
 
-  //
-  public static final String LOG_TAG = ChartFragment.class.getName();
+  private long rowId;
+  private SortieModel sortieModel;
+  private LocationModelList locationModelList;
+  private ObservationModelList observationModelList;
 
   /**
    * mandatory empty ctor
@@ -32,18 +51,21 @@ public class ChartFragment extends MapFragment {
     //empty
   }
 
+  public void setCurrentSortie(long rowId) {
+    this.rowId = rowId;
+  }
+
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
-    /*
-    LogFacade.entry(LOG_TAG, "onAttach");
-    
-    DataBaseFacade dbf = new DataBaseFacade(activity);
-    stationList = dbf.getActiveStationModels();
-    
-    UserPreferenceHelper uph = new UserPreferenceHelper();
-    favoriteStationRowId = uph.getFaveStation(activity);
-    */
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(activity);
+    sortieModel = dataBaseFacade.selectSortie(rowId, activity);
+    LOG.debug("sortie:" + rowId + ":" + sortieModel.getSortieName() + ":" + sortieModel.getSortieUuid());
+    locationModelList = dataBaseFacade.selectAllLocations(true, sortieModel.getSortieUuid(), activity);
+    LOG.debug("total locations:" + locationModelList.size());
+    observationModelList = dataBaseFacade.selectAllObservations(true, sortieModel.getSortieUuid(), activity);
+    LOG.debug("total observations:" + observationModelList.size());
   }
 
   @Override
@@ -90,6 +112,25 @@ public class ChartFragment extends MapFragment {
   private ArrayList<StationModel> stationList;
   private long favoriteStationRowId;
 */
+
+  /*
+
+  @Override
+  public void onStop() {
+    super.onStop();
+
+    FragmentManager fragmentManager = getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    Fragment oldFragment = fragmentManager.findFragmentByTag(ChartFragment.FRAGMENT_TAG);
+    if (oldFragment != null) {
+      fragmentTransaction.remove(oldFragment);
+    }
+
+//    fragmentTransaction.replace(R.id.layoutFragment01, chartFragment);
+    fragmentTransaction.commit();
+  }
+  */
 }
 /*
  * Copyright 2014 Digital Burro, INC

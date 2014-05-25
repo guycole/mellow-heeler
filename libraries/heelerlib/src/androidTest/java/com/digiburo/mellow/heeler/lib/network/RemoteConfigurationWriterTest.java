@@ -9,7 +9,7 @@ import com.digiburo.mellow.heeler.lib.TestHelper;
  * exercise remote configuration
  * @author gsc
  */
-public class RemoteConfigurationWriterTest extends ApplicationTestCase<HeelerApplication> implements NetworkListener {
+public class RemoteConfigurationWriterTest extends ApplicationTestCase<HeelerApplication> {
   private TestHelper testHelper = new TestHelper();
 
   public RemoteConfigurationWriterTest() {

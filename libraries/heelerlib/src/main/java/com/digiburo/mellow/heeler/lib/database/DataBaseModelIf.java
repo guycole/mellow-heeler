@@ -15,35 +15,35 @@ public interface DataBaseModelIf {
   /**
    * set reasonable model defaults
    */
-  public void setDefault();
+  void setDefault();
 
   /**
    * load content from model
    * @return populated values
    */
-  public ContentValues toContentValues();
+  ContentValues toContentValues();
 
   /**
    * convert from cursor to model
    * @param cursor points to model datum
    */
-  public void fromCursor(final Cursor cursor);
+  void fromCursor(final Cursor cursor);
 
   /**
    * return associated table name
    * @return associated table name
    */
-  public String getTableName();
+  String getTableName();
 
   /**
    * return associated table URI
    * @return associated table URI
    */
-  public Uri getTableUri();
+  Uri getTableUri();
 
   //for BaseColumns
-  public Long getId();
-  public void setId(final Long id);
+  Long getId();
+  void setId(final Long id);
 }
 /*
  * Copyright 2014 Digital Burro, INC

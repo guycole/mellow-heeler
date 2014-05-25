@@ -32,11 +32,7 @@ public class DataBaseFacade {
    * @param context
    */
   public DataBaseFacade(final Context context) {
-    if (Personality.isInternalDataBaseFileSystem()) {
-      dataBaseFileName = DataBaseHelper.DATABASE_FILE_NAME;
-    } else {
-      dataBaseFileName = context.getExternalFilesDir(null).getAbsolutePath() + File.separator + DataBaseHelper.DATABASE_FILE_NAME;
-    }
+    dataBaseFileName = DataBaseUtility.dataBaseFileName(Personality.isInternalDataBaseFileSystem(), context);
   }
 
   /**
@@ -560,7 +556,7 @@ public class DataBaseFacade {
    * @return
    */
   private SQLiteDatabase getReadableDataBase(final Context context) {
-    DataBaseHelper dataBaseHelper = new DataBaseHelper(context, dataBaseFileName);
+    DataBaseHelper dataBaseHelper = new DataBaseHelper(dataBaseFileName, context);
     return dataBaseHelper.getReadableDatabase();
   }
 
@@ -570,7 +566,12 @@ public class DataBaseFacade {
    * @return
    */
   private SQLiteDatabase getWritableDataBase(final Context context) {
-    DataBaseHelper dataBaseHelper = new DataBaseHelper(context, dataBaseFileName);
+    DataBaseHelper dataBaseHelper = new DataBaseHelper(dataBaseFileName, context);
     return dataBaseHelper.getWritableDatabase();
   }
 }
+/*
+ * Copyright 2014 Digital Burro, INC
+ * Created on May 11, 2014 by gsc
+ */
+
