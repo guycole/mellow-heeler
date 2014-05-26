@@ -1,5 +1,6 @@
 package com.digiburo.mellow.heeler.lib.network;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ public class GeoLocationRequest extends SpringAndroidSpiceRequest<GeoLocationRes
   private static final Logger LOG = LoggerFactory.getLogger(GeoLocationRequest.class);
 
   private final String url;
-  //private final String url = "https://mellow-heeler.appspot.com/diagnostic";
+  //private final String url = Constant.DIAGNOSTIC_URL;
   private final GeoLocation geoLocation;
 
   public GeoLocationRequest(final String url, final GeoLocation geoLocation) {

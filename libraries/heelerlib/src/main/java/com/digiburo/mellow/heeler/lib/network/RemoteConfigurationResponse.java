@@ -11,13 +11,13 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /*
 {
   "_links": {
-    "self": { "href": "http://digiburo.com/hal/mellow_heeler.json" },
+    "self": { "href": "http://digiburo.com/hal/mellow-heeler.json" },
     "authorize": { "href": "https://mellow-heeler.appspot.com/ws/v1/authorize" },
     "location": { "href": "https://mellow-heeler.appspot.com/ws/v1/location" },
     "observation": { "href": "https://mellow-heeler.appspot.com/ws/v1/observation" },
     "sortie": { "href": "https://mellow-heeler.appspot.com/ws/v1/sortie" }
   },
-  "version":1,
+  "messageVersion":1,
   "revisionDate":"2014-05-19T02:18:51Z"
 }
 */
@@ -38,11 +38,11 @@ public class RemoteConfigurationResponse {
     links = arg;
   }
 
-  public Integer getVersion() {
+  public Integer getMessageVersion() {
     return version;
   }
 
-  public void setVersion(Integer version) {
+  public void setMessageVersion(Integer version) {
     this.version = version;
   }
 

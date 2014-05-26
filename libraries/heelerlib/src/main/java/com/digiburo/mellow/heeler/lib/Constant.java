@@ -23,6 +23,9 @@ public class Constant {
   //
   public static final String AUTHORITY = "com.digiburo.mellow.heeler.authority";
 
+  //
+  public static final String DIAGNOSTIC_URL = "https://mellow-heeler.appspot.com/diagnostic";
+
   public static final String OK = "OK";
   public static final String UNKNOWN = "Unknown";
 

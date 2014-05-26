@@ -14,7 +14,7 @@ public class RemoteConfigurationRequest extends SpringAndroidSpiceRequest<Remote
   private static final Logger LOG = LoggerFactory.getLogger(RemoteConfigurationRequest.class);
 
   // provisioning URL
-  public static final String URL = "http://digiburo.com/hal/mellow_heeler.json";
+  public static final String URL = "http://digiburo.com/hal/mellow-heeler1.json";
 
   public RemoteConfigurationRequest() {
     super(RemoteConfigurationResponse.class);

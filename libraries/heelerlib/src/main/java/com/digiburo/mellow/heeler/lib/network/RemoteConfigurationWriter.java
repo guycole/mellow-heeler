@@ -28,7 +28,7 @@ public class RemoteConfigurationWriter {
   private void loadResponse(final RemoteConfigurationResponse remoteConfigurationResponse, final Context context) {
     UserPreferenceHelper uph = new UserPreferenceHelper(context);
     int knownVersion = uph.getRemoteConfigurationVersion(context);
-    int freshVersion = remoteConfigurationResponse.getVersion().intValue();
+    int freshVersion = remoteConfigurationResponse.getMessageVersion().intValue();
     if (freshVersion == knownVersion) {
       LOG.debug("skipping update, same version:" + knownVersion);
     } else {

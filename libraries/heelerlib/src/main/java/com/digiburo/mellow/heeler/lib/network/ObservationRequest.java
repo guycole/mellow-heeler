@@ -1,5 +1,6 @@
 package com.digiburo.mellow.heeler.lib.network;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ public class ObservationRequest extends SpringAndroidSpiceRequest<ObservationRes
   private static final Logger LOG = LoggerFactory.getLogger(ObservationRequest.class);
 
   private final String url;
-  //  private final String url = "https://mellow-heeler.appspot.com/diagnostic";
+  //private final String url = Constant.DIAGNOSTIC_URL;
   private final Observation observation;
 
   public ObservationRequest(final String url, final Observation observation) {

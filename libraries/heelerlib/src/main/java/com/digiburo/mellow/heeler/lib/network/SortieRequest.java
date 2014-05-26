@@ -2,13 +2,12 @@ package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
 
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class SortieRequest extends SpringAndroidSpiceRequest<SortieResponse> {
   private static final Logger LOG = LoggerFactory.getLogger(SortieRequest.class);
 
   private final String url;
-  //  private final String url = "https://mellow-heeler.appspot.com/diagnostic";
+  //private final String url = Constant.DIAGNOSTIC_URL;
   private final Map<String, String> parameters = new HashMap<String, String>();
 
   /**
