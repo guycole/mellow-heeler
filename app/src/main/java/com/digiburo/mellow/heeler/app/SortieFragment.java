@@ -3,9 +3,6 @@ package com.digiburo.mellow.heeler.app;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -33,7 +30,7 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
   public static final int LOADER_ID = 314156;
 
   private SortieCursorAdapter adapter;
-  private FragmentListener fragmentListener;
+  private MainListener mainListener;
 
   /**
    * LoaderCallback
@@ -72,7 +69,7 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
   @Override
   public void onListItemClick(ListView listView, View view, int position, long id) {
     LOG.debug("click:" + position + ":" + id);
-    fragmentListener.displayGoogleMap(id);
+    mainListener.displayGoogleMap(id);
   }
 
   /**
@@ -82,13 +79,11 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
     //empty
   }
 
-
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
-    fragmentListener = (FragmentListener) activity;
+    mainListener = (MainListener) activity;
   }
-
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

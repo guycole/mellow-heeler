@@ -1,10 +1,12 @@
 package com.digiburo.mellow.heeler.app;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.google.android.gms.plus.model.people.Person;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +35,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsoleFragment extends Fragment {
   public static final String FRAGMENT_TAG = "TAG_CONSOLE";
+
+  public static final int MAX_ROWS = 4000;
 
   private static final Logger LOG = LoggerFactory.getLogger(ConsoleFragment.class);
 
@@ -52,6 +57,8 @@ public class ConsoleFragment extends Fragment {
   //TODO runFlag persist to bundle
   private boolean runFlag = false;
 
+  private MainListener mainListener;
+
   /**
    * update display for fresh location or WiFi detection event
    */
@@ -71,6 +78,11 @@ public class ConsoleFragment extends Fragment {
         long rowKey = intent.getLongExtra(Constant.INTENT_ROW_KEY, 0);
         if (rowKey < 1) {
           updateLocationDisplay();
+
+          WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+          if (!wifiManager.isWifiEnabled()) {
+            Toast.makeText(getActivity(), R.string.toast_wifi_disabled, Toast.LENGTH_LONG).show();
+          }
         } else {
           updateDetectionDisplay(rowKey);
         }
@@ -83,6 +95,12 @@ public class ConsoleFragment extends Fragment {
    */
   public ConsoleFragment() {
     //empty
+  }
+
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    mainListener = (MainListener) activity;
   }
 
   @Override
@@ -105,6 +123,7 @@ public class ConsoleFragment extends Fragment {
     });
 
     editSortieName = (EditText) getActivity().findViewById(R.id.editSortieName);
+    editSortieName.setText(Constant.DEFAULT_SORTIE_NAME);
 
     textLastLocation = (TextView) getActivity().findViewById(R.id.textLastLocation);
     textLastLocation.setText(Constant.UNKNOWN);
@@ -179,20 +198,26 @@ public class ConsoleFragment extends Fragment {
     String tempName = editSortieName.getText().toString();
     SortieModel sortieModel = Personality.getCurrentSortie();
     if (sortieModel != null) {
-      if (!sortieModel.getSortieName().equals(tempName)) {
+      if (tempName.isEmpty()) {
+        editSortieName.setText(sortieModel.getSortieName());
+        return;
+      }
+
+      if (Constant.DEFAULT_SORTIE_NAME.equals(tempName)) {
+        editSortieName.setText(sortieModel.getSortieName());
+      } else if (Constant.DEFAULT_SORTIE_NAME.equals(sortieModel.getSortieName())) {
         sortieModel.setSortieName(tempName);
 
         DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
         dataBaseFacade.updateSortie(sortieModel, getActivity());
 
-        editSortieName.setText(sortieModel.getSortieName());
+        //editSortieName.setText(sortieModel.getSortieName());
       }
     }
   }
 
   private void updateDetectionDisplay(long rowKey) {
     DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-    int observationPopulation = dataBaseFacade.countObservationRows(getActivity());
 
     String ssid = "Unknown";
     String timeStamp = "Unknown";
@@ -205,7 +230,17 @@ public class ConsoleFragment extends Fragment {
 
     textLastSsid.setText(ssid);
     textLastSsidTime.setText(timeStamp);
-    textObservationRowCount.setText(Integer.toString(observationPopulation));
+
+    if (Personality.getCurrentSortie() == null) {
+      textObservationRowCount.setText("Empty");
+    } else {
+      int observationPopulation = dataBaseFacade.countObservationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
+      textObservationRowCount.setText(Integer.toString(observationPopulation));
+
+      if (observationPopulation > MAX_ROWS) {
+        mainListener.restartSortie(editSortieName.getText().toString());
+      }
+    }
   }
 
   private void updateLocationDisplay() {
@@ -216,9 +251,17 @@ public class ConsoleFragment extends Fragment {
       textLastLocation.setText(latString + ", " + lngString);
       textLastLocationTime.setText(locationModel.getTimeStamp());
 
-      DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-      int locationPopulation = dataBaseFacade.countLocationRows(getActivity());
-      textLocationRowCount.setText(Integer.toString(locationPopulation));
+      if (Personality.getCurrentSortie() == null) {
+        textLocationRowCount.setText("Empty");
+      } else {
+        DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+        int locationPopulation = dataBaseFacade.countLocationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
+        textLocationRowCount.setText(Integer.toString(locationPopulation));
+
+        if (locationPopulation > MAX_ROWS) {
+          mainListener.restartSortie(editSortieName.getText().toString());
+        }
+      }
     }
   }
 

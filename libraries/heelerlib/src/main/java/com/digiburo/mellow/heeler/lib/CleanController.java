@@ -1,6 +1,7 @@
 package com.digiburo.mellow.heeler.lib;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationTable;
@@ -27,6 +28,11 @@ public class CleanController {
     dataBaseFacade.deleteUploaded(LocationTable.TABLE_NAME, LocationTable.Columns.UPLOAD_FLAG, context);
     dataBaseFacade.deleteUploaded(ObservationTable.TABLE_NAME, ObservationTable.Columns.UPLOAD_FLAG, context);
     dataBaseFacade.deleteUploaded(SortieTable.TABLE_NAME, SortieTable.Columns.UPLOAD_FLAG, context);
+
+    System.out.println("tytytytytytyyt");
+
+    Intent notifier = new Intent(Constant.CLEAN_EVENT);
+    context.sendBroadcast(notifier);
   }
 }
 /*

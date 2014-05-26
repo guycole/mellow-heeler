@@ -1,19 +1,65 @@
 package com.digiburo.mellow.heeler.app;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.digiburo.mellow.heeler.R;
+import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.UploadController;
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModelList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * upload fragment
  */
 public class UploadFragment extends Fragment {
-  public static final String LOG_TAG = UploadFragment.class.getName();
+  private static final Logger LOG = LoggerFactory.getLogger(UploadFragment.class);
+
+  private SortieModelList sortieModelList;
+
+  /**
+   * update display for fresh location or WiFi detection event
+   */
+  private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      LOG.info("onReceive noted");
+
+      boolean authFlag = false;
+      boolean uploadFlag = false;
+
+      if (intent.hasExtra(Constant.INTENT_AUTH_FLAG)) {
+        authFlag = intent.getBooleanExtra(Constant.INTENT_AUTH_FLAG, false);
+        if (authFlag) {
+          Toast.makeText(getActivity(), "authentication success", Toast.LENGTH_LONG).show();
+        } else {
+          Toast.makeText(getActivity(), "authentication failure", Toast.LENGTH_LONG).show();
+        }
+      } else if (intent.hasExtra(Constant.INTENT_UPLOAD_FLAG)) {
+        uploadFlag = intent.getBooleanExtra(Constant.INTENT_UPLOAD_FLAG, false);
+        if (uploadFlag) {
+          Toast.makeText(getActivity(), "upload success", Toast.LENGTH_LONG).show();
+        } else {
+          Toast.makeText(getActivity(), "upload failure", Toast.LENGTH_LONG).show();
+        }
+
+        getActivity().finish();
+      }
+    }
+  };
 
   /**
    * mandatory empty ctor
@@ -32,9 +78,33 @@ public class UploadFragment extends Fragment {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    UploadController uploadController = new UploadController();
-    uploadController.uploadAll(getActivity());
   }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Constant.UPLOAD_EVENT));
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+    sortieModelList = dataBaseFacade.selectAllSorties(false, getActivity());
+    if (sortieModelList.isEmpty()) {
+      LOG.debug("empty sortie list");
+      Toast.makeText(getActivity(), "empty upload list", Toast.LENGTH_LONG).show();
+      getActivity().finish();
+      return;
+    }
+
+    UploadController uploadController = new UploadController();
+    uploadController.uploadAll(sortieModelList, getActivity());
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    getActivity().unregisterReceiver(broadcastReceiver);
+  }
+
 }
 /*
  * Copyright 2014 Digital Burro, INC

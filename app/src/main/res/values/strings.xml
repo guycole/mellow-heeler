@@ -48,4 +48,5 @@
 
   <string name="toast_location_failure">Special Location Failure</string>
   <string name="toast_location_success">Special Location Success</string>
+  <string name="toast_wifi_disabled">Must Enable WiFi</string>
 </resources>

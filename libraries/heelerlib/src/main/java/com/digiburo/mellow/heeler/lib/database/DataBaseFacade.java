@@ -93,14 +93,20 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int countLocationRows(final Context context) {
+  public int countLocationRows(final String sortieUuid, final Context context) {
     int population = 0;
     Cursor cursor = null;
     SQLiteDatabase sqlDb = null;
 
+    LocationTable table = new LocationTable();
+    String[] projection = table.getDefaultProjection();
+
+    String selection = LocationTable.Columns.SORTIE_ID + "=?";
+    String[] selectionArgs = new String[]{sortieUuid};
+
     try {
       sqlDb = getReadableDataBase(context);
-      cursor = sqlDb.query(LocationTable.TABLE_NAME, null, null, null, null, null, null);
+      cursor = sqlDb.query(LocationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
       population = cursor.getCount();
     } finally {
       if (cursor != null) {
@@ -220,14 +226,17 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public int countObservationRows(final Context context) {
+  public int countObservationRows(final String sortieUuid, final Context context) {
     int population = 0;
     Cursor cursor = null;
     SQLiteDatabase sqlDb = null;
 
+    String selection = ObservationTable.Columns.SORTIE_ID + "=?";
+    String[] selectionArgs = new String[]{sortieUuid};
+
     try {
       sqlDb = getReadableDataBase(context);
-      cursor = sqlDb.query(ObservationTable.TABLE_NAME, null, null, null, null, null, null);
+      cursor = sqlDb.query(ObservationTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
       population = cursor.getCount();
     } finally {
       if (cursor != null) {

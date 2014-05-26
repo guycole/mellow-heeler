@@ -14,14 +14,18 @@ import android.widget.ToggleButton;
 
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
+import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.SortieController;
 import com.digiburo.mellow.heeler.lib.UploadController;
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
+import com.google.android.gms.plus.model.people.Person;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MainActivity extends ActionBarActivity implements FragmentListener {
+public class MainActivity extends ActionBarActivity implements MainListener {
   private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
   private TabHelper tabHelper;
 
@@ -47,9 +51,14 @@ public class MainActivity extends ActionBarActivity implements FragmentListener 
   /**
    * start location/WiFi collection
    */
-  public void startCollection() {
+  public void startCollection(final String sortieName) {
     LOG.info("start collection");
-    sortieController.startSortie(this);
+
+    if (sortieName == null) {
+      sortieController.startSortie(Constant.DEFAULT_SORTIE_NAME, this);
+    } else {
+      sortieController.startSortie(sortieName, this);
+    }
   }
 
   /**
@@ -69,10 +78,33 @@ public class MainActivity extends ActionBarActivity implements FragmentListener 
     LOG.info("toggle:" + flag);
 
     if (flag) {
-      startCollection();
+      startCollection(null);
     } else {
       stopCollection();
     }
+  }
+
+  /**
+   *
+   * @param name
+   */
+  @Override
+  public void restartSortie(String name) {
+
+    SortieModel sortieModel = Personality.getCurrentSortie();
+    String sortieName = sortieModel.getSortieName();
+    if (!Constant.DEFAULT_SORTIE_NAME.equals(sortieName)) {
+      String[] temp = sortieName.split("-");
+      if (temp.length > 1) {
+        int ndx = Integer.parseInt(temp[1]);
+        sortieName = temp[0] + "-" + (ndx+1);
+      } else {
+        sortieName += "-1";
+      }
+    }
+
+    stopCollection();
+    startCollection(sortieName);
   }
 
   /**

@@ -1,6 +1,7 @@
 package com.digiburo.mellow.heeler.lib;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModelList;
@@ -18,6 +19,7 @@ import com.digiburo.mellow.heeler.lib.network.SortieResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
  * upload contents of current database
  * only uploads items which have not yet been transmitted
@@ -29,7 +31,7 @@ public class UploadController implements NetworkListener {
 
   private Context context;
   private DataBaseFacade dataBaseFacade;
-  private NetworkFacade networkFacade;
+  private final NetworkFacade networkFacade = new NetworkFacade();
 
   private boolean locationFlag = false;
   private boolean observationFlag = false;
@@ -45,9 +47,18 @@ public class UploadController implements NetworkListener {
     LOG.debug("remote authorization noted");
     if (authorizationResponse.getStatus().equals("OK")) {
       LOG.debug("remote authorization approved");
+
+      Intent notifier = new Intent(Constant.UPLOAD_EVENT);
+      notifier.putExtra(Constant.INTENT_AUTH_FLAG, true);
+      context.sendBroadcast(notifier);
+
       sortieUpload();
     } else {
       LOG.debug("remote authorization failure");
+
+      Intent notifier = new Intent(Constant.UPLOAD_EVENT);
+      notifier.putExtra(Constant.INTENT_AUTH_FLAG, false);
+      context.sendBroadcast(notifier);
     }
   }
 
@@ -95,6 +106,10 @@ public class UploadController implements NetworkListener {
 
     if (++sortieModelNdx < sortieModelList.size()) {
       sortieUpload();
+    } else {
+      Intent notifier = new Intent(Constant.UPLOAD_EVENT);
+      notifier.putExtra(Constant.INTENT_UPLOAD_FLAG, true);
+      context.sendBroadcast(notifier);
     }
   }
 
@@ -102,19 +117,13 @@ public class UploadController implements NetworkListener {
    * upload everything, collection must be stopped prior to invoking
    * @param context
    */
-  public void uploadAll(final Context context) {
+  public void uploadAll(final SortieModelList sortieModelList, final Context context) {
     LOG.debug("uploadAll");
 
-    dataBaseFacade = new DataBaseFacade(context);
-    sortieModelList = dataBaseFacade.selectAllSorties(false, context);
-    if (sortieModelList.isEmpty()) {
-      LOG.debug("empty sortie list");
-      return;
-    }
-
+    this.sortieModelList = sortieModelList;
     this.context = context;
 
-    networkFacade = new NetworkFacade();
+    dataBaseFacade = new DataBaseFacade(context);
     networkFacade.readRemoteConfiguration(this, context);
   }
 

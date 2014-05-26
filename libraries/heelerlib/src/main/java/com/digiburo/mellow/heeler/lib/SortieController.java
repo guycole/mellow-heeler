@@ -31,24 +31,24 @@ public class SortieController {
    * @param sortieName
    * @param context
    */
-  public void startSortie(final Context context) {
+  public void startSortie(final String sortieName, final Context context) {
     LOG.debug("startSortie");
 
     SortieModel sortieModel = new SortieModel();
     sortieModel.setDefault();
+    sortieModel.setSortieName(sortieName);
 
     DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
     dataBaseFacade.insert(sortieModel, context);
 
     Personality.setCurrentSortie(sortieModel);
 
+    alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     if (Personality.getAlarmIntent() != null) {
       alarmManager.cancel(Personality.getAlarmIntent());
     }
 
     context.startService(new Intent(context, LocationService.class));
-
-    alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
     Intent intent = new Intent(context, ScanReceiver.class);
     intent.setAction(Constant.INTENT_ACTION_ALARM);
