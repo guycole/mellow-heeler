@@ -150,20 +150,30 @@ public class UploadController implements NetworkListener {
   }
 
   private void uploadLocation(final String sortieUuid) {
-    LOG.debug("uploadLocation:" + sortieUuid);
-
     LocationModelList locationModelList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
-    if (!locationModelList.isEmpty()) {
+    LOG.debug("uploadLocation:" + locationModelList.size() + ":" + sortieUuid);
+    if (locationModelList.isEmpty()) {
+      locationFlag = true;
+
+      if (testForSortieComplete()) {
+        sortieWrapUp();
+      }
+    } else {
       NetworkFacade networkFacade = new NetworkFacade();
       networkFacade.writeLocations(sortieUuid, locationModelList, this, context);
     }
   }
 
   private void uploadObservation(final String sortieUuid) {
-    LOG.debug("uploadObservation:" + sortieUuid);
-
     ObservationModelList observationModelList = dataBaseFacade.selectAllObservations(false, sortieUuid, context);
-    if (!observationModelList.isEmpty()) {
+    LOG.debug("uploadObservation:" + observationModelList.size() + ":" + sortieUuid);
+    if (observationModelList.isEmpty()) {
+      observationFlag = true;
+
+      if (testForSortieComplete()) {
+        sortieWrapUp();
+      }
+    } else {
       NetworkFacade networkFacade = new NetworkFacade();
       networkFacade.writeObservations(sortieUuid, observationModelList, this, context);
     }

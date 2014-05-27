@@ -70,6 +70,7 @@ public class SortieController {
     context.stopService(new Intent(context, LocationService.class));
 
     if (Personality.getAlarmIntent() != null) {
+      alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
       alarmManager.cancel(Personality.getAlarmIntent());
     }
 
