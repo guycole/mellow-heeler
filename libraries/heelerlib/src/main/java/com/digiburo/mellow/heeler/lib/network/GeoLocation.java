@@ -10,7 +10,6 @@ import java.util.Map;
  */
 public class GeoLocation {
   private String installationId;
-  private Integer messageVersion = 1;
   private String sortieId;
   private List<GeoLocationElement> locationList;
 
@@ -20,14 +19,6 @@ public class GeoLocation {
 
   public void setInstallationId(String installationId) {
     this.installationId = installationId;
-  }
-
-  public Integer getMessageVersion() {
-    return messageVersion;
-  }
-
-  public void setMessageVersion(Integer messageVersion) {
-    this.messageVersion = messageVersion;
   }
 
   public String getSortieId() {

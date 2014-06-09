@@ -61,10 +61,12 @@ public class ObservationWriter {
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(context);
     String installationUuid = userPreferenceHelper.getInstallationId(context);
     String observationUrl = userPreferenceHelper.getObservationUrl(context);
+    if (observationUrl.contains(Constant.TEST_URL_FRAGMENT)) {
+      installationUuid = Constant.TEST_INSTALLATION_ID;
+    }
 
     Observation observation = new Observation();
     observation.setInstallationId(installationUuid);
-    observation.setMessageVersion(1);
     observation.setSortieId(sortieUuid);
     observation.setObservationList(observationList);
 
@@ -80,7 +82,7 @@ public class ObservationWriter {
 
       @Override
       public void onRequestSuccess(ObservationResponse observationResponse) {
-        LOG.info("observation write success:" + observationResponse.getRemoteIpAddress() + ":" + observationResponse.getVersion() + ":" + observationResponse.getStatus());
+        LOG.info("observation write success:" + observationResponse.getRemoteIpAddress() + ":" + observationResponse.getStatus());
 
         if (!Constant.OK.equals(observationResponse.getStatus())) {
           LOG.error("bad remote status:" + observationResponse.getStatus());

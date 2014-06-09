@@ -15,7 +15,6 @@ public class ObservationResponse {
   private String status;
   private String timeStamp;
   private Integer rowCount;
-  private Integer version;
 
   public String getReceipt() {
     return receipt;
@@ -63,14 +62,6 @@ public class ObservationResponse {
 
   public void setRowCount(Integer rowCount) {
     this.rowCount = rowCount;
-  }
-
-  public Integer getVersion() {
-    return version;
-  }
-
-  public void setVersion(Integer version) {
-    this.version = version;
   }
 
   @JsonProperty("_links")

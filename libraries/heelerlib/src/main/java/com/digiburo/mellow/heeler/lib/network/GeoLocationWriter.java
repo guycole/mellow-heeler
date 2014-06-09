@@ -58,6 +58,9 @@ public class GeoLocationWriter {
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(context);
     String installationUuid = userPreferenceHelper.getInstallationId(context);
     String locationUrl = userPreferenceHelper.getLocationUrl(context);
+    if (locationUrl.contains(Constant.TEST_URL_FRAGMENT)) {
+      installationUuid = Constant.TEST_INSTALLATION_ID;
+    }
 
     final GeoLocation geoLocation = new GeoLocation();
     geoLocation.setInstallationId(installationUuid);
@@ -76,7 +79,7 @@ public class GeoLocationWriter {
 
       @Override
       public void onRequestSuccess(GeoLocationResponse geoLocationResponse) {
-        LOG.info("geoloc write success:" + geoLocationResponse.getRemoteIpAddress() + ":" + geoLocationResponse.getVersion() + ":" + geoLocationResponse.getStatus());
+        LOG.info("geoloc write success:" + geoLocationResponse.getRemoteIpAddress() + ":" + geoLocationResponse.getStatus());
 
         if (!Constant.OK.equals(geoLocationResponse.getStatus())) {
           LOG.error("bad remote status:" + geoLocationResponse.getStatus());

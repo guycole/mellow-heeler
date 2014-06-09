@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class ConsoleFragment extends Fragment {
   public static final String FRAGMENT_TAG = "TAG_CONSOLE";
 
-  public static final int MAX_ROWS = 4000;
+  public static final int MAX_ROWS = 2000;
 
   private static final Logger LOG = LoggerFactory.getLogger(ConsoleFragment.class);
 

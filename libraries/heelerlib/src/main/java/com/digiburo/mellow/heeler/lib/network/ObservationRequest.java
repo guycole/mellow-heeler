@@ -16,7 +16,6 @@ public class ObservationRequest extends SpringAndroidSpiceRequest<ObservationRes
   private static final Logger LOG = LoggerFactory.getLogger(ObservationRequest.class);
 
   private final String url;
-  //private final String url = Constant.DIAGNOSTIC_URL;
   private final Observation observation;
 
   public ObservationRequest(final String url, final Observation observation) {

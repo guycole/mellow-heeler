@@ -16,7 +16,6 @@ public class SortieResponse {
   private String timeStamp;
 
   private Integer rowCount = 0;
-  private Integer version = 0;
 
   public String getReceipt() {
     return receipt;
@@ -64,14 +63,6 @@ public class SortieResponse {
 
   public void setRowCount(Integer rowCount) {
     this.rowCount = rowCount;
-  }
-
-  public Integer getVersion() {
-    return version;
-  }
-
-  public void setVersion(Integer version) {
-    this.version = version;
   }
 
   @JsonProperty("_links")

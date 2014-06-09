@@ -18,7 +18,6 @@ public class GeoLocationRequest extends SpringAndroidSpiceRequest<GeoLocationRes
   private static final Logger LOG = LoggerFactory.getLogger(GeoLocationRequest.class);
 
   private final String url;
-  //private final String url = Constant.DIAGNOSTIC_URL;
   private final GeoLocation geoLocation;
 
   public GeoLocationRequest(final String url, final GeoLocation geoLocation) {

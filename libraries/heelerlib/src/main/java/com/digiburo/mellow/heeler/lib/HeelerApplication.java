@@ -30,7 +30,7 @@ public class HeelerApplication extends Application {
   @Override
   public void onCreate() {
     logConfiguration();
-    logTest();
+//    logTest();
 
     new UserPreferenceHelper(this);
 
@@ -53,7 +53,7 @@ public class HeelerApplication extends Application {
 
   @Override
   public void onTerminate() {
-    LOG.info("onTerminate");
+//    LOG.info("onTerminate");
     super.onTerminate();
 
     SpiceManager spiceManager = Personality.getSpiceManager();

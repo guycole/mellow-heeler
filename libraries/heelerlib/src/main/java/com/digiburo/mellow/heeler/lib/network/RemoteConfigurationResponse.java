@@ -24,7 +24,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RemoteConfigurationResponse {
-  private Integer version;
+  private Integer messageVersion = 0;
   private String revisionDate;
 
   @JsonProperty("_links")
@@ -39,11 +39,11 @@ public class RemoteConfigurationResponse {
   }
 
   public Integer getMessageVersion() {
-    return version;
+    return messageVersion;
   }
 
-  public void setMessageVersion(Integer version) {
-    this.version = version;
+  public void setMessageVersion(Integer arg) {
+    messageVersion = arg;
   }
 
   public String getRevisionDate() {

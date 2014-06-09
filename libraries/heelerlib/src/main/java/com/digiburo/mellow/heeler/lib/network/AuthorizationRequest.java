@@ -20,17 +20,19 @@ public class AuthorizationRequest extends SpringAndroidSpiceRequest<Authorizatio
   private static final Logger LOG = LoggerFactory.getLogger(AuthorizationRequest.class);
 
   private final String url;
-//  private final String url = Constant.DIAGNOSTIC_URL;
   private final Map<String, String> parameters = new HashMap<String, String>();
 
   public AuthorizationRequest(final Context context) {
     super(AuthorizationResponse.class);
 
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(context);
-    parameters.put("installationId", userPreferenceHelper.getInstallationId(context));
-    parameters.put("messageVersion", "1");
-
     url = userPreferenceHelper.getAuthorizeUrl(context);
+
+    if (url.contains(Constant.TEST_URL_FRAGMENT)) {
+      parameters.put("installationId", Constant.TEST_INSTALLATION_ID);
+    } else {
+      parameters.put("installationId", userPreferenceHelper.getInstallationId(context));
+    }
   }
 
   @Override

@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class Observation {
   private String installationId;
-  private Integer messageVersion;
   private String sortieId;
   private List<ObservationElement> observationList;
 
@@ -18,14 +17,6 @@ public class Observation {
 
   public void setInstallationId(String installationId) {
     this.installationId = installationId;
-  }
-
-  public Integer getMessageVersion() {
-    return messageVersion;
-  }
-
-  public void setMessageVersion(Integer messageVersion) {
-    this.messageVersion = messageVersion;
   }
 
   public String getSortieId() {

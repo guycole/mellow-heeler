@@ -50,7 +50,7 @@ public class SortieWriter {
 
       @Override
       public void onRequestSuccess(SortieResponse sortieResponse) {
-        LOG.info("sortie write success:" + sortieResponse.getRemoteIpAddress() + ":" + sortieResponse.getVersion() + ":" + sortieResponse.getStatus());
+        LOG.info("sortie write success:" + sortieResponse.getRemoteIpAddress() + ":" + sortieResponse.getStatus());
 
         if (!Constant.OK.equals(sortieResponse.getStatus())) {
           LOG.error("bad remote status:" + sortieResponse.getStatus());

@@ -13,7 +13,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
   "receipt": "b6d1430d-b44f-4586bdc7-38c520f84a35",
   "status": "OK",
   "timeStamp": "2014-05-21T07:36:45Z",
-  "messageVersion": 1,
   "remoteIpAddress": "127.0.0.1",
   "_links": {
     "self": {
@@ -29,7 +28,6 @@ public class AuthorizationResponse {
   private String remoteIpAddress;
   private String status;
   private String timeStamp;
-  private Integer version;
 
   @JsonProperty("_links")
   private Links links;
@@ -72,14 +70,6 @@ public class AuthorizationResponse {
 
   public void setTimeStamp(String timeStamp) {
     this.timeStamp = timeStamp;
-  }
-
-  public Integer getVersion() {
-    return version;
-  }
-
-  public void setVersion(Integer arg) {
-    version = arg;
   }
 
   public static class Links {

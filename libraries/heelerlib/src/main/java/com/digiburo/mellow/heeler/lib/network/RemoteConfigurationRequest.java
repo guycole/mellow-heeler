@@ -1,5 +1,6 @@
 package com.digiburo.mellow.heeler.lib.network;
 
+import com.digiburo.mellow.heeler.lib.Personality;
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ public class RemoteConfigurationRequest extends SpringAndroidSpiceRequest<Remote
   private static final Logger LOG = LoggerFactory.getLogger(RemoteConfigurationRequest.class);
 
   // provisioning URL
-  public static final String URL = "http://digiburo.com/hal/mellow-heeler1.json";
+  public static final String URL = Personality.getRemoteConfigurationUrl();
 
   public RemoteConfigurationRequest() {
     super(RemoteConfigurationResponse.class);

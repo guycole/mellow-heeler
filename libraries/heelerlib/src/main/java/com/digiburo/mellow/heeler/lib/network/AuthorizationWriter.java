@@ -35,12 +35,12 @@ public class AuthorizationWriter {
     spiceManager.execute(request, cacheKey, DurationInMillis.ALWAYS_EXPIRED, new RequestListener<AuthorizationResponse>() {
       @Override
       public void onRequestFailure(final SpiceException spiceException) {
-        LOG.info("authorize failure");
+        LOG.info("authorize failure:" + spiceException);
       }
 
       @Override
       public void onRequestSuccess(final AuthorizationResponse authorizationResponse) {
-        LOG.debug("authorize success:" + authorizationResponse.getRemoteIpAddress() + ":" + authorizationResponse.getVersion() + ":" + authorizationResponse.getStatus());
+        LOG.debug("authorize success:" + authorizationResponse.getRemoteIpAddress() + ":" + authorizationResponse.getStatus());
 
         if (!Constant.OK.equals(authorizationResponse.getStatus())) {
           LOG.error("bad remote status:" + authorizationResponse.getStatus());

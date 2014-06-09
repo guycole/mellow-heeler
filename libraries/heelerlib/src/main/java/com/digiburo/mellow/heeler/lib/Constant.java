@@ -26,6 +26,15 @@ public class Constant {
   //
   public static final String DIAGNOSTIC_URL = "https://mellow-heeler.appspot.com/diagnostic";
 
+  //
+  public static final String TEST_INSTALLATION_ID = "bcf7210f-2ab3-4a66-9cf9-256687d99c46";
+  public static final String TEST_SORTIE_ID = "bcf7210f-2ab3-4a66-9cf9-256687d99c46";
+
+  //
+  public static final String TEST_CONFIGURATION_URL = "http://digiburo.com/hal/mellow-heeler-test1.json";
+  public static final String TEST_URL_FRAGMENT = "mellow-heeler-test";
+
+  //
   public static final String OK = "OK";
   public static final String UNKNOWN = "Unknown";
 

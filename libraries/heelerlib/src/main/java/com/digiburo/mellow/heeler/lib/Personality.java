@@ -47,6 +47,19 @@ public class Personality {
   }
 
   /**
+   * remote configuration URL, default value is for production, changes for unit test
+   */
+  private static String remoteConfigurationUrl = "http://digiburo.com/hal/mellow-heeler1.json";
+
+  public static synchronized String getRemoteConfigurationUrl() {
+    return remoteConfigurationUrl;
+  }
+
+  public static synchronized void setRemoteConfigurationUrl(String arg) {
+    remoteConfigurationUrl = arg;
+  }
+
+  /**
    * spice manager
    */
   private static SpiceManager spiceManager;
