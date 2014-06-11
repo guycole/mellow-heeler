@@ -10,6 +10,7 @@ import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 /**
  * @author gsc
@@ -44,10 +45,9 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
     RemoteConfigurationResponse remoteConfigurationResponse = null;
 
     do {
-
+      remoteConfigurationResponse = concreteListener.getRemoteConfigurationResponse();
       if (remoteConfigurationResponse == null) {
         ++testCount;
-        System.out.println("testCount:" +testCount);
 
         try {
           Thread.sleep(10 * 1000L);
@@ -58,6 +58,13 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
     } while ((testCount < 5) && (remoteConfigurationResponse == null));
 
     assertNotNull(remoteConfigurationResponse);
+    assertTrue(Constant.TEST_CONFIGURATION_URL.equals(remoteConfigurationResponse.getLinks().getSelf().getHref()));
+
+    UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(getContext());
+    assertTrue(userPreferenceHelper.getAuthorizeUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getAuthorize().getHref()));
+    assertTrue(userPreferenceHelper.getLocationUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getLocation().getHref()));
+    assertTrue(userPreferenceHelper.getObservationUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getObservation().getHref()));
+    assertTrue(userPreferenceHelper.getSortieUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getSortie().getHref()));
   }
 
   /**
