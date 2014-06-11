@@ -14,13 +14,9 @@ import android.widget.ToggleButton;
 
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
-import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.SortieController;
 import com.digiburo.mellow.heeler.lib.UploadController;
-import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
-import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
-import com.google.android.gms.plus.model.people.Person;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,19 +28,19 @@ public class MainActivity extends ActionBarActivity implements MainListener {
   private final SortieController sortieController = new SortieController();
   private final UploadController uploadController = new UploadController();
 
-  // some user preference changes require the sortie to be restarted
+  // user preference changes require the sortie to be restarted
   private SharedPreferences.OnSharedPreferenceChangeListener sharedPrefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-    LOG.debug("shared preference change:" + key);
+      LOG.debug("shared preference change:" + key);
 
-    if (UserPreferenceHelper.USER_PREF_POLL_FREQUENCY.equals(key)) {
-      LOG.debug("wifi polling update");
-      stopCollection();
-    } else if (UserPreferenceHelper.USER_PREF_POLL_DISTANCE.equals(key)) {
-      LOG.debug("distance update");
-      stopCollection();
-    }
+      if (UserPreferenceHelper.USER_PREF_POLL_FREQUENCY.equals(key)) {
+        LOG.debug("wifi polling update");
+        stopCollection();
+      } else if (UserPreferenceHelper.USER_PREF_POLL_DISTANCE.equals(key)) {
+        LOG.debug("distance update");
+        stopCollection();
+      }
     }
   };
 
@@ -82,29 +78,6 @@ public class MainActivity extends ActionBarActivity implements MainListener {
     } else {
       stopCollection();
     }
-  }
-
-  /**
-   *
-   * @param name
-   */
-  @Override
-  public void restartSortie(String name) {
-
-    SortieModel sortieModel = Personality.getCurrentSortie();
-    String sortieName = sortieModel.getSortieName();
-    if (!Constant.DEFAULT_SORTIE_NAME.equals(sortieName)) {
-      String[] temp = sortieName.split("-");
-      if (temp.length > 1) {
-        int ndx = Integer.parseInt(temp[1]);
-        sortieName = temp[0] + "-" + (ndx+1);
-      } else {
-        sortieName += "-1";
-      }
-    }
-
-    stopCollection();
-    startCollection(sortieName);
   }
 
   /**

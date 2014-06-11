@@ -10,12 +10,6 @@ public interface MainListener {
    * @param rowId sortieModel rowId
    */
   void displayGoogleMap(long rowId);
-
-  /**
-   * current sortie has reached threshold limits
-   * @param name
-   */
-  void restartSortie(String name);
 }
 /*
  * Copyright 2014 Digital Burro, INC

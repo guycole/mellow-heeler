@@ -1,6 +1,5 @@
 package com.digiburo.mellow.heeler.app;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +15,6 @@ import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.UploadController;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
-import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModelList;
 
 import org.slf4j.Logger;
@@ -86,6 +84,7 @@ public class UploadFragment extends Fragment {
 
     getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Constant.UPLOAD_EVENT));
 
+    /*
     DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
     sortieModelList = dataBaseFacade.selectAllSorties(false, getActivity());
     if (sortieModelList.isEmpty()) {
@@ -94,9 +93,10 @@ public class UploadFragment extends Fragment {
       getActivity().finish();
       return;
     }
+    */
 
     UploadController uploadController = new UploadController();
-    uploadController.uploadAll(sortieModelList, getActivity());
+    uploadController.uploadAll(getActivity());
   }
 
   @Override
@@ -104,7 +104,6 @@ public class UploadFragment extends Fragment {
     super.onPause();
     getActivity().unregisterReceiver(broadcastReceiver);
   }
-
 }
 /*
  * Copyright 2014 Digital Burro, INC

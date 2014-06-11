@@ -23,7 +23,6 @@ import com.digiburo.mellow.heeler.lib.UploadController;
 public class MenuActivity extends Activity {
   private static final Logger LOG = LoggerFactory.getLogger(MenuActivity.class);
 
-
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {

@@ -138,29 +138,8 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
   }
 
   private void startLocation() {
-    Date date1 = new Date();
-    Location location1 = new Location(LocationManager.PASSIVE_PROVIDER);
-    location1.setAccuracy(1.23f);
-    location1.setAltitude(2.34f);
-    location1.setLatitude(3.45f);
-    location1.setLongitude(4.56f);
-    location1.setTime(date1.getTime());
-
-    LocationModel locationModel1 = new LocationModel();
-    locationModel1.setDefault();
-    locationModel1.setLocation(location1, Constant.TEST_SORTIE_ID);
-
-    Date date2 = new Date();
-    Location location2 = new Location(LocationManager.PASSIVE_PROVIDER);
-    location2.setAccuracy(5.67f);
-    location2.setAltitude(6.78f);
-    location2.setLatitude(7.89f);
-    location2.setLongitude(8.90f);
-    location2.setTime(date2.getTime());
-
-    LocationModel locationModel2 = new LocationModel();
-    locationModel2.setDefault();
-    locationModel2.setLocation(location1, Constant.TEST_SORTIE_ID);
+    LocationModel locationModel1 = testHelper.generateLocationModel(null, Constant.TEST_SORTIE_ID);
+    LocationModel locationModel2 = testHelper.generateLocationModel(null, Constant.TEST_SORTIE_ID);
 
     LocationModelList locationModelList = new LocationModelList();
     locationModelList.add(locationModel1);
@@ -171,13 +150,8 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
   }
 
   private void startObservation() {
-    ObservationModel observation1 = new ObservationModel();
-    observation1.setDefault();
-    observation1.setScanResult("ssid1", "bssid1", "capability1", 1111, 2222, "locationId1", Constant.TEST_SORTIE_ID);
-
-    ObservationModel observation2 = new ObservationModel();
-    observation2.setDefault();
-    observation2.setScanResult("ssid2", "bssid2", "capability2", 3333, 4444, "locationId2", Constant.TEST_SORTIE_ID);
+    ObservationModel observation1 = testHelper.generateObservationModel(null, Constant.TEST_SORTIE_ID);
+    ObservationModel observation2 = testHelper.generateObservationModel(null, Constant.TEST_SORTIE_ID);
 
     ObservationModelList observationModelList = new ObservationModelList();
     observationModelList.add(observation1);
@@ -188,12 +162,7 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
   }
 
   private void startSortie() {
-    SortieModel sortieModel = new SortieModel();
-    sortieModel.setDefault();
-
-    sortieModel.setSortieName("sortie1");
-//    sortieModel.setSortieUuid(Constant.TEST_SORTIE_ID);
-
+    SortieModel sortieModel = testHelper.generateSortieModel(null, "facadeTest");
     NetworkFacade networkFacade = new NetworkFacade();
     networkFacade.writeSortie(sortieModel, this, getContext());
   }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.LocationModelList;
 import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
@@ -19,7 +20,6 @@ import com.digiburo.mellow.heeler.lib.network.SortieResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * upload contents of current database
  * only uploads items which have not yet been transmitted
@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
  * @author gsc
  */
 public class UploadController implements NetworkListener {
+  public static final int MAX_ROWS = 50;
+
   private static final Logger LOG = LoggerFactory.getLogger(UploadController.class);
 
   private Context context;
@@ -38,6 +40,12 @@ public class UploadController implements NetworkListener {
 
   private int sortieModelNdx = 0;
   private SortieModelList sortieModelList;
+
+  private int locationModelNdx = 0;
+  private LocationModelList locationModelList;
+
+  private int observationModelNdx = 0;
+  private ObservationModelList observationModelList;
 
   /**
    * NetworkListener:remote authorization test
@@ -68,11 +76,14 @@ public class UploadController implements NetworkListener {
    */
   public void freshGeoLocation(final GeoLocationResponse geoLocationResponse) {
     LOG.debug("remote geoloc noted");
+
+    /*
     locationFlag = true;
 
     if (testForSortieComplete()) {
       sortieWrapUp();
     }
+    */
   }
 
   /**
@@ -117,14 +128,23 @@ public class UploadController implements NetworkListener {
    * upload everything, collection must be stopped prior to invoking
    * @param context
    */
-  public void uploadAll(final SortieModelList sortieModelList, final Context context) {
+  public void uploadAll(final Context context) {
     LOG.debug("uploadAll");
 
-    this.sortieModelList = sortieModelList;
     this.context = context;
 
     dataBaseFacade = new DataBaseFacade(context);
+
+    sortieModelList = dataBaseFacade.selectAllSorties(false, context);
+    for (SortieModel sortieModel:sortieModelList) {
+      uploadLocation(sortieModel.getSortieUuid());
+    }
+
     networkFacade.readRemoteConfiguration(this, context);
+
+    /*
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+    */
   }
 
   private void sortieUpload() {
@@ -133,7 +153,7 @@ public class UploadController implements NetworkListener {
 
     SortieModel model = sortieModelList.get(sortieModelNdx);
     uploadLocation(model.getSortieUuid());
-    uploadObservation(model.getSortieUuid());
+//    uploadObservation(model.getSortieUuid());
   }
 
   private boolean testForSortieComplete() {
@@ -150,8 +170,22 @@ public class UploadController implements NetworkListener {
   }
 
   private void uploadLocation(final String sortieUuid) {
-    LocationModelList locationModelList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
-    LOG.debug("uploadLocation:" + locationModelList.size() + ":" + sortieUuid);
+    LocationModelList tempList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
+    LOG.debug("uploadLocation:" + tempList.size() + ":" + sortieUuid);
+
+    if (tempList.isEmpty()) {
+      locationFlag = true;
+    } else {
+      locationModelList = new LocationModelList();
+      for (int ii = 0; (ii < MAX_ROWS) || (ii < tempList.size()); ii++) {
+        locationModelList.add(tempList.get(ii));
+      }
+
+      NetworkFacade networkFacade = new NetworkFacade();
+      networkFacade.writeLocations(sortieUuid, locationModelList, this, context);
+    }
+
+    /*
     if (locationModelList.isEmpty()) {
       locationFlag = true;
 
@@ -159,9 +193,9 @@ public class UploadController implements NetworkListener {
         sortieWrapUp();
       }
     } else {
-      NetworkFacade networkFacade = new NetworkFacade();
-      networkFacade.writeLocations(sortieUuid, locationModelList, this, context);
+
     }
+    */
   }
 
   private void uploadObservation(final String sortieUuid) {
@@ -179,6 +213,10 @@ public class UploadController implements NetworkListener {
     }
   }
 
+  /**
+   *
+   * @param sortieModel
+   */
   private void uploadSortie(final SortieModel sortieModel) {
     LOG.debug("uploadSortie:" + sortieModel.getSortieUuid());
     NetworkFacade networkFacade = new NetworkFacade();
