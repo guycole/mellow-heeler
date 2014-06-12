@@ -63,14 +63,14 @@ public class RemoteConfigurationWriter {
 
       @Override
       public void onRequestSuccess(final RemoteConfigurationResponse remoteConfigurationResponse) {
-        LOG.debug("request success");
+        LOG.info("request success");
 
         loadResponse(remoteConfigurationResponse, context);
 
         if (networkListener == null) {
-          LOG.debug("skipping listener");
+          LOG.info("skipping listener");
         } else {
-          LOG.debug("invoking listener");
+          LOG.info("invoking listener");
           networkListener.freshRemoteConfiguration(remoteConfigurationResponse);
         }
       }

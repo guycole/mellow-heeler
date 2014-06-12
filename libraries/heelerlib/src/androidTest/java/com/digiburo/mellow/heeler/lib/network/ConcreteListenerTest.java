@@ -20,6 +20,8 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
 
   private final NetworkFacade networkFacade = new NetworkFacade();
 
+  private volatile boolean configurationUpdated = false;
+
   public ConcreteListenerTest() {
     super(HeelerApplication.class);
   }
@@ -37,7 +39,56 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
     super.tearDown();
   }
 
+  public void testAuthentication() {
+    RemoteConfigurationResponse remoteConfigurationResponse = waitForConfiguration();
+    assertNotNull(remoteConfigurationResponse);
+
+    ConcreteListener concreteListener = new ConcreteListener(getContext());
+    networkFacade.testAuthorization(concreteListener, getContext());
+
+    int testCount = 0;
+    AuthorizationResponse authorizationResponse = null;
+
+    do {
+      authorizationResponse = concreteListener.getAuthorizationResponse();
+      if (authorizationResponse == null) {
+        ++testCount;
+
+        try {
+          Thread.sleep(5 * 1000L);
+        } catch(Exception exception) {
+          //empty
+        }
+      }
+    } while ((testCount < 12) && (authorizationResponse == null));
+
+    assertNotNull(authorizationResponse);
+  }
+
   public void testRemoteConfiguration() {
+    RemoteConfigurationResponse remoteConfigurationResponse = waitForConfiguration();
+    assertNotNull(remoteConfigurationResponse);
+
+    System.out.println("zxzx:" + remoteConfigurationResponse);
+    System.out.println("zxzx:" + remoteConfigurationResponse.getLinks());
+    System.out.println("zxzx:" + remoteConfigurationResponse.getLinks().getSelf());
+    System.out.println("zxzx:" + remoteConfigurationResponse.getLinks().getSelf().getHref());
+
+    assertTrue(Constant.TEST_CONFIGURATION_URL.equals(remoteConfigurationResponse.getLinks().getSelf().getHref()));
+
+    UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(getContext());
+    assertTrue(userPreferenceHelper.getAuthorizeUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getAuthorize().getHref()));
+    assertTrue(userPreferenceHelper.getLocationUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getLocation().getHref()));
+    assertTrue(userPreferenceHelper.getObservationUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getObservation().getHref()));
+    assertTrue(userPreferenceHelper.getSortieUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getSortie().getHref()));
+
+    configurationUpdated = true;
+  }
+
+  /**
+   *
+   */
+  private RemoteConfigurationResponse waitForConfiguration() {
     ConcreteListener concreteListener = new ConcreteListener(getContext());
     networkFacade.readRemoteConfiguration(concreteListener, getContext());
 
@@ -50,26 +101,20 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
         ++testCount;
 
         try {
-          Thread.sleep(10 * 1000L);
+          Thread.sleep(5 * 1000L);
         } catch(Exception exception) {
           //empty
         }
       }
-    } while ((testCount < 5) && (remoteConfigurationResponse == null));
+    } while ((testCount < 12) && (remoteConfigurationResponse == null));
 
-    assertNotNull(remoteConfigurationResponse);
-    assertTrue(Constant.TEST_CONFIGURATION_URL.equals(remoteConfigurationResponse.getLinks().getSelf().getHref()));
-
-    UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(getContext());
-    assertTrue(userPreferenceHelper.getAuthorizeUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getAuthorize().getHref()));
-    assertTrue(userPreferenceHelper.getLocationUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getLocation().getHref()));
-    assertTrue(userPreferenceHelper.getObservationUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getObservation().getHref()));
-    assertTrue(userPreferenceHelper.getSortieUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getSortie().getHref()));
+    return remoteConfigurationResponse;
   }
 
   /**
    * ensure there are rows to upload
    */
+  /*
   private void prepareDataBase() {
     SortieModel sortieModel = testHelper.generateSortieModel(null, "uploadTest");
     LocationModel locationModel1 = testHelper.generateLocationModel(null, sortieModel.getSortieUuid());
@@ -84,4 +129,5 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
     dataBaseFacade.insert(observationModel1, getContext());
     dataBaseFacade.insert(observationModel2, getContext());
   }
+  */
 }

@@ -135,10 +135,12 @@ public class UploadController implements NetworkListener {
 
     dataBaseFacade = new DataBaseFacade(context);
 
+    /*
     sortieModelList = dataBaseFacade.selectAllSorties(false, context);
     for (SortieModel sortieModel:sortieModelList) {
       uploadLocation(sortieModel.getSortieUuid());
     }
+    */
 
     networkFacade.readRemoteConfiguration(this, context);
 
@@ -170,9 +172,10 @@ public class UploadController implements NetworkListener {
   }
 
   private void uploadLocation(final String sortieUuid) {
-    LocationModelList tempList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
-    LOG.debug("uploadLocation:" + tempList.size() + ":" + sortieUuid);
+//    LocationModelList tempList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
+//    LOG.debug("uploadLocation:" + tempList.size() + ":" + sortieUuid);
 
+    /*
     if (tempList.isEmpty()) {
       locationFlag = true;
     } else {
@@ -183,7 +186,7 @@ public class UploadController implements NetworkListener {
 
       NetworkFacade networkFacade = new NetworkFacade();
       networkFacade.writeLocations(sortieUuid, locationModelList, this, context);
-    }
+    }*/
 
     /*
     if (locationModelList.isEmpty()) {
