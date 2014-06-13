@@ -6,13 +6,15 @@ import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.HeelerApplication;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.TestHelper;
-import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.LocationModelList;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 /**
+ * Exercise network listener - write random models to remote server
  * @author gsc
  */
 public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication> {
@@ -63,6 +65,82 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
     } while ((testCount < 12) && (authorizationResponse == null));
 
     assertNotNull(authorizationResponse);
+    assertTrue(Constant.OK.equals(authorizationResponse.getStatus()));
+  }
+
+  public void testLocation() {
+    RemoteConfigurationResponse remoteConfigurationResponse = waitForConfiguration();
+    assertNotNull(remoteConfigurationResponse);
+
+    String sortieId = java.util.UUID.randomUUID().toString();
+
+    LocationModel model1 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model2 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+
+    LocationModelList locationModelList = new LocationModelList();
+    locationModelList.add(model1);
+    locationModelList.add(model2);
+
+    ConcreteListener concreteListener = new ConcreteListener(getContext());
+    networkFacade.writeLocations(sortieId, locationModelList, concreteListener, getContext());
+
+    int testCount = 0;
+    GeoLocationResponse geoLocationResponse = null;
+
+    do {
+      geoLocationResponse = concreteListener.getGeoLocationResponse();
+      if (geoLocationResponse == null) {
+        ++testCount;
+
+        try {
+          Thread.sleep(5 * 1000L);
+        } catch(Exception exception) {
+          //empty
+        }
+      }
+    } while ((testCount < 12) && (geoLocationResponse == null));
+
+    assertNotNull(geoLocationResponse);
+    assertTrue(Constant.OK.equals(geoLocationResponse.getStatus()));
+    assertEquals(2, geoLocationResponse.getRowCount().intValue());
+  }
+
+  public void testObservation() {
+    RemoteConfigurationResponse remoteConfigurationResponse = waitForConfiguration();
+    assertNotNull(remoteConfigurationResponse);
+
+    String locationId = java.util.UUID.randomUUID().toString();
+    String sortieId = java.util.UUID.randomUUID().toString();
+
+    ObservationModel model1 = testHelper.generateObservationModel(locationId, sortieId);
+    ObservationModel model2 = testHelper.generateObservationModel(locationId, sortieId);
+
+    ObservationModelList observationModelList = new ObservationModelList();
+    observationModelList.add(model1);
+    observationModelList.add(model2);
+
+    ConcreteListener concreteListener = new ConcreteListener(getContext());
+    networkFacade.writeObservations(sortieId, observationModelList, concreteListener, getContext());
+
+    int testCount = 0;
+    ObservationResponse observationResponse = null;
+
+    do {
+      observationResponse = concreteListener.getObservationResponse();
+      if (observationResponse == null) {
+        ++testCount;
+
+        try {
+          Thread.sleep(5 * 1000L);
+        } catch(Exception exception) {
+          //empty
+        }
+      }
+    } while ((testCount < 12) && (observationResponse == null));
+
+    assertNotNull(observationResponse);
+    assertTrue(Constant.OK.equals(observationResponse.getStatus()));
+    assertEquals(2, observationResponse.getRowCount().intValue());
   }
 
   public void testRemoteConfiguration() {
@@ -83,6 +161,39 @@ public class ConcreteListenerTest extends ApplicationTestCase<HeelerApplication>
     assertTrue(userPreferenceHelper.getSortieUrl(getContext()).equals(remoteConfigurationResponse.getLinks().getSortie().getHref()));
 
     configurationUpdated = true;
+  }
+
+  public void testSortie() {
+    RemoteConfigurationResponse remoteConfigurationResponse = waitForConfiguration();
+    assertNotNull(remoteConfigurationResponse);
+
+    String sortieId = java.util.UUID.randomUUID().toString();
+    String sortieName = testHelper.randomString();
+
+    SortieModel sortieModel = testHelper.generateSortieModel(sortieId, sortieName);
+
+    ConcreteListener concreteListener = new ConcreteListener(getContext());
+    networkFacade.writeSortie(sortieModel, concreteListener, getContext());
+
+    int testCount = 0;
+    SortieResponse sortieResponse = null;
+
+    do {
+      sortieResponse = concreteListener.getSortieResponse();
+      if (sortieResponse == null) {
+        ++testCount;
+
+        try {
+          Thread.sleep(5 * 1000L);
+        } catch(Exception exception) {
+          //empty
+        }
+      }
+    } while ((testCount < 12) && (sortieResponse == null));
+
+    assertNotNull(sortieResponse);
+    assertTrue(Constant.OK.equals(sortieResponse.getStatus()));
+    assertEquals(1, sortieResponse.getRowCount().intValue());
   }
 
   /**

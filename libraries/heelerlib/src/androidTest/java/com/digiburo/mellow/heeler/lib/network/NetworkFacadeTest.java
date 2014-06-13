@@ -22,14 +22,12 @@ import java.util.Date;
  * exercise remote configuration
  * @author gsc
  */
-public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> implements NetworkListener {
+public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> {
   private TestHelper testHelper = new TestHelper();
 
-  private boolean authorizationFlag = false;
-  private boolean configurationFlag = false;
-  private boolean locationFlag = false;
-  private boolean observationFlag = false;
-  private boolean sortieFlag = false;
+  private final NetworkFacade networkFacade = new NetworkFacade();
+
+  private volatile boolean configurationUpdated = false;
 
   public NetworkFacadeTest() {
     super(HeelerApplication.class);
@@ -48,6 +46,98 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
     super.tearDown();
   }
 
+  /**
+   *
+   */
+  public void testLocation() {
+    RemoteConfigurationResponse remoteConfigurationResponse = waitForConfiguration();
+    assertNotNull(remoteConfigurationResponse);
+
+    String sortieId = java.util.UUID.randomUUID().toString();
+
+    LocationModel model01 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model02 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model03 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model04 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model05 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model06 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model07 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model08 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model09 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model10 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model11 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model12 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+    LocationModel model13 = testHelper.generateLocationModel(testHelper.generateLocation(), sortieId);
+
+    LocationModelList locationModelList = new LocationModelList();
+    locationModelList.add(model01);
+    locationModelList.add(model02);
+    locationModelList.add(model03);
+    locationModelList.add(model04);
+    locationModelList.add(model05);
+    locationModelList.add(model06);
+    locationModelList.add(model07);
+    locationModelList.add(model08);
+    locationModelList.add(model09);
+    locationModelList.add(model10);
+    locationModelList.add(model11);
+    locationModelList.add(model12);
+    locationModelList.add(model13);
+
+    ConcreteListener concreteListener = new ConcreteListener(getContext());
+    networkFacade.writeLocations(sortieId, locationModelList, concreteListener, getContext());
+
+    int testCount = 0;
+    GeoLocationResponse geoLocationResponse = null;
+
+    do {
+      geoLocationResponse = concreteListener.getGeoLocationResponse();
+      if (geoLocationResponse == null) {
+        ++testCount;
+
+        try {
+          Thread.sleep(5 * 1000L);
+        } catch(Exception exception) {
+          //empty
+        }
+      }
+    } while ((testCount < 12) && (geoLocationResponse == null));
+
+    assertNotNull(geoLocationResponse);
+    assertTrue(Constant.OK.equals(geoLocationResponse.getStatus()));
+    assertEquals(13, geoLocationResponse.getRowCount().intValue());
+  }
+
+  /**
+   *
+   */
+  private RemoteConfigurationResponse waitForConfiguration() {
+    ConcreteListener concreteListener = new ConcreteListener(getContext());
+    networkFacade.readRemoteConfiguration(concreteListener, getContext());
+
+    int testCount = 0;
+    RemoteConfigurationResponse remoteConfigurationResponse = null;
+
+    do {
+      remoteConfigurationResponse = concreteListener.getRemoteConfigurationResponse();
+      if (remoteConfigurationResponse == null) {
+        ++testCount;
+
+        try {
+          Thread.sleep(5 * 1000L);
+        } catch(Exception exception) {
+          //empty
+        }
+      }
+    } while ((testCount < 12) && (remoteConfigurationResponse == null));
+
+    return remoteConfigurationResponse;
+  }
+
+
+  ////////////
+
+/*
   @Override
   public void freshAuthorization(final AuthorizationResponse authorizationResponse) {
     assertNotNull(authorizationResponse.getReceipt());
@@ -63,7 +153,9 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
 
     startLocation();
   }
+  */
 
+  /*
   @Override
   public void freshGeoLocation(final GeoLocationResponse geoLocationResponse) {
     assertNotNull(geoLocationResponse.getReceipt());
@@ -81,7 +173,9 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
 
     startObservation();
   }
+  */
 
+  /*
   @Override
   public void freshObservation(final ObservationResponse observationResponse) {
     assertNotNull(observationResponse.getReceipt());
@@ -99,7 +193,9 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
 
     startSortie();
   }
+  */
 
+  /*
   @Override
   public void freshRemoteConfiguration(final RemoteConfigurationResponse remoteConfigurationResponse) {
     assertEquals(1, remoteConfigurationResponse.getMessageVersion().intValue());
@@ -114,7 +210,9 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
 
     startAuthorization();
   }
+  */
 
+  /*
   @Override
   public void freshSortie(final SortieResponse sortieResponse) {
     assertNotNull(sortieResponse.getReceipt());
@@ -131,7 +229,9 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
 
     sortieFlag = true;
   }
+  */
 
+  /*
   private void startAuthorization() {
     NetworkFacade networkFacade = new NetworkFacade();
     networkFacade.testAuthorization(this, getContext());
@@ -148,7 +248,9 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
     NetworkFacade networkFacade = new NetworkFacade();
     networkFacade.writeLocations(Constant.TEST_SORTIE_ID, locationModelList, this, getContext());
   }
+  */
 
+  /*
   private void startObservation() {
     ObservationModel observation1 = testHelper.generateObservationModel(null, Constant.TEST_SORTIE_ID);
     ObservationModel observation2 = testHelper.generateObservationModel(null, Constant.TEST_SORTIE_ID);
@@ -166,6 +268,7 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
     NetworkFacade networkFacade = new NetworkFacade();
     networkFacade.writeSortie(sortieModel, this, getContext());
   }
+  */
 
   /**
    * Read remote configuration...
@@ -175,6 +278,7 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
    * ...then test sortie upload
    */
   public void testChain() {
+    /*
     NetworkFacade networkFacade = new NetworkFacade();
     networkFacade.readRemoteConfiguration(this, getContext());
 
@@ -183,6 +287,7 @@ public class NetworkFacadeTest extends ApplicationTestCase<HeelerApplication> im
     } catch(Exception exception) {
       //empty
     }
+    */
 
     /*
     assertTrue(authorizationFlag);

@@ -27,203 +27,143 @@ import org.slf4j.LoggerFactory;
  * @author gsc
  */
 public class UploadController implements NetworkListener {
-  public static final int MAX_ROWS = 50;
+  public static final int MAX_ROWS = 5;
 
   private static final Logger LOG = LoggerFactory.getLogger(UploadController.class);
+
+  private enum StateOption { CONFIGURATION, AUTHORIZE, LOCATION, OBSERVATION, SORTIE };
 
   private Context context;
   private DataBaseFacade dataBaseFacade;
   private final NetworkFacade networkFacade = new NetworkFacade();
 
-  private boolean locationFlag = false;
-  private boolean observationFlag = false;
-
-  private int sortieModelNdx = 0;
-  private SortieModelList sortieModelList;
-
-  private int locationModelNdx = 0;
   private LocationModelList locationModelList;
-
-  private int observationModelNdx = 0;
   private ObservationModelList observationModelList;
+  private SortieModelList sortieModelList;
+  private int sortieNdx;
 
   /**
-   * NetworkListener:remote authorization test
+   * ensure remote server will accept upload
    * @param authorizationResponse
    */
   public void freshAuthorization(final AuthorizationResponse authorizationResponse) {
-    LOG.debug("remote authorization noted");
-    if (authorizationResponse.getStatus().equals("OK")) {
-      LOG.debug("remote authorization approved");
+    LOG.debug("fresh authorization noted:" + authorizationResponse.getStatus());
 
-      Intent notifier = new Intent(Constant.UPLOAD_EVENT);
-      notifier.putExtra(Constant.INTENT_AUTH_FLAG, true);
-      context.sendBroadcast(notifier);
-
-      sortieUpload();
+    if (Constant.OK.equals(authorizationResponse.getStatus())) {
+      dispatcher(StateOption.LOCATION);
     } else {
-      LOG.debug("remote authorization failure");
-
-      Intent notifier = new Intent(Constant.UPLOAD_EVENT);
-      notifier.putExtra(Constant.INTENT_AUTH_FLAG, false);
-      context.sendBroadcast(notifier);
+      // authorization failure
     }
   }
 
   /**
-   * NetworkListener:success location write
+   * success location write
    * @param geoLocationResponse
    */
   public void freshGeoLocation(final GeoLocationResponse geoLocationResponse) {
-    LOG.debug("remote geoloc noted");
+    LOG.debug("fresh geolocation noted:" + geoLocationResponse.getStatus());
 
-    /*
-    locationFlag = true;
-
-    if (testForSortieComplete()) {
-      sortieWrapUp();
+    if (Constant.OK.equals(geoLocationResponse.getStatus())) {
+      writeLocation();
+    } else {
+      // location failure
     }
-    */
   }
 
   /**
-   * NetworkListener:success observation write
+   * success observation write
    * @param observationResponse
    */
   public void freshObservation(final ObservationResponse observationResponse) {
-    LOG.debug("remote observation noted");
-    observationFlag = true;
+    LOG.debug("fresh observation noted:" + observationResponse.getStatus());
 
-    if (testForSortieComplete()) {
-      sortieWrapUp();
+    if (Constant.OK.equals(observationResponse.getStatus())) {
+      writeObservation();
+    } else {
+      // observation failure
     }
   }
 
   /**
-   * NetworkListener:updated remote configuration
+   * refresh remote configuration
    * @param remoteConfigurationResponse
    */
   public void freshRemoteConfiguration(final RemoteConfigurationResponse remoteConfigurationResponse) {
     LOG.debug("remote configuration noted");
-    networkFacade.testAuthorization(this, context);
+    dispatcher(StateOption.AUTHORIZE);
   }
 
   /**
-   * NetworkListener:success sortie write
-   * @param sortieResponse
+   * success sortie write
+   * @param observationResponse
    */
   public void freshSortie(final SortieResponse sortieResponse) {
-    LOG.debug("remote sortie noted");
 
-    if (++sortieModelNdx < sortieModelList.size()) {
-      sortieUpload();
-    } else {
-      Intent notifier = new Intent(Constant.UPLOAD_EVENT);
-      notifier.putExtra(Constant.INTENT_UPLOAD_FLAG, true);
-      context.sendBroadcast(notifier);
-    }
   }
 
   /**
    * upload everything, collection must be stopped prior to invoking
    * @param context
    */
-  public void uploadAll(final Context context) {
+  public void uploadAll(final Context arg) {
     LOG.debug("uploadAll");
 
-    this.context = context;
+    context = arg;
 
     dataBaseFacade = new DataBaseFacade(context);
-
-    /*
     sortieModelList = dataBaseFacade.selectAllSorties(false, context);
-    for (SortieModel sortieModel:sortieModelList) {
-      uploadLocation(sortieModel.getSortieUuid());
+
+    if (!sortieModelList.isEmpty()) {
+      dispatcher(StateOption.CONFIGURATION);
     }
-    */
-
-    networkFacade.readRemoteConfiguration(this, context);
-
-    /*
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-    */
   }
 
-  private void sortieUpload() {
-    locationFlag = false;
-    observationFlag = false;
-
-    SortieModel model = sortieModelList.get(sortieModelNdx);
-    uploadLocation(model.getSortieUuid());
-//    uploadObservation(model.getSortieUuid());
+  private void dispatcher(StateOption currentOption) {
+    switch(currentOption) {
+      case CONFIGURATION:
+        networkFacade.readRemoteConfiguration(this, context);
+        break;
+      case AUTHORIZE:
+        networkFacade.testAuthorization(this, context);
+        break;
+      case LOCATION:
+        writeLocation();
+        break;
+      case OBSERVATION:
+        break;
+      case SORTIE:
+        break;
+    }
   }
 
-  private boolean testForSortieComplete() {
-    if (locationFlag && observationFlag) {
-      return true;
+  private void writeLocation() {
+    if (locationModelList != null) {
+      //mark successful upload of previous candidates
+      for (LocationModel current:locationModelList) {
+        current.setUploadFlag();
+        dataBaseFacade.updateLocation(current, context);
+      }
     }
 
-    return false;
-  }
+    SortieModel sortieModel = sortieModelList.get(sortieNdx);
+    String sortieUuid = sortieModel.getSortieUuid();
 
-  private void sortieWrapUp() {
-    SortieModel model = sortieModelList.get(sortieModelNdx);
-    uploadSortie(model);
-  }
-
-  private void uploadLocation(final String sortieUuid) {
-//    LocationModelList tempList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
-//    LOG.debug("uploadLocation:" + tempList.size() + ":" + sortieUuid);
-
-    /*
+    LocationModelList tempList = dataBaseFacade.selectAllLocations(false, sortieUuid, context);
     if (tempList.isEmpty()) {
-      locationFlag = true;
+      dispatcher(StateOption.OBSERVATION);
+    } else if (tempList.size() < MAX_ROWS) {
+      locationModelList = tempList;
     } else {
-      locationModelList = new LocationModelList();
-      for (int ii = 0; (ii < MAX_ROWS) || (ii < tempList.size()); ii++) {
+      for (int ii = 0; ii < MAX_ROWS; ii++) {
         locationModelList.add(tempList.get(ii));
       }
-
-      NetworkFacade networkFacade = new NetworkFacade();
-      networkFacade.writeLocations(sortieUuid, locationModelList, this, context);
-    }*/
-
-    /*
-    if (locationModelList.isEmpty()) {
-      locationFlag = true;
-
-      if (testForSortieComplete()) {
-        sortieWrapUp();
-      }
-    } else {
-
     }
-    */
+
+    networkFacade.writeLocations(sortieUuid, locationModelList, this, context);
   }
 
-  private void uploadObservation(final String sortieUuid) {
-    ObservationModelList observationModelList = dataBaseFacade.selectAllObservations(false, sortieUuid, context);
-    LOG.debug("uploadObservation:" + observationModelList.size() + ":" + sortieUuid);
-    if (observationModelList.isEmpty()) {
-      observationFlag = true;
-
-      if (testForSortieComplete()) {
-        sortieWrapUp();
-      }
-    } else {
-      NetworkFacade networkFacade = new NetworkFacade();
-      networkFacade.writeObservations(sortieUuid, observationModelList, this, context);
-    }
-  }
-
-  /**
-   *
-   * @param sortieModel
-   */
-  private void uploadSortie(final SortieModel sortieModel) {
-    LOG.debug("uploadSortie:" + sortieModel.getSortieUuid());
-    NetworkFacade networkFacade = new NetworkFacade();
-    networkFacade.writeSortie(sortieModel, this, context);
+  private void writeObservation() {
+    //empty
   }
 }
 /*

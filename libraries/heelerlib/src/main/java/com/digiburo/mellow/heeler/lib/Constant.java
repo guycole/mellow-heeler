@@ -31,6 +31,9 @@ public class Constant {
   public static final String TEST_SORTIE_ID = "bcf7210f-2ab3-4a66-9cf9-256687d99c46";
 
   //
+  public static final String PRODUCTION_CONFIGURATION_URL = "http://digiburo.com/hal/mellow-heeler1.json";
+
+  //
   public static final String TEST_CONFIGURATION_URL = "http://digiburo.com/hal/mellow-heeler-test1.json";
   public static final String TEST_URL_FRAGMENT = "mellow-heeler-test";
 
