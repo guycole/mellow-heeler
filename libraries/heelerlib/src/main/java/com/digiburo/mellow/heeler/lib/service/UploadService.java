@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * discover items within database which require uploading and write them to remote server
  */
 public class UploadService extends IntentService implements NetworkListener {
-  public static final int MAX_ROWS = 5;
+  public static final int MAX_ROWS = 30;
   public static final int MAX_COUNT = 12;
 
   private static final Logger LOG = LoggerFactory.getLogger(UploadService.class);
