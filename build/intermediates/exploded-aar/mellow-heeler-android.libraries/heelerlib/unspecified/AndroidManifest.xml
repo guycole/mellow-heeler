@@ -17,6 +17,10 @@
         <service
             android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
             android:exported="false" />
+        <service
+            android:name="com.digiburo.mellow.heeler.lib.service.UploadService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

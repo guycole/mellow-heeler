@@ -29,6 +29,7 @@ public class GeoLocationRequest extends SpringAndroidSpiceRequest<GeoLocationRes
 
   @Override
   public GeoLocationResponse loadDataFromNetwork() throws Exception {
+    LOG.info(url);
     return getRestTemplate().postForObject(url, geoLocation, GeoLocationResponse.class);
   }
 }

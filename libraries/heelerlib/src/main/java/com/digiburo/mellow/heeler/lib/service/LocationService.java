@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * collect GPS location
+ * collect locations
  * @author gsc
  */
 public class LocationService extends Service implements LocationListener {
@@ -94,32 +94,48 @@ public class LocationService extends Service implements LocationListener {
   }
 
   /**
-   *
+   * service a fresh location
    */
   private void freshLocation(final Location location) {
-    if (location == null) {
-      //confused device
-      LOG.debug("no location - ignoring update");
-      return;
+    Thread thread = new Thread(new FreshLocation(location, Personality.getCurrentSortie().getSortieUuid()));
+    thread.start();
+  }
+
+  class FreshLocation implements Runnable {
+    private final Location location;
+    private final String sortieId;
+
+    public FreshLocation(final Location location, final String sortieId) {
+      this.location = location;
+      this.sortieId = sortieId;
     }
 
-    if (Personality.getCurrentSortie() == null) {
-      LOG.debug("no sortie - ignoring location update");
-      return;
+    @Override
+    public void run() {
+      if (location == null) {
+        LOG.error("ignoring null location");
+        return;
+      }
+
+      if (sortieId == null) {
+        LOG.debug("no sortie - ignoring location update");
+        return;
+      }
+
+      LocationModel locationModel = new LocationModel();
+      locationModel.setDefault();
+      locationModel.setLocation(location, sortieId);
+
+      DataBaseFacade dataBaseFacade = new DataBaseFacade(getBaseContext());
+      dataBaseFacade.insert(locationModel, getBaseContext());
+
+      Personality.setCurrentLocation(locationModel);
+
+      sendBroadcast(new Intent(Constant.FRESH_UPDATE));
     }
-
-    LocationModel locationModel = new LocationModel();
-    locationModel.setDefault();
-    locationModel.setLocation(location, Personality.getCurrentSortie().getSortieUuid());
-
-    Personality.setCurrentLocation(locationModel);
-
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(this);
-    dataBaseFacade.insert(locationModel, this);
-
-    sendBroadcast(new Intent(Constant.FRESH_UPDATE));
   }
 }
+
 /*
  * Copyright 2014 Digital Burro, INC
  * Created on May 10, 2014 by gsc

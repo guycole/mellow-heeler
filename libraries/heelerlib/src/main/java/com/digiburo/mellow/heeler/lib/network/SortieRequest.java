@@ -52,6 +52,7 @@ public class SortieRequest extends SpringAndroidSpiceRequest<SortieResponse> {
    */
   @Override
   public SortieResponse loadDataFromNetwork() throws Exception {
+    LOG.info(url);
     return getRestTemplate().postForObject(url, parameters, SortieResponse.class);
   }
 }

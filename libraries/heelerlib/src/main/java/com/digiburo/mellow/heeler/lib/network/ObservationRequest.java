@@ -27,6 +27,7 @@ public class ObservationRequest extends SpringAndroidSpiceRequest<ObservationRes
 
   @Override
   public ObservationResponse loadDataFromNetwork() throws Exception {
+    LOG.info(url);
     return getRestTemplate().postForObject(url, observation, ObservationResponse.class);
   }
 }

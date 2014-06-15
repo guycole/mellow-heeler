@@ -16,6 +16,7 @@ import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.UploadController;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.SortieModelList;
+import com.digiburo.mellow.heeler.lib.service.UploadService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,8 +96,7 @@ public class UploadFragment extends Fragment {
     }
     */
 
-    UploadController uploadController = new UploadController();
-    uploadController.uploadAll(getActivity());
+    getActivity().startService(new Intent(getActivity(), UploadService.class));
   }
 
   @Override

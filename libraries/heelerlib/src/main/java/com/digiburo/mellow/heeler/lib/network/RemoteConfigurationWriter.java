@@ -59,20 +59,14 @@ public class RemoteConfigurationWriter {
       @Override
       public void onRequestFailure(final SpiceException spiceException) {
         LOG.info("request failure");
+        networkListener.freshRemoteConfiguration(null);
       }
 
       @Override
       public void onRequestSuccess(final RemoteConfigurationResponse remoteConfigurationResponse) {
         LOG.info("request success");
-
         loadResponse(remoteConfigurationResponse, context);
-
-        if (networkListener == null) {
-          LOG.info("skipping listener");
-        } else {
-          LOG.info("invoking listener");
-          networkListener.freshRemoteConfiguration(remoteConfigurationResponse);
-        }
+        networkListener.freshRemoteConfiguration(remoteConfigurationResponse);
       }
     });
   }

@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
-import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.SpiceManager;
@@ -94,17 +93,7 @@ public class GeoLocationWriter {
           LOG.error("bad remote row count:" + rowCount + ":" + locationModelList.size());
         }
 
-        DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
-        for (LocationModel locationModel:locationModelList) {
-          dataBaseFacade.setLocationUpload(locationModel.getId(), context);
-        }
-
-        if (networkListener == null) {
-          LOG.debug("skipping listener");
-        } else {
-          LOG.debug("invoking listener");
-          networkListener.freshGeoLocation(geoLocationResponse);
-        }
+        networkListener.freshGeoLocation(geoLocationResponse);
       }
     });
   }

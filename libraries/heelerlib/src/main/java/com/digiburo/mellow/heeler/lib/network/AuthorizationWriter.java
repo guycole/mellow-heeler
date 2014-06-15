@@ -46,12 +46,7 @@ public class AuthorizationWriter {
           LOG.error("bad remote status:" + authorizationResponse.getStatus());
         }
 
-        if (networkListener == null) {
-          LOG.debug("skipping listener");
-        } else {
-          LOG.debug("invoking listener");
-          networkListener.freshAuthorization(authorizationResponse);
-        }
+        networkListener.freshAuthorization(authorizationResponse);
       }
     });
   }

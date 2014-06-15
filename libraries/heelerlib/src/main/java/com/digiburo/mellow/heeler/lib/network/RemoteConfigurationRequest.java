@@ -23,6 +23,7 @@ public class RemoteConfigurationRequest extends SpringAndroidSpiceRequest<Remote
 
   @Override
   public RemoteConfigurationResponse loadDataFromNetwork() throws Exception {
+    LOG.info(URL);
     return getRestTemplate().getForObject(URL, RemoteConfigurationResponse.class);
   }
 }

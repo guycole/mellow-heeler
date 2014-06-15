@@ -37,6 +37,7 @@ public class AuthorizationRequest extends SpringAndroidSpiceRequest<Authorizatio
 
   @Override
   public AuthorizationResponse loadDataFromNetwork() throws Exception {
+    LOG.info(url);
     return getRestTemplate().postForObject(url, parameters, AuthorizationResponse.class);
   }
 }

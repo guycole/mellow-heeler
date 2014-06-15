@@ -8,31 +8,31 @@ public interface NetworkListener {
 
   /**
    * ensure remote server will accept upload
-   * @param authorizationResponse
+   * @param authorizationResponse (or null if error)
    */
   void freshAuthorization(final AuthorizationResponse authorizationResponse);
 
   /**
    * success location write
-   * @param geoLocationResponse
+   * @param geoLocationResponse (or null if error)
    */
   void freshGeoLocation(final GeoLocationResponse geoLocationResponse);
 
   /**
    * success observation write
-   * @param observationResponse
+   * @param observationResponse (or null if error)
    */
   void freshObservation(final ObservationResponse observationResponse);
 
   /**
    * refresh remote configuration
-   * @param remoteConfigurationResponse
+   * @param remoteConfigurationResponse (or null if error)
    */
   void freshRemoteConfiguration(final RemoteConfigurationResponse remoteConfigurationResponse);
 
   /**
    * success sortie write
-   * @param observationResponse
+   * @param sortieResponse (or null if error)
    */
   void freshSortie(final SortieResponse sortieResponse);
 }
