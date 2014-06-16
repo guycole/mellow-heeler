@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.CleanController;
 import com.digiburo.mellow.heeler.lib.Constant;
-import com.digiburo.mellow.heeler.lib.UploadController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +30,8 @@ public class CleanFragment extends Fragment {
   private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
-      LOG.info("onReceive noted");
-      getActivity().finish();
+    LOG.info("onReceive noted");
+    getActivity().finish();
     }
   };
 

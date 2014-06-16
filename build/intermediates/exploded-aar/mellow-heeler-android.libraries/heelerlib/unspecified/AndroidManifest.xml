@@ -21,6 +21,10 @@
             android:name="com.digiburo.mellow.heeler.lib.service.UploadService"
             android:exported="false" >
         </service>
+        <service
+            android:name="com.digiburo.mellow.heeler.lib.service.AudioService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

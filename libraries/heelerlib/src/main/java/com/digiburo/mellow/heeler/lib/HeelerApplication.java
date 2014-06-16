@@ -1,10 +1,12 @@
 package com.digiburo.mellow.heeler.lib;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseHelper;
+import com.digiburo.mellow.heeler.lib.service.AudioService;
 import com.digiburo.mellow.heeler.lib.service.LocationService;
 import com.digiburo.mellow.heeler.lib.utility.PackageUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
@@ -37,6 +39,8 @@ public class HeelerApplication extends Application {
     Personality.setApplicationVersion(PackageUtility.getAppVersion(this));
 
     startRoboSpice();
+
+    AudioService.startActionSayReceivePopulation(this, 123);
   }
 
   @Override

@@ -15,6 +15,10 @@
             android:name=".service.UploadService"
             android:exported="false" >
         </service>
+        <service
+            android:name=".service.AudioService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

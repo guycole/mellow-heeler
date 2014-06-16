@@ -50,6 +50,7 @@ public class Constant {
 
   //
   public static final String INTENT_AUTH_FLAG = "INTENT_AUTH_FLAG";
+  public static final String INTENT_COMPLETE_FLAG = "INTENT_COMPLETE_FLAG";
   public static final String INTENT_ROW_KEY = "INTENT_ROW_KEY";
   public static final String INTENT_MODE_FLAG = "INTENT_MODE_FLAG";
   public static final String INTENT_UPLOAD_FLAG = "INTENT_UPLOAD_FLAG";

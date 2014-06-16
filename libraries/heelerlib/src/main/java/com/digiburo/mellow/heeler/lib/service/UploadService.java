@@ -58,15 +58,17 @@ public class UploadService extends IntentService implements NetworkListener {
       if (Constant.OK.equals(authorizationResponse.getStatus())) {
         authorizationResponseOption = ResponseOption.SUCCESS;
 
-        Intent notifier = new Intent(Constant.UPLOAD_EVENT);
-        notifier.putExtra(Constant.INTENT_AUTH_FLAG, true);
-        sendBroadcast(notifier);
+        //broadcast authorization success
+        Intent intent = new Intent(Constant.UPLOAD_EVENT);
+        intent.putExtra(Constant.INTENT_AUTH_FLAG, true);
+        sendBroadcast(intent);
       } else {
         authorizationResponseOption = ResponseOption.FAILURE;
 
-        Intent notifier = new Intent(Constant.UPLOAD_EVENT);
-        notifier.putExtra(Constant.INTENT_AUTH_FLAG, false);
-        sendBroadcast(notifier);
+        //broadcast authorization failure
+        Intent intent = new Intent(Constant.UPLOAD_EVENT);
+        intent.putExtra(Constant.INTENT_AUTH_FLAG, false);
+        sendBroadcast(intent);
       }
     }
   }
@@ -180,6 +182,7 @@ public class UploadService extends IntentService implements NetworkListener {
       } while (runOption != StateOption.DONE);
     }
 
+    //broadcast upload complete
     Intent notifier = new Intent(Constant.UPLOAD_EVENT);
     notifier.putExtra(Constant.INTENT_UPLOAD_FLAG, true);
     sendBroadcast(notifier);

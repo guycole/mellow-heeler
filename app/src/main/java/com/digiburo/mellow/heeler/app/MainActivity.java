@@ -15,7 +15,6 @@ import android.widget.ToggleButton;
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.SortieController;
-import com.digiburo.mellow.heeler.lib.UploadController;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 import org.slf4j.Logger;
@@ -26,7 +25,6 @@ public class MainActivity extends ActionBarActivity implements MainListener {
   private TabHelper tabHelper;
 
   private final SortieController sortieController = new SortieController();
-  private final UploadController uploadController = new UploadController();
 
   // user preference changes require the sortie to be restarted
   private SharedPreferences.OnSharedPreferenceChangeListener sharedPrefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
