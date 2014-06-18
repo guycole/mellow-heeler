@@ -49,10 +49,10 @@ public class LocationTableTest extends ApplicationTestCase<HeelerApplication> {
     assertEquals(rowKey.longValue(), selected.getId().longValue());
     assertTrue(original.equals(selected));
 
-    LocationModelList modelList = dataBaseFacade.selectAllLocations(true, original.getSortieUuid(), getContext());
+    LocationModelList modelList = dataBaseFacade.selectAllLocations(true, original.getSortieUuid(), 0, getContext());
     assertEquals(1, modelList.size());
 
-    modelList = dataBaseFacade.selectAllLocations(false, original.getSortieUuid(), getContext());
+    modelList = dataBaseFacade.selectAllLocations(false, original.getSortieUuid(), 0, getContext());
     assertEquals(1, modelList.size());
   }
 

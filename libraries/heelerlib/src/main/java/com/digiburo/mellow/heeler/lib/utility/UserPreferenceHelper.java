@@ -23,6 +23,9 @@ public class UserPreferenceHelper {
   //true, audio cues enabled
   public static final String USER_PREF_AUDIO_CUE = "audioCue";
 
+  //true, speech cues enabled
+  public static final String USER_PREF_SPEECH_CUE = "speechCue";
+
   //first run timestamp
   public static final String USER_PREF_FIRST_RUN_TIMESTAMP = "firstRunTimeStamp";
 
@@ -66,6 +69,7 @@ public class UserPreferenceHelper {
     SharedPreferences.Editor editor = sp.edit();
 
     editor.putBoolean(USER_PREF_AUDIO_CUE, true);
+    editor.putBoolean(USER_PREF_SPEECH_CUE, true);
 
     editor.putString(USER_PREF_INSTALL_ID, UUID.randomUUID().toString());
 
@@ -102,6 +106,25 @@ public class UserPreferenceHelper {
   public boolean isAudioCue(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     return(sp.getBoolean(USER_PREF_AUDIO_CUE, true));
+  }
+
+  /**
+   * determine if speech cue enabled
+   * @param context
+   * @return true, speech cue enabled
+   */
+  public boolean isSpeechCue(final Context context) {
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    return(sp.getBoolean(USER_PREF_SPEECH_CUE, true));
+  }
+
+  /**
+   * define if speech cue enabled
+   * @param context
+   * @param arg true, speech cue enabled
+   */
+  public void setSpeechCue(final Context context, boolean arg) {
+    setPreference(context, USER_PREF_SPEECH_CUE, arg);
   }
   
   /**

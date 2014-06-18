@@ -4,13 +4,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.SystemClock;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.service.LocationService;
 import com.digiburo.mellow.heeler.lib.service.ScanReceiver;
+import com.digiburo.mellow.heeler.lib.service.SpeechService;
+import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +25,6 @@ public class SortieController {
 
   private AlarmManager alarmManager;
 
-  private long timeOut = 60 * 1000L;
-
   /**
    * create/start a fresh sortie
    * @param sortieName
@@ -34,31 +33,16 @@ public class SortieController {
   public void startSortie(final String sortieName, final Context context) {
     LOG.debug("startSortie");
 
-    SortieModel sortieModel = new SortieModel();
-    sortieModel.setDefault();
-    sortieModel.setSortieName(sortieName);
+    Personality.setCurrentSortie(createSortie(sortieName, context));
 
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
-    dataBaseFacade.insert(sortieModel, context);
+    LocationService.startLocationService(context);
 
-    Personality.setCurrentSortie(sortieModel);
+    cancelAlarm(context);
+    startAlarm(context);
 
-    alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    if (Personality.getAlarmIntent() != null) {
-      alarmManager.cancel(Personality.getAlarmIntent());
-    }
+    broadcastChange(true, context);
 
-    context.startService(new Intent(context, LocationService.class));
-
-    Intent intent = new Intent(context, ScanReceiver.class);
-    intent.setAction(Constant.INTENT_ACTION_ALARM);
-    PendingIntent pending = PendingIntent.getBroadcast(context, 0, intent, 0);
-    alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), timeOut, pending);
-    Personality.setAlarmIntent(pending);
-
-    Intent notifier = new Intent(Constant.FRESH_UPDATE);
-    notifier.putExtra(Constant.INTENT_MODE_FLAG, true);
-    context.sendBroadcast(notifier);
+    SpeechService.sayThis("sortie start", context);
   }
 
   /**
@@ -67,16 +51,59 @@ public class SortieController {
    */
   public void stopSortie(final Context context) {
     LOG.debug("stopSortie");
-    context.stopService(new Intent(context, LocationService.class));
 
-    if (Personality.getAlarmIntent() != null) {
-      alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-      alarmManager.cancel(Personality.getAlarmIntent());
-    }
+    LocationService.stopLocationService(context);
+
+    cancelAlarm(context);
+
+    broadcastChange(false, context);
 
     Intent notifier = new Intent(Constant.FRESH_UPDATE);
     notifier.putExtra(Constant.INTENT_MODE_FLAG, false);
     context.sendBroadcast(notifier);
+
+    SpeechService.sayThis("sortie stop", context);
+  }
+
+  private void broadcastChange(boolean startFlag, Context context) {
+    Intent notifier = new Intent(Constant.FRESH_UPDATE);
+    notifier.putExtra(Constant.INTENT_MODE_FLAG, startFlag);
+    context.sendBroadcast(notifier);
+  }
+
+  private SortieModel createSortie(final String sortieName, final Context context) {
+    SortieModel sortieModel = new SortieModel();
+    sortieModel.setDefault();
+    sortieModel.setSortieName(sortieName);
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
+    dataBaseFacade.insert(sortieModel, context);
+
+    return sortieModel;
+  }
+
+  private void cancelAlarm(final Context context) {
+    if (Personality.getAlarmIntent() != null) {
+      AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+      alarmManager.cancel(Personality.getAlarmIntent());
+      Personality.setAlarmIntent(null);
+    }
+  }
+
+  private void startAlarm(final Context context) {
+    Intent intent = new Intent(context, ScanReceiver.class);
+    intent.setAction(Constant.INTENT_ACTION_ALARM);
+    PendingIntent pending = PendingIntent.getBroadcast(context, 0, intent, 0);
+    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), getPollFrequency(context), pending);
+    Personality.setAlarmIntent(pending);
+  }
+
+  private long getPollFrequency(Context context) {
+    UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(context);
+    String temp = userPreferenceHelper.getPollFrequency(context);
+    long result = Long.parseLong(temp) * 1000L;
+    return result;
   }
 }
 /*

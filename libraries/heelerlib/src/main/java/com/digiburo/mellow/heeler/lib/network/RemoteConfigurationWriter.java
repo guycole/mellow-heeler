@@ -1,9 +1,12 @@
 package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
+import com.digiburo.mellow.heeler.lib.service.UploadService;
+import com.digiburo.mellow.heeler.lib.utility.LegalJsonMessage;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.SpiceManager;
@@ -45,10 +48,10 @@ public class RemoteConfigurationWriter {
    * Remote service configuration is obtained from a remote server.
    * Configuration rarely changes.  Should be read prior to uploading collected datum.
    * If the configuration version has changed, then load fresh values into user preferences.
-   * @param networkListener
+   * @param handlerClass
    * @param context
    */
-  public void doJsonGet(final NetworkListener networkListener, final Context context) {
+  public void doJsonGet(final Class handlerClass, final Context context) {
     LOG.debug("remote configuration read");
 
     RemoteConfigurationRequest request = new RemoteConfigurationRequest();
@@ -59,14 +62,22 @@ public class RemoteConfigurationWriter {
       @Override
       public void onRequestFailure(final SpiceException spiceException) {
         LOG.info("request failure");
-        networkListener.freshRemoteConfiguration(null);
+
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.CONFIGURATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, false);
+        context.startService(notifier);
       }
 
       @Override
       public void onRequestSuccess(final RemoteConfigurationResponse remoteConfigurationResponse) {
         LOG.info("request success");
         loadResponse(remoteConfigurationResponse, context);
-        networkListener.freshRemoteConfiguration(remoteConfigurationResponse);
+
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.CONFIGURATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, true);
+        context.startService(notifier);
       }
     });
   }

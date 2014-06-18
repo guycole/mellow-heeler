@@ -3,9 +3,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/preference_title02">
     <CheckBoxPreference
-      android:key="audioCheckBox"
+      android:key="audioCue"
       android:title="@string/preference_audio"
       android:summary="@string/preference_audio_summary" />
+
+    <CheckBoxPreference
+        android:key="speechCue"
+        android:title="@string/preference_speech"
+        android:summary="@string/preference_speech_summary" />
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/preference_title01">

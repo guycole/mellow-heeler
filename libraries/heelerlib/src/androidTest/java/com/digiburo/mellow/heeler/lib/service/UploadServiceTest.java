@@ -1,103 +1,37 @@
 package com.digiburo.mellow.heeler.lib.service;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.test.ApplicationTestCase;
-import android.widget.Toast;
-
-import com.digiburo.mellow.heeler.lib.Constant;
-import com.digiburo.mellow.heeler.lib.HeelerApplication;
-import com.digiburo.mellow.heeler.lib.Personality;
+import android.test.ServiceTestCase;
 import com.digiburo.mellow.heeler.lib.TestHelper;
-import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
-import com.digiburo.mellow.heeler.lib.database.LocationModel;
-import com.digiburo.mellow.heeler.lib.database.ObservationModel;
-import com.digiburo.mellow.heeler.lib.database.SortieModel;
-import com.digiburo.mellow.heeler.lib.network.AbstractListener;
-import com.digiburo.mellow.heeler.lib.network.ConcreteListener;
-import com.digiburo.mellow.heeler.lib.network.NetworkFacade;
-import com.digiburo.mellow.heeler.lib.network.RemoteConfigurationResponse;
 
-/**
- * FIXME - there is a trick to using broadcast receiver from unit test
- * http://stackoverflow.com/questions/5769315/unit-testing-a-broadcast-receiver
- * @author gsc
- */
-public class UploadServiceTest extends ApplicationTestCase<HeelerApplication> {
+public class UploadServiceTest extends ServiceTestCase<UploadService> {
   private TestHelper testHelper = new TestHelper();
 
-  private final NetworkFacade networkFacade = new NetworkFacade();
-
-  private boolean authFlag = false;
-  private boolean uploadFlag = false;
-
-  private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-      if (intent.hasExtra(Constant.INTENT_AUTH_FLAG)) {
-        authFlag = intent.getBooleanExtra(Constant.INTENT_AUTH_FLAG, false);
-      } else if (intent.hasExtra(Constant.INTENT_UPLOAD_FLAG)) {
-        uploadFlag = intent.getBooleanExtra(Constant.INTENT_UPLOAD_FLAG, false);
-      }
-    }
-  };
-
   public UploadServiceTest() {
-    super(HeelerApplication.class);
+    super(UploadService.class);
   }
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
-    createApplication();
-    Personality.setInternalDataBaseFileSystem(true);
-    Personality.setRemoteConfigurationUrl(Constant.TEST_CONFIGURATION_URL);
-//    getContext().registerReceiver(broadcastReceiver, new IntentFilter(Constant.UPLOAD_EVENT));
   }
 
   @Override
   protected void tearDown() throws Exception {
     super.tearDown();
-//    getContext().unregisterReceiver(broadcastReceiver);
   }
 
-  public void testRemoteConfiguration() {
-    prepareDataBase();
-    getContext().startService(new Intent(getContext(), UploadService.class));
+  public void testBasicServiceCreate() {
+    Intent intent = new Intent(getSystemContext(), UploadService.class);
+//    intent.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.AUTHORIZATION.toString());
+//    intent.putExtra(Constant.INTENT_STATUS_FLAG, true);
 
-    int testCount = 0;
+    startService(intent);
+    UploadService service = getService();
+    assertTrue(service.created);
+//   assertEquals(0, service.startId);
+//    assertTrue(service.lastJsonStatus);
+//    assertEquals(LegalJsonMessage.CONFIGURATION, service.messageType);
 
-    do {
-      try {
-        ++testCount;
-        Thread.sleep(3 * 1000L);
-//        System.out.println("sleeping:" + testCount);
-      } catch (Exception exception) {
-        testCount = UploadService.MAX_COUNT + 1;
-      }
-    } while ((testCount < UploadService.MAX_COUNT) && (!authFlag));
-
-    assertFalse(authFlag);
-    assertFalse(uploadFlag);
-  }
-
-  /**
-   * ensure there are rows to upload
-   */
-  private void prepareDataBase() {
-    SortieModel sortieModel = testHelper.generateSortieModel(null, "uploadTest");
-    LocationModel locationModel1 = testHelper.generateLocationModel(null, sortieModel.getSortieUuid());
-    LocationModel locationModel2 = testHelper.generateLocationModel(null, sortieModel.getSortieUuid());
-    ObservationModel observationModel1 = testHelper.generateObservationModel(locationModel1.getLocationUuid(), sortieModel.getSortieUuid());
-    ObservationModel observationModel2 = testHelper.generateObservationModel(locationModel2.getLocationUuid(), sortieModel.getSortieUuid());
-
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(getContext());
-    dataBaseFacade.insert(sortieModel, getContext());
-    dataBaseFacade.insert(locationModel1, getContext());
-    dataBaseFacade.insert(locationModel2, getContext());
-    dataBaseFacade.insert(observationModel1, getContext());
-    dataBaseFacade.insert(observationModel2, getContext());
   }
 }

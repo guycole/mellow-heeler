@@ -1,10 +1,13 @@
 package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.service.UploadService;
+import com.digiburo.mellow.heeler.lib.utility.LegalJsonMessage;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -31,10 +34,9 @@ public class GeoLocationWriter {
    * write location rows to remote server
    * @param sortieUuid
    * @param locationModelList
-   * @param networkListener
    * @param context
    */
-  public void doJsonPost(final String sortieUuid, final List<LocationModel> locationModelList, final NetworkListener networkListener, final Context context) {
+  public void doJsonPost(final String sortieUuid, final List<LocationModel> locationModelList, final Class handlerClass, final Context context) {
     LOG.debug("doJsonPost:" + locationModelList.size() + ":" + sortieUuid);
 
     if (locationModelList.isEmpty()) {
@@ -74,6 +76,11 @@ public class GeoLocationWriter {
       @Override
       public void onRequestFailure(SpiceException spiceException) {
         LOG.info("geoloc write failure");
+
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.GEOLOCATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, false);
+        context.startService(notifier);
       }
 
       @Override
@@ -93,7 +100,10 @@ public class GeoLocationWriter {
           LOG.error("bad remote row count:" + rowCount + ":" + locationModelList.size());
         }
 
-        networkListener.freshGeoLocation(geoLocationResponse);
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.GEOLOCATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, true);
+        context.startService(notifier);
       }
     });
   }

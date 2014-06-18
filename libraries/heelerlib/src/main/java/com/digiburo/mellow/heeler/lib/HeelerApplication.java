@@ -1,13 +1,9 @@
 package com.digiburo.mellow.heeler.lib;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 
-import com.digiburo.mellow.heeler.lib.database.DataBaseHelper;
-import com.digiburo.mellow.heeler.lib.service.AudioService;
-import com.digiburo.mellow.heeler.lib.service.LocationService;
+import com.digiburo.mellow.heeler.lib.service.SpeechService;
 import com.digiburo.mellow.heeler.lib.utility.PackageUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
@@ -15,8 +11,6 @@ import com.octo.android.robospice.SpiceManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
 
 import ch.qos.logback.classic.android.BasicLogcatConfigurator;
 
@@ -39,8 +33,6 @@ public class HeelerApplication extends Application {
     Personality.setApplicationVersion(PackageUtility.getAppVersion(this));
 
     startRoboSpice();
-
-    AudioService.startActionSayReceivePopulation(this, 123);
   }
 
   @Override

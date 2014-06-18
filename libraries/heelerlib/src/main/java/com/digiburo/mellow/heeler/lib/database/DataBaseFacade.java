@@ -125,10 +125,16 @@ public class DataBaseFacade {
    * select all locations
    * @param allRows true return all rows else only uploadFlag false
    * @param sortieUuid
+   * @param rowLimit
    * @param context
    * @return
    */
-  public LocationModelList selectAllLocations(boolean allRows, final String sortieUuid, final Context context) {
+  public LocationModelList selectAllLocations(boolean allRows, final String sortieUuid, final int rowLimit, final Context context) {
+    String rowLimitString = null;
+    if (rowLimit > 0) {
+      rowLimitString = Integer.toString(rowLimit);
+    }
+
     LocationModelList results = new LocationModelList();
 
     LocationTable table = new LocationTable();
@@ -150,7 +156,7 @@ public class DataBaseFacade {
 
     try {
       sqlDb = getReadableDataBase(context);
-      cursor = sqlDb.query(LocationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, LocationTable.DEFAULT_SORT_ORDER);
+      cursor = sqlDb.query(LocationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, LocationTable.DEFAULT_SORT_ORDER, rowLimitString);
       if (cursor.moveToFirst()) {
         do {
           LocationModel locationModel = new LocationModel();
@@ -257,7 +263,12 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
-  public ObservationModelList selectAllObservations(boolean allRows, final String sortieUuid, final Context context) {
+  public ObservationModelList selectAllObservations(boolean allRows, final String sortieUuid, final int rowLimit, final Context context) {
+    String rowLimitString = null;
+    if (rowLimit > 0) {
+      rowLimitString = Integer.toString(rowLimit);
+    }
+
     ObservationModelList results = new ObservationModelList();
 
     ObservationTable table = new ObservationTable();
@@ -279,7 +290,7 @@ public class DataBaseFacade {
 
     try {
       sqlDb = getReadableDataBase(context);
-      cursor = sqlDb.query(ObservationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, ObservationTable.DEFAULT_SORT_ORDER);
+      cursor = sqlDb.query(ObservationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, ObservationTable.DEFAULT_SORT_ORDER, rowLimitString);
       if (cursor.moveToFirst()) {
         do {
           ObservationModel observationModel = new ObservationModel();

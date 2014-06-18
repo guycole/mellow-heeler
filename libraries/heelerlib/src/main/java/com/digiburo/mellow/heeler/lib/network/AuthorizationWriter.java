@@ -1,9 +1,12 @@
 package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
+import com.digiburo.mellow.heeler.lib.service.UploadService;
+import com.digiburo.mellow.heeler.lib.utility.LegalJsonMessage;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -22,10 +25,9 @@ public class AuthorizationWriter {
 
   /**
    * discover if this installation is authorized to use remote server
-   * @param networkListener
    * @param context
    */
-  public void doJsonPost(final NetworkListener networkListener, final Context context) {
+  public void doJsonPost(final Class handlerClass, final Context context) {
     LOG.debug("test authorization");
 
     AuthorizationRequest request = new AuthorizationRequest(context);
@@ -36,17 +38,28 @@ public class AuthorizationWriter {
       @Override
       public void onRequestFailure(final SpiceException spiceException) {
         LOG.info("authorize failure:" + spiceException);
+
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.AUTHORIZATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, false);
+        context.startService(notifier);
       }
 
       @Override
       public void onRequestSuccess(final AuthorizationResponse authorizationResponse) {
         LOG.debug("authorize success:" + authorizationResponse.getRemoteIpAddress() + ":" + authorizationResponse.getStatus());
 
-        if (!Constant.OK.equals(authorizationResponse.getStatus())) {
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.AUTHORIZATION.toString());
+
+        if (Constant.OK.equals(authorizationResponse.getStatus())) {
+          notifier.putExtra(Constant.INTENT_STATUS_FLAG, true);
+        } else {
+          notifier.putExtra(Constant.INTENT_STATUS_FLAG, false);
           LOG.error("bad remote status:" + authorizationResponse.getStatus());
         }
 
-        networkListener.freshAuthorization(authorizationResponse);
+        context.startService(notifier);
       }
     });
   }

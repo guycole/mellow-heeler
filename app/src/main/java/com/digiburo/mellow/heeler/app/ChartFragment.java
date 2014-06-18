@@ -62,9 +62,9 @@ public class ChartFragment extends SupportMapFragment {
     DataBaseFacade dataBaseFacade = new DataBaseFacade(activity);
     sortieModel = dataBaseFacade.selectSortie(rowId, activity);
     LOG.debug("sortie:" + rowId + ":" + sortieModel.getSortieName() + ":" + sortieModel.getSortieUuid());
-    locationModelList = dataBaseFacade.selectAllLocations(true, sortieModel.getSortieUuid(), activity);
+    locationModelList = dataBaseFacade.selectAllLocations(true, sortieModel.getSortieUuid(), 0, activity);
     LOG.debug("total locations:" + locationModelList.size());
-    observationModelList = dataBaseFacade.selectAllObservations(true, sortieModel.getSortieUuid(), activity);
+    observationModelList = dataBaseFacade.selectAllObservations(true, sortieModel.getSortieUuid(), 0, activity);
     LOG.debug("total observations:" + observationModelList.size());
   }
 

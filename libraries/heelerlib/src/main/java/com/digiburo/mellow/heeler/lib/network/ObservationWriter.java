@@ -1,10 +1,13 @@
 package com.digiburo.mellow.heeler.lib.network;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.service.UploadService;
+import com.digiburo.mellow.heeler.lib.utility.LegalJsonMessage;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 import com.octo.android.robospice.SpiceManager;
@@ -32,10 +35,9 @@ public class ObservationWriter {
    * write observation rows to remote server
    * @param sortieUuid
    * @param observationModelList
-   * @param networkListener
    * @param context
    */
-  public void doJsonPost(final String sortieUuid, final List<ObservationModel> observationModelList, final NetworkListener networkListener, final Context context) {
+  public void doJsonPost(final String sortieUuid, final List<ObservationModel> observationModelList, final Class handlerClass, final Context context) {
     LOG.debug("writer:" + observationModelList.size() + ":" + sortieUuid);
 
     if (observationModelList.isEmpty()) {
@@ -76,6 +78,11 @@ public class ObservationWriter {
       @Override
       public void onRequestFailure(SpiceException spiceException) {
         LOG.info("observation write failure");
+
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.OBSERVATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, false);
+        context.startService(notifier);
       }
 
       @Override
@@ -95,7 +102,10 @@ public class ObservationWriter {
           LOG.error("bad remote row count:" + rowCount + ":" + observationList.size());
         }
 
-        networkListener.freshObservation(observationResponse);
+        Intent notifier = new Intent(context, handlerClass);
+        notifier.putExtra(Constant.INTENT_JSON_TYPE, LegalJsonMessage.OBSERVATION.toString());
+        notifier.putExtra(Constant.INTENT_STATUS_FLAG, true);
+        context.startService(notifier);
       }
     });
   }

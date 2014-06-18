@@ -94,7 +94,7 @@ public class UploadFragment extends Fragment {
     }
     */
 
-    getActivity().startService(new Intent(getActivity(), UploadService.class));
+    UploadService.startUploadService(getActivity());
   }
 
   @Override

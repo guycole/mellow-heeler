@@ -13,6 +13,7 @@ import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.utility.AudioHelper;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 import org.slf4j.Logger;
@@ -27,6 +28,14 @@ import java.util.Set;
  */
 public class LocationService extends Service implements LocationListener {
   private static final Logger LOG = LoggerFactory.getLogger(LocationService.class);
+
+  public static void startLocationService(Context context) {
+    context.startService(new Intent(context, LocationService.class));
+  }
+
+  public static void stopLocationService(Context context) {
+    context.stopService(new Intent(context, LocationService.class));
+  }
 
   public void onLocationChanged(Location location) {
     LOG.debug("xxx xxx Location Change:" + location.toString());
@@ -68,7 +77,6 @@ public class LocationService extends Service implements LocationListener {
 
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(this);
     int distance = Integer.parseInt(userPreferenceHelper.getPollDistance(this));
-    LOG.debug("distance:" + distance);
 
     //timeout usually ignored by platform, but I optimistically supply it anyway
     long timeOut = 30 * 1000L;
@@ -97,17 +105,19 @@ public class LocationService extends Service implements LocationListener {
    * service a fresh location
    */
   private void freshLocation(final Location location) {
-    Thread thread = new Thread(new FreshLocation(location, Personality.getCurrentSortie().getSortieUuid()));
+    Thread thread = new Thread(new FreshLocation(location, Personality.getCurrentSortie().getSortieUuid(), this));
     thread.start();
   }
 
   class FreshLocation implements Runnable {
     private final Location location;
     private final String sortieId;
+    private final Context context;
 
-    public FreshLocation(final Location location, final String sortieId) {
+    public FreshLocation(final Location location, final String sortieId, final Context context) {
       this.location = location;
       this.sortieId = sortieId;
+      this.context = context;
     }
 
     @Override
@@ -132,6 +142,9 @@ public class LocationService extends Service implements LocationListener {
       Personality.setCurrentLocation(locationModel);
 
       sendBroadcast(new Intent(Constant.FRESH_UPDATE));
+
+      AudioHelper audioHelper = new AudioHelper();
+      audioHelper.notifier(context);
     }
   }
 }

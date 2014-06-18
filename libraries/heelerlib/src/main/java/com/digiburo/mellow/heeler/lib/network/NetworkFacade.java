@@ -16,60 +16,59 @@ public class NetworkFacade {
   private static final Logger LOG = LoggerFactory.getLogger(NetworkFacade.class);
 
   /**
-   * Remote service configuration is obtained from a remote server.
+   * Remote configuration is obtained from a remote server.
    * Configuration rarely changes.  Should be read prior to uploading collected datum.
    * If the configuration version has changed, then load fresh values into user preferences.
-   * @param networkListener
+   * @param handlerClass
    * @param context
    */
-  public void readRemoteConfiguration(final NetworkListener networkListener, final Context context) {
+  public void readRemoteConfiguration(final Class handlerClass, final Context context) {
     RemoteConfigurationWriter remoteConfigurationWriter = new RemoteConfigurationWriter();
-    remoteConfigurationWriter.doJsonGet(networkListener, context);
+    remoteConfigurationWriter.doJsonGet(handlerClass, context);
   }
 
   /**
    * Discover if this installation is authorized to use remote server
-   * @param networkListener
+   * @param handlerClass
    * @param context
    */
-  public void testAuthorization(final NetworkListener networkListener, final Context context) {
+  public void testAuthorization(final Class handlerClass, final Context context) {
     AuthorizationWriter authorizationWriter = new AuthorizationWriter();
-    authorizationWriter.doJsonPost(networkListener, context);
+    authorizationWriter.doJsonPost(handlerClass, context);
   }
 
   /**
    * Write collected locations
    * @param sortieUuid
    * @param locationModelList
-   * @param networkListener
+   * @param handlerClass
    * @param context
    */
-  public void writeLocations(final String sortieUuid, final LocationModelList locationModelList, final NetworkListener networkListener, final Context context) {
+  public void writeLocations(final String sortieUuid, final LocationModelList locationModelList, final Class handlerClass, final Context context) {
     GeoLocationWriter geoLocationWriter = new GeoLocationWriter();
-    geoLocationWriter.doJsonPost(sortieUuid, locationModelList, networkListener, context);
+    geoLocationWriter.doJsonPost(sortieUuid, locationModelList, handlerClass, context);
   }
 
   /**
    *
    * @param sortieUuid
    * @param observationModelList
-   * @param networkListener
+   * @param handlerClass
    * @param context
    */
-  public void writeObservations(final String sortieUuid, final ObservationModelList observationModelList, final NetworkListener networkListener, final Context context) {
+  public void writeObservations(final String sortieUuid, final ObservationModelList observationModelList, final Class handlerClass, final Context context) {
     ObservationWriter observationWriter = new ObservationWriter();
-    observationWriter.doJsonPost(sortieUuid, observationModelList, networkListener, context);
+    observationWriter.doJsonPost(sortieUuid, observationModelList, handlerClass, context);
   }
 
   /**
    *
    * @param sortieModel
-   * @param networkListener
    * @param context
    */
-  public void writeSortie(final SortieModel sortieModel, final NetworkListener networkListener, final Context context) {
+  public void writeSortie(final SortieModel sortieModel, final Class handlerClass, final Context context) {
     SortieWriter sortieWriter = new SortieWriter();
-    sortieWriter.doJsonPost(sortieModel, networkListener, context);
+    sortieWriter.doJsonPost(sortieModel, handlerClass, context);
   }
 }
 /*

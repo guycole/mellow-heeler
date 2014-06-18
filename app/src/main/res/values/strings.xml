@@ -23,7 +23,7 @@
   <string name="main_tab_sortie">Sortie</string>
 
   <string name="preference_audio">Cues</string>
-  <string name="preference_audio_summary">Command Feedback</string>
+  <string name="preference_audio_summary">Audio Cues</string>
   <string name="preference_distance">Movement Radius</string>
   <string name="preference_distance_summary">Geographic Location</string>
   <string name="preference_distance_dialog_title">Movement Radius</string>
@@ -31,6 +31,8 @@
   <string name="preference_install_name">Installation UUID</string>
   <string name="preference_install_name_dialog">Installation Identifier</string>
   <string name="preference_install_summary">Installation Identifier</string>
+  <string name="preference_speech">Speech</string>
+  <string name="preference_speech_summary">Spoken Status</string>
   <string name="preference_title01">Collection</string>
   <string name="preference_title02">Audio</string>
   <string name="preference_title03">Administration</string>

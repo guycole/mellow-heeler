@@ -16,7 +16,12 @@
             android:exported="false" >
         </service>
         <service
-            android:name=".service.AudioService"
+            android:name=".service.NetworkFacadeService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".service.SpeechService"
             android:exported="false" >
         </service>
     </application>
