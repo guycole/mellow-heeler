@@ -1,11 +1,11 @@
 package com.digiburo.mellow.heeler.app;
 
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,7 @@ import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.database.SortieModelList;
 import com.digiburo.mellow.heeler.lib.service.UploadService;
+import com.digiburo.mellow.heeler.lib.utility.LegalJsonMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,6 @@ import org.slf4j.LoggerFactory;
 public class UploadFragment extends Fragment {
   private static final Logger LOG = LoggerFactory.getLogger(UploadFragment.class);
 
-  private SortieModelList sortieModelList;
-
   /**
    * update display for fresh location or WiFi detection event
    */
@@ -36,7 +35,6 @@ public class UploadFragment extends Fragment {
       LOG.info("onReceive noted");
 
       boolean authFlag = false;
-      boolean uploadFlag = false;
 
       if (intent.hasExtra(Constant.INTENT_AUTH_FLAG)) {
         authFlag = intent.getBooleanExtra(Constant.INTENT_AUTH_FLAG, false);
@@ -45,14 +43,26 @@ public class UploadFragment extends Fragment {
         } else {
           Toast.makeText(getActivity(), "authentication failure", Toast.LENGTH_LONG).show();
         }
-      } else if (intent.hasExtra(Constant.INTENT_UPLOAD_FLAG)) {
-        uploadFlag = intent.getBooleanExtra(Constant.INTENT_UPLOAD_FLAG, false);
-        if (uploadFlag) {
-          Toast.makeText(getActivity(), "upload success", Toast.LENGTH_LONG).show();
-        } else {
-          Toast.makeText(getActivity(), "upload failure", Toast.LENGTH_LONG).show();
-        }
+      } else if (intent.hasExtra(Constant.INTENT_UPLOAD_TYPE)) {
+        int uploadCount = intent.getIntExtra(Constant.INTENT_UPLOAD_COUNT, 0);
+        String uploadType = intent.getStringExtra(Constant.INTENT_UPLOAD_TYPE);
 
+        LegalJsonMessage messageType = LegalJsonMessage.discoverMatchingEnum(uploadType);
+        switch(messageType) {
+          case GEOLOCATION:
+            Toast.makeText(getActivity(), "location success:" + uploadCount, Toast.LENGTH_LONG).show();
+            break;
+          case OBSERVATION:
+            Toast.makeText(getActivity(), "observation success:" + uploadCount, Toast.LENGTH_LONG).show();
+            break;
+          case SORTIE:
+            Toast.makeText(getActivity(), "sortie success:" + uploadCount, Toast.LENGTH_LONG).show();
+            break;
+          default:
+            LOG.error("unsupported message type:" + uploadType);
+        }
+      } else if (intent.hasExtra(Constant.INTENT_COMPLETE_FLAG)) {
+        Toast.makeText(getActivity(), "upload complete", Toast.LENGTH_LONG).show();
         getActivity().finish();
       }
     }
@@ -75,26 +85,13 @@ public class UploadFragment extends Fragment {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+    UploadService.startUploadService(getActivity());
   }
 
   @Override
   public void onResume() {
     super.onResume();
-
     getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Constant.UPLOAD_EVENT));
-
-    /*
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-    sortieModelList = dataBaseFacade.selectAllSorties(false, getActivity());
-    if (sortieModelList.isEmpty()) {
-      LOG.debug("empty sortie list");
-      Toast.makeText(getActivity(), "empty upload list", Toast.LENGTH_LONG).show();
-      getActivity().finish();
-      return;
-    }
-    */
-
-    UploadService.startUploadService(getActivity());
   }
 
   @Override

@@ -1,7 +1,8 @@
 package com.digiburo.mellow.heeler.app;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import com.digiburo.mellow.heeler.R;
 /**
  * user preferences
  */
-public class PrefFragment extends PreferenceFragment {
+public class PrefFragment extends Fragment {
   public static final String LOG_TAG = PrefFragment.class.getName();
 
   /**
@@ -22,16 +23,17 @@ public class PrefFragment extends PreferenceFragment {
   }
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    addPreferencesFromResource(R.xml.prefer);
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = super.onCreateView(inflater, container, savedInstanceState);
+    super.onCreateView(inflater, container, savedInstanceState);
+    View view = inflater.inflate(R.layout.fragment_pref, container, false);
     return(view);
   }
+
 }
 /*
  * Copyright 2014 Digital Burro, INC

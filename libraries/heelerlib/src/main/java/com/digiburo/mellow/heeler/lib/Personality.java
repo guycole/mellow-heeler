@@ -1,9 +1,8 @@
 package com.digiburo.mellow.heeler.lib;
 
-import android.app.PendingIntent;
-
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.digiburo.mellow.heeler.lib.utility.LegalMode;
 import com.octo.android.robospice.SpiceManager;
 
 /**
@@ -19,22 +18,9 @@ public class Personality {
   }
 
   /**
-   * alarm manager
-   */
-  private static PendingIntent alarmIntent;
-
-  public static synchronized PendingIntent getAlarmIntent() {
-    return alarmIntent;
-  }
-
-  public static synchronized void setAlarmIntent(PendingIntent arg) {
-    alarmIntent = arg;
-  }
-
-  /**
    * true, use database on internal file system else external
    * production deployment is on external file system
-   * unit tests execute on internal file system
+   * unit tests must execute on internal file system
    */
   private static Boolean databaseFileSystemFlag = false;
 
@@ -49,8 +35,8 @@ public class Personality {
   /**
    * remote configuration URL, default value is for production, changes for unit test
    */
-//  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
-  private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
+  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
+//  private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
 
   public static synchronized String getRemoteConfigurationUrl() {
     return remoteConfigurationUrl;
@@ -110,6 +96,19 @@ public class Personality {
 
   public static synchronized void setCurrentSortie(SortieModel arg) {
     currentSortie = arg;
+  }
+
+  /**
+   * current operational mode
+   */
+  private static LegalMode legalMode = LegalMode.UNKNOWN;
+
+  public static synchronized LegalMode getOperationMode() {
+    return legalMode;
+  }
+
+  public static synchronized void setOperationMode(LegalMode arg) {
+    legalMode = arg;
   }
 }
 /*

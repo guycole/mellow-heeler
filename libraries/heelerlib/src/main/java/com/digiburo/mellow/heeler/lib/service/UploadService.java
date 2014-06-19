@@ -105,8 +105,12 @@ public class UploadService extends Service {
     switch (jsonMessage) {
       case AUTHORIZATION:
         if (statusFlag) {
+          broadcastAuthenticationStatus(true);
           discoverSorties();
           writeLocations();
+        } else {
+          broadcastAuthenticationStatus(false);
+          broadcastUploadComplete();
         }
         break;
       case CONFIGURATION:
@@ -132,6 +136,7 @@ public class UploadService extends Service {
           if (++sortieNdx < sortieModelList.size()) {
             writeLocations();
           } else {
+            broadcastUploadComplete();
             stopSelf();
           }
         }
@@ -157,6 +162,8 @@ public class UploadService extends Service {
   }
 
   private void locationUploadSuccess() {
+    broadcastUploadStatus(LegalJsonMessage.GEOLOCATION, locationModelList.size());
+
     if (locationModelList != null) {
       for (LocationModel locationModel:locationModelList) {
         //mark upload success
@@ -166,6 +173,8 @@ public class UploadService extends Service {
   }
 
   private void observationUploadSuccess() {
+    broadcastUploadStatus(LegalJsonMessage.OBSERVATION, observationModelList.size());
+
     if (observationModelList != null) {
       for (ObservationModel observationModel:observationModelList) {
         //mark upload success
@@ -175,6 +184,8 @@ public class UploadService extends Service {
   }
 
   private void sortieUploadSuccess() {
+    broadcastUploadStatus(LegalJsonMessage.SORTIE, 1);
+
     SortieModel sortieModel = sortieModelList.get(sortieNdx);
     dataBaseFacade.setSortieUpload(sortieModel.getId(), this);
   }
@@ -214,5 +225,24 @@ public class UploadService extends Service {
 
     SortieModel sortieModel = sortieModelList.get(sortieNdx);
     networkFacade.writeSortie(sortieModel, UploadService.class, this);
+  }
+
+  private void broadcastAuthenticationStatus(boolean flag) {
+    Intent intent = new Intent(Constant.UPLOAD_EVENT);
+    intent.putExtra(Constant.INTENT_AUTH_FLAG, flag);
+    sendBroadcast(intent);
+  }
+
+  private void broadcastUploadStatus(final LegalJsonMessage messageType, int rowCount) {
+    Intent intent = new Intent(Constant.UPLOAD_EVENT);
+    intent.putExtra(Constant.INTENT_UPLOAD_TYPE, messageType.toString());
+    intent.putExtra(Constant.INTENT_UPLOAD_COUNT, rowCount);
+    sendBroadcast(intent);
+  }
+
+  private void broadcastUploadComplete() {
+    Intent intent = new Intent(Constant.UPLOAD_EVENT);
+    intent.putExtra(Constant.INTENT_COMPLETE_FLAG, true);
+    sendBroadcast(intent);
   }
 }

@@ -1,8 +1,13 @@
 package com.digiburo.mellow.heeler.app;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
@@ -47,12 +52,7 @@ public class MainActivity extends ActionBarActivity implements MainListener {
    */
   public void startCollection(final String sortieName) {
     LOG.info("start collection");
-
-    if (sortieName == null) {
-      sortieController.startSortie(Constant.DEFAULT_SORTIE_NAME, this);
-    } else {
-      sortieController.startSortie(sortieName, this);
-    }
+    sortieController.startSortie(sortieName, this);
   }
 
   /**
@@ -97,9 +97,30 @@ public class MainActivity extends ActionBarActivity implements MainListener {
     tabHelper = new TabHelper(this);
     tabHelper.initialize();
 
+    setupNotifier();
+
     // some user preference changes require the sortie to be restarted
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     sp.registerOnSharedPreferenceChangeListener(sharedPrefListener);
+  }
+
+  private void setupNotifier() {
+    Intent intent = new Intent(this, MainActivity.class);
+
+    TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+    stackBuilder.addParentStack(MainActivity.class);
+    stackBuilder.addNextIntent(intent);
+
+    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    builder.setContentTitle("Mellow Heeler");
+    builder.setContentText("Notification Placeholder");
+    builder.setContentIntent(pendingIntent);
+    builder.setSmallIcon(R.drawable.icon24);
+
+    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    notificationManager.notify(2718, builder.build());
   }
 
   /**

@@ -69,7 +69,7 @@ public class UserPreferenceHelper {
     SharedPreferences.Editor editor = sp.edit();
 
     editor.putBoolean(USER_PREF_AUDIO_CUE, true);
-    editor.putBoolean(USER_PREF_SPEECH_CUE, true);
+    editor.putBoolean(USER_PREF_SPEECH_CUE, false);
 
     editor.putString(USER_PREF_INSTALL_ID, UUID.randomUUID().toString());
 
@@ -162,7 +162,7 @@ public class UserPreferenceHelper {
    */
   public String getPollFrequency(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_POLL_FREQUENCY, "30"));
+    return(sp.getString(USER_PREF_POLL_FREQUENCY, "15"));
   }
 
   /**

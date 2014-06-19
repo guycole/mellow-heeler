@@ -81,6 +81,12 @@ public class SpeechService extends IntentService implements TextToSpeech.OnInitL
     if (status == TextToSpeech.SUCCESS) {
       LOG.info("onInit success");
 
+      //TODO research this
+      if (textToSpeech == null) {
+        LOG.error("skipping null textToSpeech");
+        return;
+      }
+
       int result = textToSpeech.setLanguage(Locale.US);
       if ((result == TextToSpeech.LANG_MISSING_DATA) || (result == TextToSpeech.LANG_NOT_SUPPORTED)) {
         throw new IllegalArgumentException("unsupported language");
@@ -116,6 +122,7 @@ public class SpeechService extends IntentService implements TextToSpeech.OnInitL
     } while ((testCount < maxCount) && (sleepFlag));
 
     textToSpeech.shutdown();
+    textToSpeech = null;
   }
 
   private boolean preferenceTest() {

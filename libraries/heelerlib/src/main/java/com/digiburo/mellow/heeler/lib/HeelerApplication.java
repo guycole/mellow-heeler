@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 import com.digiburo.mellow.heeler.lib.service.SpeechService;
+import com.digiburo.mellow.heeler.lib.utility.LegalMode;
 import com.digiburo.mellow.heeler.lib.utility.PackageUtility;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
@@ -31,6 +32,7 @@ public class HeelerApplication extends Application {
     new UserPreferenceHelper(this);
 
     Personality.setApplicationVersion(PackageUtility.getAppVersion(this));
+    Personality.setOperationMode(LegalMode.IDLE);
 
     startRoboSpice();
   }

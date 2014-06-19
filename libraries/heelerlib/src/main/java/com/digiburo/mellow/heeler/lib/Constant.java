@@ -50,7 +50,7 @@ public class Constant {
   public static final String INTENT_ACTION_UPLOAD = "INTENT_ACTION_UPLOAD";
 
   // UI Update
-  public static final String FRESH_UPDATE = "com.digiburo.mellow.heeler.update";
+  public static final String CONSOLE_UPDATE = "com.digiburo.mellow.heeler.update";
   public static final String CLEAN_EVENT = "com.digiburo.mellow.heeler.clean";
   public static final String UPLOAD_EVENT = "com.digiburo.mellow.heeler.upload";
 
@@ -63,10 +63,13 @@ public class Constant {
   public static final String INTENT_MODE_FLAG = "INTENT_MODE_FLAG";
   public static final String INTENT_JSON_RESPONSE = "INTENT_JSON_RESPONSE";
   public static final String INTENT_JSON_TYPE = "INTENT_JSON_TYPE";
+  public static final String INTENT_LOCATION_UPDATE = "INTENT_LOCATION_UPDATE";
+  public static final String INTENT_OBSERVATION_UPDATE = "INTENT_OBSERVATION_UPDATE";
   public static final String INTENT_ROW_KEY = "INTENT_ROW_KEY";
   public static final String INTENT_SAY_THIS = "INTENT_SAY_THIS";
   public static final String INTENT_STATUS_FLAG = "INTENT_STATUS_FLAG";
-  public static final String INTENT_UPLOAD_FLAG = "INTENT_UPLOAD_FLAG";
+  public static final String INTENT_UPLOAD_COUNT = "INTENT_UPLOAD_COUNT";
+  public static final String INTENT_UPLOAD_TYPE = "INTENT_UPLOAD_TYPE";
 
   //
   public static final Integer SQL_TRUE = 1;

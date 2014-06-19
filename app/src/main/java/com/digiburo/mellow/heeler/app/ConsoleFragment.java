@@ -24,6 +24,7 @@ import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.utility.LegalMode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +51,6 @@ public class ConsoleFragment extends Fragment {
 
   private ToggleButton toggleStart;
 
-  //TODO runFlag persist to bundle
-  private boolean runFlag = false;
-
   private MainListener mainListener;
 
   /**
@@ -63,21 +61,18 @@ public class ConsoleFragment extends Fragment {
     public void onReceive(Context context, Intent intent) {
       LOG.info("onReceive noted");
 
-      if (intent.hasExtra(Constant.INTENT_MODE_FLAG)) {
-        runFlag = intent.getBooleanExtra(Constant.INTENT_MODE_FLAG, false);
-        updateStatusLabel();
-      } else {
-        long rowKey = intent.getLongExtra(Constant.INTENT_ROW_KEY, 0);
-        if (rowKey < 1) {
-          updateLocationDisplay();
+      updateStatusLabel();
 
-          WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-          if (!wifiManager.isWifiEnabled()) {
-            Toast.makeText(getActivity(), R.string.toast_wifi_disabled, Toast.LENGTH_LONG).show();
-          }
-        } else {
-          updateDetectionDisplay(rowKey);
-        }
+      if (intent.hasExtra(Constant.INTENT_LOCATION_UPDATE)) {
+        updateLocationDisplay();
+      } else if (intent.hasExtra(Constant.INTENT_OBSERVATION_UPDATE)) {
+        long rowKey = intent.getLongExtra(Constant.INTENT_OBSERVATION_UPDATE, 0);
+        updateDetectionDisplay(rowKey);
+      }
+
+      WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+      if (!wifiManager.isWifiEnabled()) {
+        Toast.makeText(getActivity(), R.string.toast_wifi_disabled, Toast.LENGTH_LONG).show();
       }
     }
   };
@@ -148,7 +143,7 @@ public class ConsoleFragment extends Fragment {
     updateStatusLabel();
     updateDetectionDisplay(0);
     updateLocationDisplay();
-    getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Constant.FRESH_UPDATE));
+    getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Constant.CONSOLE_UPDATE));
   }
 
   @Override
@@ -165,7 +160,7 @@ public class ConsoleFragment extends Fragment {
     int colorText = Color.GREEN;
     int message = R.string.text_idle;
 
-    if (runFlag) {
+    if (Personality.getOperationMode() == LegalMode.COLLECTION) {
       message = R.string.text_collection;
       colorBackground = Color.GREEN;
       colorText = Color.RED;

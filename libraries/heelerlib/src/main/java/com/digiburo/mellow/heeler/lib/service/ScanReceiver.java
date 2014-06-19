@@ -54,19 +54,6 @@ public class ScanReceiver extends BroadcastReceiver {
     }
 
     freshScan(locationModel, sortieModel, context);
-
-    /*
-    long rowKey = 0;
-
-    if (rowKey < 1) {
-      LOG.debug("empty scanlist");
-    } else {
-      LOG.debug("broadcast scan update");
-      Intent notifier = new Intent(Constant.FRESH_UPDATE);
-      notifier.putExtra(Constant.INTENT_ROW_KEY, rowKey);
-      context.sendBroadcast(notifier);
-    }
-    */
   }
 
   private void freshScan(final LocationModel locationModel, final SortieModel sortieModel, final Context context) {
@@ -92,6 +79,15 @@ public class ScanReceiver extends BroadcastReceiver {
 
       int population = observationModelList.size();
       LOG.debug("WiFi scan population:" + population);
+
+      if (population > 0) {
+        ObservationModel lastObservation = observationModelList.get(population-1);
+
+        Intent intent = new Intent(Constant.CONSOLE_UPDATE);
+        intent.putExtra(Constant.INTENT_OBSERVATION_UPDATE, lastObservation.getId());
+        context.sendBroadcast(intent);
+      }
+
       SpeechService.sayThis(Integer.toString(population), context);
     }
 

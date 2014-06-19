@@ -38,15 +38,6 @@
 
     <provider android:name=".lib.database.DataBaseProvider" android:authorities="com.digiburo.mellow.heeler.authority" />
 
-    <receiver android:name=".lib.service.ScanReceiver">
-      <intent-filter>
-        <action android:name="android.net.wifi.SCAN_RESULTS"/>
-      </intent-filter>
-    </receiver>
-
-    <service android:name=".lib.service.LocationService" />
-
-    <service android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService" android:exported="false" />
 
     <uses-library android:name="com.google.android.maps"/>
 

@@ -141,7 +141,9 @@ public class LocationService extends Service implements LocationListener {
 
       Personality.setCurrentLocation(locationModel);
 
-      sendBroadcast(new Intent(Constant.FRESH_UPDATE));
+      Intent intent = new Intent(Constant.CONSOLE_UPDATE);
+      intent.putExtra(Constant.INTENT_LOCATION_UPDATE, true);
+      sendBroadcast(intent);
 
       AudioHelper audioHelper = new AudioHelper();
       audioHelper.notifier(context);
