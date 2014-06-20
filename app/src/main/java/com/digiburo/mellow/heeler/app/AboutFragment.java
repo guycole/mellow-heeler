@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.digiburo.mellow.heeler.R;
+import com.digiburo.mellow.heeler.lib.Constant;
+import com.digiburo.mellow.heeler.lib.Personality;
 
 /**
  * Menu option:About, shameless self promotion
@@ -35,6 +38,13 @@ public class AboutFragment extends Fragment {
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+
+//    String heelerVersion = getString(R.string.app_name) + " Version " + Personality.getApplicationVersion();
+    String heelerVersion = "Version " + Personality.getApplicationVersion();
+
+    TextView tvHeelerVersion = (TextView) getActivity().findViewById(R.id.tvHeelerVersion);
+    tvHeelerVersion.setText(heelerVersion);
+
     WebView webView = (WebView) getActivity().findViewById(R.id.webView01);
     webView.loadUrl("file:///android_asset/html/about.html");
   }

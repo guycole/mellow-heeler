@@ -40,8 +40,17 @@
   <string name="preference_wifi_dialog_title">WiFi Scan Rate</string>
   <string name="preference_wifi_summary">Scan Rate (Time)</string>
 
+  <string name="settings_audio_cue">Audio Cues Enabled</string>
+  <string name="settings_audio_header">Audio Options</string>
+  <string name="settings_collection_controls">Collection Controls</string>
+  <string name="settings_distance">Distance</string>
+  <string name="settings_speech">Speech Enabled</string>
+  <string name="settings_time">Time</string>
+  <string name="settings_uuid">UUID</string>
+
   <string name="text_collection">Collection</string>
   <string name="text_idle">Idle</string>
+  <string name="text_installation">Installation:</string>
   <string name="text_location">GeoLoc:</string>
   <string name="text_row_count">Rows:</string>
   <string name="text_sortie_name">Name:</string>

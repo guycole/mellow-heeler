@@ -53,8 +53,8 @@ public class MenuActivity extends ActionBarActivity {
         fragment = new AboutFragment();
       } else if (Constant.INTENT_ACTION_CLEAN.equals(action)) {
         fragment = new CleanFragment();
-      } else if (Constant.INTENT_ACTION_PREFERENCE.equals(action)) {
-        fragment = new PrefFragment();
+      } else if (Constant.INTENT_ACTION_SETTING.equals(action)) {
+        fragment = new SettingFragment();
       } else if (Constant.INTENT_ACTION_UPLOAD.equals(action)) {
         fragment = new UploadFragment();
       } else {

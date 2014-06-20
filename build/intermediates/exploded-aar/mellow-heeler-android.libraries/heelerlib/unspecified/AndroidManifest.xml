@@ -17,13 +17,6 @@
         <service
             android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
             android:exported="false" />
-
-        <receiver android:name="com.digiburo.mellow.heeler.lib.lib.service.ScanReceiver" >
-            <intent-filter>
-                <action android:name="android.net.wifi.SCAN_RESULTS" />
-            </intent-filter>
-        </receiver>
-
         <service android:name="com.digiburo.mellow.heeler.lib.service.LocationService" />
         <service
             android:name="com.digiburo.mellow.heeler.lib.service.UploadService"

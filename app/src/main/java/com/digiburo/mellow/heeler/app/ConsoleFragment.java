@@ -24,6 +24,7 @@ import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.LegalMode;
 
 import org.slf4j.Logger;
@@ -167,6 +168,10 @@ public class ConsoleFragment extends Fragment {
 
       toggleStart.setChecked(true);
       LOG.debug("start collection true");
+
+      if (!editSortieName.getText().toString().isEmpty()) {
+        updateSortieName();
+      }
     } else {
       toggleStart.setChecked(false);
       editSortieName.setText("");
@@ -234,6 +239,19 @@ public class ConsoleFragment extends Fragment {
       dataBaseFacade.updateLocation(locationModel, getActivity());
       Toast.makeText(getActivity(), R.string.toast_location_success, Toast.LENGTH_LONG).show();
     }
+  }
+
+  private void updateSortieName() {
+    String temp = editSortieName.getText().toString().trim();
+    if (temp.isEmpty()) {
+      return;
+    }
+
+    SortieModel sortieModel = Personality.getCurrentSortie();
+    sortieModel.setSortieName(temp);
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+    dataBaseFacade.updateSortie(sortieModel, getActivity());
   }
 }
 /*

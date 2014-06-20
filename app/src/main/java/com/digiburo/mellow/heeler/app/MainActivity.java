@@ -155,7 +155,7 @@ public class MainActivity extends ActionBarActivity implements MainListener {
         intent.setAction(Constant.INTENT_ACTION_CLEAN);
         break;
       case R.id.menu_preference:
-        intent.setAction(Constant.INTENT_ACTION_PREFERENCE);
+        intent.setAction(Constant.INTENT_ACTION_SETTING);
         break;
       case R.id.menu_upload:
         stopCollection();

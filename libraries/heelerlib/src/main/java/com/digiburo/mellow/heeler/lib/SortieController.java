@@ -39,7 +39,6 @@ public class SortieController {
 
     LocationService.startLocationService(context);
 
-//    cancelAlarm(context);
     startAlarm(context);
 
     broadcastChange(true, context);
@@ -54,8 +53,8 @@ public class SortieController {
   public void stopSortie(final Context context) {
     LOG.debug("stopSortie");
 
-//    Personality.setCurrentSortie(null);
-//    Personality.setCurrentLocation(null);
+    Personality.setCurrentSortie(null);
+    Personality.setCurrentLocation(null);
     Personality.setOperationMode(LegalMode.IDLE);
 
     LocationService.stopLocationService(context);
@@ -112,9 +111,8 @@ public class SortieController {
 
   private long getPollFrequency(Context context) {
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(context);
-    String temp = userPreferenceHelper.getPollFrequency(context);
-    long result = Long.parseLong(temp) * 1000L;
-    return result;
+    int seconds = userPreferenceHelper.getPollFrequency(context);
+    return seconds * 1000L;
   }
 }
 /*

@@ -75,8 +75,8 @@ public class UserPreferenceHelper {
 
     editor.putLong(USER_PREF_FIRST_RUN_TIMESTAMP, TimeUtility.timeMillis());
 
-    editor.putString(USER_PREF_POLL_DISTANCE, "10");
-    editor.putString(USER_PREF_POLL_FREQUENCY, "30");
+    editor.putInt(USER_PREF_POLL_DISTANCE, 10);
+    editor.putInt(USER_PREF_POLL_FREQUENCY, 15);
 
     editor.putInt(USER_PREF_WS_CONFIG_VERSION, 0);
     editor.putString(USER_PREF_WS_AUTHORIZE_URL, "");
@@ -137,40 +137,40 @@ public class UserPreferenceHelper {
   }
 
   /**
-   * return distance radius, must be String to pacify PreferenceFragment
+   * return distance radius for geofence
    * @param context
-   * @return distance radius in meters
+   * @return distance in meters
    */
-  public String getPollDistance(final Context context) {
+  public int getPollDistance(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_POLL_DISTANCE, "10"));
+    return(sp.getInt(USER_PREF_POLL_DISTANCE, 10));
   }
 
   /**
-   * define distance radius, must be String to pacify PreferenceFragment
+   * define distance radius for geofence
    * @param context
-   * @param distance radius in meters
+   * @param arg distance in meters
    */
-  public void setPollDistance(final Context context, final String arg) {
+  public void setPollDistance(final Context context, final int arg) {
     setPreference(context, USER_PREF_POLL_DISTANCE, arg);
   }
 
   /**
-   * return WiFi scan interval in seconds, must be String to pacify PreferenceFragment
+   * return WiFi scan interval
    * @param context
-   * @return WiFi scan interval in seconds
+   * @return scan interval in seconds
    */
-  public String getPollFrequency(final Context context) {
+  public int getPollFrequency(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_POLL_FREQUENCY, "15"));
+    return(sp.getInt(USER_PREF_POLL_FREQUENCY, 15));
   }
 
   /**
-   * define WiFi scan interval in seconds, must be String to pacify PreferenceFragment
+   * define WiFi scan interval
    * @param context
-   * @param WiFi scan interval in seconds
+   * @param arg scan interval in seconds
    */
-  public void setPollFrequency(final Context context, final String arg) {
+  public void setPollFrequency(final Context context, final int arg) {
     setPreference(context, USER_PREF_POLL_FREQUENCY, arg);
   }
 

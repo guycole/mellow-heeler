@@ -73,17 +73,17 @@ public class UserPreferenceHelperTest extends ApplicationTestCase<HeelerApplicat
   }
 
   public void testPollDistance() {
-    String temp = testHelper.randomString();
+    int temp = testHelper.randomInteger();
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(getContext());
     userPreferenceHelper.setPollDistance(getContext(), temp);
-    assertTrue(temp.equals(userPreferenceHelper.getPollDistance(getContext())));
+    assertEquals(temp, userPreferenceHelper.getPollDistance(getContext()));
   }
 
   public void testPollFrequency() {
-    String temp = testHelper.randomString();
+    int temp = testHelper.randomInteger();
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(getContext());
     userPreferenceHelper.setPollFrequency(getContext(), temp);
-    assertTrue(temp.equals(userPreferenceHelper.getPollFrequency(getContext())));
+    assertEquals(temp, userPreferenceHelper.getPollFrequency(getContext()));
   }
 
   public void testWebServiceConfigVersion() {

@@ -76,7 +76,7 @@ public class LocationService extends Service implements LocationListener {
     LOG.debug("xxx xxx onCreate xxx xxx ");
 
     UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper(this);
-    int distance = Integer.parseInt(userPreferenceHelper.getPollDistance(this));
+    int distance = userPreferenceHelper.getPollDistance(this);
 
     //timeout usually ignored by platform, but I optimistically supply it anyway
     long timeOut = 30 * 1000L;

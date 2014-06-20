@@ -45,7 +45,7 @@ public class Constant {
   public static final String INTENT_ACTION_ABOUT = "INTENT_ACTION_ABOUT";
   public static final String INTENT_ACTION_ALARM = "INTENT_ACTION_ALARM";
   public static final String INTENT_ACTION_CLEAN = "INTENT_ACTION_CLEAN";
-  public static final String INTENT_ACTION_PREFERENCE = "INTENT_ACTION_PREFERENCE";
+  public static final String INTENT_ACTION_SETTING = "INTENT_ACTION_SETTING";
   public static final String INTENT_ACTION_SAY_THIS = "INTENT_ACTION_SAY_THIS";
   public static final String INTENT_ACTION_UPLOAD = "INTENT_ACTION_UPLOAD";
 
