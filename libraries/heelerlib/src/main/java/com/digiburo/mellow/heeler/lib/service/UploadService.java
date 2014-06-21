@@ -41,7 +41,6 @@ public class UploadService extends Service {
   //testing kludges
   public boolean created = false;
   public int startId = 0;
-  public boolean lastJsonStatus = false;
   public LegalJsonMessage messageType = LegalJsonMessage.UNKNOWN;
 
   private static final Logger LOG = LoggerFactory.getLogger(UploadService.class);
@@ -91,7 +90,6 @@ public class UploadService extends Service {
     this.startId = startId;
 
     boolean statusFlag = intent.getBooleanExtra(Constant.INTENT_STATUS_FLAG, false);
-    lastJsonStatus = statusFlag;
 
     LegalJsonMessage jsonMessage = LegalJsonMessage.UNKNOWN;
     if (intent.hasExtra(Constant.INTENT_JSON_TYPE)) {
@@ -106,11 +104,16 @@ public class UploadService extends Service {
       case AUTHORIZATION:
         if (statusFlag) {
           broadcastAuthenticationStatus(true);
+
           discoverSorties();
-          writeLocations();
+          if (sortieModelList.isEmpty()) {
+            wrapUp();
+          } else {
+            writeLocations();
+          }
         } else {
           broadcastAuthenticationStatus(false);
-          broadcastUploadComplete();
+          wrapUp();
         }
         break;
       case CONFIGURATION:
@@ -136,8 +139,7 @@ public class UploadService extends Service {
           if (++sortieNdx < sortieModelList.size()) {
             writeLocations();
           } else {
-            broadcastUploadComplete();
-            stopSelf();
+            wrapUp();
           }
         }
         break;
@@ -225,6 +227,11 @@ public class UploadService extends Service {
 
     SortieModel sortieModel = sortieModelList.get(sortieNdx);
     networkFacade.writeSortie(sortieModel, UploadService.class, this);
+  }
+
+  private void wrapUp() {
+    broadcastUploadComplete();
+    stopSelf();
   }
 
   private void broadcastAuthenticationStatus(boolean flag) {
