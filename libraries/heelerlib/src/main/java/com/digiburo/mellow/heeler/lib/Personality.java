@@ -1,6 +1,7 @@
 package com.digiburo.mellow.heeler.lib;
 
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.LegalMode;
 import com.octo.android.robospice.SpiceManager;
@@ -35,8 +36,8 @@ public class Personality {
   /**
    * remote configuration URL, default value is for production, changes for unit test
    */
-  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
-// private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
+//  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
+ private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
 
   public static synchronized String getRemoteConfigurationUrl() {
     return remoteConfigurationUrl;
@@ -96,6 +97,19 @@ public class Personality {
 
   public static synchronized void setCurrentSortie(SortieModel arg) {
     currentSortie = arg;
+  }
+
+  /**
+   * currently observed WAP
+   */
+  private static ObservationModelList currentObservedModelList;
+
+  public static synchronized ObservationModelList getCurrentObserved() {
+    return currentObservedModelList;
+  }
+
+  public static synchronized void setCurrentObserved(ObservationModelList arg) {
+    currentObservedModelList = arg;
   }
 
   /**

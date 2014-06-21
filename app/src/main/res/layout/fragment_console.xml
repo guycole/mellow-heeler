@@ -39,99 +39,127 @@
       <TextView style="@style/EditView01"
         android:id="@+id/textStatus"
         android:text="@string/text_idle"
+        android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
     </TableRow>
   </TableLayout>
 
-  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tableLocation"
-    android:background="#ff0000"
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLocation"
+    android:orientation="vertical"
     android:layout_below="@id/tableSortie"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="1">
+    android:layout_height="wrap_content">
 
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLastLocation"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    </TableRow>
+    <TextView style="@style/EditView01"
+      android:layout_gravity="center_horizontal"
+      android:text="@string/text_location"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
 
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLastLocationTime"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    </TableRow>
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/tableLocation"
+      android:background="#ff0000"
+      android:layout_below="@id/linearLocation"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:stretchColumns="1">
 
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_row_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLocationRowCount"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    </TableRow>
-  </TableLayout>
+      <TableRow>
+        <TextView style="@style/LabelView01"
+          android:text="@string/text_row_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <TextView style="@style/EditView01"
+          android:id="@+id/textLocationRowCount"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+      </TableRow>
+
+      <TableRow>
+        <TextView style="@style/LabelView01"
+          android:text="@string/text_geoloc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <TextView style="@style/EditView01"
+          android:id="@+id/textGeoLoc"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+      </TableRow>
+
+      <TableRow>
+        <TextView style="@style/LabelView01"
+          android:text="@string/text_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <TextView style="@style/EditView01"
+          android:id="@+id/textLocationTime"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+      </TableRow>
+    </TableLayout>
+  </LinearLayout>
 
   <Button
     android:id="@+id/buttonSpecialLocation"
     android:text="@string/button_special"
-    android:layout_below="@id/tableLocation"
+    android:layout_below="@id/linearLocation"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"/>
 
-  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tableObservation"
-    android:background="#ff0000"
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearObservation"
+    android:orientation="vertical"
     android:layout_below="@id/buttonSpecialLocation"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="1">
+    android:layout_height="wrap_content">
 
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_ssid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLastSsid"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    </TableRow>
+    <TextView style="@style/EditView01"
+      android:layout_gravity="center_horizontal"
+      android:text="@string/text_observations"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
 
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLastSsidTime"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    </TableRow>
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/tableObservation"
+      android:background="#ff0000"
+      android:layout_below="@id/buttonSpecialLocation"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:stretchColumns="1">
 
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_row_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textObservationRowCount"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    </TableRow>
-  </TableLayout>
+      <TableRow>
+        <TextView style="@style/LabelView01"
+          android:text="@string/text_row_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <TextView style="@style/EditView01"
+          android:id="@+id/textObservationRowCount"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"/>
+      </TableRow>
+    </TableLayout>
+
+    <ListView
+      android:id="@id/android:list"
+      android:dividerHeight="5dp"
+      android:layout_weight="1"
+      android:drawSelectorOnTop="true"
+      android:layout_height="0dp"
+      android:layout_width="match_parent"
+      android:layout_marginLeft="6dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginRight="6dp"/>
+
+    <TextView
+      android:id="@id/android:empty"
+      android:text="@string/label_no_rows"
+      android:textSize="20sp"
+      android:textStyle="bold"
+      android:typeface="sans"
+      android:gravity="center"
+      android:layout_height="match_parent"
+      android:layout_width="match_parent"/>
+  </LinearLayout>
 </RelativeLayout>
