@@ -77,16 +77,14 @@ public class ScanReceiver extends BroadcastReceiver {
       ObservationModelList observationModelList = getScanResults(context);
       saveScanResults(observationModelList, context);
 
+      Personality.setCurrentObserved(observationModelList);
+
       int population = observationModelList.size();
       LOG.debug("WiFi scan population:" + population);
 
-      if (population > 0) {
-        ObservationModel lastObservation = observationModelList.get(population-1);
-
-        Intent intent = new Intent(Constant.CONSOLE_UPDATE);
-        intent.putExtra(Constant.INTENT_OBSERVATION_UPDATE, lastObservation.getId());
-        context.sendBroadcast(intent);
-      }
+      Intent intent = new Intent(Constant.CONSOLE_UPDATE);
+      intent.putExtra(Constant.INTENT_OBSERVATION_UPDATE, population);
+      context.sendBroadcast(intent);
 
       SpeechService.sayThis(Integer.toString(population), context);
     }

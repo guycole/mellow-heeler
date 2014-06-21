@@ -45,7 +45,7 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
     String[] selectionArgs = null;
 
     CursorLoader loader = new CursorLoader(getActivity(), SortieTable.CONTENT_URI, projection, selection, selectionArgs, orderBy);
-    return (loader);
+    return loader;
   }
 
   /**

@@ -22,6 +22,8 @@
   <string name="main_tab_console">Console</string>
   <string name="main_tab_sortie">Sortie</string>
 
+  <string name="menu_context_delete">Delete</string>
+
   <string name="preference_audio">Cues</string>
   <string name="preference_audio_summary">Audio Cues</string>
   <string name="preference_distance">Movement Radius</string>
@@ -51,7 +53,10 @@
   <string name="text_collection">Collection</string>
   <string name="text_idle">Idle</string>
   <string name="text_installation">Installation:</string>
-  <string name="text_location">GeoLoc:</string>
+  <string name="text_latitude">Latitude:</string>
+  <string name="text_longitude">Longitude:</string>
+  <string name="text_location">Location</string>
+  <string name="text_observations">Observations</string>
   <string name="text_row_count">Rows:</string>
   <string name="text_sortie_name">Name:</string>
   <string name="text_ssid">SSID:</string>

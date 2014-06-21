@@ -36,7 +36,7 @@
         jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/mellow-heeler-android.libraries/heelerlib/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="b5d49ad4bbe4f1f990c86ff4076ac13ca5558d1f"/>
+        sha1="2f8ae529f87c201d80e12964d15698a6f67e0802"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/jackson-core-asl-1.9.13-b25d38a0c7ee7795b67a022bebfd61181f1ca053.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar"
@@ -50,17 +50,17 @@
         revision="19.1.0"
         sha1="7676c0cb230efa6ac41c47867d372ed5913029d4"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/slf4j-api-1.7.6-b06ad553a075c55dfbabc91cbacce2c0fc5e145b.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.6/562424e36df3d2327e8e9301a76027fca17d54ea/slf4j-api-1.7.6.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="562424e36df3d2327e8e9301a76027fca17d54ea"/>
-    <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/apktool-lib-1.4.4-3-08684a54db89a2675514cc97513bd3bb397be068.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/apktool-lib/1.4.4-3/1d0125bf578cb30dd192496db56c2d937495248a/apktool-lib-1.4.4-3.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="1d0125bf578cb30dd192496db56c2d937495248a"/>
+    <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/slf4j-api-1.7.6-b06ad553a075c55dfbabc91cbacce2c0fc5e145b.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.6/562424e36df3d2327e8e9301a76027fca17d54ea/slf4j-api-1.7.6.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="562424e36df3d2327e8e9301a76027fca17d54ea"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/logback-android-core-1.1.1-2-13a14fa4eb0d79ce28f0fcfca37b884d6770f1f5.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/logback-android-core/1.1.1-2/bbce4935f5f1882ec37a7adaafabc76641beb15a/logback-android-core-1.1.1-2.jar"
