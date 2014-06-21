@@ -51,6 +51,7 @@
   <string name="settings_uuid">UUID</string>
 
   <string name="text_collection">Collection</string>
+  <string name="text_geoloc">GeoLoc:</string>
   <string name="text_idle">Idle</string>
   <string name="text_installation">Installation:</string>
   <string name="text_latitude">Latitude:</string>

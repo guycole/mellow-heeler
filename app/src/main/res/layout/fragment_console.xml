@@ -39,6 +39,7 @@
       <TextView style="@style/EditView01"
         android:id="@+id/textStatus"
         android:text="@string/text_idle"
+        android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
     </TableRow>
@@ -52,6 +53,7 @@
     android:layout_height="wrap_content">
 
     <TextView style="@style/EditView01"
+      android:layout_gravity="center_horizontal"
       android:text="@string/text_location"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
@@ -66,22 +68,22 @@
 
       <TableRow>
         <TextView style="@style/LabelView01"
-          android:text="@string/text_latitude"
+          android:text="@string/text_row_count"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
         <TextView style="@style/EditView01"
-          android:id="@+id/textLatitude"
+          android:id="@+id/textLocationRowCount"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"/>
       </TableRow>
 
       <TableRow>
         <TextView style="@style/LabelView01"
-          android:text="@string/text_longitude"
+          android:text="@string/text_geoloc"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
         <TextView style="@style/EditView01"
-          android:id="@+id/textLongitude"
+          android:id="@+id/textGeoLoc"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"/>
       </TableRow>
@@ -93,17 +95,6 @@
           android:layout_height="wrap_content"/>
         <TextView style="@style/EditView01"
           android:id="@+id/textLocationTime"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"/>
-      </TableRow>
-
-      <TableRow>
-        <TextView style="@style/LabelView01"
-          android:text="@string/text_row_count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-        <TextView style="@style/EditView01"
-          android:id="@+id/textLocationRowCount"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"/>
       </TableRow>
@@ -125,6 +116,7 @@
     android:layout_height="wrap_content">
 
     <TextView style="@style/EditView01"
+      android:layout_gravity="center_horizontal"
       android:text="@string/text_observations"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>

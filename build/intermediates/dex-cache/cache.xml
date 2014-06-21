@@ -36,7 +36,7 @@
         jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/mellow-heeler-android.libraries/heelerlib/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="2f8ae529f87c201d80e12964d15698a6f67e0802"/>
+        sha1="46347e59574ba4e6a27f540aed1753fbadcbfd7c"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/jackson-core-asl-1.9.13-b25d38a0c7ee7795b67a022bebfd61181f1ca053.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar"

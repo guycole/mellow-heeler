@@ -35,6 +35,7 @@ import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.DataBaseTableIf;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.database.SortieTable;
 import com.digiburo.mellow.heeler.lib.utility.LegalMode;
@@ -43,7 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * upload fragment
+ * console fragment
  */
 public class ConsoleFragment extends ListFragment {
   public static final String FRAGMENT_TAG = "TAG_CONSOLE";
@@ -57,8 +58,7 @@ public class ConsoleFragment extends ListFragment {
 
   private EditText editSortieName;
 
-  private TextView textLatitude;
-  private TextView textLongitude;
+  private TextView textGeoLoc;
   private TextView textLocationTime;
   private TextView textLocationRowCount;
 
@@ -69,7 +69,7 @@ public class ConsoleFragment extends ListFragment {
 
   private MainListener mainListener;
 
-  private ArrayAdapter<CharSequence> arrayAdapter;
+  private ArrayAdapter<String> arrayAdapter;
 
   /**
    * update display for fresh location or WiFi detection event
@@ -79,6 +79,7 @@ public class ConsoleFragment extends ListFragment {
     public void onReceive(Context context, Intent intent) {
       LOG.info("onReceive noted");
 
+      updateSortieName();
       updateStatusLabel();
       updateLocationDisplay();
       updateDetectionDisplay(intent.getIntExtra(Constant.INTENT_OBSERVATION_UPDATE, 0));
@@ -135,7 +136,6 @@ public class ConsoleFragment extends ListFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    arrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.wifi_poll_option, android.R.layout.simple_list_item_1);
   }
 
   @Override
@@ -160,11 +160,8 @@ public class ConsoleFragment extends ListFragment {
     editSortieName = (EditText) getActivity().findViewById(R.id.editSortieName);
     editSortieName.setText(Constant.DEFAULT_SORTIE_NAME);
 
-    textLatitude = (TextView) getActivity().findViewById(R.id.textLatitude);
-    textLatitude.setText(Constant.UNKNOWN);
-
-    textLongitude = (TextView) getActivity().findViewById(R.id.textLongitude);
-    textLongitude.setText(Constant.UNKNOWN);
+    textGeoLoc = (TextView) getActivity().findViewById(R.id.textGeoLoc);
+    textGeoLoc.setText(Constant.UNKNOWN);
 
     textLocationTime = (TextView) getActivity().findViewById(R.id.textLocationTime);
     textLocationTime.setText(Constant.UNKNOWN);
@@ -178,8 +175,6 @@ public class ConsoleFragment extends ListFragment {
     textStatus = (TextView) getActivity().findViewById(R.id.textStatus);
 
     toggleStart = (ToggleButton) getActivity().findViewById(R.id.toggleStart);
-
-    setListAdapter(arrayAdapter);
 
     registerForContextMenu(getListView());
 
@@ -222,10 +217,6 @@ public class ConsoleFragment extends ListFragment {
 
       toggleStart.setChecked(true);
       LOG.debug("start collection true");
-
-      if (!editSortieName.getText().toString().isEmpty()) {
-        updateSortieName();
-      }
     } else {
       toggleStart.setChecked(false);
       LOG.debug("start collection false");
@@ -239,36 +230,46 @@ public class ConsoleFragment extends ListFragment {
   }
 
   private void updateDetectionDisplay(int population) {
-    /*
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+    ObservationModelList observationModelList = Personality.getCurrentObserved();
+//    ObservationModel[] modelArray = observationModelList.toArray(new ObservationModel[observationModelList.size()]);
 
-    String ssid = "Unknown";
-    String timeStamp = "Unknown";
+    String[] stringArray;
 
-    if (rowKey > 0) {
-      ObservationModel observationModel = dataBaseFacade.selectObservation(rowKey, getActivity());
-      ssid = observationModel.getSsid();
-      timeStamp = observationModel.getTimeStamp();
+    if (observationModelList == null) {
+      stringArray = new String[0];
+    } else {
+      stringArray = new String[observationModelList.size()];
+      for (int ii = 0; ii < observationModelList.size(); ii++) {
+        ObservationModel model = observationModelList.get(ii);
+        stringArray[ii] = model.getSsid();
+      }
     }
 
-    textLastSsid.setText(ssid);
-    textLastSsidTime.setText(timeStamp);
+    arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stringArray);
+    setListAdapter(arrayAdapter);
 
     if (Personality.getCurrentSortie() == null) {
       textObservationRowCount.setText("Empty");
     } else {
+      DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
       int observationPopulation = dataBaseFacade.countObservationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
       textObservationRowCount.setText(Integer.toString(observationPopulation));
     }
-    */
   }
 
   private void updateLocationDisplay() {
     LocationModel locationModel = Personality.getCurrentLocation();
     if (locationModel != null) {
-      textLatitude.setText(String.format("%.6f", (double) locationModel.getLatitude()));
-      textLongitude.setText(String.format("%.6f", (double) locationModel.getLongitude()));
-      textLocationTime.setText(locationModel.getTimeStamp());
+      String lat = String.format("%.4f", (double) locationModel.getLatitude());
+      String lng = String.format("%.4f", (double) locationModel.getLongitude());
+      textGeoLoc.setText(lat + " " + lng);
+
+      // remove fractions of second
+      String tempTime = locationModel.getTimeStamp();
+      int ndx = tempTime.lastIndexOf(".");
+      tempTime = tempTime.substring(0, ndx) + "Z";
+
+      textLocationTime.setText(tempTime);
 
       if (Personality.getCurrentSortie() == null) {
         textLocationRowCount.setText("Empty");
@@ -283,6 +284,14 @@ public class ConsoleFragment extends ListFragment {
   private void updateSortieName() {
     String temp = editSortieName.getText().toString().trim();
     if (temp.isEmpty()) {
+      return;
+    }
+
+    if (Personality.getCurrentSortie() == null) {
+      return;
+    }
+
+    if (temp.equals(Personality.getCurrentSortie().getSortieName())) {
       return;
     }
 
