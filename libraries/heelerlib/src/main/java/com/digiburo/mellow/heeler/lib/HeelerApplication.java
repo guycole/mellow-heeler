@@ -1,7 +1,10 @@
 package com.digiburo.mellow.heeler.lib;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.location.LocationManager;
+import android.os.Environment;
 
 import com.digiburo.mellow.heeler.lib.service.SpeechService;
 import com.digiburo.mellow.heeler.lib.utility.LegalMode;
@@ -33,6 +36,8 @@ public class HeelerApplication extends Application {
 
     Personality.setApplicationVersion(PackageUtility.getAppVersion(this));
     Personality.setOperationMode(LegalMode.IDLE);
+
+    testLocationProvider();
 
     startRoboSpice();
   }
@@ -68,6 +73,11 @@ public class HeelerApplication extends Application {
     SpiceManager spiceManager = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     spiceManager.start(this);
     Personality.setSpiceManager(spiceManager);
+  }
+
+  private void testLocationProvider() {
+    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    Personality.setGpsProvider(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
   }
 
   private void logConfiguration() {

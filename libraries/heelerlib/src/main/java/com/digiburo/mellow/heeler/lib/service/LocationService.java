@@ -44,11 +44,12 @@ public class LocationService extends Service implements LocationListener {
 
   public void onProviderDisabled(String provider) {
     LOG.debug("xxx xxx provider disabled:" + provider);
-    //TODO error dialog, must have location services
+    Personality.setGpsProvider(false);
   }
 
   public void onProviderEnabled(String provider) {
     LOG.debug("xxx xxx provider enabled:" + provider);
+    Personality.setGpsProvider(true);
   }
 
   public void onStatusChanged(String provider, int status, Bundle extras) {

@@ -34,10 +34,23 @@ public class Personality {
   }
 
   /**
+   * true, gps provider enabled
+   */
+  private static Boolean gpsProviderFlag = false;
+
+  public static synchronized Boolean isGpsProvider() {
+    return gpsProviderFlag;
+  }
+
+  public static synchronized void setGpsProvider(boolean arg) {
+    gpsProviderFlag = arg;
+  }
+
+  /**
    * remote configuration URL, default value is for production, changes for unit test
    */
 //  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
- private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
+  private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
 
   public static synchronized String getRemoteConfigurationUrl() {
     return remoteConfigurationUrl;

@@ -10,6 +10,11 @@ public interface MainListener {
    * @param rowId sortieModel rowId
    */
   void displayGoogleMap(long rowId);
+
+  /**
+   * stop collection
+   */
+  void sortieStop();
 }
 /*
  * Copyright 2014 Digital Burro, INC

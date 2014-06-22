@@ -31,6 +31,7 @@ import android.widget.ToggleButton;
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
+import com.digiburo.mellow.heeler.lib.SortieController;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.DataBaseTableIf;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
@@ -86,7 +87,15 @@ public class ConsoleFragment extends ListFragment {
 
       WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
       if (!wifiManager.isWifiEnabled()) {
+        //TODO should be dialog not toast
         Toast.makeText(getActivity(), R.string.toast_wifi_disabled, Toast.LENGTH_LONG).show();
+        mainListener.sortieStop();
+      }
+
+      if (!Personality.isGpsProvider()) {
+        //TODO should be dialog not toast
+        Toast.makeText(getActivity(), R.string.toast_gps_disabled, Toast.LENGTH_LONG).show();
+        mainListener.sortieStop();
       }
     }
   };

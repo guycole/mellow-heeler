@@ -24,9 +24,6 @@ public class Constant {
   public static final String AUTHORITY = "com.digiburo.mellow.heeler.authority";
 
   //
-  public static final String DIAGNOSTIC_URL = "https://mellow-heeler.appspot.com/diagnostic";
-
-  //
   public static final String TEST_INSTALLATION_ID = "bcf7210f-2ab3-4a66-9cf9-256687d99c46";
   public static final String TEST_SORTIE_ID = "bcf7210f-2ab3-4a66-9cf9-256687d99c46";
 
@@ -36,6 +33,9 @@ public class Constant {
   //
   public static final String TEST_CONFIGURATION_URL = "http://digiburo.com/hal/mellow-heeler-test1.json";
   public static final String TEST_URL_FRAGMENT = "mellow-heeler-test";
+
+  //
+  public static final String DIAGNOSTIC_URL = "https://mellow-heeler.appspot.com/diagnostic";
 
   //
   public static final String OK = "OK";
@@ -52,6 +52,7 @@ public class Constant {
   // UI Update
   public static final String CONSOLE_UPDATE = "com.digiburo.mellow.heeler.update";
   public static final String CLEAN_EVENT = "com.digiburo.mellow.heeler.clean";
+  public static final String PROVIDER_EVENT = "com.digiburo.mellow.heeler.provider";
   public static final String UPLOAD_EVENT = "com.digiburo.mellow.heeler.upload";
 
   // RoboSpice update
@@ -65,6 +66,7 @@ public class Constant {
   public static final String INTENT_JSON_TYPE = "INTENT_JSON_TYPE";
   public static final String INTENT_LOCATION_UPDATE = "INTENT_LOCATION_UPDATE";
   public static final String INTENT_OBSERVATION_UPDATE = "INTENT_OBSERVATION_UPDATE";
+  public static final String INTENT_PROVIDER_FLAG = "INTENT_PROVIDER_FLAG";
   public static final String INTENT_ROW_KEY = "INTENT_ROW_KEY";
   public static final String INTENT_SAY_THIS = "INTENT_SAY_THIS";
   public static final String INTENT_STATUS_FLAG = "INTENT_STATUS_FLAG";

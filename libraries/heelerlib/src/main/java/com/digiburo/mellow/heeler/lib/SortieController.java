@@ -4,7 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.SystemClock;
+import android.widget.Toast;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
@@ -33,6 +35,13 @@ public class SortieController {
    */
   public void startSortie(final String sortieName, final Context context) {
     LOG.debug("startSortie");
+
+    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    if (!wifiManager.isWifiEnabled()) {
+      LOG.info("must enable WiFi");
+      stopSortie(context);
+      return;
+    }
 
     Personality.setCurrentSortie(createSortie(sortieName, context));
     Personality.setOperationMode(LegalMode.COLLECTION);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/Users/gsc/AndroidStudioProjects/mellow-heeler-android/libraries/heelerlib/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <string name="app_name">heelerlib</string>
+
+</resources>

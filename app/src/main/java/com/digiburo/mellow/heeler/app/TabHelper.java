@@ -23,11 +23,13 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   //
   private ActionBar.Tab consoleTab;
   private ActionBar.Tab sortieTab;
+  private ActionBar.Tab ssidTab;
 
   //
   private ChartFragment chartFragment;
   private ConsoleFragment consoleFragment;
   private SortieFragment sortieFragment;
+  private SsidFragment ssidFragment;
 
   //
   public static final String LOG_TAG = TabHelper.class.getName();
@@ -37,6 +39,7 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     chartFragment = (ChartFragment) Fragment.instantiate(mainActivity, ChartFragment.class.getName());
     consoleFragment = (ConsoleFragment) Fragment.instantiate(mainActivity, ConsoleFragment.class.getName());
     sortieFragment = (SortieFragment) Fragment.instantiate(mainActivity, SortieFragment.class.getName());
+    ssidFragment = (SsidFragment) Fragment.instantiate(mainActivity, SsidFragment.class.getName());
   }
 
   /**
@@ -50,6 +53,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
       fragmentTransaction.add(R.id.layoutFragment01, consoleFragment, ConsoleFragment.FRAGMENT_TAG);
     } else if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.add(R.id.layoutFragment01, sortieFragment, SortieFragment.FRAGMENT_TAG);
+    } else if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
+      fragmentTransaction.add(R.id.layoutFragment01, ssidFragment, SsidFragment.FRAGMENT_TAG);
     } else {
       throw new IllegalArgumentException("unknown tab:" + tab.getTag());
     }
@@ -68,6 +73,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
       fragmentTransaction.remove(consoleFragment);
     } else  if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(sortieFragment);
+    } else  if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
+      fragmentTransaction.remove(ssidFragment);
     } else {
       throw new IllegalArgumentException("unknown tab:" + tab.getTag());
     }
@@ -86,6 +93,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
       //empty
     } else if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.add(R.id.layoutFragment01, sortieFragment, SortieFragment.FRAGMENT_TAG);
+    } else if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
+      //empty
     } else {
       throw new IllegalArgumentException("unknown tab:" + tab.getTag());
     }
@@ -97,21 +106,6 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   public void onBackStackChanged() {
     FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
     backStackCount = fragmentManager.getBackStackEntryCount();
-
-    System.out.println("backStackCount:" + backStackCount);
-
-/*
-    ActionBar actionBar = mainActivity.getActionBar();
-    
-    if (backStackCount == 0) {
-      // restore tabs
-      ignoreMe = true;
-      actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    } else {
-      // hide tabs
-      actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-    }
-*/
   }
 
   /**
@@ -134,6 +128,12 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     sortieTab.setTag(SortieFragment.FRAGMENT_TAG);
     sortieTab.setText(R.string.main_tab_sortie);
     actionBar.addTab(sortieTab);
+
+    ssidTab = actionBar.newTab();
+    ssidTab.setTabListener(this);
+    ssidTab.setTag(SsidFragment.FRAGMENT_TAG);
+    ssidTab.setText(R.string.main_tab_ssid);
+    actionBar.addTab(ssidTab);
   }
 
   /**

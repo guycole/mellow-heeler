@@ -21,6 +21,7 @@
 
   <string name="main_tab_console">Console</string>
   <string name="main_tab_sortie">Sortie</string>
+  <string name="main_tab_ssid">SSID</string>
 
   <string name="menu_context_delete">Delete</string>
 
@@ -63,6 +64,7 @@
   <string name="text_ssid">SSID:</string>
   <string name="text_time">Time:</string>
 
+  <string name="toast_gps_disabled">Must Enable GPS</string>
   <string name="toast_location_failure">Special Location Failure</string>
   <string name="toast_location_success">Special Location Success</string>
   <string name="toast_wifi_disabled">Must Enable WiFi</string>

@@ -119,18 +119,24 @@ public class UploadService extends Service {
       case CONFIGURATION:
         if (statusFlag) {
           networkFacade.testAuthorization(UploadService.class, this);
+        } else {
+          wrapUp();
         }
         break;
       case GEOLOCATION:
         if (statusFlag) {
           locationUploadSuccess();
           writeLocations();
+        } else {
+          wrapUp();
         }
         break;
       case OBSERVATION:
         if (statusFlag) {
           observationUploadSuccess();
           writeObservations();
+        } else {
+          wrapUp();
         }
         break;
       case SORTIE:

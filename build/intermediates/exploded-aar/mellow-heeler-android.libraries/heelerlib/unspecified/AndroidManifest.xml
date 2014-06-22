@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.digiburo.mellow.heeler.lib"
+    android:versionCode="1"
+    android:versionName="1.0-SNAPSHOT" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <service
+            android:name="com.octo.android.robospice.JacksonSpringAndroidSpiceService"
+            android:exported="false" />
+        <service android:name="com.digiburo.mellow.heeler.lib.service.LocationService" />
+        <service
+            android:name="com.digiburo.mellow.heeler.lib.service.UploadService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="com.digiburo.mellow.heeler.lib.service.NetworkFacadeService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.digiburo.mellow.heeler.lib.service.SpeechService"
+            android:exported="false" >
+        </service>
+    </application>
+
+</manifest>
