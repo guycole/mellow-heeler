@@ -30,6 +30,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(final SQLiteDatabase db) {
+    db.execSQL(HotTable.CREATE_TABLE);
     db.execSQL(LocationTable.CREATE_TABLE);
     db.execSQL(ObservationTable.CREATE_TABLE);
     db.execSQL(SortieTable.CREATE_TABLE);

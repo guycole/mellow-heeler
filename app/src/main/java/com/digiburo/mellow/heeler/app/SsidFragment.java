@@ -1,153 +1,123 @@
 package com.digiburo.mellow.heeler.app;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.TextView;
+import android.widget.ListView;
 import com.digiburo.mellow.heeler.R;
 
-import com.digiburo.mellow.heeler.app.dummy.DummyContent;
+import com.digiburo.mellow.heeler.lib.database.DataBaseTableIf;
+import com.digiburo.mellow.heeler.lib.database.ObservationTable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A fragment representing a list of Items.
- * <p />
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
+ * Scrolling list of SSID
  */
-public class SsidFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class SsidFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+  private static final Logger LOG = LoggerFactory.getLogger(SortieFragment.class);
+
   public static final String FRAGMENT_TAG = "TAG_SSID";
+  public static final int LOADER_ID = 2718;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+  private SsidCursorAdapter adapter;
+  private MainListener mainListener;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+  /**
+   * LoaderCallback
+   */
+  public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    DataBaseTableIf table = new ObservationTable();
 
-    private OnFragmentInteractionListener mListener;
+    String[] projection = table.getDefaultProjection();
+    String orderBy = table.getDefaultSortOrder();
 
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
+    String selection = null;
+    String[] selectionArgs = null;
 
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
+    CursorLoader loader = new CursorLoader(getActivity(), ObservationTable.CONTENT_URI, projection, selection, selectionArgs, orderBy);
+    return loader;
+  }
 
-    // TODO: Rename and change types of parameters
-    public static SsidFragment newInstance(String param1, String param2) {
-        SsidFragment fragment = new SsidFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+  /**
+   * LoaderCallback
+   */
+  public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    adapter.swapCursor(data);
+    adapter.notifyDataSetChanged();
+  }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public SsidFragment() {
-    }
+  /**
+   * LoaderCallback
+   */
+  public void onLoaderReset(Loader<Cursor> loader) {
+    adapter.swapCursor(null);
+  }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  /**
+   * row selection
+   */
+  @Override
+  public void onListItemClick(ListView listView, View view, int position, long id) {
+    LOG.debug("click:" + position + ":" + id);
+//    mainListener.displayGoogleMap(id);
+  }
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+  /**
+   * mandatory empty ctor
+   */
+  public SsidFragment() {
+    //empty
+  }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-    }
+  @Override
+  public void onAttach(Activity activity) {
+    super.onAttach(activity);
+    mainListener = (MainListener) activity;
+  }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item, container, false);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+    ObservationTable observationTable = new ObservationTable();
+    adapter = new SsidCursorAdapter(getActivity(), observationTable.getDefaultProjection());
+  }
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
+    View view = inflater.inflate(R.layout.fragment_ssid, container, false);
+    return (view);
+  }
 
-        return view;
-    }
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                + " must implement OnFragmentInteractionListener");
-        }
-    }
+    setHasOptionsMenu(false);
+    setListAdapter(adapter);
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+    getLoaderManager().initLoader(LOADER_ID, null, this);
+  }
 
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    setListAdapter(null);
+  }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
-    }
-
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
-
-        if (emptyText instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
-    }
-
-    /**
-    * This interface must be implemented by activities that contain this
-    * fragment to allow an interaction in this fragment to be communicated
-    * to the activity and potentially other fragments contained in that
-    * activity.
-    * <p>
-    * See the Android Training lesson <a href=
-    * "http://developer.android.com/training/basics/fragments/communicating.html"
-    * >Communicating with Other Fragments</a> for more information.
-    */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
-    }
-
+  @Override
+  public void onDetach() {
+    super.onDetach();
+    mainListener = null;
+  }
 }

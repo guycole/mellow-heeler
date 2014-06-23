@@ -22,12 +22,14 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
 
   //
   private ActionBar.Tab consoleTab;
+  private ActionBar.Tab hotTab;
   private ActionBar.Tab sortieTab;
   private ActionBar.Tab ssidTab;
 
   //
   private ChartFragment chartFragment;
   private ConsoleFragment consoleFragment;
+  private HotFragment hotFragment;
   private SortieFragment sortieFragment;
   private SsidFragment ssidFragment;
 
@@ -38,6 +40,7 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     mainActivity = activity;
     chartFragment = (ChartFragment) Fragment.instantiate(mainActivity, ChartFragment.class.getName());
     consoleFragment = (ConsoleFragment) Fragment.instantiate(mainActivity, ConsoleFragment.class.getName());
+    hotFragment = (HotFragment) Fragment.instantiate(mainActivity, HotFragment.class.getName());
     sortieFragment = (SortieFragment) Fragment.instantiate(mainActivity, SortieFragment.class.getName());
     ssidFragment = (SsidFragment) Fragment.instantiate(mainActivity, SsidFragment.class.getName());
   }
@@ -51,6 +54,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     if (tab.getTag().equals(ConsoleFragment.FRAGMENT_TAG)) {
       fragmentTransaction.add(R.id.layoutFragment01, consoleFragment, ConsoleFragment.FRAGMENT_TAG);
+    } else if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
+      fragmentTransaction.add(R.id.layoutFragment01, hotFragment, HotFragment.FRAGMENT_TAG);
     } else if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.add(R.id.layoutFragment01, sortieFragment, SortieFragment.FRAGMENT_TAG);
     } else if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
@@ -71,6 +76,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
 
     if (tab.getTag().equals(ConsoleFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(consoleFragment);
+    } else  if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
+      fragmentTransaction.remove(hotFragment);
     } else  if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(sortieFragment);
     } else  if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
@@ -90,6 +97,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     fragmentTransaction.remove(chartFragment);
 
     if (tab.getTag().equals(ConsoleFragment.FRAGMENT_TAG)) {
+      //empty
+    } else if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
       //empty
     } else if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.add(R.id.layoutFragment01, sortieFragment, SortieFragment.FRAGMENT_TAG);
@@ -134,6 +143,12 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     ssidTab.setTag(SsidFragment.FRAGMENT_TAG);
     ssidTab.setText(R.string.main_tab_ssid);
     actionBar.addTab(ssidTab);
+
+    hotTab = actionBar.newTab();
+    hotTab.setTabListener(this);
+    hotTab.setTag(HotFragment.FRAGMENT_TAG);
+    hotTab.setText(R.string.main_tab_hot);
+    actionBar.addTab(hotTab);
   }
 
   /**
@@ -144,8 +159,12 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   public ActionBar.Tab tagToTab(String arg) {
     if (arg.equals(ConsoleFragment.FRAGMENT_TAG)) {
       return(consoleTab);
+    } else if (arg.equals(HotFragment.FRAGMENT_TAG)) {
+      return(hotTab);
     } else if (arg.equals(SortieFragment.FRAGMENT_TAG)) {
       return(sortieTab);
+    } else if (arg.equals(SsidFragment.FRAGMENT_TAG)) {
+      return(ssidTab);
     }
 
     throw new IllegalArgumentException("unsupported tag:" + arg);

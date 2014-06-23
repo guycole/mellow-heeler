@@ -40,6 +40,7 @@ import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.database.SortieTable;
 import com.digiburo.mellow.heeler.lib.utility.LegalMode;
+import com.google.android.gms.plus.model.people.Person;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,7 @@ public class ConsoleFragment extends ListFragment {
   private static final Logger LOG = LoggerFactory.getLogger(ConsoleFragment.class);
 
   private Button buttonSpecialLocation;
+  private Button buttonStartStop;
 
   private EditText editSortieName;
 
@@ -66,7 +68,6 @@ public class ConsoleFragment extends ListFragment {
   private TextView textObservationRowCount;
 
   private TextView textStatus;
-  private ToggleButton toggleStart;
 
   private MainListener mainListener;
 
@@ -80,7 +81,6 @@ public class ConsoleFragment extends ListFragment {
     public void onReceive(Context context, Intent intent) {
       LOG.info("onReceive noted");
 
-      updateSortieName();
       updateStatusLabel();
       updateLocationDisplay();
       updateDetectionDisplay(intent.getIntExtra(Constant.INTENT_OBSERVATION_UPDATE, 0));
@@ -105,7 +105,10 @@ public class ConsoleFragment extends ListFragment {
    */
   @Override
   public void onListItemClick(ListView listView, View view, int position, long id) {
-    LOG.debug("click:" + position + ":" + id);
+    LOG.debug("onListItemClick:" + position + ":" + id);
+
+    ObservationModel observationModel = Personality.getCurrentObserved().get(position);
+    mainListener.displayObservationDetail(observationModel.getId());
   }
 
   /**
@@ -113,7 +116,7 @@ public class ConsoleFragment extends ListFragment {
    */
   @Override
   public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-    menu.add(0, CONTEXT_ITEM_1, 0, R.string.menu_context_delete);
+    menu.add(0, CONTEXT_ITEM_1, 0, R.string.menu_context_hot_list);
   }
 
   /**
@@ -124,7 +127,8 @@ public class ConsoleFragment extends ListFragment {
   @Override
   public boolean onContextItemSelected(MenuItem item) {
     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//    LogFacade.entry(LOG_TAG, "on context item select:" + item + ":" + info.id + ":" + arrayAdapter.getItem(info.position));
+    LOG.debug("on context item select:" + item + ":" + info.id + ":" + arrayAdapter.getItem(info.position));
+    //TODO
 //    twoListener.createStateDeleteDialog(R.string.alert_delete_title, R.string.alert_delete_message);
     return super.onContextItemSelected(item);
   }
@@ -166,6 +170,23 @@ public class ConsoleFragment extends ListFragment {
       }
     });
 
+    buttonStartStop = (Button) getActivity().findViewById(R.id.buttonStartStop);
+    buttonStartStop.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if (Personality.getOperationMode() == LegalMode.COLLECTION) {
+          mainListener.sortieStop();
+        } else {
+          String temp = editSortieName.getText().toString();
+          if ((temp == null) || temp.trim().isEmpty()) {
+            mainListener.sortieStart(Constant.DEFAULT_SORTIE_NAME);
+          } else {
+            mainListener.sortieStart(temp.trim());
+          }
+        }
+      }
+    });
+
     editSortieName = (EditText) getActivity().findViewById(R.id.editSortieName);
     editSortieName.setText(Constant.DEFAULT_SORTIE_NAME);
 
@@ -176,14 +197,12 @@ public class ConsoleFragment extends ListFragment {
     textLocationTime.setText(Constant.UNKNOWN);
 
     textLocationRowCount = (TextView) getActivity().findViewById(R.id.textLocationRowCount);
-    textLocationRowCount.setText(Constant.UNKNOWN);
+    textLocationRowCount.setText("Location Rows:" + Constant.EMPTY);
 
     textObservationRowCount = (TextView) getActivity().findViewById(R.id.textObservationRowCount);
-    textObservationRowCount.setText(Constant.UNKNOWN);
+    textObservationRowCount.setText("Observation Rows:" + Constant.EMPTY);
 
     textStatus = (TextView) getActivity().findViewById(R.id.textStatus);
-
-    toggleStart = (ToggleButton) getActivity().findViewById(R.id.toggleStart);
 
     registerForContextMenu(getListView());
 
@@ -206,6 +225,12 @@ public class ConsoleFragment extends ListFragment {
   }
 
   @Override
+  public void onDetach() {
+    super.onDetach();
+    mainListener = null;
+  }
+
+  @Override
   public void onDestroyView() {
     super.onDestroyView();
     setListAdapter(null);
@@ -220,16 +245,21 @@ public class ConsoleFragment extends ListFragment {
     int message = R.string.text_idle;
 
     if (Personality.getOperationMode() == LegalMode.COLLECTION) {
+      LOG.debug("start collection true");
+
       message = R.string.text_collection;
       colorBackground = Color.GREEN;
       colorText = Color.RED;
 
-      toggleStart.setChecked(true);
-      LOG.debug("start collection true");
+      buttonStartStop.setText(R.string.button_stop);
+
+      editSortieName.setEnabled(false);
     } else {
-      toggleStart.setChecked(false);
       LOG.debug("start collection false");
 
+      buttonStartStop.setText(R.string.button_start);
+
+      editSortieName.setEnabled(true);
       editSortieName.setText("");
     }
 
@@ -254,16 +284,16 @@ public class ConsoleFragment extends ListFragment {
       }
     }
 
-    arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stringArray);
-    setListAdapter(arrayAdapter);
-
     if (Personality.getCurrentSortie() == null) {
-      textObservationRowCount.setText("Empty");
+      textObservationRowCount.setText("Observation Rows:" + Constant.EMPTY);
     } else {
       DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
       int observationPopulation = dataBaseFacade.countObservationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
-      textObservationRowCount.setText(Integer.toString(observationPopulation));
+      textObservationRowCount.setText("Observation Rows:" + Integer.toString(observationPopulation));
     }
+
+    arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_list_item, stringArray);
+    setListAdapter(arrayAdapter);
   }
 
   private void updateLocationDisplay() {
@@ -281,34 +311,13 @@ public class ConsoleFragment extends ListFragment {
       textLocationTime.setText(tempTime);
 
       if (Personality.getCurrentSortie() == null) {
-        textLocationRowCount.setText("Empty");
+        textLocationRowCount.setText("Location Rows:" + Constant.EMPTY);
       } else {
         DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
         int locationPopulation = dataBaseFacade.countLocationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
-        textLocationRowCount.setText(Integer.toString(locationPopulation));
+        textLocationRowCount.setText("Location Rows:" + Integer.toString(locationPopulation));
       }
     }
-  }
-
-  private void updateSortieName() {
-    String temp = editSortieName.getText().toString().trim();
-    if (temp.isEmpty()) {
-      return;
-    }
-
-    if (Personality.getCurrentSortie() == null) {
-      return;
-    }
-
-    if (temp.equals(Personality.getCurrentSortie().getSortieName())) {
-      return;
-    }
-
-    SortieModel sortieModel = Personality.getCurrentSortie();
-    sortieModel.setSortieName(temp);
-
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-    dataBaseFacade.updateSortie(sortieModel, getActivity());
   }
 
   /**

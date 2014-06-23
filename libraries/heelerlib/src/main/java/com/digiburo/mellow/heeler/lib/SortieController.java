@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.widget.Toast;
 
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.service.LocationService;
 import com.digiburo.mellow.heeler.lib.service.ScanReceiver;
@@ -65,6 +66,7 @@ public class SortieController {
     Personality.setCurrentSortie(null);
     Personality.setCurrentLocation(null);
     Personality.setOperationMode(LegalMode.IDLE);
+    Personality.setCurrentObserved(new ObservationModelList());
 
     LocationService.stopLocationService(context);
 

@@ -64,6 +64,88 @@ public class DataBaseFacade {
    * @param context
    * @return
    */
+  public int deleteHot(long rowKey, final Context context) {
+    String where = HotTable.Columns._ID + "=?";
+    String[] whereArgs = new String[] {Long.toString(rowKey)};
+    return simpleDelete(HotTable.TABLE_NAME, where, whereArgs, context);
+  }
+
+  /**
+   *
+   * @param context
+   * @return
+   */
+  public HotModelList selectAllHot(final Context context) {
+    HotModelList results = new HotModelList();
+
+    HotTable table = new HotTable();
+    String[] projection = table.getDefaultProjection();
+
+    String selection = null;
+    String[] selectionArgs = null;
+
+    Cursor cursor = null;
+    SQLiteDatabase sqlDb = null;
+
+    try {
+      sqlDb = getReadableDataBase(context);
+      cursor = sqlDb.query(HotTable.TABLE_NAME, projection, selection, selectionArgs, null, null, HotTable.DEFAULT_SORT_ORDER);
+      if (cursor.moveToFirst()) {
+        do {
+          HotModel hotModel = new HotModel();
+          hotModel.fromCursor(cursor);
+          results.add(hotModel);
+        } while(cursor.moveToNext());
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+
+      if (sqlDb != null) {
+        sqlDb.close();
+      }
+    }
+
+    return results;
+  }
+
+  /**
+   *
+   * @param target
+   * @param context
+   * @return
+   */
+  public HotModel selectHot(final Long target, final Context context) {
+    HotModel model = new HotModel();
+    HotTable table = new HotTable();
+
+    String selection = HotTable.Columns._ID + "=?";
+    String[] selectionArgs = new String[] {target.toString()};
+
+    simpleSelect(selection, selectionArgs, table, model, context);
+
+    return model;
+  }
+
+  /**
+   *
+   * @param model
+   * @param context
+   * @return
+   */
+  public int updateHot(final HotModel model, final Context context) {
+    String where = HotTable.Columns._ID + "=?";
+    String[] whereArgs = new String[] {model.getId().toString()};
+    return simpleUpdate(model, where, whereArgs, context);
+  }
+
+  /**
+   *
+   * @param rowKey
+   * @param context
+   * @return
+   */
   public int deleteLocation(long rowKey, final Context context) {
     String where = LocationTable.Columns._ID + "=?";
     String[] whereArgs = new String[] {Long.toString(rowKey)};

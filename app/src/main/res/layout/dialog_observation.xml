@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.digiburo.mellow.heeler.app.MainActivity">
+
+  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableObservation"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1">
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_bssid"/>
+      <TextView style="@style/EditView01"
+        android:id="@+id/textBssid"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_ssid"/>
+      <TextView style="@style/EditView01"
+        android:id="@+id/textSsid"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_capability"/>
+      <TextView style="@style/EditView01"
+        android:id="@+id/textCapability"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_frequency"/>
+      <TextView style="@style/EditView01"
+        android:id="@+id/textFrequency"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_level"/>
+      <TextView style="@style/EditView01"
+        android:id="@+id/textLevel"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_location2"/>
+      <TextView style="@style/UuidView01"
+        android:id="@+id/textLocation"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_observation"/>
+      <TextView style="@style/UuidView01"
+        android:id="@+id/textObservation"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_sortie"/>
+      <TextView style="@style/UuidView01"
+        android:id="@+id/textSortie"/>
+    </TableRow>
+
+    <TableRow>
+      <TextView style="@style/LabelView01"
+        android:text="@string/text_time"/>
+      <TextView style="@style/EditView01"
+        android:id="@+id/textTime"/>
+    </TableRow>
+  </TableLayout>
+
+  <Button style="@style/ButtonStyle01"
+    android:id="@+id/buttonDismiss"
+    android:text="@string/button_dismiss"
+    android:layout_below="@id/tableObservation"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"/>
+</RelativeLayout>

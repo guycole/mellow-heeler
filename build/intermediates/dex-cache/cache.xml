@@ -32,23 +32,23 @@
         revision="19.1.0"
         sha1="e68f0e8e4b636ee30c4de58953be38d9b72a5e3b"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-068aaa41b160b7b01dad92be8db5704fffea5804.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-asl/1.9.13/1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7/jackson-mapper-asl-1.9.13.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7"/>
-    <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/commons-lang3-3.3.2-da048d30a550b373d25a917748d9003e854ef885.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="90a3822c38ec8c996e84c16a3477ef632cbc87a3"/>
     <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-068aaa41b160b7b01dad92be8db5704fffea5804.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-asl/1.9.13/1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7/jackson-mapper-asl-1.9.13.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7"/>
+    <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/classes-0bdb4cdfc6303326eafa214d7b20bfe18393e959.jar"
         jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/mellow-heeler-android.libraries/heelerlib/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="160d99911b7e01306fc812cebcdf4ca9377175b8"/>
+        sha1="e3485d3dd784566687717c2aa8fa3de08d4d99ff"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/classes-9d3cfba88ce81e32aabfa2b493b53be8e0cd43c6.jar"
         jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"

@@ -12,6 +12,17 @@ public interface MainListener {
   void displayGoogleMap(long rowId);
 
   /**
+   * display observation detail
+   * @param rowId
+   */
+  void displayObservationDetail(long rowId);
+
+  /**
+   * start collection
+   */
+  void sortieStart(final String sortieName);
+
+  /**
    * stop collection
    */
   void sortieStop();

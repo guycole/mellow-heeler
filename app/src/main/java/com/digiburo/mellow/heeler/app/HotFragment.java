@@ -14,29 +14,28 @@ import android.widget.ListView;
 
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.database.DataBaseTableIf;
-import com.digiburo.mellow.heeler.lib.database.SortieTable;
+import com.digiburo.mellow.heeler.lib.database.ObservationTable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Scrolling list of sorties.
- * Short press display sortie track on google map
- * Long press supports sortie deletion
+ * Scrolling list of SSID
  */
-public class SortieFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class HotFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
   private static final Logger LOG = LoggerFactory.getLogger(SortieFragment.class);
-  public static final String FRAGMENT_TAG = "TAG_SORTIE";
-  public static final int LOADER_ID = 314156;
 
-  private SortieCursorAdapter adapter;
+  public static final String FRAGMENT_TAG = "TAG_SSID";
+  public static final int LOADER_ID = 2718;
+
+  private SsidCursorAdapter adapter;
   private MainListener mainListener;
 
   /**
    * LoaderCallback
    */
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    DataBaseTableIf table = new SortieTable();
+    DataBaseTableIf table = new ObservationTable();
 
     String[] projection = table.getDefaultProjection();
     String orderBy = table.getDefaultSortOrder();
@@ -44,7 +43,7 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
     String selection = null;
     String[] selectionArgs = null;
 
-    CursorLoader loader = new CursorLoader(getActivity(), SortieTable.CONTENT_URI, projection, selection, selectionArgs, orderBy);
+    CursorLoader loader = new CursorLoader(getActivity(), ObservationTable.CONTENT_URI, projection, selection, selectionArgs, orderBy);
     return loader;
   }
 
@@ -69,13 +68,13 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
   @Override
   public void onListItemClick(ListView listView, View view, int position, long id) {
     LOG.debug("click:" + position + ":" + id);
-    mainListener.displayGoogleMap(id);
+//    mainListener.displayGoogleMap(id);
   }
 
   /**
    * mandatory empty ctor
    */
-  public SortieFragment() {
+  public HotFragment() {
     //empty
   }
 
@@ -89,14 +88,14 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    SortieTable sortieTable = new SortieTable();
-    adapter = new SortieCursorAdapter(getActivity(), sortieTable.getDefaultProjection());
+    ObservationTable observationTable = new ObservationTable();
+    adapter = new SsidCursorAdapter(getActivity(), observationTable.getDefaultProjection());
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_sortie, container, false);
+    View view = inflater.inflate(R.layout.fragment_ssid, container, false);
     return (view);
   }
 
@@ -122,7 +121,3 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
     mainListener = null;
   }
 }
-/*
- * Copyright 2014 Digital Burro, INC
- * Created on May 21, 2014 by gsc
- */

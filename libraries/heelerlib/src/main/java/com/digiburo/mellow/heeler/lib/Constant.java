@@ -38,6 +38,7 @@ public class Constant {
   public static final String DIAGNOSTIC_URL = "https://mellow-heeler.appspot.com/diagnostic";
 
   //
+  public static final String EMPTY = "Empty";
   public static final String OK = "OK";
   public static final String UNKNOWN = "Unknown";
 
