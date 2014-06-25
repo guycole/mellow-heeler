@@ -9,51 +9,44 @@
     tools:context="com.digiburo.mellow.heeler.app.MainActivity">
 
   <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tableObservation"
+    android:id="@+id/tableLocation"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:stretchColumns="1">
 
     <TableRow>
       <TextView style="@style/LabelView01"
-        android:text="@string/text_bssid"/>
+        android:text="@string/text_accy"/>
       <TextView style="@style/EditView01"
-        android:id="@+id/textBssid"/>
+        android:id="@+id/textAccuracy"/>
     </TableRow>
 
     <TableRow>
       <TextView style="@style/LabelView01"
-        android:text="@string/text_ssid"/>
+        android:text="@string/text_alt"/>
       <TextView style="@style/EditView01"
-        android:id="@+id/textSsid"/>
+        android:id="@+id/textAltitude"/>
     </TableRow>
 
     <TableRow>
       <TextView style="@style/LabelView01"
-        android:text="@string/text_caps"/>
+        android:text="@string/text_lat"/>
       <TextView style="@style/UuidView01"
-        android:id="@+id/textCapability"/>
+        android:id="@+id/textLatitude"/>
     </TableRow>
 
     <TableRow>
       <TextView style="@style/LabelView01"
-        android:text="@string/text_freq"/>
+        android:text="@string/text_long"/>
       <TextView style="@style/EditView01"
-        android:id="@+id/textFrequency"/>
-    </TableRow>
-
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_level"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLevel"/>
+        android:id="@+id/textLongitude"/>
     </TableRow>
 
     <TableRow>
       <TextView style="@style/LabelView01"
         android:text="@string/text_uuid"/>
       <TextView style="@style/UuidView01"
-        android:id="@+id/textObservation"/>
+        android:id="@+id/textUuid"/>
     </TableRow>
 
     <TableRow>
@@ -65,14 +58,9 @@
   </TableLayout>
 
   <Button style="@style/ButtonStyle01"
-    android:id="@+id/buttonLocationDetail"
-    android:text="@string/button_detail_location"
-    android:layout_below="@id/tableObservation"/>
-
-  <Button style="@style/ButtonStyle01"
     android:id="@+id/buttonSortieDetail"
     android:text="@string/button_detail_sortie"
-    android:layout_below="@id/buttonLocationDetail"/>
+    android:layout_below="@id/tableLocation"/>
 
   <Button style="@style/ButtonStyle01"
     android:id="@+id/buttonMap"

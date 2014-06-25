@@ -25,6 +25,9 @@ import android.widget.ToggleButton;
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.SortieController;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 import org.slf4j.Logger;
@@ -34,7 +37,10 @@ public class MainActivity extends ActionBarActivity implements MainListener {
   private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
 
   private TabHelper tabHelper;
+
+  private LocationDialog locationDialog;
   private ObservationDialog observationDialog;
+  private SortieDialog sortieDialog;
 
   private final SortieController sortieController = new SortieController();
 
@@ -54,31 +60,78 @@ public class MainActivity extends ActionBarActivity implements MainListener {
     }
   };
 
-  /**
-   * mainListener
-   * switch sortie list for google map
-   */
   @Override
-  public void displayGoogleMap(long rowId) {
-    tabHelper.displayGoogleMap(rowId);
+  public void displayGoogleMap(LocationModel locationModel) {
+    tabHelper.displayGoogleMap(locationModel);
   }
 
-  public void displayObservationDetail(long rowId) {
-    LOG.info("displayObservationDetail:" + rowId);
+  @Override
+  public void displayGoogleMap(ObservationModel observationModel) {
+    tabHelper.displayGoogleMap(observationModel);
+  }
 
+  @Override
+  public void displayGoogleMap(SortieModel sortieModel) {
+    tabHelper.displayGoogleMap(sortieModel);
+  }
+
+  /**
+   * mainListener
+   * display location detail
+   * @param uuid
+   */
+  public void displayLocationDetail(String uuid) {
+    LOG.info("displayLocationDetail:" + uuid);
+
+    FragmentTransaction fragmentTransaction = prepareFragmentTransaction();
+
+    locationDialog = LocationDialog.newInstance(uuid);
+    locationDialog.show(fragmentTransaction, LocationDialog.FRAGMENT_TAG);
+  }
+
+  /**
+   * mainListener
+   * display observation detail
+   * @param uuid
+   */
+  public void displayObservationDetail(String uuid) {
+    LOG.info("displayObservationDetail:" + uuid);
+
+    FragmentTransaction fragmentTransaction = prepareFragmentTransaction();
+
+    observationDialog = ObservationDialog.newInstance(uuid);
+    observationDialog.show(fragmentTransaction, ObservationDialog.FRAGMENT_TAG);
+  }
+
+  /**
+   *  mainListener
+   * display sortie detail
+   * @param uuid
+   */
+  public void displaySortieDetail(String uuid) {
+    LOG.info("displaySortieDetail:" + uuid);
+
+    FragmentTransaction fragmentTransaction = prepareFragmentTransaction();
+
+    sortieDialog = SortieDialog.newInstance(uuid);
+    sortieDialog.show(fragmentTransaction, ObservationDialog.FRAGMENT_TAG);
+  }
+
+  /**
+   *
+   * @return
+   */
+  private FragmentTransaction prepareFragmentTransaction() {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     Fragment previous = fragmentManager.findFragmentByTag(ObservationDialog.FRAGMENT_TAG);
     if (previous != null) {
       fragmentTransaction.remove(previous);
     }
-    fragmentTransaction.addToBackStack(null);
 
-    observationDialog = ObservationDialog.newInstance(rowId);
-    Bundle bundle = observationDialog.getArguments();
+ //   fragmentTransaction.addToBackStack(null);
 
-    observationDialog.show(fragmentTransaction, ObservationDialog.FRAGMENT_TAG);
-//    observationDialog.show(fragmentManager, ObservationDialog.FRAGMENT_TAG);
+    return fragmentTransaction;
   }
 
   /**
@@ -167,7 +220,7 @@ public class MainActivity extends ActionBarActivity implements MainListener {
       case R.id.menu_clean:
         intent.setAction(Constant.INTENT_ACTION_CLEAN);
         break;
-      case R.id.menu_preference:
+      case R.id.menu_settings:
         intent.setAction(Constant.INTENT_ACTION_SETTING);
         break;
       case R.id.menu_upload:

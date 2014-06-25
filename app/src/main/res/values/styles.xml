@@ -11,7 +11,7 @@
 
   <style name="EditView01">
     <item name="android:layout_gravity">left|center_vertical</item>
-    <item name="android:textColor">#ffffff</item>
+    <item name="android:textColor">#000000</item>
     <item name="android:textSize">20dip</item>
     <item name="android:typeface">sans</item>
     <item name="android:layout_height">wrap_content</item>
@@ -22,7 +22,7 @@
 
   <style name="LabelView01">
     <item name="android:layout_gravity">right|center_vertical</item>
-    <item name="android:textColor">#ffffff</item>
+    <item name="android:textColor">#000000</item>
     <item name="android:textSize">20dip</item>
     <item name="android:textStyle">bold</item>
     <item name="android:typeface">sans</item>
@@ -31,18 +31,18 @@
   </style>
 
   <style name="UuidView01">
-    <item name="android:textColor">#ffffff</item>
+    <item name="android:textColor">#000000</item>
     <item name="android:textSize">20dip</item>
     <item name="android:typeface">sans</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:maxLines">3</item>
+    <item name="android:maxLines">4</item>
     <item name="android:linksClickable">true</item>
   </style>
 
   <style name="RowView01">
     <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:textColor">#ffffff</item>
+    <item name="android:textColor">#000000</item>
     <item name="android:textSize">20dip</item>
     <item name="android:typeface">sans</item>
     <item name="android:layout_height">wrap_content</item>

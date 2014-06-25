@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.digiburo.mellow.heeler.R;
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.DataBaseTableIf;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.database.SortieTable;
 
 import org.slf4j.Logger;
@@ -69,7 +71,10 @@ public class SortieFragment extends ListFragment implements LoaderManager.Loader
   @Override
   public void onListItemClick(ListView listView, View view, int position, long id) {
     LOG.debug("click:" + position + ":" + id);
-    mainListener.displayGoogleMap(id);
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+    SortieModel sortieModel = dataBaseFacade.selectSortie(id, getActivity());
+    mainListener.displaySortieDetail(sortieModel.getSortieUuid());
   }
 
   /**

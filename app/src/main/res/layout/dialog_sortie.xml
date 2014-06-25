@@ -9,51 +9,23 @@
     tools:context="com.digiburo.mellow.heeler.app.MainActivity">
 
   <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tableObservation"
+    android:id="@+id/tableSortie"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:stretchColumns="1">
 
     <TableRow>
       <TextView style="@style/LabelView01"
-        android:text="@string/text_bssid"/>
+        android:text="@string/text_name"/>
       <TextView style="@style/EditView01"
-        android:id="@+id/textBssid"/>
-    </TableRow>
-
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_ssid"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textSsid"/>
-    </TableRow>
-
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_caps"/>
-      <TextView style="@style/UuidView01"
-        android:id="@+id/textCapability"/>
-    </TableRow>
-
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_freq"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textFrequency"/>
-    </TableRow>
-
-    <TableRow>
-      <TextView style="@style/LabelView01"
-        android:text="@string/text_level"/>
-      <TextView style="@style/EditView01"
-        android:id="@+id/textLevel"/>
+        android:id="@+id/textName"/>
     </TableRow>
 
     <TableRow>
       <TextView style="@style/LabelView01"
         android:text="@string/text_uuid"/>
       <TextView style="@style/UuidView01"
-        android:id="@+id/textObservation"/>
+        android:id="@+id/textUuid"/>
     </TableRow>
 
     <TableRow>
@@ -65,19 +37,9 @@
   </TableLayout>
 
   <Button style="@style/ButtonStyle01"
-    android:id="@+id/buttonLocationDetail"
-    android:text="@string/button_detail_location"
-    android:layout_below="@id/tableObservation"/>
-
-  <Button style="@style/ButtonStyle01"
-    android:id="@+id/buttonSortieDetail"
-    android:text="@string/button_detail_sortie"
-    android:layout_below="@id/buttonLocationDetail"/>
-
-  <Button style="@style/ButtonStyle01"
     android:id="@+id/buttonMap"
     android:text="@string/button_map"
-    android:layout_below="@id/buttonSortieDetail"/>
+    android:layout_below="@id/tableSortie"/>
 
   <Button style="@style/ButtonStyle01"
     android:id="@+id/buttonDismiss"

@@ -85,6 +85,16 @@ public class TimeUtility {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     return(sdf.format(date));
   }
+
+  /**
+   * Given a string in RFC3339 format, remove the fractional seconds
+   * @param arg
+   * @return
+   */
+  public static String secondsOnly(final String arg) {
+    int ndx = arg.lastIndexOf(".");
+    return arg.substring(0, ndx) + "Z";
+  }
 }
 /*
  * Copyright 2014 Digital Burro, INC

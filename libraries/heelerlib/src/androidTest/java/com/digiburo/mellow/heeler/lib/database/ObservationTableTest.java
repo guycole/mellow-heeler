@@ -46,6 +46,9 @@ public class ObservationTableTest extends ApplicationTestCase<HeelerApplication>
     assertEquals(rowKey.longValue(), selected.getId().longValue());
     assertTrue(original.equals(selected));
 
+    ObservationModel selected2 = dataBaseFacade.selectObservation(selected.getObservationUuid(), getContext());
+    assertEquals(rowKey.longValue(), selected2.getId().longValue());
+
     ObservationModelList modelList = dataBaseFacade.selectAllObservations(true, original.getSortieUuid(), 0, getContext());
     assertEquals(1, modelList.size());
 

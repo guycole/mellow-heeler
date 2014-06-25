@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 
 import com.digiburo.mellow.heeler.R;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 
 import java.io.Console;
 
@@ -170,8 +173,40 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     throw new IllegalArgumentException("unsupported tag:" + arg);
   }
 
-  public void displayGoogleMap(long rowId) {
-    chartFragment.setCurrentSortie(rowId);
+  public void displayGoogleMap(LocationModel locationModel) {
+    chartFragment.setCurrentLocation(locationModel);
+
+    FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    Fragment oldFragment = fragmentManager.findFragmentByTag(ChartFragment.FRAGMENT_TAG);
+    if (oldFragment != null) {
+      fragmentTransaction.remove(oldFragment);
+    }
+
+    fragmentTransaction.replace(R.id.layoutFragment01, chartFragment);
+//    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.commit();
+  }
+
+  public void displayGoogleMap(ObservationModel observationModel) {
+    chartFragment.setCurrentObservation(observationModel);
+
+    FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    Fragment oldFragment = fragmentManager.findFragmentByTag(ChartFragment.FRAGMENT_TAG);
+    if (oldFragment != null) {
+      fragmentTransaction.remove(oldFragment);
+    }
+
+    fragmentTransaction.replace(R.id.layoutFragment01, chartFragment);
+//    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.commit();
+  }
+
+  public void displayGoogleMap(SortieModel sortieModel) {
+    chartFragment.setCurrentSortie(sortieModel);
 
     FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

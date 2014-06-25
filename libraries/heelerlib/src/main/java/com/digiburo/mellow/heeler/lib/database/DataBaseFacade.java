@@ -172,6 +172,24 @@ public class DataBaseFacade {
 
   /**
    *
+   * @param uuid
+   * @param context
+   * @return selected model
+   */
+  public LocationModel selectLocation(final String uuid, final Context context) {
+    LocationModel model = new LocationModel();
+    LocationTable table = new LocationTable();
+
+    String selection = LocationTable.Columns.LOCATION_ID + "=?";
+    String[] selectionArgs = new String[] {uuid};
+
+    simpleSelect(selection, selectionArgs, table, model, context);
+
+    return model;
+  }
+
+  /**
+   *
    * @param context
    * @return
    */
@@ -411,6 +429,19 @@ public class DataBaseFacade {
     return model;
   }
 
+
+  public ObservationModel selectObservation(final String uuid, final Context context) {
+    ObservationModel model = new ObservationModel();
+    ObservationTable table = new ObservationTable();
+
+    String selection = ObservationTable.Columns.OBSERVATION_ID + "=?";
+    String[] selectionArgs = new String[] {uuid};
+
+    simpleSelect(selection, selectionArgs, table, model, context);
+
+    return model;
+  }
+
   /**
    * update existing observation
    * @param model
@@ -514,16 +545,16 @@ public class DataBaseFacade {
 
   /**
    * select sortie by UUID
-   * @param target UUID
+   * @param uuid UUID
    * @param context
    * @return selected model
    */
-  public SortieModel selectSortie(final String target, final Context context) {
+  public SortieModel selectSortie(final String uuid, final Context context) {
     SortieModel model = new SortieModel();
     SortieTable table = new SortieTable();
 
     String selection = SortieTable.Columns.SORTIE_ID + "=?";
-    String[] selectionArgs = new String[] {target.toString()};
+    String[] selectionArgs = new String[] {uuid};
 
     simpleSelect(selection, selectionArgs, table, model, context);
 

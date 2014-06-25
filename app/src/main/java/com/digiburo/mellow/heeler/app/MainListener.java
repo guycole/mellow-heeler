@@ -1,21 +1,49 @@
 package com.digiburo.mellow.heeler.app;
 
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
+
 /**
  * @author gsc
  */
 public interface MainListener {
 
   /**
-   * switch sortie list for google map
-   * @param rowId sortieModel rowId
+   *
+   * @param locationModel
    */
-  void displayGoogleMap(long rowId);
+  void displayGoogleMap(LocationModel locationModel);
+
+  /**
+   *
+   * @param observationModel
+   */
+  void displayGoogleMap(ObservationModel observationModel);
+
+  /**
+   *
+   * @param sortieModel
+   */
+  void displayGoogleMap(SortieModel sortieModel);
+
+  /**
+   * display location detail
+   * @param uuid
+   */
+  void displayLocationDetail(String uuid);
 
   /**
    * display observation detail
-   * @param rowId
+   * @param uuid
    */
-  void displayObservationDetail(long rowId);
+  void displayObservationDetail(String uuid);
+
+  /**
+   * display sortie detail
+   * @param uuid
+   */
+  void displaySortieDetail(String uuid);
 
   /**
    * start collection

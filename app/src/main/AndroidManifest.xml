@@ -21,14 +21,14 @@
   <uses-permission android:name="com.digiburo.mellow.heeler.permission.MAPS_RECEIVE"/>
 
   <application android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name=".lib.HeelerApplication" android:theme="@style/AppTheme" >
-    <activity android:name=".app.MainActivity" android:screenOrientation="portrait" android:label="@string/app_name" android:theme="@style/BlackTheme">
+    <activity android:name=".app.MainActivity" android:screenOrientation="portrait" android:label="@string/app_name">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:name=".app.MenuActivity" android:screenOrientation="portrait" android:label="@string/app_name" android:theme="@style/BlackTheme"/>
+    <activity android:name=".app.MenuActivity" android:screenOrientation="portrait" android:label="@string/app_name"/>
 
     <receiver android:name=".lib.service.ScanReceiver">
       <intent-filter>

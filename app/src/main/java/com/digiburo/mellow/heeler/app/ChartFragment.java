@@ -11,12 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.LocationModelList;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModelList;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +47,15 @@ public class ChartFragment extends SupportMapFragment {
   private static final Logger LOG = LoggerFactory.getLogger(ChartFragment.class);
   public static final String FRAGMENT_TAG = "TAG_CHART";
 
-  private long rowId;
+  LocationModel locationModel;
+  ObservationModel observationModel;
   private SortieModel sortieModel;
+
+  DataBaseFacade dataBaseFacade;
+  /////
+
+  private long rowId;
+
   private LocationModelList locationModelList;
   private ObservationModelList observationModelList;
 
@@ -51,15 +66,37 @@ public class ChartFragment extends SupportMapFragment {
     //empty
   }
 
+  /*
   public void setCurrentSortie(long rowId) {
     this.rowId = rowId;
+  }
+  */
+
+
+  public void setCurrentLocation(LocationModel locationModel) {
+    this.locationModel = locationModel;
+    this.observationModel = null;
+    this.sortieModel = null;
+  }
+
+  public void setCurrentObservation(ObservationModel observationModel) {
+    this.locationModel = null;
+    this.observationModel = observationModel;
+    this.sortieModel = null;
+  }
+
+  public void setCurrentSortie(SortieModel sortieModel) {
+    this.locationModel = null;
+    this.observationModel = null;
+    this.sortieModel = sortieModel;
   }
 
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
 
-    DataBaseFacade dataBaseFacade = new DataBaseFacade(activity);
+    dataBaseFacade = new DataBaseFacade(activity);
+
     sortieModel = dataBaseFacade.selectSortie(rowId, activity);
     LOG.debug("sortie:" + rowId + ":" + sortieModel.getSortieName() + ":" + sortieModel.getSortieUuid());
     locationModelList = dataBaseFacade.selectAllLocations(true, sortieModel.getSortieUuid(), 0, activity);
@@ -70,15 +107,30 @@ public class ChartFragment extends SupportMapFragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//    LogFacade.entry(LOG_TAG, "onCreateView");
-    
     View view = super.onCreateView(inflater, container, savedInstanceState);
 
-    /*
     UiSettings settings = getMap().getUiSettings();
-//    settings.setAllGesturesEnabled(false);
+    settings.setAllGesturesEnabled(false);
     settings.setMyLocationButtonEnabled(false);
-    
+
+    if (locationModel != null) {
+      LatLng latLng = new LatLng(locationModel.getLatitude(), locationModel.getLongitude());
+//      getMap().addMarker(new MarkerOptions().position(latLng).title(model.getIdentifier()).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)));
+      getMap().addMarker(new MarkerOptions().position(latLng).title("xx").icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)));
+      getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+    } else if (observationModel != null) {
+      LocationModel locationModel = dataBaseFacade.selectLocation(observationModel.getLocationUuid(), getActivity());
+
+      LatLng latLng = new LatLng(locationModel.getLatitude(), locationModel.getLongitude());
+//      getMap().addMarker(new MarkerOptions().position(latLng).title(model.getIdentifier()).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)));
+      getMap().addMarker(new MarkerOptions().position(latLng).title("xx").icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker)));
+      getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+    } else if (sortieModel != null) {
+      //TODO
+      System.out.println("start here");
+    }
+
+    /*
     StationModel originModel = null;
  
     if ((stationList != null) && (!stationList.isEmpty())) {

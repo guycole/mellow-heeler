@@ -40,6 +40,7 @@ import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.database.SortieTable;
 import com.digiburo.mellow.heeler.lib.utility.LegalMode;
+import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.google.android.gms.plus.model.people.Person;
 
 import org.slf4j.Logger;
@@ -108,7 +109,7 @@ public class ConsoleFragment extends ListFragment {
     LOG.debug("onListItemClick:" + position + ":" + id);
 
     ObservationModel observationModel = Personality.getCurrentObserved().get(position);
-    mainListener.displayObservationDetail(observationModel.getId());
+    mainListener.displayObservationDetail(observationModel.getObservationUuid());
   }
 
   /**
@@ -155,14 +156,8 @@ public class ConsoleFragment extends ListFragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_console, container, false);
-    return(view);
-  }
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-
-    buttonSpecialLocation = (Button) getActivity().findViewById(R.id.buttonSpecialLocation);
+    buttonSpecialLocation = (Button) view.findViewById(R.id.buttonSpecialLocation);
     buttonSpecialLocation.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -170,7 +165,7 @@ public class ConsoleFragment extends ListFragment {
       }
     });
 
-    buttonStartStop = (Button) getActivity().findViewById(R.id.buttonStartStop);
+    buttonStartStop = (Button) view.findViewById(R.id.buttonStartStop);
     buttonStartStop.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -187,22 +182,29 @@ public class ConsoleFragment extends ListFragment {
       }
     });
 
-    editSortieName = (EditText) getActivity().findViewById(R.id.editSortieName);
+    editSortieName = (EditText) view.findViewById(R.id.editSortieName);
     editSortieName.setText(Constant.DEFAULT_SORTIE_NAME);
 
-    textGeoLoc = (TextView) getActivity().findViewById(R.id.textGeoLoc);
+    textGeoLoc = (TextView) view.findViewById(R.id.textGeoLoc);
     textGeoLoc.setText(Constant.UNKNOWN);
 
-    textLocationTime = (TextView) getActivity().findViewById(R.id.textLocationTime);
+    textLocationTime = (TextView) view.findViewById(R.id.textLocationTime);
     textLocationTime.setText(Constant.UNKNOWN);
 
-    textLocationRowCount = (TextView) getActivity().findViewById(R.id.textLocationRowCount);
+    textLocationRowCount = (TextView) view.findViewById(R.id.textLocationRowCount);
     textLocationRowCount.setText("Location Rows:" + Constant.EMPTY);
 
-    textObservationRowCount = (TextView) getActivity().findViewById(R.id.textObservationRowCount);
+    textObservationRowCount = (TextView) view.findViewById(R.id.textObservationRowCount);
     textObservationRowCount.setText("Observation Rows:" + Constant.EMPTY);
 
-    textStatus = (TextView) getActivity().findViewById(R.id.textStatus);
+    textStatus = (TextView) view.findViewById(R.id.textStatus);
+
+    return(view);
+  }
+
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
 
     registerForContextMenu(getListView());
 
@@ -303,12 +305,7 @@ public class ConsoleFragment extends ListFragment {
       String lng = String.format("%.4f", (double) locationModel.getLongitude());
       textGeoLoc.setText(lat + " " + lng);
 
-      // remove fractions of second
-      String tempTime = locationModel.getTimeStamp();
-      int ndx = tempTime.lastIndexOf(".");
-      tempTime = tempTime.substring(0, ndx) + "Z";
-
-      textLocationTime.setText(tempTime);
+      textLocationTime.setText(TimeUtility.secondsOnly(locationModel.getTimeStamp()));
 
       if (Personality.getCurrentSortie() == null) {
         textLocationRowCount.setText("Location Rows:" + Constant.EMPTY);

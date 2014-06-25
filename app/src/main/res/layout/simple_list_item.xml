@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:textAppearance="?android:attr/textAppearanceListItemSmall"
-  android:textColor="#ffffff"
+  android:textColor="#000000"
   android:gravity="center_vertical"
   android:paddingStart="?android:attr/listPreferredItemPaddingStart"
   android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"

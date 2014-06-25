@@ -91,6 +91,7 @@
 
     <ListView
       android:id="@id/android:list"
+      android:background="#ff0000"
       android:dividerHeight="5dp"
       android:layout_weight="1"
       android:drawSelectorOnTop="true"

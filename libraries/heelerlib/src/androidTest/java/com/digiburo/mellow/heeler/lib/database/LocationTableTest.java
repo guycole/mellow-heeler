@@ -93,6 +93,9 @@ public class LocationTableTest extends ApplicationTestCase<HeelerApplication> {
     assertTrue(sortieId.equals(selected.getSortieUuid()));
     assertTrue(selected.isSpecialFlag());
     assertTrue(selected.isUploadFlag());
+
+    LocationModel selected2 = dataBaseFacade.selectLocation(selected.getLocationUuid(), getContext());
+    assertEquals(rowKey.longValue(), selected2.getId().longValue());
   }
 
   public void testDelete() {
