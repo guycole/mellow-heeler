@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.app;
+package com.digiburo.mellow.heeler.app.ui;
 
 import java.util.ArrayList;
 

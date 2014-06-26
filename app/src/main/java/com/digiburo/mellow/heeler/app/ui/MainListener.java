@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.app;
+package com.digiburo.mellow.heeler.app.ui;
 
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;

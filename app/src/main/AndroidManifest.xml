@@ -19,16 +19,22 @@
   <uses-permission android:name="com.digiburo.mellow.heeler.permission.MAPS_RECEIVE" />
 
   <application android:name=".lib.HeelerApplication" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme" >
-    <activity android:name=".app.MainActivity" android:label="@string/app_name" android:screenOrientation="portrait" >
+    <activity android:name=".app.ui.MainActivity" android:label="@string/app_name" android:screenOrientation="portrait" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:name=".app.MenuActivity" android:label="@string/app_name" android:screenOrientation="portrait" />
+    <activity android:name=".app.ui.MenuActivity" android:label="@string/app_name" android:screenOrientation="portrait" />
 
-    <activity android:name=".app.ChartActivity" android:label="@string/app_name" android:screenOrientation="portrait" />
+    <activity android:name=".app.ui.ChartActivity" android:label="@string/app_name" android:screenOrientation="portrait" />
+
+    <receiver android:name=".app.service.NotifyReceiver" >
+      <intent-filter>
+        <action android:name="com.digiburo.mellow.heeler.update" />
+      </intent-filter>
+    </receiver>
 
     <receiver android:name=".lib.service.ScanReceiver" >
       <intent-filter>

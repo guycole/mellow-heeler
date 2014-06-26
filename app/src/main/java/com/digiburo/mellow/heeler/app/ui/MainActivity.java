@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.app;
+package com.digiburo.mellow.heeler.app.ui;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -201,30 +201,9 @@ public class MainActivity extends ActionBarActivity implements MainListener {
     tabHelper = new TabHelper(this);
     tabHelper.initialize();
 
-    setupNotifier();
-
     // some user preference changes require the sortie to be restarted
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     sp.registerOnSharedPreferenceChangeListener(sharedPrefListener);
-  }
-
-  private void setupNotifier() {
-    Intent intent = new Intent(this, MainActivity.class);
-
-    TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-    stackBuilder.addParentStack(MainActivity.class);
-    stackBuilder.addNextIntent(intent);
-
-    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-    builder.setContentTitle("Mellow Heeler");
-    builder.setContentText("Notification Placeholder");
-    builder.setContentIntent(pendingIntent);
-    builder.setSmallIcon(R.drawable.icon24);
-
-    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    notificationManager.notify(2718, builder.build());
   }
 
   /**

@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.app;
+package com.digiburo.mellow.heeler.app.ui;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,26 +9,27 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.digiburo.mellow.heeler.R;
-import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.digiburo.mellow.heeler.lib.database.HotModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 
 /**
  * @author gsc
  */
-public class SortieCursorAdapter extends SimpleCursorAdapter {
+public class HotCursorAdapter extends SimpleCursorAdapter {
   private Context context;
 
   /**
    *
    * @param context
    */
-  public SortieCursorAdapter(Context context, String[] projection) {
-    super(context, R.layout.row_sortie, null, projection, null, 0);
+  public HotCursorAdapter(Context context, String[] projection) {
+    super(context, R.layout.row_hot, null, projection, null, 0);
     this.context = context;
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    final SortieModel currentModel = readFromCursor(position);
+    final HotModel currentModel = readFromCursor(position);
     if (currentModel == null) {
       throw new IllegalArgumentException("readFromCursor:" + position + ":failure noted");
     }
@@ -38,7 +39,7 @@ public class SortieCursorAdapter extends SimpleCursorAdapter {
 
     if (convertView == null) {
       LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      view = inflater.inflate(R.layout.row_sortie, null);
+      view = inflater.inflate(R.layout.row_hot, null);
 
       holder = new ViewHolder(view);
       view.setTag(holder);
@@ -47,19 +48,19 @@ public class SortieCursorAdapter extends SimpleCursorAdapter {
       holder = (ViewHolder) view.getTag();
     }
 
-    holder.tvName.setText(currentModel.getSortieName());
-    holder.tvTime.setText(currentModel.getTimeStamp());
+    holder.tvSsid.setText(currentModel.getSsid());
+    holder.tvBssid.setText(currentModel.getBssid());
 
     return view;
   }
 
-  private SortieModel readFromCursor(int position) {
+  private HotModel readFromCursor(int position) {
     Cursor cursor = getCursor();
     if (!cursor.moveToPosition(position)) {
       return null;
     }
 
-    SortieModel result = new SortieModel();
+    HotModel result = new HotModel();
     result.setDefault();
 
     try {
@@ -73,15 +74,15 @@ public class SortieCursorAdapter extends SimpleCursorAdapter {
 
   class ViewHolder {
     ViewHolder(View view) {
-      tvName = (TextView) view.findViewById(R.id.textSortieName01);
-      tvTime = (TextView) view.findViewById(R.id.textSortieTime01);
+      tvSsid = (TextView) view.findViewById(R.id.textSsid);
+      tvBssid = (TextView) view.findViewById(R.id.textBssid);
     }
 
-    private TextView tvName;
-    private TextView tvTime;
+    private TextView tvSsid;
+    private TextView tvBssid;
   }
 }
 /*
  * Copyright 2014 Digital Burro, INC
- * Created on May 24, 2014 by gsc
+ * Created on Jun 22, 2014 by gsc
  */

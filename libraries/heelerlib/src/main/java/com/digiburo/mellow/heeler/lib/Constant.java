@@ -78,6 +78,9 @@ public class Constant {
   public static final String INTENT_UPLOAD_TYPE = "INTENT_UPLOAD_TYPE";
 
   //
+  public static final int NOTIFICATION_ID = 2718;
+
+  //
   public static final Integer SQL_TRUE = 1;
   public static final Integer SQL_FALSE = 0;
 

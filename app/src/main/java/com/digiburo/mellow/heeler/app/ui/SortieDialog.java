@@ -1,4 +1,4 @@
-package com.digiburo.mellow.heeler.app;
+package com.digiburo.mellow.heeler.app.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,41 +11,37 @@ import android.widget.TextView;
 
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
-import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.SortieModel;
 import com.digiburo.mellow.heeler.lib.utility.TimeUtility;
 import com.digiburo.mellow.heeler.lib.utility.UuidHelper;
 
 /**
  * @author gsc
  */
-public class LocationDialog extends DialogFragment {
+public class SortieDialog extends DialogFragment {
   public static final String FRAGMENT_TAG = "TAG_DIALOG";
   public static final String UUID = "UUID";
 
-  private LocationModel locationModel;
+  private SortieModel sortieModel;
 
-  private TextView textAccuracy;
-  private TextView textAltitude;
-  private TextView textLatitude;
-  private TextView textLongitude;
+  private TextView textName;
   private TextView textUuid;
   private TextView textTime;
 
   private Button buttonDismiss;
   private Button buttonMap;
-  private Button buttonSortieDetail;
 
   private MainListener mainListener;
 
-  public static LocationDialog newInstance(String uuid) {
-    LocationDialog locationDialog = new LocationDialog();
+  public static SortieDialog newInstance(String uuid) {
+    SortieDialog sortieDialog = new SortieDialog();
 
     Bundle bundle = new Bundle();
     bundle.putString(UUID, uuid);
-    locationDialog.setArguments(bundle);
+    sortieDialog.setArguments(bundle);
 
-    return locationDialog;
+    return sortieDialog;
   }
 
   /**
@@ -63,20 +59,22 @@ public class LocationDialog extends DialogFragment {
     String uuid = getArguments().getString(UUID);
 
     DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-    locationModel = dataBaseFacade.selectLocation(uuid, getActivity());
+    sortieModel = dataBaseFacade.selectSortie(uuid, getActivity());
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.dialog_location, container, false);
-    getDialog().setTitle(R.string.dialog_location);
+    View view = inflater.inflate(R.layout.dialog_sortie, container, false);
+    getDialog().setTitle(R.string.dialog_sortie);
 
-    textAccuracy = (TextView) view.findViewById(R.id.textAccuracy);
-    textAltitude = (TextView) view.findViewById(R.id.textAltitude);
-    textLatitude = (TextView) view.findViewById(R.id.textLatitude);
-    textLongitude = (TextView) view.findViewById(R.id.textLongitude);
+    textName = (TextView) view.findViewById(R.id.textName);
+    textName.setText(sortieModel.getSortieName());
+
     textUuid = (TextView) view.findViewById(R.id.textUuid);
+    textUuid.setText(UuidHelper.formatUuidString(sortieModel.getSortieUuid()));
+
     textTime = (TextView) view.findViewById(R.id.textTime);
+    textTime.setText(TimeUtility.secondsOnly(sortieModel.getTimeStamp()));
 
     buttonDismiss = (Button) view.findViewById(R.id.buttonDismiss);
     buttonDismiss.setOnClickListener(new View.OnClickListener() {
@@ -90,30 +88,10 @@ public class LocationDialog extends DialogFragment {
     buttonMap.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        mainListener.displayGoogleMap(locationModel);
+        mainListener.displayGoogleMap(sortieModel);
         dismiss();
       }
     });
-
-    buttonSortieDetail = (Button) view.findViewById(R.id.buttonSortieDetail);
-    buttonSortieDetail.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        mainListener.displaySortieDetail(locationModel.getSortieUuid());
-      }
-    });
-
-    String accuracy = String.format("%.4f", (double) locationModel.getAccuracy());
-    String altitude = String.format("%.4f", (double) locationModel.getAltitude());
-    String lat = String.format("%.4f", (double) locationModel.getLatitude());
-    String lng = String.format("%.4f", (double) locationModel.getLongitude());
-
-    textAccuracy.setText(accuracy);
-    textAltitude.setText(altitude);
-    textLatitude.setText(lat);
-    textLongitude.setText(lng);
-    textUuid.setText(UuidHelper.formatUuidString(locationModel.getLocationUuid()));
-    textTime.setText(TimeUtility.secondsOnly(locationModel.getTimeStamp()));
 
     return view;
   }

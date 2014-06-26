@@ -8,12 +8,6 @@
         revision="19.1.0"
         sha1="72acbbe328cc32b67315611f973e8e8149a83cf3"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/robospice-1.4.12-7b5a71c23a4026e9368a5fa49a9af62a5dda41f8.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.octo.android.robospice/robospice/1.4.12/a765a12a6f549c15b583a275c1f25c8cf656c0fb/robospice-1.4.12.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="a765a12a6f549c15b583a275c1f25c8cf656c0fb"/>
-    <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/logback-android-classic-1.1.1-2-c01307fa4f4f105c4d66fdc8709fda3199728703.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/logback-android-classic/1.1.1-2/3b4bd0ce4a76bb72d8295fe4186d2aa610848a8c/logback-android-classic-1.1.1-2.jar"
         jumboMode="false"
@@ -26,11 +20,11 @@
         revision="19.1.0"
         sha1="e132d929bd181941f79b0d63edafb8a86ae6fd33"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/spring-android-core-1.0.1.RELEASE-7d67a9ce3ef01e90fd3882e81ab5c8f219657e9a.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.springframework.android/spring-android-core/1.0.1.RELEASE/e68f0e8e4b636ee30c4de58953be38d9b72a5e3b/spring-android-core-1.0.1.RELEASE.jar"
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/commons-lang3-3.3.2-da048d30a550b373d25a917748d9003e854ef885.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="e68f0e8e4b636ee30c4de58953be38d9b72a5e3b"/>
+        sha1="90a3822c38ec8c996e84c16a3477ef632cbc87a3"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-068aaa41b160b7b01dad92be8db5704fffea5804.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-asl/1.9.13/1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7/jackson-mapper-asl-1.9.13.jar"
@@ -38,29 +32,11 @@
         revision="19.1.0"
         sha1="1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/commons-lang3-3.3.2-da048d30a550b373d25a917748d9003e854ef885.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.3.2/90a3822c38ec8c996e84c16a3477ef632cbc87a3/commons-lang3-3.3.2.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="90a3822c38ec8c996e84c16a3477ef632cbc87a3"/>
-    <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/classes-0bdb4cdfc6303326eafa214d7b20bfe18393e959.jar"
         jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/mellow-heeler-android.libraries/heelerlib/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="b84965acc0ce33913292b1b63e5414690f1c226e"/>
-    <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/classes-9d3cfba88ce81e32aabfa2b493b53be8e0cd43c6.jar"
-        jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+        sha1="769e50a7fdb1a13a356259d322dc35cb94da2ac8"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/jackson-core-asl-1.9.13-b25d38a0c7ee7795b67a022bebfd61181f1ca053.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar"
@@ -74,11 +50,11 @@
         revision="19.1.0"
         sha1="7676c0cb230efa6ac41c47867d372ed5913029d4"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/logback-android-core-1.1.1-2-13a14fa4eb0d79ce28f0fcfca37b884d6770f1f5.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/logback-android-core/1.1.1-2/bbce4935f5f1882ec37a7adaafabc76641beb15a/logback-android-core-1.1.1-2.jar"
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/apktool-lib-1.4.4-3-08684a54db89a2675514cc97513bd3bb397be068.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/apktool-lib/1.4.4-3/1d0125bf578cb30dd192496db56c2d937495248a/apktool-lib-1.4.4-3.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="bbce4935f5f1882ec37a7adaafabc76641beb15a"/>
+        sha1="1d0125bf578cb30dd192496db56c2d937495248a"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/slf4j-api-1.7.6-b06ad553a075c55dfbabc91cbacce2c0fc5e145b.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.6/562424e36df3d2327e8e9301a76027fca17d54ea/slf4j-api-1.7.6.jar"
@@ -86,11 +62,11 @@
         revision="19.1.0"
         sha1="562424e36df3d2327e8e9301a76027fca17d54ea"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/apktool-lib-1.4.4-3-08684a54db89a2675514cc97513bd3bb397be068.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/apktool-lib/1.4.4-3/1d0125bf578cb30dd192496db56c2d937495248a/apktool-lib-1.4.4-3.jar"
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/logback-android-core-1.1.1-2-13a14fa4eb0d79ce28f0fcfca37b884d6770f1f5.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.github.tony19/logback-android-core/1.1.1-2/bbce4935f5f1882ec37a7adaafabc76641beb15a/logback-android-core-1.1.1-2.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="1d0125bf578cb30dd192496db56c2d937495248a"/>
+        sha1="bbce4935f5f1882ec37a7adaafabc76641beb15a"/>
     <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/support-v13-19.1.0-432d29bb26d6067815408d15c09d69cadf2dd68d.jar"
         jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v13/19.1.0/support-v13-19.1.0.jar"
@@ -98,16 +74,40 @@
         revision="19.1.0"
         sha1="6b852a232f642c75a7fdfc7212b841b8c8f8959c"/>
     <item
-        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/robospice-spring-android-1.4.12-1b8fde6610f300a151d3b315edc64081b8b4a11c.jar"
-        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.octo.android.robospice/robospice-spring-android/1.4.12/29480de67d117a699170fc2b1440c66d716c2e27/robospice-spring-android-1.4.12.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="29480de67d117a699170fc2b1440c66d716c2e27"/>
-    <item
         dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/commons-io-1.3.2-f38a766bcbd96abcac1694dedc62b0b48d92f9ae.jar"
         jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/1.3.2/b6dde38349ba9bb5e6ea6320531eae969985dae5/commons-io-1.3.2.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="b6dde38349ba9bb5e6ea6320531eae969985dae5"/>
+    <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/robospice-1.4.12-7b5a71c23a4026e9368a5fa49a9af62a5dda41f8.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.octo.android.robospice/robospice/1.4.12/a765a12a6f549c15b583a275c1f25c8cf656c0fb/robospice-1.4.12.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a765a12a6f549c15b583a275c1f25c8cf656c0fb"/>
+    <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/spring-android-core-1.0.1.RELEASE-7d67a9ce3ef01e90fd3882e81ab5c8f219657e9a.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/org.springframework.android/spring-android-core/1.0.1.RELEASE/e68f0e8e4b636ee30c4de58953be38d9b72a5e3b/spring-android-core-1.0.1.RELEASE.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e68f0e8e4b636ee30c4de58953be38d9b72a5e3b"/>
+    <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/classes-9d3cfba88ce81e32aabfa2b493b53be8e0cd43c6.jar"
+        jar="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/Users/gsc/AndroidStudioProjects/mellow-heeler-android/app/build/intermediates/pre-dexed/debug/robospice-spring-android-1.4.12-1b8fde6610f300a151d3b315edc64081b8b4a11c.jar"
+        jar="/Users/gsc/.gradle/caches/modules-2/files-2.1/com.octo.android.robospice/robospice-spring-android/1.4.12/29480de67d117a699170fc2b1440c66d716c2e27/robospice-spring-android-1.4.12.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="29480de67d117a699170fc2b1440c66d716c2e27"/>
 
 </pre-dex-items>
