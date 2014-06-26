@@ -16,9 +16,7 @@
     android:layout_height="wrap_content">
 
     <TextView style="@style/EditView01"
-      android:text="@string/settings_audio_header"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
+      android:text="@string/settings_audio_header"/>
 
     <CheckBox
       android:id="@+id/cbAudio"
@@ -54,9 +52,7 @@
 
       <TableRow>
         <TextView style="@style/LabelView01"
-          android:text="@string/settings_distance"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
+          android:text="@string/settings_distance"/>
         <Spinner
           android:id="@+id/spinnerDistance"
           android:layout_width="wrap_content"
@@ -67,9 +63,7 @@
 
       <TableRow>
         <TextView style="@style/LabelView01"
-          android:text="@string/settings_time"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
+          android:text="@string/settings_time"/>
         <Spinner
           android:id="@+id/spinnerTime"
           android:layout_width="wrap_content"
@@ -101,14 +95,9 @@
 
       <TableRow>
         <TextView style="@style/LabelView01"
-          android:text="@string/text_installation"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-        <TextView style="@style/EditView01"
-          android:id="@+id/tvInstallationId"
-          android:maxLines="3"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
+          android:text="@string/text_installation"/>
+        <TextView style="@style/UuidView01"
+          android:id="@+id/tvInstallationId"/>
       </TableRow>
     </TableLayout>
   </LinearLayout>

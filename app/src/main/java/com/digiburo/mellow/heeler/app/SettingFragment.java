@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
+import com.digiburo.mellow.heeler.lib.utility.UuidHelper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,17 @@ public class SettingFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
+
     View view = inflater.inflate(R.layout.fragment_setting, container, false);
+
+    cbAudio = (CheckBox) view.findViewById(R.id.cbAudio);
+    cbSpeech = (CheckBox) view.findViewById(R.id.cbSpeech);
+    spinnerDistance = (Spinner) view.findViewById(R.id.spinnerDistance);
+    spinnerTime = (Spinner) view.findViewById(R.id.spinnerTime);
+
+    TextView tvInstallationId = (TextView) view.findViewById(R.id.tvInstallationId);
+    tvInstallationId.setText(UuidHelper.formatUuidString(userPreferenceHelper.getInstallationId(getActivity())));
+
     return view;
   }
 
@@ -55,7 +66,6 @@ public class SettingFragment extends Fragment {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    cbAudio = (CheckBox) getActivity().findViewById(R.id.cbAudio);
     cbAudio.setChecked(userPreferenceHelper.isAudioCue(getActivity()));
     cbAudio.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -64,7 +74,6 @@ public class SettingFragment extends Fragment {
       }
     });
 
-    cbSpeech = (CheckBox) getActivity().findViewById(R.id.cbSpeech);
     cbSpeech.setChecked(userPreferenceHelper.isSpeechCue(getActivity()));
     cbSpeech.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -76,10 +85,8 @@ public class SettingFragment extends Fragment {
     ArrayAdapter<CharSequence> distanceAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.distance_option, android.R.layout.simple_spinner_item);
     distanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-    spinnerDistance = (Spinner) getActivity().findViewById(R.id.spinnerDistance);
     spinnerDistance.setAdapter(distanceAdapter);
     spinnerDistance.setSelection(discoverDistance());
-
     spinnerDistance.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -96,7 +103,6 @@ public class SettingFragment extends Fragment {
     ArrayAdapter<CharSequence> timeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.wifi_poll_option, android.R.layout.simple_spinner_item);
     timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-    spinnerTime = (Spinner) getActivity().findViewById(R.id.spinnerTime);
     spinnerTime.setAdapter(timeAdapter);
     spinnerTime.setSelection(discoverTime());
 
@@ -112,9 +118,6 @@ public class SettingFragment extends Fragment {
         LOG.info("onNothingSelected");
       }
     });
-
-    TextView tvInstallationId = (TextView) getActivity().findViewById(R.id.tvInstallationId);
-    tvInstallationId.setText(userPreferenceHelper.getInstallationId(getActivity()));
   }
 
   private void updateDistance(int ndx) {

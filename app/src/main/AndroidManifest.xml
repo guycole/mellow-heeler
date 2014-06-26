@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.digiburo.mellow.heeler" >
-  <uses-feature android:name = "android:hardware.location"/>
-  <uses-feature android:name = "hardware.wifi"/>
-
+  <uses-feature android:name="android:hardware.location" />
+  <uses-feature android:name="hardware.wifi" />
   <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <permission android:name="com.digiburo.example.wxtrax.permission.MAPS_RECEIVE" android:protectionLevel="signature" />
 
-  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="com.digiburo.mellow.heeler.permission.MAPS_RECEIVE" />
 
-  <permission android:name="com.digiburo.example.wxtrax.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
-  <uses-permission android:name="com.digiburo.mellow.heeler.permission.MAPS_RECEIVE"/>
-
-  <application android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name=".lib.HeelerApplication" android:theme="@style/AppTheme" >
-    <activity android:name=".app.MainActivity" android:screenOrientation="portrait" android:label="@string/app_name">
+  <application android:name=".lib.HeelerApplication" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme" >
+    <activity android:name=".app.MainActivity" android:label="@string/app_name" android:screenOrientation="portrait" >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:name=".app.MenuActivity" android:screenOrientation="portrait" android:label="@string/app_name"/>
+    <activity android:name=".app.MenuActivity" android:label="@string/app_name" android:screenOrientation="portrait" />
 
-    <receiver android:name=".lib.service.ScanReceiver">
+    <activity android:name=".app.ChartActivity" android:label="@string/app_name" android:screenOrientation="portrait" />
+
+    <receiver android:name=".lib.service.ScanReceiver" >
       <intent-filter>
-        <action android:name="android.net.wifi.SCAN_RESULTS"/>
+        <action android:name="android.net.wifi.SCAN_RESULTS" />
       </intent-filter>
     </receiver>
 
     <provider android:name=".lib.database.DataBaseProvider" android:authorities="com.digiburo.mellow.heeler.authority" />
 
-    <uses-library android:name="com.google.android.maps"/>
+    <uses-library android:name="com.google.android.maps" />
 
     <!-- duckman -->
-    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyATt-JReJ20BgNrunPlVtY8tCSPJjrf-z0"/>
-
+    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyATt-JReJ20BgNrunPlVtY8tCSPJjrf-z0" />
     <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
   </application>
 </manifest>

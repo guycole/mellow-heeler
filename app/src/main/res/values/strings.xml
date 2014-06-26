@@ -2,9 +2,10 @@
 
 <resources>
   <string name="app_name">Heeler</string>
-  <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
 
+  <string name="button_delete_all">Delete All</string>
+  <string name="button_delete_uploaded">Delete Uploaded</string>
   <string name="button_detail">Detail</string>
   <string name="button_detail_location">Location Detail</string>
   <string name="button_detail_sortie">Sortie Detail</string>
@@ -29,7 +30,6 @@
   <string name="main_menu_settings">Settings</string>
   <string name="main_menu_clean">DB Clean</string>
   <string name="main_menu_upload">Upload</string>
-
   <string name="main_tab_console">Console</string>
   <string name="main_tab_hot">Hot</string>
   <string name="main_tab_sortie">Sortie</string>
@@ -82,23 +82,31 @@
   <string name="text_lat">Lat:</string>
   <string name="text_latitude">Latitude:</string>
   <string name="text_level">Level:</string>
+  <string name="text_locations">Locations:</string>
   <string name="text_long">Long:</string>
   <string name="text_longitude">Longitude:</string>
   <string name="text_location">Location</string>
   <string name="text_location2">Location:</string>
   <string name="text_name">Name:</string>
+  <string name="text_row_type">Row Type</string>
   <string name="text_obs">Obs:</string>
   <string name="text_observe">Observe:</string>
-  <string name="text_observations">Observations</string>
+  <string name="text_observations">Observations:</string>
   <string name="text_row_count">Rows:</string>
+  <string name="text_slash">/</string>
   <string name="text_sortie">Sortie:</string>
+  <string name="text_sorties">Sorties:</string>
   <string name="text_sortie_name">Name:</string>
   <string name="text_ssid">SSID:</string>
   <string name="text_time">Time:</string>
+  <string name="text_total_rows">All</string>
   <string name="text_uuid">UUID:</string>
+  <string name="text_uploaded_rows">Uploaded</string>
 
   <string name="toast_gps_disabled">Must Enable GPS</string>
   <string name="toast_location_failure">Special Location Failure</string>
   <string name="toast_location_success">Special Location Success</string>
   <string name="toast_wifi_disabled">Must Enable WiFi</string>
+
+  <string name="title_activity_chart">ChartActivity</string>
 </resources>

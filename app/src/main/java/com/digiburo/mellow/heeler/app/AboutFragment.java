@@ -32,21 +32,16 @@ public class AboutFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_about, container, false);
-    return view;
-  }
 
-  @Override
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-
-//    String heelerVersion = getString(R.string.app_name) + " Version " + Personality.getApplicationVersion();
     String heelerVersion = "Version " + Personality.getApplicationVersion();
 
-    TextView tvHeelerVersion = (TextView) getActivity().findViewById(R.id.tvHeelerVersion);
+    TextView tvHeelerVersion = (TextView) view.findViewById(R.id.tvHeelerVersion);
     tvHeelerVersion.setText(heelerVersion);
 
-    WebView webView = (WebView) getActivity().findViewById(R.id.webView01);
+    WebView webView = (WebView) view.findViewById(R.id.webView01);
     webView.loadUrl("file:///android_asset/html/about.html");
+
+    return view;
   }
 }
 /*

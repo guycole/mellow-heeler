@@ -1,22 +1,15 @@
 package com.digiburo.mellow.heeler.lib.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
-import com.digiburo.mellow.heeler.lib.utility.StringList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * database convenience methods
@@ -184,29 +177,33 @@ public class DataBaseFacade {
   }
 
   /**
+   * return row population
+   *
+   * @param allRows true return all rows else only uploadFlag false
+   * @param sortieUuid
    * @param context
    * @return
    */
-  public int countLocationRows(final String sortieUuid, final Context context) {
-    int population = 0;
-    Cursor cursor = null;
+  public long countLocationRows(boolean allRows, final String sortieUuid, final Context context) {
+    long population = 0;
     SQLiteDatabase sqlDb = null;
 
-    LocationTable table = new LocationTable();
-    String[] projection = table.getDefaultProjection();
+    String selection = null;
+    String[] selectionArgs = null;
 
-    String selection = LocationTable.Columns.SORTIE_ID + "=?";
-    String[] selectionArgs = new String[]{sortieUuid};
+    if (allRows) {
+      selection = LocationTable.Columns.SORTIE_ID + "=?";
+      selectionArgs = new String[]{sortieUuid};
+    } else {
+      selection = LocationTable.Columns.SORTIE_ID + "=? and " + LocationTable.Columns.UPLOAD_FLAG + "=?";
+      selectionArgs = new String[]{sortieUuid, Constant.SQL_FALSE.toString()};
+    }
 
     try {
       sqlDb = getReadableDataBase(context);
-      cursor = sqlDb.query(LocationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
-      population = cursor.getCount();
+      DatabaseUtils databaseUtils = new DatabaseUtils();
+      population = databaseUtils.queryNumEntries(sqlDb, LocationTable.TABLE_NAME, selection, selectionArgs);
     } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-
       if (sqlDb != null) {
         sqlDb.close();
       }
@@ -218,7 +215,7 @@ public class DataBaseFacade {
   /**
    * select all locations
    *
-   * @param allRows    true return all rows else only uploadFlag false
+   * @param allRows true return all rows else only uploadFlag false
    * @param sortieUuid
    * @param rowLimit
    * @param context
@@ -325,26 +322,33 @@ public class DataBaseFacade {
   }
 
   /**
+   * return row population
+   *
+   * @param allRows true return all rows else only uploadFlag false
+   * @param sortieUuid
    * @param context
    * @return
    */
-  public int countObservationRows(final String sortieUuid, final Context context) {
-    int population = 0;
-    Cursor cursor = null;
+  public long countObservationRows(boolean allRows, final String sortieUuid, final Context context) {
+    long population = 0;
     SQLiteDatabase sqlDb = null;
 
-    String selection = ObservationTable.Columns.SORTIE_ID + "=?";
-    String[] selectionArgs = new String[]{sortieUuid};
+    String selection = null;
+    String[] selectionArgs = null;
+
+    if (allRows) {
+      selection = ObservationTable.Columns.SORTIE_ID + "=?";
+      selectionArgs = new String[]{sortieUuid};
+    } else {
+      selection = ObservationTable.Columns.SORTIE_ID + "=? and " + ObservationTable.Columns.UPLOAD_FLAG + "=?";
+      selectionArgs = new String[]{sortieUuid, Constant.SQL_FALSE.toString()};
+    }
 
     try {
       sqlDb = getReadableDataBase(context);
-      cursor = sqlDb.query(ObservationTable.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-      population = cursor.getCount();
+      DatabaseUtils databaseUtils = new DatabaseUtils();
+      population = databaseUtils.queryNumEntries(sqlDb, ObservationTable.TABLE_NAME, selection, selectionArgs);
     } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-
       if (sqlDb != null) {
         sqlDb.close();
       }
@@ -555,6 +559,38 @@ public class DataBaseFacade {
   }
 
   /**
+   * return row population
+   *
+   * @param allRows true return all rows else only uploadFlag false
+   * @param context
+   * @return
+   */
+  public long countSortieRows(boolean allRows, final Context context) {
+    long population = 0;
+    SQLiteDatabase sqlDb = null;
+
+    String selection = null;
+    String[] selectionArgs = null;
+
+    if (!allRows) {
+      selection = SortieTable.Columns.UPLOAD_FLAG + "=?";
+      selectionArgs = new String[]{Constant.SQL_FALSE.toString()};
+    }
+
+    try {
+      sqlDb = getReadableDataBase(context);
+      DatabaseUtils databaseUtils = new DatabaseUtils();
+      population = databaseUtils.queryNumEntries(sqlDb, SortieTable.TABLE_NAME, selection, selectionArgs);
+    } finally {
+      if (sqlDb != null) {
+        sqlDb.close();
+      }
+    }
+
+    return population;
+  }
+
+  /**
    * select all sorties
    * @param allRows true return all rows else only uploadFlag false
    * @param context
@@ -756,6 +792,16 @@ public class DataBaseFacade {
     String where = columnName + "=?";
     String[] whereArgs = new String[] {Constant.SQL_TRUE.toString()};
     return simpleDelete(tableName, where, whereArgs, context);
+  }
+
+  /**
+   * delete entire table
+   * @param tableName
+   * @param context
+   * @return
+   */
+  public int deleteAll(final String tableName, final Context context) {
+    return simpleDelete(tableName, null, null, context);
   }
 
   /**

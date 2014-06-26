@@ -25,9 +25,7 @@ public class MenuActivity extends ActionBarActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        finish();
         break;
     }
 
@@ -44,6 +42,7 @@ public class MenuActivity extends ActionBarActivity {
 
     Intent intent = getIntent();
     if (intent == null) {
+      LOG.error("null intent");
       finish();
     } else {
       Fragment fragment = null;
@@ -58,7 +57,7 @@ public class MenuActivity extends ActionBarActivity {
       } else if (Constant.INTENT_ACTION_UPLOAD.equals(action)) {
         fragment = new UploadFragment();
       } else {
-        LOG.error("onConfigurationChanged");
+        LOG.error("unsupported action:" + action);
         finish();
       }
 

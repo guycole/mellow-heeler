@@ -297,8 +297,8 @@ public class ConsoleFragment extends ListFragment {
       textObservationRowCount.setText("Observation Rows:" + Constant.EMPTY);
     } else {
       DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-      int observationPopulation = dataBaseFacade.countObservationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
-      textObservationRowCount.setText("Observation Rows:" + Integer.toString(observationPopulation));
+      long observationPopulation = dataBaseFacade.countObservationRows(true, Personality.getCurrentSortie().getSortieUuid(), getActivity());
+      textObservationRowCount.setText("Observation Rows:" + Long.toString(observationPopulation));
     }
 
     arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.simple_list_item, stringArray);
@@ -318,8 +318,8 @@ public class ConsoleFragment extends ListFragment {
         textLocationRowCount.setText("Location Rows:" + Constant.EMPTY);
       } else {
         DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
-        int locationPopulation = dataBaseFacade.countLocationRows(Personality.getCurrentSortie().getSortieUuid(), getActivity());
-        textLocationRowCount.setText("Location Rows:" + Integer.toString(locationPopulation));
+        long locationPopulation = dataBaseFacade.countLocationRows(true, Personality.getCurrentSortie().getSortieUuid(), getActivity());
+        textLocationRowCount.setText("Location Rows:" + Long.toString(locationPopulation));
       }
     }
   }

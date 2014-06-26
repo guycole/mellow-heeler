@@ -17,22 +17,18 @@ import org.slf4j.LoggerFactory;
 public class CleanController {
   private static final Logger LOG = LoggerFactory.getLogger(CleanController.class);
 
-  /**
-   * delete uploaded items from database
-   * @param context
-   */
-  public void cleanDataBase(final Context context) {
-    LOG.debug("database cleanup");
+  public void deleteAll(final Context context) {
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
+    dataBaseFacade.deleteAll(LocationTable.TABLE_NAME, context);
+    dataBaseFacade.deleteAll(ObservationTable.TABLE_NAME, context);
+    dataBaseFacade.deleteAll(SortieTable.TABLE_NAME, context);
+  }
 
+  public void deleteUploaded(final Context context) {
     DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
     dataBaseFacade.deleteUploaded(LocationTable.TABLE_NAME, LocationTable.Columns.UPLOAD_FLAG, context);
     dataBaseFacade.deleteUploaded(ObservationTable.TABLE_NAME, ObservationTable.Columns.UPLOAD_FLAG, context);
     dataBaseFacade.deleteUploaded(SortieTable.TABLE_NAME, SortieTable.Columns.UPLOAD_FLAG, context);
-
-    System.out.println("tytytytytytyyt");
-
-    Intent notifier = new Intent(Constant.CLEAN_EVENT);
-    context.sendBroadcast(notifier);
   }
 }
 /*

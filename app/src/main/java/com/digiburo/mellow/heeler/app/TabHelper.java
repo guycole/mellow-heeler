@@ -34,7 +34,6 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   private ActionBar.Tab ssidTab;
 
   //
-  private ChartFragment chartFragment;
   private ConsoleFragment consoleFragment;
   private HotFragment hotFragment;
   private SortieFragment sortieFragment;
@@ -45,7 +44,6 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
 
   public TabHelper(MainActivity activity) {
     mainActivity = activity;
-    chartFragment = (ChartFragment) Fragment.instantiate(mainActivity, ChartFragment.class.getName());
     consoleFragment = (ConsoleFragment) Fragment.instantiate(mainActivity, ConsoleFragment.class.getName());
     hotFragment = (HotFragment) Fragment.instantiate(mainActivity, HotFragment.class.getName());
     sortieFragment = (SortieFragment) Fragment.instantiate(mainActivity, SortieFragment.class.getName());
@@ -79,8 +77,6 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
    */
   @Override
   public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    fragmentTransaction.remove(chartFragment);
-
     if (tab.getTag().equals(ConsoleFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(consoleFragment);
     } else if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
@@ -101,8 +97,6 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
    */
   @Override
   public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    fragmentTransaction.remove(chartFragment);
-
     if (tab.getTag().equals(ConsoleFragment.FRAGMENT_TAG)) {
       //empty
     } else if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
@@ -122,6 +116,7 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   public void onBackStackChanged() {
     FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
     backStackCount = fragmentManager.getBackStackEntryCount();
+    LOG.info("backStackCount:" + backStackCount);
   }
 
   /**
@@ -175,60 +170,6 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
     }
 
     throw new IllegalArgumentException("unsupported tag:" + arg);
-  }
-
-  public void displayGoogleMap(LocationModel locationModel) {
-    LOG.info("displayGoogleMap:location");
-
-    chartFragment.setCurrentLocation(locationModel);
-
-    FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-    Fragment oldFragment = fragmentManager.findFragmentByTag(ChartFragment.FRAGMENT_TAG);
-    if (oldFragment != null) {
-      fragmentTransaction.remove(oldFragment);
-    }
-
-    fragmentTransaction.replace(R.id.layoutFragment01, chartFragment);
-//    fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.commit();
-  }
-
-  public void displayGoogleMap(ObservationModel observationModel) {
-    LOG.info("displayGoogleMap:observation");
-
-    chartFragment.setCurrentObservation(observationModel);
-
-    FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-    Fragment oldFragment = fragmentManager.findFragmentByTag(ChartFragment.FRAGMENT_TAG);
-    if (oldFragment != null) {
-      fragmentTransaction.remove(oldFragment);
-    }
-
-    fragmentTransaction.replace(R.id.layoutFragment01, chartFragment);
-//    fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.commit();
-  }
-
-  public void displayGoogleMap(SortieModel sortieModel) {
-    LOG.info("displayGoogleMap:sortie");
-
-    chartFragment.setCurrentSortie(sortieModel);
-
-    FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-    Fragment oldFragment = fragmentManager.findFragmentByTag(ChartFragment.FRAGMENT_TAG);
-    if (oldFragment != null) {
-      fragmentTransaction.remove(oldFragment);
-    }
-
-    fragmentTransaction.replace(R.id.layoutFragment01, chartFragment);
-//    fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.commit();
   }
 }
 /*

@@ -66,10 +66,13 @@ public class Constant {
   public static final String INTENT_JSON_RESPONSE = "INTENT_JSON_RESPONSE";
   public static final String INTENT_JSON_TYPE = "INTENT_JSON_TYPE";
   public static final String INTENT_LOCATION_UPDATE = "INTENT_LOCATION_UPDATE";
+  public static final String INTENT_LOCATION_UUID = "INTENT_LOCATION_UUID";
   public static final String INTENT_OBSERVATION_UPDATE = "INTENT_OBSERVATION_UPDATE";
+  public static final String INTENT_OBSERVATION_UUID = "INTENT_OBSERVATION_UUID";
   public static final String INTENT_PROVIDER_FLAG = "INTENT_PROVIDER_FLAG";
   public static final String INTENT_ROW_KEY = "INTENT_ROW_KEY";
   public static final String INTENT_SAY_THIS = "INTENT_SAY_THIS";
+  public static final String INTENT_SORTIE_UUID = "INTENT_SORTIE_UUID";
   public static final String INTENT_STATUS_FLAG = "INTENT_STATUS_FLAG";
   public static final String INTENT_UPLOAD_COUNT = "INTENT_UPLOAD_COUNT";
   public static final String INTENT_UPLOAD_TYPE = "INTENT_UPLOAD_TYPE";

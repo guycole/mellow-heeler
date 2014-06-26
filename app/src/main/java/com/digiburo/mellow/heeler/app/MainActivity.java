@@ -29,7 +29,9 @@ import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.HotModel;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
+import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
+import com.digiburo.mellow.heeler.lib.utility.StringList;
 import com.digiburo.mellow.heeler.lib.utility.UserPreferenceHelper;
 
 import org.slf4j.Logger;
@@ -84,9 +86,10 @@ public class MainActivity extends ActionBarActivity implements MainListener {
    */
   @Override
   public void displayGoogleMap(LocationModel locationModel) {
-    tabHelper.displayGoogleMap(locationModel);
+    Intent intent = new Intent(this, ChartActivity.class);
+    intent.putExtra(Constant.INTENT_LOCATION_UUID, locationModel.getLocationUuid());
+    startActivity(intent);
   }
-
 
   /**
    * mainListener
@@ -94,7 +97,9 @@ public class MainActivity extends ActionBarActivity implements MainListener {
    */
   @Override
   public void displayGoogleMap(ObservationModel observationModel) {
-    tabHelper.displayGoogleMap(observationModel);
+    Intent intent = new Intent(this, ChartActivity.class);
+    intent.putExtra(Constant.INTENT_OBSERVATION_UUID, observationModel.getObservationUuid());
+    startActivity(intent);
   }
 
   /**
@@ -103,7 +108,9 @@ public class MainActivity extends ActionBarActivity implements MainListener {
    */
   @Override
   public void displayGoogleMap(SortieModel sortieModel) {
-    tabHelper.displayGoogleMap(sortieModel);
+    Intent intent = new Intent(this, ChartActivity.class);
+    intent.putExtra(Constant.INTENT_SORTIE_UUID, sortieModel.getSortieUuid());
+    startActivity(intent);
   }
 
   /**
