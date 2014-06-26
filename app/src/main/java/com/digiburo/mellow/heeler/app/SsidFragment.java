@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.digiburo.mellow.heeler.R;
 
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
 import com.digiburo.mellow.heeler.lib.database.DataBaseTableIf;
+import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationTable;
 
 import org.slf4j.Logger;
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Scrolling list of SSID
  */
 public class SsidFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
-  private static final Logger LOG = LoggerFactory.getLogger(SortieFragment.class);
+  private static final Logger LOG = LoggerFactory.getLogger(SsidFragment.class);
 
   public static final String FRAGMENT_TAG = "TAG_SSID";
   public static final int LOADER_ID = 2718;
@@ -68,7 +70,10 @@ public class SsidFragment extends ListFragment implements LoaderManager.LoaderCa
   @Override
   public void onListItemClick(ListView listView, View view, int position, long id) {
     LOG.debug("click:" + position + ":" + id);
-//    mainListener.displayGoogleMap(id);
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+    ObservationModel observationModel = dataBaseFacade.selectObservation(id, getActivity());
+    mainListener.displayObservationDetail(observationModel.getObservationUuid());
   }
 
   /**
@@ -96,7 +101,7 @@ public class SsidFragment extends ListFragment implements LoaderManager.LoaderCa
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_ssid, container, false);
-    return (view);
+    return view;
   }
 
   @Override

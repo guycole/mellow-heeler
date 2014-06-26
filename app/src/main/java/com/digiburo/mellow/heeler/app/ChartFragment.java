@@ -156,7 +156,7 @@ public class ChartFragment extends SupportMapFragment {
     }
     */
   
-    return(view);
+    return view;
   }
 
   /*

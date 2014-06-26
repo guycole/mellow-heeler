@@ -21,7 +21,7 @@ public class TimeUtility {
   public static Time timeNow() {
     Time time = new Time("UTC");
     time.setToNow();
-    return(time);
+    return time;
   }
 
   /**
@@ -30,7 +30,7 @@ public class TimeUtility {
    */
   public static long timeMillis() {
     Time time = timeNow();
-    return(time.toMillis(Constant.IGNORE_DST));
+    return time.toMillis(Constant.IGNORE_DST);
   }
 
   /**
@@ -51,7 +51,7 @@ public class TimeUtility {
     Time time = new Time("UTC");
     time.set(arg);
     time.normalize(Constant.IGNORE_DST);
-    return(time);
+    return time;
   }
 
   /**
@@ -63,14 +63,14 @@ public class TimeUtility {
    */
   public static boolean timeEquals(final Time arg1, final Time arg2) {
     if ((arg1 == null) || (arg2 == null)) {
-      return(false);
+      return false;
     }
 
     if (arg1.toMillis(Constant.IGNORE_DST) == arg2.toMillis(Constant.IGNORE_DST)) {
-      return(true);
+      return true;
     }
 
-    return(false);
+    return false;
   }
 
   /**
@@ -83,7 +83,7 @@ public class TimeUtility {
     Date date = new Date();
     date.setTime(arg.toMillis(Constant.IGNORE_DST));
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    return(sdf.format(date));
+    return sdf.format(date);
   }
 
   /**

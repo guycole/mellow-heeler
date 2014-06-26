@@ -121,7 +121,7 @@ public class ObservationDialog extends DialogFragment {
     textSsid.setText(observationModel.getSsid());
     textTime.setText(TimeUtility.secondsOnly(observationModel.getTimeStamp()));
 
-    return (view);
+    return view;
   }
 }
 /*

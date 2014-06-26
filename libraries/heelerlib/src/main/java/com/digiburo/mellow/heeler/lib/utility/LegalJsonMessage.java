@@ -39,7 +39,7 @@ public enum LegalJsonMessage {
     LegalJsonMessage result = LegalJsonMessage.UNKNOWN;
 
     if (arg == null) {
-      return(result);
+      return result;
     }
 
     for (LegalJsonMessage symbol:LegalJsonMessage.values()) {

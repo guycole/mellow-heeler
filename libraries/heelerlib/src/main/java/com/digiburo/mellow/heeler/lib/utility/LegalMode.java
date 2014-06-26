@@ -37,7 +37,7 @@ public enum LegalMode {
     LegalMode result = LegalMode.UNKNOWN;
 
     if (arg == null) {
-      return(result);
+      return result;
     }
 
     for (LegalMode symbol: LegalMode.values()) {

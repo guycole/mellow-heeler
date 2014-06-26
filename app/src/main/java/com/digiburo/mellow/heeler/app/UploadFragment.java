@@ -79,7 +79,7 @@ public class UploadFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_upload, container, false);
-    return (view);
+    return view;
   }
 
   @Override

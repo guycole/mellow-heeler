@@ -17,11 +17,11 @@ public class TestHelper {
   private Random random = new Random();
 
   public Double randomDouble() {
-    return(random.nextDouble());
+    return random.nextDouble();
   }
 
   public Float randomFloat() {
-    return(random.nextFloat());
+    return random.nextFloat();
   }
 
   public Float randomPositiveFloat(float limit) {
@@ -35,7 +35,7 @@ public class TestHelper {
   }
 
   public Integer randomInteger() {
-    return(random.nextInt());
+    return random.nextInt();
   }
 
   public Float randomLatitude() {
@@ -59,11 +59,11 @@ public class TestHelper {
   }
 
   public Long randomLong() {
-    return(random.nextLong());
+    return random.nextLong();
   }
 
   public String randomString() {
-    return(Long.toHexString(random.nextLong()));
+    return Long.toHexString(random.nextLong());
   }
 
   public Location generateLocation() {

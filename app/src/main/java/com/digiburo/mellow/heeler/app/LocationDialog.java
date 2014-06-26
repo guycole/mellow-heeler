@@ -115,7 +115,7 @@ public class LocationDialog extends DialogFragment {
     textUuid.setText(UuidHelper.formatUuidString(locationModel.getLocationUuid()));
     textTime.setText(TimeUtility.secondsOnly(locationModel.getTimeStamp()));
 
-    return (view);
+    return view;
   }
 }
 /*

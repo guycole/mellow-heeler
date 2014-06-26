@@ -9,6 +9,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.digiburo.mellow.heeler.R;
+import com.digiburo.mellow.heeler.lib.database.HotModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 
 /**
@@ -22,13 +23,13 @@ public class HotCursorAdapter extends SimpleCursorAdapter {
    * @param context
    */
   public HotCursorAdapter(Context context, String[] projection) {
-    super(context, R.layout.row_ssid, null, projection, null, 0);
+    super(context, R.layout.row_hot, null, projection, null, 0);
     this.context = context;
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    final ObservationModel currentModel = readFromCursor(position);
+    final HotModel currentModel = readFromCursor(position);
     if (currentModel == null) {
       throw new IllegalArgumentException("readFromCursor:" + position + ":failure noted");
     }
@@ -38,7 +39,7 @@ public class HotCursorAdapter extends SimpleCursorAdapter {
 
     if (convertView == null) {
       LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-      view = inflater.inflate(R.layout.row_ssid, null);
+      view = inflater.inflate(R.layout.row_hot, null);
 
       holder = new ViewHolder(view);
       view.setTag(holder);
@@ -47,38 +48,38 @@ public class HotCursorAdapter extends SimpleCursorAdapter {
       holder = (ViewHolder) view.getTag();
     }
 
-    holder.tvName.setText(currentModel.getSsid());
-    holder.tvTime.setText(currentModel.getTimeStamp());
+    holder.tvSsid.setText(currentModel.getSsid());
+    holder.tvBssid.setText(currentModel.getBssid());
 
-    return(view);
+    return view;
   }
 
-  private ObservationModel readFromCursor(int position) {
+  private HotModel readFromCursor(int position) {
     Cursor cursor = getCursor();
     if (!cursor.moveToPosition(position)) {
-      return(null);
+      return null;
     }
 
-    ObservationModel result = new ObservationModel();
+    HotModel result = new HotModel();
     result.setDefault();
 
     try {
       result.fromCursor(cursor);
     } catch(Exception exception) {
-      return(null);
+      return null;
     }
 
-    return(result);
+    return result;
   }
 
   class ViewHolder {
     ViewHolder(View view) {
-      tvName = (TextView) view.findViewById(R.id.textSsid01);
-      tvTime = (TextView) view.findViewById(R.id.textSsidTime01);
+      tvSsid = (TextView) view.findViewById(R.id.textSsid);
+      tvBssid = (TextView) view.findViewById(R.id.textBssid);
     }
 
-    private TextView tvName;
-    private TextView tvTime;
+    private TextView tvSsid;
+    private TextView tvBssid;
   }
 }
 /*

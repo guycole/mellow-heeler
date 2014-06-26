@@ -28,7 +28,6 @@ public class DataBaseFacade {
   private final String dataBaseFileName;
 
   /**
-   *
    * @param context
    */
   public DataBaseFacade(final Context context) {
@@ -37,6 +36,7 @@ public class DataBaseFacade {
 
   /**
    * insert a fresh row
+   *
    * @param candidate
    * @param context
    * @return
@@ -59,19 +59,17 @@ public class DataBaseFacade {
   }
 
   /**
-   *
    * @param rowKey
    * @param context
    * @return
    */
   public int deleteHot(long rowKey, final Context context) {
     String where = HotTable.Columns._ID + "=?";
-    String[] whereArgs = new String[] {Long.toString(rowKey)};
+    String[] whereArgs = new String[]{Long.toString(rowKey)};
     return simpleDelete(HotTable.TABLE_NAME, where, whereArgs, context);
   }
 
   /**
-   *
    * @param context
    * @return
    */
@@ -95,7 +93,7 @@ public class DataBaseFacade {
           HotModel hotModel = new HotModel();
           hotModel.fromCursor(cursor);
           results.add(hotModel);
-        } while(cursor.moveToNext());
+        } while (cursor.moveToNext());
       }
     } finally {
       if (cursor != null) {
@@ -111,7 +109,6 @@ public class DataBaseFacade {
   }
 
   /**
-   *
    * @param target
    * @param context
    * @return
@@ -121,7 +118,7 @@ public class DataBaseFacade {
     HotTable table = new HotTable();
 
     String selection = HotTable.Columns._ID + "=?";
-    String[] selectionArgs = new String[] {target.toString()};
+    String[] selectionArgs = new String[]{target.toString()};
 
     simpleSelect(selection, selectionArgs, table, model, context);
 
@@ -129,32 +126,31 @@ public class DataBaseFacade {
   }
 
   /**
-   *
    * @param model
    * @param context
    * @return
    */
   public int updateHot(final HotModel model, final Context context) {
     String where = HotTable.Columns._ID + "=?";
-    String[] whereArgs = new String[] {model.getId().toString()};
+    String[] whereArgs = new String[]{model.getId().toString()};
     return simpleUpdate(model, where, whereArgs, context);
   }
 
   /**
-   *
    * @param rowKey
    * @param context
    * @return
    */
   public int deleteLocation(long rowKey, final Context context) {
     String where = LocationTable.Columns._ID + "=?";
-    String[] whereArgs = new String[] {Long.toString(rowKey)};
+    String[] whereArgs = new String[]{Long.toString(rowKey)};
     return simpleDelete(LocationTable.TABLE_NAME, where, whereArgs, context);
   }
 
   /**
    * select location by row id
-   * @param target row id
+   *
+   * @param target  row id
    * @param context
    * @return selected model
    */
@@ -163,7 +159,7 @@ public class DataBaseFacade {
     LocationTable table = new LocationTable();
 
     String selection = LocationTable.Columns._ID + "=?";
-    String[] selectionArgs = new String[] {target.toString()};
+    String[] selectionArgs = new String[]{target.toString()};
 
     simpleSelect(selection, selectionArgs, table, model, context);
 
@@ -171,7 +167,6 @@ public class DataBaseFacade {
   }
 
   /**
-   *
    * @param uuid
    * @param context
    * @return selected model
@@ -181,7 +176,7 @@ public class DataBaseFacade {
     LocationTable table = new LocationTable();
 
     String selection = LocationTable.Columns.LOCATION_ID + "=?";
-    String[] selectionArgs = new String[] {uuid};
+    String[] selectionArgs = new String[]{uuid};
 
     simpleSelect(selection, selectionArgs, table, model, context);
 
@@ -189,7 +184,6 @@ public class DataBaseFacade {
   }
 
   /**
-   *
    * @param context
    * @return
    */
@@ -223,7 +217,8 @@ public class DataBaseFacade {
 
   /**
    * select all locations
-   * @param allRows true return all rows else only uploadFlag false
+   *
+   * @param allRows    true return all rows else only uploadFlag false
    * @param sortieUuid
    * @param rowLimit
    * @param context
@@ -262,7 +257,7 @@ public class DataBaseFacade {
           LocationModel locationModel = new LocationModel();
           locationModel.fromCursor(cursor);
           results.add(locationModel);
-        } while(cursor.moveToNext());
+        } while (cursor.moveToNext());
       }
     } finally {
       if (cursor != null) {
@@ -279,31 +274,32 @@ public class DataBaseFacade {
 
   /**
    * update existing location
+   *
    * @param model
    * @param context
    * @return
    */
   public int updateLocation(final LocationModel model, final Context context) {
     String where = LocationTable.Columns._ID + "=?";
-    String[] whereArgs = new String[] {model.getId().toString()};
+    String[] whereArgs = new String[]{model.getId().toString()};
     return simpleUpdate(model, where, whereArgs, context);
   }
 
   /**
-   *
    * @param rowKey
    * @param context
    * @return
    */
   public int deleteObservation(long rowKey, final Context context) {
     String where = ObservationTable.Columns._ID + "=?";
-    String[] whereArgs = new String[] {Long.toString(rowKey)};
+    String[] whereArgs = new String[]{Long.toString(rowKey)};
     return simpleDelete(ObservationTable.TABLE_NAME, where, whereArgs, context);
   }
 
   /**
    * mark location as special interest
-   * @param target row key
+   *
+   * @param target  row key
    * @param context
    */
   public void setLocationSpecial(final Long target, final Context context) {
@@ -316,7 +312,8 @@ public class DataBaseFacade {
 
   /**
    * mark location as uploaded
-   * @param target row key
+   *
+   * @param target  row key
    * @param context
    */
   public void setLocationUpload(final Long target, final Context context) {
@@ -328,7 +325,6 @@ public class DataBaseFacade {
   }
 
   /**
-   *
    * @param context
    * @return
    */
@@ -355,6 +351,86 @@ public class DataBaseFacade {
     }
 
     return population;
+  }
+
+  /**
+   * return a list of SSID which have unique BSSID
+   * @param context
+   * @return
+   */
+  public ObservationModelList selectDistinctBssid(final Context context) {
+    ObservationModelList results = new ObservationModelList();
+
+    ObservationTable table = new ObservationTable();
+    String[] projection = table.getDefaultProjection();
+
+    String having = null;
+    String groupBy = ObservationTable.Columns.BSSID;
+    String orderBy = ObservationTable.Columns.SSID;
+    String limit = null;
+
+    String selection = null;
+    String[] selectionArgs = null;
+
+    Cursor cursor = null;
+    SQLiteDatabase sqlDb = null;
+
+    try {
+      sqlDb = getReadableDataBase(context);
+      cursor = sqlDb.query(true, ObservationTable.TABLE_NAME, projection, selection, selectionArgs, groupBy, having, orderBy, limit);
+      if (cursor.moveToFirst()) {
+        do {
+          ObservationModel observationModel = new ObservationModel();
+          observationModel.fromCursor(cursor);
+          results.add(observationModel);
+        } while(cursor.moveToNext());
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+
+      if (sqlDb != null) {
+        sqlDb.close();
+      }
+    }
+
+    return results;
+  }
+
+  public ObservationModelList selectBssidObservations(final String bssid, final Context context) {
+    ObservationModelList results = new ObservationModelList();
+
+    ObservationTable table = new ObservationTable();
+    String[] projection = table.getDefaultProjection();
+
+    String selection = ObservationTable.Columns.BSSID + "=?";
+    String[] selectionArgs = new String[]{bssid};
+
+    Cursor cursor = null;
+    SQLiteDatabase sqlDb = null;
+
+    try {
+      sqlDb = getReadableDataBase(context);
+      cursor = sqlDb.query(ObservationTable.TABLE_NAME, projection, selection, selectionArgs, null, null, ObservationTable.DEFAULT_SORT_ORDER);
+      if (cursor.moveToFirst()) {
+        do {
+          ObservationModel observationModel = new ObservationModel();
+          observationModel.fromCursor(cursor);
+          results.add(observationModel);
+        } while(cursor.moveToNext());
+      }
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+
+      if (sqlDb != null) {
+        sqlDb.close();
+      }
+    }
+
+    return results;
   }
 
   /**
@@ -428,7 +504,6 @@ public class DataBaseFacade {
 
     return model;
   }
-
 
   public ObservationModel selectObservation(final String uuid, final Context context) {
     ObservationModel model = new ObservationModel();

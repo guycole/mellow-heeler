@@ -23,7 +23,6 @@ public class HotModel implements DataBaseModelIf {
   @Override
   public void setDefault() {
     id = 0L;
-
     ssid = Constant.UNKNOWN;
     bssid = Constant.UNKNOWN;
   }
@@ -40,17 +39,17 @@ public class HotModel implements DataBaseModelIf {
     ContentValues cv = new ContentValues();
     cv.put(ObservationTable.Columns.BSSID, bssid);
     cv.put(ObservationTable.Columns.SSID, ssid);
-    return(cv);
+    return cv;
   }
 
   @Override
   public String getTableName() {
-    return(HotTable.TABLE_NAME);
+    return HotTable.TABLE_NAME;
   }
 
   @Override
   public Uri getTableUri() {
-    return(HotTable.CONTENT_URI);
+    return HotTable.CONTENT_URI;
   }
 
   @Override

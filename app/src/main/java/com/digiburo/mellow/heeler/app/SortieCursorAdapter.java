@@ -50,13 +50,13 @@ public class SortieCursorAdapter extends SimpleCursorAdapter {
     holder.tvName.setText(currentModel.getSortieName());
     holder.tvTime.setText(currentModel.getTimeStamp());
 
-    return(view);
+    return view;
   }
 
   private SortieModel readFromCursor(int position) {
     Cursor cursor = getCursor();
     if (!cursor.moveToPosition(position)) {
-      return(null);
+      return null;
     }
 
     SortieModel result = new SortieModel();
@@ -65,10 +65,10 @@ public class SortieCursorAdapter extends SimpleCursorAdapter {
     try {
       result.fromCursor(cursor);
     } catch(Exception exception) {
-      return(null);
+      return null;
     }
 
-    return(result);
+    return result;
   }
 
   class ViewHolder {

@@ -129,8 +129,15 @@ public class ConsoleFragment extends ListFragment {
   public boolean onContextItemSelected(MenuItem item) {
     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
     LOG.debug("on context item select:" + item + ":" + info.id + ":" + arrayAdapter.getItem(info.position));
-    //TODO
-//    twoListener.createStateDeleteDialog(R.string.alert_delete_title, R.string.alert_delete_message);
+
+    switch(item.getItemId()) {
+      case CONTEXT_ITEM_1:
+        Long temp = new Long(info.id);
+        ObservationModel observationModel = Personality.getCurrentObserved().get(temp.intValue());
+        mainListener.addHot(observationModel);
+        break;
+    }
+
     return super.onContextItemSelected(item);
   }
 
@@ -199,7 +206,7 @@ public class ConsoleFragment extends ListFragment {
 
     textStatus = (TextView) view.findViewById(R.id.textStatus);
 
-    return(view);
+    return view;
   }
 
   @Override

@@ -77,7 +77,7 @@ public class LocationModel implements DataBaseModelIf {
       cv.put(LocationTable.Columns.UPLOAD_FLAG, Constant.SQL_FALSE);
     }
 
-    return(cv);
+    return cv;
   }
 
   @Override
@@ -109,12 +109,12 @@ public class LocationModel implements DataBaseModelIf {
 
   @Override
   public String getTableName() {
-    return(LocationTable.TABLE_NAME);
+    return LocationTable.TABLE_NAME;
   }
 
   @Override
   public Uri getTableUri() {
-    return(LocationTable.CONTENT_URI);
+    return LocationTable.CONTENT_URI;
   }
 
   @Override
@@ -151,33 +151,17 @@ public class LocationModel implements DataBaseModelIf {
     return accuracy;
   }
 
-//  public void setAccuracy(double arg) {
-//    accuracy = arg;
-//  }
-
   public Double getAltitude() {
     return altitude;
   }
-
-//  public void setAltitude(double arg) {
-//    altitude = arg;
-//  }
 
   public Double getLatitude() {
     return latitude;
   }
 
-//  public void setLatitude(double arg) {
-//    latitude = arg;
-//  }
-
   public Double getLongitude() {
     return longitude;
   }
-
-//  public void setLongitude(double arg) {
-//    longitude = arg;
-//  }
 
   public long getTimeStampMs() {
     return timeStampMs;
@@ -187,20 +171,9 @@ public class LocationModel implements DataBaseModelIf {
     return timeStamp;
   }
 
-//  public void setTimeStamp(Date date) {
-//    Time time = new Time("UTC");
-//    time.set(date.getTime());
-//    timeStamp = time.format3339(false);
-//    timeStampMs = date.getTime();
-//  }
-
   public String getSortieUuid() {
     return sortieUuid;
   }
-
-//  public void setSortieUuid(String arg) {
-//    sortieUuid = arg;
-//  }
 
   public boolean isSpecialFlag() {
     return specialFlag;

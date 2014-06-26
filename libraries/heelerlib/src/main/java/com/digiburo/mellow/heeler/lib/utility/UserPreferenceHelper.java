@@ -95,7 +95,7 @@ public class UserPreferenceHelper {
   private boolean isEmptyPreferences(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
     Map<String, ?> map = sp.getAll();
-    return(map.isEmpty());
+    return map.isEmpty();
   }
 
   /**
@@ -105,7 +105,7 @@ public class UserPreferenceHelper {
    */
   public boolean isAudioCue(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getBoolean(USER_PREF_AUDIO_CUE, true));
+    return sp.getBoolean(USER_PREF_AUDIO_CUE, true);
   }
 
   /**
@@ -115,7 +115,7 @@ public class UserPreferenceHelper {
    */
   public boolean isSpeechCue(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getBoolean(USER_PREF_SPEECH_CUE, true));
+    return sp.getBoolean(USER_PREF_SPEECH_CUE, true);
   }
 
   /**
@@ -143,7 +143,7 @@ public class UserPreferenceHelper {
    */
   public int getPollDistance(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getInt(USER_PREF_POLL_DISTANCE, 10));
+    return sp.getInt(USER_PREF_POLL_DISTANCE, 10);
   }
 
   /**
@@ -162,7 +162,7 @@ public class UserPreferenceHelper {
    */
   public int getPollFrequency(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getInt(USER_PREF_POLL_FREQUENCY, 15));
+    return sp.getInt(USER_PREF_POLL_FREQUENCY, 15);
   }
 
   /**
@@ -181,7 +181,7 @@ public class UserPreferenceHelper {
    */
   public Integer getRemoteConfigurationVersion(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getInt(USER_PREF_WS_CONFIG_VERSION, 0));
+    return sp.getInt(USER_PREF_WS_CONFIG_VERSION, 0);
   }
 
   /**
@@ -200,7 +200,7 @@ public class UserPreferenceHelper {
    */
   public String getAuthorizeUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_WS_AUTHORIZE_URL, ""));
+    return sp.getString(USER_PREF_WS_AUTHORIZE_URL, "");
   }
 
   /**
@@ -219,7 +219,7 @@ public class UserPreferenceHelper {
    */
   public String getLocationUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_WS_LOCATION_URL, ""));
+    return sp.getString(USER_PREF_WS_LOCATION_URL, "");
   }
 
   /**
@@ -238,7 +238,7 @@ public class UserPreferenceHelper {
    */
   public String getObservationUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_WS_OBSERVATION_URL, ""));
+    return sp.getString(USER_PREF_WS_OBSERVATION_URL, "");
   }
 
   /**
@@ -257,7 +257,7 @@ public class UserPreferenceHelper {
    */
   public String getSortieUrl(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_WS_SORTIE_URL, ""));
+    return sp.getString(USER_PREF_WS_SORTIE_URL, "");
   }
 
   /**
@@ -276,7 +276,7 @@ public class UserPreferenceHelper {
    */
   public String getInstallationId(final Context context) {
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-    return(sp.getString(USER_PREF_INSTALL_ID, ""));
+    return sp.getString(USER_PREF_INSTALL_ID, "");
   }
 
   /**

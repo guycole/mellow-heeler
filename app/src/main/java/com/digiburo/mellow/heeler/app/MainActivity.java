@@ -25,6 +25,8 @@ import android.widget.ToggleButton;
 import com.digiburo.mellow.heeler.R;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.SortieController;
+import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.HotModel;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
@@ -60,16 +62,45 @@ public class MainActivity extends ActionBarActivity implements MainListener {
     }
   };
 
+  /**
+   * mainListener
+   * @param observationModel
+   */
+  @Override
+  public void addHot(ObservationModel observationModel) {
+    HotModel hotModel = new HotModel();
+    hotModel.setDefault();
+
+    hotModel.setBssid(observationModel.getBssid());
+    hotModel.setSsid(observationModel.getSsid());
+
+    DataBaseFacade dataBaseFacade = new DataBaseFacade(this);
+    dataBaseFacade.insert(hotModel, this);
+  }
+
+  /**
+   * mainListener
+   * @param locationModel
+   */
   @Override
   public void displayGoogleMap(LocationModel locationModel) {
     tabHelper.displayGoogleMap(locationModel);
   }
 
+
+  /**
+   * mainListener
+   * @param observationModel
+   */
   @Override
   public void displayGoogleMap(ObservationModel observationModel) {
     tabHelper.displayGoogleMap(observationModel);
   }
 
+  /**
+   * mainListener
+   * @param sortieModel
+   */
   @Override
   public void displayGoogleMap(SortieModel sortieModel) {
     tabHelper.displayGoogleMap(sortieModel);
@@ -232,7 +263,7 @@ public class MainActivity extends ActionBarActivity implements MainListener {
     }
 
     startActivity(intent);
-    return(true);
+    return true;
   }
 }
 /*

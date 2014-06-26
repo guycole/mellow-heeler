@@ -52,7 +52,7 @@ public class SortieModel implements DataBaseModelIf {
       cv.put(SortieTable.Columns.UPLOAD_FLAG, Constant.SQL_FALSE);
     }
 
-    return(cv);
+    return cv;
   }
 
   @Override
@@ -73,17 +73,17 @@ public class SortieModel implements DataBaseModelIf {
 
   @Override
   public String getTableName() {
-    return(SortieTable.TABLE_NAME);
+    return SortieTable.TABLE_NAME;
   }
 
   @Override
   public Uri getTableUri() {
-    return(SortieTable.CONTENT_URI);
+    return SortieTable.CONTENT_URI;
   }
 
   @Override
   public String toString() {
-    return(id + ":" + sortieName + ":" + sortieUuid + ":" + timeStamp);
+    return id + ":" + sortieName + ":" + sortieUuid + ":" + timeStamp;
   }
 
   @Override

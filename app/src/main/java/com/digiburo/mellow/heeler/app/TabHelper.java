@@ -10,12 +10,16 @@ import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.SortieModel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Console;
 
 /**
  * React to ActionBar tab events
  */
 public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackStackChangedListener {
+  private static final Logger LOG = LoggerFactory.getLogger(TabHelper.class);
 
   //
   private int backStackCount;
@@ -79,11 +83,11 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
 
     if (tab.getTag().equals(ConsoleFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(consoleFragment);
-    } else  if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
+    } else if (tab.getTag().equals(HotFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(hotFragment);
-    } else  if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
+    } else if (tab.getTag().equals(SortieFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(sortieFragment);
-    } else  if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
+    } else if (tab.getTag().equals(SsidFragment.FRAGMENT_TAG)) {
       fragmentTransaction.remove(ssidFragment);
     } else {
       throw new IllegalArgumentException("unknown tab:" + tab.getTag());
@@ -161,19 +165,21 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
    */
   public ActionBar.Tab tagToTab(String arg) {
     if (arg.equals(ConsoleFragment.FRAGMENT_TAG)) {
-      return(consoleTab);
+      return consoleTab;
     } else if (arg.equals(HotFragment.FRAGMENT_TAG)) {
-      return(hotTab);
+      return hotTab;
     } else if (arg.equals(SortieFragment.FRAGMENT_TAG)) {
-      return(sortieTab);
+      return sortieTab;
     } else if (arg.equals(SsidFragment.FRAGMENT_TAG)) {
-      return(ssidTab);
+      return ssidTab;
     }
 
     throw new IllegalArgumentException("unsupported tag:" + arg);
   }
 
   public void displayGoogleMap(LocationModel locationModel) {
+    LOG.info("displayGoogleMap:location");
+
     chartFragment.setCurrentLocation(locationModel);
 
     FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
@@ -190,6 +196,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   }
 
   public void displayGoogleMap(ObservationModel observationModel) {
+    LOG.info("displayGoogleMap:observation");
+
     chartFragment.setCurrentObservation(observationModel);
 
     FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
@@ -206,6 +214,8 @@ public class TabHelper implements ActionBar.TabListener, FragmentManager.OnBackS
   }
 
   public void displayGoogleMap(SortieModel sortieModel) {
+    LOG.info("displayGoogleMap:sortie");
+
     chartFragment.setCurrentSortie(sortieModel);
 
     FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();

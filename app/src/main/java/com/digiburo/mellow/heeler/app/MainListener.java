@@ -10,19 +10,25 @@ import com.digiburo.mellow.heeler.lib.database.SortieModel;
 public interface MainListener {
 
   /**
-   *
+   * add to hot list
+   * @param observationModel
+   */
+  void addHot(ObservationModel observationModel);
+
+  /**
+   * display google map
    * @param locationModel
    */
   void displayGoogleMap(LocationModel locationModel);
 
   /**
-   *
+   * display google map
    * @param observationModel
    */
   void displayGoogleMap(ObservationModel observationModel);
 
   /**
-   *
+   * display google map
    * @param sortieModel
    */
   void displayGoogleMap(SortieModel sortieModel);

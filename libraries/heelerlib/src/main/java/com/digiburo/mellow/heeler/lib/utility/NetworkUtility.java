@@ -27,16 +27,16 @@ public class NetworkUtility {
     ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     if (cm == null) {
       //mobile packet data not enabled
-      return(false);
+      return false;
     }
  
     NetworkInfo networkInfo = cm.getActiveNetworkInfo();
     if (networkInfo == null) {
       //no active network
-      return(false);
+      return false;
     }    
     
-    return(networkInfo.isConnected());
+    return networkInfo.isConnected();
   }
 }
 /*

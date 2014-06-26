@@ -16,19 +16,19 @@ public class HotTable implements DataBaseTableIf {
 
   @Override
   public String getTableName() {
-    return(TABLE_NAME);
+    return TABLE_NAME;
   }
 
   @Override
   public String getDefaultSortOrder() {
-    return(DEFAULT_SORT_ORDER);
+    return DEFAULT_SORT_ORDER;
   }
 
   @Override
   public String[] getDefaultProjection() {
     Set<String> keySet = HotTable.PROJECTION_MAP.keySet();
     String[] result = (String[]) keySet.toArray(new String[keySet.size()]);
-    return(result);
+    return result;
   }
 
   public static final class Columns implements BaseColumns {

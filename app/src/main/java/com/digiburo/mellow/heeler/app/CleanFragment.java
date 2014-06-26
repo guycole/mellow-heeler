@@ -46,7 +46,7 @@ public class CleanFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_clean, container, false);
-    return (view);
+    return view;
   }
 
   @Override

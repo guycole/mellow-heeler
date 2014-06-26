@@ -117,7 +117,7 @@ public class ObservationModel implements DataBaseModelIf {
       cv.put(ObservationTable.Columns.UPLOAD_FLAG, Constant.SQL_FALSE);
     }
 
-    return(cv);
+    return cv;
   }
 
   @Override
@@ -144,12 +144,12 @@ public class ObservationModel implements DataBaseModelIf {
 
   @Override
   public String getTableName() {
-    return(ObservationTable.TABLE_NAME);
+    return ObservationTable.TABLE_NAME;
   }
 
   @Override
   public Uri getTableUri() {
-    return(ObservationTable.CONTENT_URI);
+    return ObservationTable.CONTENT_URI;
   }
 
   @Override

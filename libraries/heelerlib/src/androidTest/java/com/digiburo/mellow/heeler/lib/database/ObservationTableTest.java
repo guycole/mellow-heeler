@@ -54,6 +54,12 @@ public class ObservationTableTest extends ApplicationTestCase<HeelerApplication>
 
     modelList = dataBaseFacade.selectAllObservations(false, original.getSortieUuid(), 0, getContext());
     assertEquals(1, modelList.size());
+
+    modelList = dataBaseFacade.selectBssidObservations(selected.getBssid(), getContext());
+    assertEquals(1, modelList.size());
+
+    modelList = dataBaseFacade.selectDistinctBssid(getContext());
+    assertEquals(1, modelList.size());
   }
 
   public void testUpdate() {
