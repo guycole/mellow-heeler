@@ -25,6 +25,19 @@ public class AudioHelper {
       }
     }
   }
+
+
+  public void alarmer(final Context context) {
+    if (preferenceTest(context)) {
+      try {
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
+        ringtone.play();
+      } catch (Exception exception) {
+        //empty
+      }
+    }
+  }
 }
 /*
  * Copyright 2014 Digital Burro, INC

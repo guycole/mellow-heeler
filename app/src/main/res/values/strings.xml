@@ -104,6 +104,9 @@
   <string name="text_uploaded_rows">Uploaded</string>
 
   <string name="toast_gps_disabled">Must Enable GPS</string>
+  <string name="toast_hot_duplicate">Duplicate Hot List Item</string>
+  <string name="toast_hot_fresh">Fresh Hot List Item</string>
+  <string name="toast_hot_match">Hot List Match</string>
   <string name="toast_location_failure">Special Location Failure</string>
   <string name="toast_location_success">Special Location Success</string>
   <string name="toast_wifi_disabled">Must Enable WiFi</string>

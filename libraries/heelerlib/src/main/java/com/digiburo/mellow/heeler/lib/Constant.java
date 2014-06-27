@@ -62,6 +62,7 @@ public class Constant {
   //
   public static final String INTENT_AUTH_FLAG = "INTENT_AUTH_FLAG";
   public static final String INTENT_COMPLETE_FLAG = "INTENT_COMPLETE_FLAG";
+  public static final String INTENT_HOT_FLAG = "INTENT_HOT_FLAG";
   public static final String INTENT_MODE_FLAG = "INTENT_MODE_FLAG";
   public static final String INTENT_JSON_RESPONSE = "INTENT_JSON_RESPONSE";
   public static final String INTENT_JSON_TYPE = "INTENT_JSON_TYPE";

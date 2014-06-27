@@ -7,9 +7,13 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.digiburo.mellow.heeler.R;
@@ -23,16 +27,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Scrolling list of SSID
+ * Scrolling list of high priority SSID/BSSID
  */
 public class HotFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
   private static final Logger LOG = LoggerFactory.getLogger(HotFragment.class);
 
+  public static final int CONTEXT_ITEM_1 = Menu.FIRST;
   public static final String FRAGMENT_TAG = "TAG_HOT";
   public static final int LOADER_ID = 2718;
 
   private HotCursorAdapter adapter;
   private MainListener mainListener;
+  private DataBaseFacade dataBaseFacade;
 
   /**
    * LoaderCallback
@@ -78,6 +84,36 @@ public class HotFragment extends ListFragment implements LoaderManager.LoaderCal
   }
 
   /**
+   * long click
+   */
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+    menu.add(0, CONTEXT_ITEM_1, 0, R.string.menu_context_delete);
+  }
+
+  /**
+   * service context menu
+   * @param item
+   * @return
+   */
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    LOG.debug("on context item select:" + item + ":" + item.getItemId() + ":" + info.id);
+
+    switch(item.getItemId()) {
+      case CONTEXT_ITEM_1:
+        DataBaseFacade dataBaseFacade = new DataBaseFacade(getActivity());
+        dataBaseFacade.deleteHot(info.id, getActivity());
+        getLoaderManager().restartLoader(0, null, this);
+
+        break;
+    }
+
+    return super.onContextItemSelected(item);
+  }
+
+  /**
    * mandatory empty ctor
    */
   public HotFragment() {
@@ -109,8 +145,8 @@ public class HotFragment extends ListFragment implements LoaderManager.LoaderCal
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    setHasOptionsMenu(false);
     setListAdapter(adapter);
+    registerForContextMenu(getListView());
 
     getLoaderManager().initLoader(LOADER_ID, null, this);
   }

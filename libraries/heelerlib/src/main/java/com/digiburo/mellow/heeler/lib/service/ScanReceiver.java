@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import com.digiburo.mellow.heeler.lib.Constant;
 import com.digiburo.mellow.heeler.lib.Personality;
 import com.digiburo.mellow.heeler.lib.database.DataBaseFacade;
+import com.digiburo.mellow.heeler.lib.database.HotModel;
 import com.digiburo.mellow.heeler.lib.database.LocationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModel;
 import com.digiburo.mellow.heeler.lib.database.ObservationModelList;
@@ -65,26 +66,27 @@ public class ScanReceiver extends BroadcastReceiver {
     private final LocationModel locationModel;
     private final SortieModel sortieModel;
     private final Context context;
+    private final DataBaseFacade dataBaseFacade;
 
     public FreshScan(final LocationModel locationModel, final SortieModel sortieModel, final Context context) {
       this.locationModel = locationModel;
       this.sortieModel = sortieModel;
       this.context = context;
+
+      dataBaseFacade = new DataBaseFacade(context);
     }
 
     @Override
     public void run() {
       ObservationModelList observationModelList = getScanResults(context);
       saveScanResults(observationModelList, context);
+      testHotList(observationModelList, context);
 
       Personality.setCurrentObserved(observationModelList);
 
       int population = observationModelList.size();
       LOG.debug("WiFi scan population:" + population);
-
-      Intent intent = new Intent(Constant.CONSOLE_UPDATE);
-      intent.putExtra(Constant.INTENT_OBSERVATION_UPDATE, population);
-      context.sendBroadcast(intent);
+      broadcastChange(population, context);
 
       SpeechService.sayThis(Integer.toString(population), context);
     }
@@ -105,10 +107,30 @@ public class ScanReceiver extends BroadcastReceiver {
     }
 
     private void saveScanResults(final ObservationModelList observationModelList, final Context context) {
-      DataBaseFacade dataBaseFacade = new DataBaseFacade(context);
       for (ObservationModel observationModel:observationModelList) {
         dataBaseFacade.insert(observationModel, context);
       }
+    }
+
+    private void testHotList(final ObservationModelList observationModelList, final Context context) {
+      for (ObservationModel observationModel:observationModelList) {
+        HotModel hotModel = dataBaseFacade.selectHot(observationModel.getBssid(), context);
+        if (hotModel.getId() > 0) {
+          broadcastChange(observationModel.getBssid(), context);
+        }
+      }
+    }
+
+    private void broadcastChange(String bssid, Context context) {
+      Intent notifier = new Intent(Constant.CONSOLE_UPDATE);
+      notifier.putExtra(Constant.INTENT_HOT_FLAG, bssid);
+      context.sendBroadcast(notifier);
+    }
+
+    private void broadcastChange(int population, Context context) {
+      Intent notifier = new Intent(Constant.CONSOLE_UPDATE);
+      notifier.putExtra(Constant.INTENT_OBSERVATION_UPDATE, population);
+      context.sendBroadcast(notifier);
     }
   }
 }

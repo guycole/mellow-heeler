@@ -119,6 +119,24 @@ public class DataBaseFacade {
   }
 
   /**
+   *
+   * @param target
+   * @param context
+   * @return
+   */
+  public HotModel selectHot(final String target, final Context context) {
+    HotModel model = new HotModel();
+    HotTable table = new HotTable();
+
+    String selection = HotTable.Columns.BSSID + "=?";
+    String[] selectionArgs = new String[]{target.toString()};
+
+    simpleSelect(selection, selectionArgs, table, model, context);
+
+    return model;
+  }
+
+  /**
    * @param model
    * @param context
    * @return

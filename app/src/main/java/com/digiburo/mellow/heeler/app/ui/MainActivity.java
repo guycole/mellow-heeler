@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.digiburo.mellow.heeler.R;
@@ -70,14 +71,21 @@ public class MainActivity extends ActionBarActivity implements MainListener {
    */
   @Override
   public void addHot(ObservationModel observationModel) {
-    HotModel hotModel = new HotModel();
-    hotModel.setDefault();
-
-    hotModel.setBssid(observationModel.getBssid());
-    hotModel.setSsid(observationModel.getSsid());
-
     DataBaseFacade dataBaseFacade = new DataBaseFacade(this);
-    dataBaseFacade.insert(hotModel, this);
+    HotModel hotModel = dataBaseFacade.selectHot(observationModel.getBssid(), this);
+    if (hotModel.getId() > 0) {
+      LOG.debug("duplicate hot list item:" + observationModel.getSsid() + ":" + observationModel.getBssid());
+      Toast.makeText(this, getString(R.string.toast_hot_duplicate), Toast.LENGTH_SHORT).show();
+    } else {
+      LOG.debug("insert fresh hot list item:" + observationModel.getSsid() + ":" + observationModel.getBssid());
+      Toast.makeText(this, getString(R.string.toast_hot_fresh), Toast.LENGTH_SHORT).show();
+
+      hotModel.setDefault();
+      hotModel.setBssid(observationModel.getBssid());
+      hotModel.setSsid(observationModel.getSsid());
+
+      dataBaseFacade.insert(hotModel, this);
+    }
   }
 
   /**

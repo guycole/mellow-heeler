@@ -7,9 +7,13 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.digiburo.mellow.heeler.R;
 
@@ -27,11 +31,13 @@ import org.slf4j.LoggerFactory;
 public class SsidFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
   private static final Logger LOG = LoggerFactory.getLogger(SsidFragment.class);
 
+  public static final int CONTEXT_ITEM_1 = Menu.FIRST;
   public static final String FRAGMENT_TAG = "TAG_SSID";
   public static final int LOADER_ID = 2718;
 
   private SsidCursorAdapter adapter;
   private MainListener mainListener;
+  private DataBaseFacade dataBaseFacade;
 
   /**
    * LoaderCallback
@@ -77,6 +83,34 @@ public class SsidFragment extends ListFragment implements LoaderManager.LoaderCa
   }
 
   /**
+   * long click
+   */
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+    menu.add(0, CONTEXT_ITEM_1, 0, R.string.menu_context_hot_list);
+  }
+
+  /**
+   * service context menu
+   * @param item
+   * @return
+   */
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    LOG.debug("on context item select:" + item + ":" + item.getItemId() + ":" + info.id);
+
+    switch(item.getItemId()) {
+      case CONTEXT_ITEM_1:
+        ObservationModel observationModel = dataBaseFacade.selectObservation(info.id, getActivity());
+        mainListener.addHot(observationModel);
+        break;
+    }
+
+    return super.onContextItemSelected(item);
+  }
+
+  /**
    * mandatory empty ctor
    */
   public SsidFragment() {
@@ -87,12 +121,12 @@ public class SsidFragment extends ListFragment implements LoaderManager.LoaderCa
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     mainListener = (MainListener) activity;
+    dataBaseFacade = new DataBaseFacade(activity);
   }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     ObservationTable observationTable = new ObservationTable();
     adapter = new SsidCursorAdapter(getActivity(), observationTable.getDefaultProjection());
   }
@@ -108,8 +142,8 @@ public class SsidFragment extends ListFragment implements LoaderManager.LoaderCa
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
-    setHasOptionsMenu(false);
     setListAdapter(adapter);
+    registerForContextMenu(getListView());
 
     getLoaderManager().initLoader(LOADER_ID, null, this);
   }
