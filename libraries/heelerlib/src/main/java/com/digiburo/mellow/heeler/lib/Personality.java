@@ -49,8 +49,8 @@ public class Personality {
   /**
    * remote configuration URL, default value is for production, changes for unit test
    */
-//  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
-  private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
+  private static String remoteConfigurationUrl = Constant.PRODUCTION_CONFIGURATION_URL;
+//  private static String remoteConfigurationUrl = Constant.TEST_CONFIGURATION_URL;
 
   public static synchronized String getRemoteConfigurationUrl() {
     return remoteConfigurationUrl;
