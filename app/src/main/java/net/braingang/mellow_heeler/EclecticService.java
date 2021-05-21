@@ -12,7 +12,7 @@ public class EclecticService extends IntentService {
     public static final String LOG_TAG = EclecticService.class.getName();
 
     public EclecticService() {
-        super("ApiService");
+        super("EclecticService");
     }
 
     @Override
