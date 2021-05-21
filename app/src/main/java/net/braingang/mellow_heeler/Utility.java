@@ -11,6 +11,6 @@ public class Utility {
     }
 
     public static long timeMillis(Time arg) {
-        return arg.toMillis(Constants.IGNORE_DST);
+        return arg.toMillis(Constant.IGNORE_DST);
     }
 }

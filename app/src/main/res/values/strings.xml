@@ -10,4 +10,13 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="running">running</string>
+    <string name="stopped">stopped</string>
+
+    <string name="button_main_fragment">Show Main</string>
+    <string name="button_list_fragment">Show List</string>
+    <string name="button_start_collection">Start</string>
+    <string name="button_stop_collection">Stop</string>
+    <string name="button_upload">Stop</string>
 </resources>

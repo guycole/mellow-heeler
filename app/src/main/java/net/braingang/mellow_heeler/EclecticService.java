@@ -5,8 +5,13 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.text.format.Time;
 import android.util.Log;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class EclecticService extends IntentService {
     public static final String LOG_TAG = EclecticService.class.getName();
@@ -30,27 +35,22 @@ public class EclecticService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.i(LOG_TAG, "-x-x-x-x-x-x-x-x-x- onHandleIntent -x-x-x-x-x-x-x-x-x-");
-/*
-        //VagrantListener callback = (VagrantListener) getApplicationContext();
-        VolleySingleton volleySingleton = VolleySingleton.getInstance(this);
 
-        if ((Personality.currentTicket == null) || (Personality.currentTicket.getTicketId().length() < 1)) {
-            Log.i(LOG_TAG, "skipping null or empty ticket");
-        } else {
-            String ticketState = Personality.currentTicket.getTicketState();
-
-            switch(ticketState) {
-                case "TICKET_CREATE":
-                case "TICKET_ACCEPT":
-                case "TICKET_TRIAL":
-                    Log.i(LOG_TAG, "testing ticket id");
-                    volleySingleton.ticketSelect(Personality.currentTicket.getTicketId(), null);
-                    break;
-                default:
-                    Log.i(LOG_TAG, "skipping ticket test:" + ticketState);
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                Log.i(LOG_TAG, "fresh location");
+                if (location != null) {
+                    // Logic to handle location object
+                    Log.i(LOG_TAG, location.toString());
+                } else {
+                    Log.i(LOG_TAG, "fresh location is null");
+                }
             }
-        }
-
+        });
+/*
         if (Personality.gracefulExit == false) {
             scheduleNextAlarm();
         }
@@ -62,12 +62,12 @@ public class EclecticService extends IntentService {
 
         Time timeNow = Utility.timeNow();
         Time timeAlarm = new Time();
-        timeAlarm.set(timeNow.toMillis(Constants.IGNORE_DST) + delay);
+        timeAlarm.set(timeNow.toMillis(Constant.IGNORE_DST) + delay);
 
         Intent intent = new Intent(this, EclecticService.class);
         PendingIntent alarmIntent = PendingIntent.getService(this, 0, intent, 0);
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC, timeAlarm.toMillis(Constants.IGNORE_DST), alarmIntent);
+        am.set(AlarmManager.RTC, timeAlarm.toMillis(Constant.IGNORE_DST), alarmIntent);
     }
 }
