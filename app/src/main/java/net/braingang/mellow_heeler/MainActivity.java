@@ -143,6 +143,23 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         for (int current:grantResults) {
             Log.i(LOG_TAG, "grantResult:" + current);
         }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                Log.i(LOG_TAG, "fresh location");
+                if (location != null) {
+                    // Logic to handle location object
+                    Log.i(LOG_TAG, location.toString());
+                } else {
+                    Log.i(LOG_TAG, "fresh location is null");
+                }
+            }
+        });
+
+
     }
 
     @Override

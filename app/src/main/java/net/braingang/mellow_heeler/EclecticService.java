@@ -36,6 +36,7 @@ public class EclecticService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.i(LOG_TAG, "-x-x-x-x-x-x-x-x-x- onHandleIntent -x-x-x-x-x-x-x-x-x-");
 
+        /*
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
@@ -43,13 +44,15 @@ public class EclecticService extends IntentService {
                 // Got last known location. In some rare situations this can be null.
                 Log.i(LOG_TAG, "fresh location");
                 if (location != null) {
-                    // Logic to handle location object
+                    // Logic to handle location objectf
                     Log.i(LOG_TAG, location.toString());
                 } else {
                     Log.i(LOG_TAG, "fresh location is null");
                 }
             }
         });
+
+         */
 /*
         if (Personality.gracefulExit == false) {
             scheduleNextAlarm();
