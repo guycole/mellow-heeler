@@ -1,1 +1,2 @@
-include ':app', ':libraries:heelerlib'
+rootProject.name = "mellow_heeler"
+include ':app'
