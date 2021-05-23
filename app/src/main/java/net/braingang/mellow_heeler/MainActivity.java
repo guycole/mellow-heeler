@@ -1,6 +1,7 @@
 package net.braingang.mellow_heeler;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -8,6 +9,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,7 +33,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, HeelerListener {
     public static final String LOG_TAG = MainActivity.class.getName();
 
     private FusedLocationProviderClient fusedLocationClient;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Log.i(LOG_TAG, "must ask location permission");
 
             String[] permissions = {
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.INTERNET,
@@ -70,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         } else {
             Log.i(LOG_TAG, "permission granted");
         }
-
          */
     }
 
@@ -89,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        permissionDance();
 
         /*
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +120,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
          */
 
-
-
         /*
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -144,6 +143,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Log.i(LOG_TAG, "grantResult:" + current);
         }
 
+        // location manager access granted
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(Constant.ONE_MINUTE);
+        locationRequest.setFastestInterval(Constant.THIRTY_SECOND);
+
+        Intent intent = new Intent(this, EclecticService.class);
+        PendingIntent pi = PendingIntent.getService(this, EclecticService.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.requestLocationUpdates(locationRequest, pi);
+
+        /*
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
@@ -158,8 +170,19 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 }
             }
         });
+         */
+    }
 
+    @Override
+    public void onCollectionStart() {
+        Log.i(LOG_TAG, "start start start");
 
+        permissionDance();
+    }
+
+    @Override
+    public void onCollectionStop() {
+        Log.i(LOG_TAG, "stop stop stop");
     }
 
     @Override

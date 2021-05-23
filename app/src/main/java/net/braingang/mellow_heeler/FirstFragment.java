@@ -18,6 +18,8 @@ public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
 
+    private HeelerListener heelerListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
@@ -27,10 +29,19 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        heelerListener = (MainActivity) getActivity();
+
         binding.buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(LOG_TAG, "button start start start");
+                heelerListener.onCollectionStart();
+            }
+        });
+
+        binding.buttonStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                heelerListener.onCollectionStop();
             }
         });
 

@@ -24,6 +24,8 @@ import net.braingang.houndlib.model.Observation;
 import net.braingang.houndlib.utility.UserPreferenceHelper;
 */
 
+import com.google.android.gms.location.LocationResult;
+
 import java.util.List;
 
 /**
@@ -111,7 +113,11 @@ public class GeoLocService extends IntentService {
         Log.i(LOG_TAG, "onHandleIntent");
 
         Bundle bundle = intent.getExtras();
+
+
         if ((bundle != null) && (bundle.containsKey(LocationManager.KEY_LOCATION_CHANGED))) {
+            Log.i(LOG_TAG, "aaaaaaaaaa");
+
             /*
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String phone1 = telephonyManager.getLine1Number();

@@ -10,11 +10,14 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class EclecticService extends IntentService {
     public static final String LOG_TAG = EclecticService.class.getName();
+
+    public static final int REQUEST_CODE = 6789;
 
     public EclecticService() {
         super("EclecticService");
@@ -36,41 +39,12 @@ public class EclecticService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.i(LOG_TAG, "-x-x-x-x-x-x-x-x-x- onHandleIntent -x-x-x-x-x-x-x-x-x-");
 
-        /*
-        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                // Got last known location. In some rare situations this can be null.
-                Log.i(LOG_TAG, "fresh location");
-                if (location != null) {
-                    // Logic to handle location objectf
-                    Log.i(LOG_TAG, location.toString());
-                } else {
-                    Log.i(LOG_TAG, "fresh location is null");
-                }
-            }
-        });
-
-         */
-/*
-        if (Personality.gracefulExit == false) {
-            scheduleNextAlarm();
+        if (LocationResult.hasResult(intent)) {
+            Log.i(LOG_TAG, "has result true");
+            LocationResult locationResult = LocationResult.extractResult(intent);
+            Log.i(LOG_TAG, "result:" + locationResult);
+        } else {
+            Log.i(LOG_TAG, "has result false");
         }
- */
-    }
-
-    private void scheduleNextAlarm() {
-        long delay = 59 * 1000L;
-
-        Time timeNow = Utility.timeNow();
-        Time timeAlarm = new Time();
-        timeAlarm.set(timeNow.toMillis(Constant.IGNORE_DST) + delay);
-
-        Intent intent = new Intent(this, EclecticService.class);
-        PendingIntent alarmIntent = PendingIntent.getService(this, 0, intent, 0);
-
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC, timeAlarm.toMillis(Constant.IGNORE_DST), alarmIntent);
     }
 }
