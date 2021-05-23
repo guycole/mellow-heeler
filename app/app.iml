@@ -81,4 +81,8 @@
     <orderEntry type="library" exported="" name="robospice-1.4.12" level="project" />
     <orderEntry type="module" module-name="heelerlib" exported="" />
   </component>
+<<<<<<< HEAD
 </module>
+=======
+</module>
+>>>>>>> 64daefe563f2a327383e44e71fd3aa9f306d0704
