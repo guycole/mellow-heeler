@@ -1,0 +1,4 @@
+Raspberry Pi OS Lite (Legacy)
+Jan 28, 2022
+Debian 10 buster
+
