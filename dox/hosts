@@ -1,0 +1,17 @@
+127.0.0.1	localhost localhost.localdomain
+127.0.1.1	wombat02
+
+# 192.168.171.0/24 
+192.168.171.1 wombat02.braingang.net
+192.168.171.3 waifu
+192.168.171.5 duckman
+192.168.171.7 altoid
+192.168.171.9 available
+192.168.171.11 badger1
+192.168.171.13 badger2
+192.168.171.15 badger3
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
