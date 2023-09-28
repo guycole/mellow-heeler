@@ -1,0 +1,15 @@
+--
+-- Title: note.psql
+-- Description: note
+-- 
+create table note (
+  id            bigserial    primary key,
+  created_at    timestamptz  not null default CURRENT_TIMESTAMP,
+  modified_at   timestamptz  not null default CURRENT_TIMESTAMP,
+  mask          int          not null,
+  note          varchar(64)  not null,
+  note_key      varchar(64)  unique not null,
+  private_flag  boolean      not null default false,
+  group_id      bigint       not null,
+  constraint    fk_group     foreign key(group_id) references group_member(id)
+);

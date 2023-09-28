@@ -1,0 +1,14 @@
+--
+-- Title: sample_raw.psql
+-- Description: WAP samples  
+-- 
+create table sample_raw (
+  id              bigserial       primary key,
+  bssid           varchar(24)     not null,
+  capability      varchar(80)     not null,
+  frequency       smallint        not null,
+  level           smallint        not null,
+  ssid            varchar(80)     not null,
+  observation_id  bigint          not null,
+  constraint      observation_id  foreign key(observation_id) references observation(id)
+);

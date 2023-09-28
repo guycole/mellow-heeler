@@ -1,0 +1,16 @@
+--
+-- Title: sample_cooked.psql
+-- Description: WAP samples  
+-- 
+create table sample_cooked (
+  id             bigserial   primary key,
+  bssid          varchar(24) not null,
+  capability     varchar(80) not null,
+  frequency      smallint    not null,
+  latitude       varchar(16) not null,
+  longitude      varchar(16) not null,
+  observed_first timestamptz not null default CURRENT_TIMESTAMP,
+  observed_last  timestamptz not null default CURRENT_TIMESTAMP,
+  population     int         not null,
+  ssid           varchar(80) not null,
+);
