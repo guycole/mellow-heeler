@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 #
 # Title: heeler.py
 # Description:

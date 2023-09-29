@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 #
 # Title: parser1.py
 # Description:
