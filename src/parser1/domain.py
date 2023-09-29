@@ -43,6 +43,7 @@ class Observation:
             )
         )
 
+
 class CookedSample:
     def __init__(
         self,
@@ -101,13 +102,16 @@ class RawSample:
         self.ssid = ssid
 
     def __str__(self):
-        return "raw_sample: bssid:%s capability:%s frequency:%d level:%d observation_key:%s ssid:%s" % (
-            self.bssid,
-            self.capability,
-            self.frequency,
-            self.level,
-            self.observation_key,
-            self.ssid,
+        return (
+            "raw_sample: bssid:%s capability:%s frequency:%d level:%d observation_key:%s ssid:%s"
+            % (
+                self.bssid,
+                self.capability,
+                self.frequency,
+                self.level,
+                self.observation_key,
+                self.ssid,
+            )
         )
 
 

@@ -23,7 +23,9 @@ class Hound:
             geo_loc["latitude"],
             geo_loc["longitude"],
             file_name,
-            time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(geo_loc["fixTimeMs"] / 1000)),
+            time.strftime(
+                "%Y-%m-%d %H:%M:%S", time.gmtime(geo_loc["fixTimeMs"] / 1000)
+            ),
             self.project,
             self.version,
         )
