@@ -1,15 +1,12 @@
-# funny-turtle postgres
+# mellow-heeler postgres
 PostGreSQL 12.16 (turtle_v1 database)
 
-## COGNITO_USER
-+ map cognito user ID to turtle references
+## OBSERVATION
++ note
 
-## NOTE
+## SAMPLE_COOKED
 + note 
 
-## SUSPEND
-+ suspended account history
+## SAMPLE_RAW
++ note
 
-
-key = UUID (only UUID can be shared w/crocodile)
-id = integer row id

@@ -1,0 +1,8 @@
+createuser -U postgres -d -e -E -l -P -r -s heeler-admin
+
+psql -U postgres template1
+create database heeler_v1;
+create role heeler_py with login;
+alter role heeler_py with password 'bogus';
+
+psql -U heeler_py -d heeler_v1

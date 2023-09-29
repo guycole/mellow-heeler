@@ -12,5 +12,5 @@ create table sample_cooked (
   observed_first timestamptz not null default CURRENT_TIMESTAMP,
   observed_last  timestamptz not null default CURRENT_TIMESTAMP,
   population     int         not null,
-  ssid           varchar(80) not null,
+  ssid           varchar(80) not null
 );

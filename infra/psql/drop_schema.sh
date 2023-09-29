@@ -2,20 +2,15 @@
 #
 # Title:drop_schema.sh
 # Description: remove schema
-# Development Environment: OS X 10.15.2/postgres 9.6.16
+# Development Environment: OS X 10.15.2/postgres 12.12
 # Author: G.S. Cole (guy at shastrax dot com)
 #
-export PGDATABASE=turtle_v1
+export PGDATABASE=heeler_v1
 export PGHOST=localhost
-export PGPASSWORD=goboy
-export PGUSER=turtle_go
+export PGPASSWORD=bogus
+export PGUSER=heeler_py
 #
-psql $PGDATABASE -c "drop table note"
-psql $PGDATABASE -c "drop table suspend"
-psql $PGDATABASE -c "drop table group_member"
-psql $PGDATABASE -c "drop table group_header"
-psql $PGDATABASE -c "drop table cognito_user"
-#
-psql $PGDATABASE -c "drop table visit_tracker"
-psql $PGDATABASE -c "drop table visit_event"
+psql $PGDATABASE -c "drop table sample_cooked"
+psql $PGDATABASE -c "drop table sample_raw"
+psql $PGDATABASE -c "drop table observation"
 #
