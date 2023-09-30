@@ -5,6 +5,8 @@
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
+# */10 * * * * /home/gsc/github/mellow-heeler/bin/rpi-iwlist.sh > /dev/null 2>&1
+#
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 FILENAME="/tmp/iwlist.scan"
