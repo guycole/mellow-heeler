@@ -1,0 +1,11 @@
+#
+importDir: /Users/gsc/Documents/github/mellow-heeler/samples
+#
+#gzipCommand: /bin/gzip
+gzipCommand: /usr/bin/gzip
+#
+dbUserName: seagull
+dbPassWord: bogus
+dbDataBase: vocal_seagull
+dbHostName: localhost
+#
