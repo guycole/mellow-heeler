@@ -3,6 +3,52 @@ createuser -U postgres -d -e -E -l -P -r -s heeler-admin
 psql -U postgres template1
 create database heeler_v1;
 create role heeler_py with login;
-alter role heeler_py with password 'bogus';
+alter role heeler_py with password 'bogus'
 
 psql -U heeler_py -d heeler_v1
+
+A sample is an unbiased number of observations taken from a population. 
+In simple terms, a population is the total number of observations (i.e., 
+individuals, animals, items, data, etc.)
+
+tables
+
+
+geoloc
+  name (i.e. anderson1, vallejo1, mobile)
+  accuracy
+  altitude
+  latitude
+  longitude 
+
+observation_time
+  timeMs 
+  geoloc 
+  sortie (file name)
+
+observation 
+  observation_time
+  geoloc
+  bssid 
+  ssid 
+  level (sig strength)
+  frequency (integer)
+  capability 
+
+wap
+  bssid
+  ssid
+  frequency
+  capability
+  first_noted
+  last_noted
+  counter
+
+  
+
+
+daily observation population (# from site) (file uploads)
+daily raw AP samples (# from site) select for detail
+daily new AP observed (# from site) select for detail
+daily missing AP observed (# from site) select for detail
+daily changed AP observed (# from site) select for detail

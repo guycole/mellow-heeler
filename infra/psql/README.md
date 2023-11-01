@@ -1,5 +1,5 @@
 # mellow-heeler postgres
-PostGreSQL 12.16 (turtle_v1 database)
+PostGreSQL 12.16 (heeler_v1 database)
 
 ## OBSERVATION
 + note
