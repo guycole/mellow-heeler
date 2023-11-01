@@ -13,7 +13,6 @@ individuals, animals, items, data, etc.)
 
 tables
 
-
 geoloc
   name (i.e. anderson1, vallejo1, mobile)
   accuracy
@@ -21,13 +20,7 @@ geoloc
   latitude
   longitude 
 
-observation_time
-  timeMs 
-  geoloc 
-  sortie (file name)
-
 observation 
-  observation_time
   geoloc
   bssid 
   ssid 
@@ -43,9 +36,6 @@ wap
   first_noted
   last_noted
   counter
-
-  
-
 
 daily observation population (# from site) (file uploads)
 daily raw AP samples (# from site) select for detail

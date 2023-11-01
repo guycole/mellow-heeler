@@ -10,7 +10,9 @@ export PGHOST=localhost
 export PGPASSWORD=bogus
 export PGUSER=heeler_py
 #
+psql < geoloc.psql
 psql < observation.psql
 psql < sample_raw.psql
 psql < sample_cooked.psql
+psql < wap.psql
 #
