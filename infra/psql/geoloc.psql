@@ -10,3 +10,8 @@ create table geoloc (
   latitude         varchar(16) not null,
   longitude        varchar(16) not null
 );
+
+-- anderson
+-- vallejo
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude) values('12.3', '4.5', 1629166763219, '40.3702153', '-122.2835223')
+

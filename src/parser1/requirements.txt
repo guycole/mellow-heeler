@@ -4,7 +4,8 @@ mypy-extensions==1.0.0
 packaging==23.1
 pathspec==0.11.2
 platformdirs==3.10.0
+psycopg2-binary==2.9.9
 PyYAML==6.0.1
-SQLAlchemy==2.0.21
+SQLAlchemy==2.0.22
 tomli==2.0.1
 typing_extensions==4.8.0

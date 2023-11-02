@@ -1,0 +1,25 @@
+--
+-- Title: box_score.psql
+-- Description: daily boxscore, for 24 hour period 00:00 to 23:59 UTC
+--
+-- bssid_new = new AP discovered today
+-- bssid_total = total AP heard today
+-- bssid_updated = total AP updated today
+-- file_population = total files uploaded
+-- refresh_flag = true, must recalculate stats
+-- score_date = date
+-- site = anderson, vallejo, mobile, etc
+-- 
+create table box_score (
+  id               bigserial    primary key,
+  bssid_new        smallint     not null, 
+  bssid_total      smallint     not null,
+  bssid_updated    smallint     not null, 
+  file_population  smallint     not null, 
+  refresh_flag     boolean      not null,
+  score_date       date         not null,
+  site             varchar(16)  not null
+);
+
+create index boxscore_date on box_score(score_date);
+

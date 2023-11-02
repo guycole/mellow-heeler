@@ -37,6 +37,8 @@ wap
   last_noted
   counter
 
+how to capture wap changes? (i.e. ssid name changes)
+
 daily observation population (# from site) (file uploads)
 daily raw AP samples (# from site) select for detail
 daily new AP observed (# from site) select for detail

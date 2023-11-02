@@ -5,6 +5,8 @@
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
+2,12,22,32,42,52 * * * * /home/gsc/github/mellow-heeler/bin > /dev/null 2>&1
+#
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start conversion"

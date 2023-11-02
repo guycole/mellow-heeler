@@ -11,3 +11,7 @@ create table wap (
 );
 
 create index wap_ssid on wap(ssid);
+
+insert into wap(bssid, capability, frequency, ssid) values('60:38:e0:ae:ec:88', '[WPA2-PSK-CCMP][WPS][ESS]', 2452, 'powerorganics');
+insert into wap(bssid, capability, frequency, ssid) values('60:a4:23:86:cf:3b', '[ESS]', 2462, 'MLG09772');
+insert into wap(bssid, capability, frequency, ssid) values('56:20:5f:fd:06:15', '[IBSS]', 2457, 'airportthru');

@@ -1,16 +1,15 @@
 --
 -- Title: observation.psql
--- Description: time and location for each sample
+-- Description: WAP observation
+--
+-- level = signal strength
 -- 
 create table observation (
-  id               bigserial   primary key,
-  accuracy         varchar(16) not null,
-  altitude         varchar(16) not null,
-  fix_time_ms      bigint      not null,
-  latitude         varchar(16) not null,
-  longitude        varchar(16) not null,
-  observation_key  varchar(64) unique not null,
-  observed_at      timestamptz not null default CURRENT_TIMESTAMP,
-  project          smallint    not null,
-  version          smallint    not null
-);
+  id          bigserial    primary key,
+  geoloc_id   bigint       not null,
+  constraint  geoloc_id    foreign key(geoloc_id) references geoloc(id),
+  level       smallint     not null,
+  time_stamp  timestamptz  not null default CURRENT_TIMESTAMP,
+  wap_id      bigint       not null,
+  constraint  wap_id       foreign key(wap_id) references wap(id)
+); 

@@ -1,0 +1,20 @@
+--
+-- Title: cooked.psql
+-- Description: WAP appgregate
+-- 
+-- latitude/longitude = ap location
+-- observed_first = AP first observation
+-- observed_last = most recent AP observation
+-- observed_counter = total population of AP observations
+--
+create table cooked (
+  id                bigserial    primary key,
+  latitude          varchar(16)  not null,
+  longitude         varchar(16)  not null,
+  note              varchar(132) not null,
+  observed_first    timestamptz  not null default CURRENT_TIMESTAMP,
+  observed_counter  int          not null,
+  observed_last     timestamptz  not null default CURRENT_TIMESTAMP,
+  wap_id            bigint       not null,
+  constraint        wap_id       foreign key(wap_id) references wap(id)
+);
