@@ -10,10 +10,9 @@ export PGHOST=localhost
 export PGPASSWORD=bogus
 export PGUSER=heeler_py
 #
-#psql $PGDATABASE -c "drop table sample_cooked"
-#psql $PGDATABASE -c "drop table sample_raw"
 psql $PGDATABASE -c "drop table observation"
 psql $PGDATABASE -c "drop table box_score"
 psql $PGDATABASE -c "drop table geoloc"
+psql $PGDATABASE -c "drop table cooked"
 psql $PGDATABASE -c "drop table wap"
 #

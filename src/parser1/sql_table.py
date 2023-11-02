@@ -35,12 +35,12 @@ class Cooked(Base):
   __tablename__ = 'cooked'
 
   id = Column(Integer, primary_key=True)
-  latitude = Column(String)
-  longitude = Column(String)
+  latitude = Column(Float)
+  longitude = Column(Float)
   note = Column(String)
   observed_counter = Column(Integer)
-  observed_first = Column(DateTime, default=datetime.datetime.utcnow)
-  observed_last = Column(DateTime, default=datetime.datetime.utcnow)
+  observed_first = Column(DateTime)
+  observed_last = Column(DateTime)
   wap_id = Column(BigInteger)
 
   def __init__(self, latitude, longitude, note, observed_counter, observed_first, observed_last, wap_id):
@@ -59,11 +59,11 @@ class GeoLoc(Base):
   __tablename__ = 'geoloc'
 
   id = Column(Integer, primary_key=True)
-  accuracy = Column(String)
-  altitude = Column(String)
+  accuracy = Column(Float)
+  altitude = Column(Float)
   fix_time_ms = Column(BigInteger)
-  latitude = Column(String)
-  longitude = Column(String)
+  latitude = Column(Float)
+  longitude = Column(Float)
 
   def __init__(self, accuracy, altitude, fix_time_ms, latitude, longitude):
     self.accuracy = accuracy
@@ -81,7 +81,7 @@ class Observation(Base):
   id = Column(Integer, primary_key=True)
   geoloc_id = Column(BigInteger)
   level = Column(Integer)
-  time_stamp = Column(DateTime, default=datetime.datetime.utcnow)
+  time_stamp = Column(DateTime)
   wap_id = Column(BigInteger)
   
   def __init__(self, geoloc_id, level, time_stamp, wap_id):

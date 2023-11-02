@@ -1,17 +1,24 @@
 --
 -- Title: geoloc.psql
 -- Description: time and location
+--
+-- Note that latitude and longitude are truncated by real() datatype
+-- fix_time_ms = -1 for static locations
 -- 
 create table geoloc (
-  id               bigserial   primary key,
-  accuracy         varchar(16) not null,
-  altitude         varchar(16) not null,
-  fix_time_ms      bigint      not null,
-  latitude         varchar(16) not null,
-  longitude        varchar(16) not null
+  id               bigserial  primary key,
+  accuracy         real       not null,
+  altitude         real       not null,
+  fix_time_ms      bigint     not null,
+  latitude         real       not null,
+  longitude        real       not null
 );
 
+create index geoloc_fix_time on geoloc(fix_time_ms);
+
 -- anderson
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223);
+
 -- vallejo
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude) values('12.3', '4.5', 1629166763219, '40.3702153', '-122.2835223')
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223);
 

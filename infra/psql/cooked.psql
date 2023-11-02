@@ -9,8 +9,8 @@
 --
 create table cooked (
   id                bigserial    primary key,
-  latitude          varchar(16)  not null,
-  longitude         varchar(16)  not null,
+  latitude          real         not null,
+  longitude         real         not null,
   note              varchar(132) not null,
   observed_counter  int          not null,
   observed_first    timestamptz  not null default CURRENT_TIMESTAMP,
