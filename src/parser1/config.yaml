@@ -1,5 +1,12 @@
-#
+# dryRun true is parse only, not load database and not delete/move files
+dryRun: true
+# problem files
+failureDir: /Users/gsc/Documents/github/mellow-heeler/failures
+# raw files to process
 importDir: /Users/gsc/Documents/github/mellow-heeler/samples
+#
+# kill below
+#
 #
 #gzipCommand: /bin/gzip
 gzipCommand: /usr/bin/gzip

@@ -7,10 +7,12 @@
 import typing
 import time
 
+
 class PostGres(object):
     def bogus(self, file_name: str, raw_load: typing.Dict):
         project = 2
         version = 1
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
