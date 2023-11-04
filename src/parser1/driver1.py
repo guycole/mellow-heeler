@@ -29,6 +29,7 @@ from yaml.loader import SafeLoader
 # 			print(row)
 #
 
+
 class Parser(object):
     dry_run = False
 
@@ -45,10 +46,10 @@ class Parser(object):
             project = None
             version = None
 
-            if 'project' in temp:
-                project = temp['project']
-            if 'version' in temp:
-                version = temp['version']
+            if "project" in temp:
+                project = temp["project"]
+            if "version" in temp:
+                version = temp["version"]
 
             file_type = f"{project}_{version}"
 
@@ -76,13 +77,25 @@ class Parser(object):
 
         classifier = self.file_classifier(buffer)
 
-        if classifier == 'hound_1':
-            hound = Hound(dry_run)
+        if classifier == "hound_1":
+            hound = Hound(self.dry_run)
             status = hound.hound_v1(buffer)
         elif classifier == "unknown":
             status = -1
-     
+
         return status
+
+    def file_success(self, file_name: str):
+        if self.dry_run is True:
+            print(f"skip file delete for {file_name}")
+        else:
+            os.unlink(file_name)
+
+    def file_failure(self, file_name: str, failure_dir: str):
+        if self.dry_run is True:
+            print(f"skip file move for {file_name}")
+        else:
+            os.rename(file_name, failure_dir + "/" + file_name)
 
     def directory_processor(self, import_dir: str, failure_dir: str):
         failure_counter = 0
@@ -97,21 +110,13 @@ class Parser(object):
 
             if status == 0:
                 success_counter += 1
-
-                if self.dry_run is True:
-                    print(f"skip file delete for {target}")
-                else:
-                    os.unlink(target)
+                self.file_success(target)
             else:
-                print(f"failed file: {target}")
                 failure_counter += 1
-
-                if self.dry_run is True:
-                    print(f"skip file move for {target}")
-                else:
-                    os.rename(target, failure_dir + "/" + target)
+                self.file_failure(target, failure_dir)
 
         print(f"success:{success_counter} failure:{failure_counter}")
+
 
 print("start parser")
 
@@ -130,12 +135,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    dry_run = configuration["dryRun"]
-    failure_dir = configuration["failureDir"]
-    import_dir = configuration["importDir"]
-
-    parser = Parser(dry_run)
-    parser.directory_processor(import_dir, failure_dir)
+    parser = Parser(configuration["dryRun"])
+    parser.directory_processor(configuration["importDir"], configuration["failureDir"])
 
 print("stop parser")
 
