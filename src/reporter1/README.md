@@ -1,2 +1,0 @@
-
-update static html pages

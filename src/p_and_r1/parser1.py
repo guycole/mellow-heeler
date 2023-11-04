@@ -143,7 +143,7 @@ class HeelerParser:
             print("skipping unknown:", project, ":", version)
 
 
-print("start loader")
+print("start parser")
 
 #
 # argv[1] = configuration filename
@@ -175,7 +175,7 @@ if __name__ == "__main__":
 #    db_pass_word = configuration['dbPassWord']
 #    db_user_name = configuration['dbUserName']
 
-print("stop loader")
+print("stop parser")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

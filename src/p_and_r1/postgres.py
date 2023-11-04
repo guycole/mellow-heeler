@@ -13,6 +13,9 @@ class PostGres(object):
         project = 2
         version = 1
 
+    def getGeoLoc():
+        return 0
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

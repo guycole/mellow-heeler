@@ -3,6 +3,7 @@ import os
 import sys
 import yaml
 
+from heeler import Heeler
 from hound import Hound
 
 from typing import List
@@ -29,7 +30,6 @@ from yaml.loader import SafeLoader
 # 			print(row)
 #
 
-
 class Parser(object):
     dry_run = False
 
@@ -52,6 +52,8 @@ class Parser(object):
                 version = temp["version"]
 
             file_type = f"{project}_{version}"
+        elif buffer[1].startswith('RAWBUFFER'):
+            file_type = "heeler_1"
 
         return file_type
 
@@ -77,7 +79,10 @@ class Parser(object):
 
         classifier = self.file_classifier(buffer)
 
-        if classifier == "hound_1":
+        if classifier == "heeler_1":
+            heeler = Heeler(self.dry_run)
+            status = heeler.heeler_v1(buffer)
+        elif classifier == "hound_1":
             hound = Hound(self.dry_run)
             status = hound.hound_v1(buffer)
         elif classifier == "unknown":
