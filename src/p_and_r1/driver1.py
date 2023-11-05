@@ -31,9 +31,11 @@ from yaml.loader import SafeLoader
 #
 
 class Parser(object):
+    db_conn = None
     dry_run = False
 
-    def __init__(self, dry_run: bool):
+    def __init__(self, db_conn:str, dry_run: bool):
+        self.db_conn = db_conn
         self.dry_run = dry_run
 
     def file_classifier(self, buffer: List[str]) -> str:
@@ -52,7 +54,7 @@ class Parser(object):
                 version = temp["version"]
 
             file_type = f"{project}_{version}"
-        elif buffer[1].startswith('RAWBUFFER'):
+        elif buffer[1].startswith("RAWBUFFER"):
             file_type = "heeler_1"
 
         return file_type
@@ -140,7 +142,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    parser = Parser(configuration["dryRun"])
+    parser = Parser(configuration("dbConn"), configuration["dryRun"])
     parser.directory_processor(configuration["importDir"], configuration["failureDir"])
 
 print("stop parser")

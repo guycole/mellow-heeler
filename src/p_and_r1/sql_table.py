@@ -86,6 +86,15 @@ class GeoLoc(Base):
     latitude = Column(Float)
     longitude = Column(Float)
 
+    def __eq__(self, other):
+        return (
+            self.accuracy == other.accuracy
+            and self.altitude == other.altitude
+            and self.fix_time_ms == other.fix_time_ms
+            and self.latitude == other.latitude
+            and self.longitude == other.longitude
+        )
+
     def __init__(self, accuracy, altitude, fix_time_ms, latitude, longitude):
         self.accuracy = accuracy
         self.altitude = altitude

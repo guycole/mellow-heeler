@@ -9,7 +9,8 @@ import time
 
 from typing import List
 
-#from domain import Observation
+# from domain import Observation
+
 
 class Heeler(object):
     dry_run = False
@@ -26,14 +27,14 @@ class Heeler(object):
         wifi = payload["wifi"]
         print(wifi)
 
-#        status = self.process_geoloc(geoloc)
-#        if status != 0:
-#            return status
+        #        status = self.process_geoloc(geoloc)
+        #        if status != 0:
+        #            return status
 
         status = 0
 
         return status
-    
+
 
 #    def observation_v1(self, file_name: str, project: int, geo_loc: typing.Dict):
 #        print("observation_writer")
@@ -76,7 +77,7 @@ class Heeler(object):
 #            print("skipping bad observation empty wiFi:", file_name)
 #            return
 
-    #        self.observation_writer(file_name, project, version, geo_loc)
+#        self.observation_writer(file_name, project, version, geo_loc)
 
 #    def execute(self, file_name: str, version: int, raw_load: typing.Dict):
 #        if version == 1:
