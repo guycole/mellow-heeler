@@ -7,8 +7,8 @@
 #
 export PGDATABASE=heeler_v1
 export PGHOST=localhost
-export PGPASSWORD=bogus
-export PGUSER=heeler_py
+export PGPASSWORD=woofwoof
+export PGUSER=heeler_admin
 #
 psql $PGDATABASE -c "drop table observation"
 psql $PGDATABASE -c "drop table box_score"

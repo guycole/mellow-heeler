@@ -5,10 +5,12 @@
 # Development Environment: OS X 10.15.2/postgres 12.12
 # Author: G.S. Cole (guy at shastrax dot com)
 #
+# psql -U heeler_py -d heeler_v1
+#
 export PGDATABASE=heeler_v1
 export PGHOST=localhost
-export PGPASSWORD=bogus
-export PGUSER=heeler_py
+export PGPASSWORD=woofwoof
+export PGUSER=heeler_admin
 #
 psql < box_score.psql
 psql < geoloc.psql

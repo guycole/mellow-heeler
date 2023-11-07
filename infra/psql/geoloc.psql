@@ -7,18 +7,21 @@
 -- 
 create table geoloc (
   id               bigserial  primary key,
-  accuracy         real       not null,
-  altitude         real       not null,
-  fix_time_ms      bigint     not null,
-  latitude         real       not null,
-  longitude        real       not null
+  accuracy         real        not null,
+  altitude         real        not null,
+  fix_time_ms      bigint      not null,
+  latitude         real        not null,
+  longitude        real        not null,
+  site             varchar(12) not null default 'default'
 );
+
+grant select, insert, update, delete on geoloc to heeler_py;
+grant usage, select on sequence geoloc_id_seq to heeler_py;
 
 create index geoloc_fix_time on geoloc(fix_time_ms);
 
--- anderson
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223);
+-- anderson1
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, site) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'anderson1');
 
--- vallejo
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223);
-
+-- vallejo1
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, site) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'vallejo1');

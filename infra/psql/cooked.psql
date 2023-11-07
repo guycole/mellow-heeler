@@ -11,10 +11,13 @@ create table cooked (
   id                bigserial    primary key,
   latitude          real         not null,
   longitude         real         not null,
-  note              varchar(132) not null,
+  note              varchar(132) not null default 'default',
   observed_counter  int          not null,
   observed_first    timestamptz  not null default CURRENT_TIMESTAMP,
   observed_last     timestamptz  not null default CURRENT_TIMESTAMP,
-  wap_id            bigint       not null,
+  wap_id            bigint       unique not null,
   constraint        wap_id       foreign key(wap_id) references wap(id)
 );
+
+grant select, insert, update, delete on cooked to heeler_py;
+grant usage, select on sequence cooked_id_seq to heeler_py;

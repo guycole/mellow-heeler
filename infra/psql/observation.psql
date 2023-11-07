@@ -13,3 +13,6 @@ create table observation (
   wap_id      bigint       not null,
   constraint  wap_id       foreign key(wap_id) references wap(id)
 ); 
+
+grant select, insert, update, delete on observation to heeler_py;
+grant usage, select on sequence observation_id_seq to heeler_py;

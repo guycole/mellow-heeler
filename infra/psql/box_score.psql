@@ -21,5 +21,7 @@ create table box_score (
   site             varchar(16)  not null
 );
 
-create index boxscore_date on box_score(score_date);
+grant select, insert, update, delete on box_score to heeler_py;
+grant usage, select on sequence box_score_id_seq to heeler_py;
 
+create index boxscore_date on box_score(score_date);
