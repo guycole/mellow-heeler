@@ -85,6 +85,7 @@ class GeoLoc(Base):
     fix_time_ms = Column(BigInteger)
     latitude = Column(Float)
     longitude = Column(Float)
+    site = Column(String)
 
     def __eq__(self, other):
         return (
@@ -95,12 +96,13 @@ class GeoLoc(Base):
             and self.longitude == other.longitude
         )
 
-    def __init__(self, accuracy, altitude, fix_time_ms, latitude, longitude):
+    def __init__(self, accuracy:float, altitude:float, fix_time_ms:int, latitude:float, longitude:float, site:str):
         self.accuracy = accuracy
         self.altitude = altitude
         self.fix_time_ms = fix_time_ms
         self.latitude = latitude
         self.longitude = longitude
+        self.site = site
 
     def __repr__(self):
         return "<geoloc(%d, %d)>" % (self.id, self.fix_time_ms)
