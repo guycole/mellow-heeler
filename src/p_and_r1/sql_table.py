@@ -75,7 +75,6 @@ class Cooked(Base):
     def __repr__(self):
         return "<cooked(%d)>" % (self.id)
 
-
 class GeoLoc(Base):
     __tablename__ = "geoloc"
 
@@ -85,7 +84,7 @@ class GeoLoc(Base):
     fix_time_ms = Column(BigInteger)
     latitude = Column(Float)
     longitude = Column(Float)
-    site = Column(String)
+    device = Column(String)
 
     def __eq__(self, other):
         return (
@@ -94,6 +93,7 @@ class GeoLoc(Base):
             and self.fix_time_ms == other.fix_time_ms
             and self.latitude == other.latitude
             and self.longitude == other.longitude
+            and self.device == other.device
         )
 
     def __init__(
@@ -103,20 +103,20 @@ class GeoLoc(Base):
         fix_time_ms: int,
         latitude: float,
         longitude: float,
-        site: str,
+        device: str,
     ):
         self.accuracy = accuracy
         self.altitude = altitude
         self.fix_time_ms = fix_time_ms
         self.latitude = latitude
         self.longitude = longitude
-        self.site = site
+        self.device = device
 
     def __repr__(self):
         if self.id == None:
             self.id = 0
 
-        return "<geoloc(%d, %d)>" % (self.id, self.fix_time_ms)
+        return "<geoloc(%d, %d, %s)>" % (self.id, self.fix_time_ms, self.device)
 
 
 class Observation(Base):
@@ -146,12 +146,17 @@ class Wap(Base):
     capability = Column(String)
     frequency = Column(Integer)
     ssid = Column(String)
+    version = Column(Integer)
 
-    def __init__(self, bssid, capability, frequency, ssid):
+    def __init__(self, bssid, capability, frequency, ssid, version):
         self.bssid = bssid
         self.capability = capability
         self.frequency = frequency
         self.ssid = ssid
+        self.version = version
 
     def __repr__(self):
+        if self.id == None:
+            self.id = 0
+        
         return "<wap(%d, %s, %s)>" % (self.id, self.bssid, self.ssid)

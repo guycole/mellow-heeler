@@ -11,6 +11,7 @@ geoloc
   altitude
   latitude
   longitude 
+  device
 
 observation 
   geoloc
@@ -19,17 +20,17 @@ observation
   level (sig strength)
   frequency (integer)
   capability 
+  wap
 
 wap
   bssid
   ssid
   frequency
   capability
-  first_noted
-  last_noted
-  counter
+  version 
 
 how to capture wap changes? (i.e. ssid name changes)
+wap can have multiple rows w/different version
 
 daily observation population (# from site) (file uploads)
 daily raw AP samples (# from site) select for detail

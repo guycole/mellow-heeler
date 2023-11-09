@@ -12,16 +12,16 @@ create table geoloc (
   fix_time_ms      bigint      not null,
   latitude         real        not null,
   longitude        real        not null,
-  site             varchar(12) not null default 'default'
+  device           varchar(16) not null
 );
 
 grant select, insert, update, delete on geoloc to heeler_py;
 grant usage, select on sequence geoloc_id_seq to heeler_py;
 
-create index geoloc_fix_time on geoloc(fix_time_ms);
+create unique index geoloc_fix_time_device on geoloc(fix_time_ms, device);
 
 -- anderson1
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, site) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'anderson1');
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, device) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'rpi4c-anderson1');
 
 -- vallejo1
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, site) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'vallejo1');
+insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, device) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'rpi4a-vallejo1');
