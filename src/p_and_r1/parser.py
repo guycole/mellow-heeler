@@ -24,11 +24,12 @@ from sql_table import GeoLoc
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
+
 class Parser(object):
     db_engine = None
     dry_run = False
 
-    def __init__(self, db_conn:str, dry_run: bool):
+    def __init__(self, db_conn: str, dry_run: bool):
         self.db_engine = create_engine(db_conn)
         self.dry_run = dry_run
 
@@ -67,7 +68,7 @@ class Parser(object):
                 return buffer
 
         return buffer
-    
+
     def file_processor(self, file_name: str) -> int:
         status = 0
 
@@ -117,6 +118,7 @@ class Parser(object):
                 self.file_failure(target, failure_dir)
 
         print(f"success:{success_counter} failure:{failure_counter}")
+
 
 print("start parser")
 

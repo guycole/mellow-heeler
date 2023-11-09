@@ -30,11 +30,12 @@ from yaml.loader import SafeLoader
 # 			print(row)
 #
 
+
 class Parser(object):
     db_conn = None
     dry_run = False
 
-    def __init__(self, db_conn:str, dry_run: bool):
+    def __init__(self, db_conn: str, dry_run: bool):
         self.db_conn = db_conn
         self.dry_run = dry_run
 

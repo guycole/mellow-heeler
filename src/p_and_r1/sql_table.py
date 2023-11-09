@@ -96,7 +96,15 @@ class GeoLoc(Base):
             and self.longitude == other.longitude
         )
 
-    def __init__(self, accuracy:float, altitude:float, fix_time_ms:int, latitude:float, longitude:float, site:str):
+    def __init__(
+        self,
+        accuracy: float,
+        altitude: float,
+        fix_time_ms: int,
+        latitude: float,
+        longitude: float,
+        site: str,
+    ):
         self.accuracy = accuracy
         self.altitude = altitude
         self.fix_time_ms = fix_time_ms
@@ -105,6 +113,9 @@ class GeoLoc(Base):
         self.site = site
 
     def __repr__(self):
+        if self.id == None:
+            self.id = 0
+
         return "<geoloc(%d, %d)>" % (self.id, self.fix_time_ms)
 
 

@@ -14,35 +14,51 @@ from sql_table import GeoLoc
 
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import sessionmaker
 
 from typing import Dict, List
 
 from yaml.loader import SafeLoader
 
+
 class PostGres(object):
     db_engine = None
     dry_run = False
-    
+
     def __init__(self, db_engine: sqlalchemy.engine.base.Engine, dry_run: bool):
         self.db_engine = db_engine
         self.dry_run = dry_run
 
     def geoloc_insert(self, geoloc: Dict) -> GeoLoc:
-        lat = round(geoloc['latitude'], 5)
-        lng = round(geoloc['longitude'], 5)
+        lat = round(geoloc["latitude"], 5)
+        lng = round(geoloc["longitude"], 5)
 
-        candidate = GeoLoc(geoloc['accuracy'], geoloc['altitude'], geoloc['fixTimeMs'], lat, lng, geoloc['site'])
-        with Session(self.db_engine) as session:
+        candidate = GeoLoc(
+            geoloc["accuracy"],
+            geoloc["altitude"],
+            geoloc["fixTimeMs"],
+            lat,
+            lng,
+            geoloc["site"],
+        )
+
+        if self.dry_run is True:
+            print(f"skipping insert for geoloc {geoloc["fixTimeMe"]}")
+        else:
+            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+            session = Session()
+
             session.add(candidate)
             session.commit()
+            session.close()
 
         return candidate
 
-    def geoloc_select_by_site(self, site:str) -> GeoLoc:
-        if site not in ['anderson1', 'vallejo1']:
+    def geoloc_select_by_site(self, site: str) -> GeoLoc:
+        if site not in ["anderson1", "vallejo1"]:
             raise ValueError(f"invalid site:{site}")
 
-        statement = select(GeoLoc).filter_by(site = site)
+        statement = select(GeoLoc).filter_by(site=site)
 
         row = None
         with Session(self.db_engine) as session:
@@ -51,24 +67,60 @@ class PostGres(object):
                 pass
 
         return row
-    
+
     def geoloc_select_by_time(self, geoloc: Dict) -> GeoLoc:
-        statement = select(GeoLoc).filter_by(fix_time_ms = geoloc['fixTimeMs'])
+        statement = select(GeoLoc).filter_by(fix_time_ms=geoloc["fixTimeMs"])
 
-        lat = round(geoloc['latitude'], 5)
-        lng = round(geoloc['longitude'], 5)
-
-        print("xxxxxx")
+        lat = round(geoloc["latitude"], 5)
+        lng = round(geoloc["longitude"], 5)
 
         row = None
         with Session(self.db_engine) as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                if row.accuracy == geoloc['accuracy'] and row.altitude == geoloc['altitude'] and row.latitude == lat and row.longitude == lng:
+                if (
+                    row.accuracy == geoloc["accuracy"]
+                    and row.altitude == geoloc["altitude"]
+                    and row.latitude == lat
+                    and row.longitude == lng
+                ):
                     return row
 
         return None
-    
+
+    def geoloc_select_or_insert(self, geoloc: Dict) -> GeoLoc:
+        result = self.geoloc_select_by_time(geoloc)
+        if result is None:
+            result = geoloc_insert(geoloc)
+
+        return result
+
+    def wap_insert(self, wap: Dict) -> Wap:
+        candidate = Wap(wap["bssid"], wap["capability"], wap["frequency"], wap["ssid"])
+
+        if self.dry_run is True:
+            print(f"skipping insert for wap {wap["bssid"]}")
+        else:
+            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+            session = Session()
+
+            session.add(candidate)
+            session.commit()
+            session.close()
+
+        return candidate
+
+    def wap_select_by_bssid(self, bssid:str) -> Wap:
+        statement = select(Wap).filter_by(bssid=bssid)
+
+        row = None
+        with Session(self.db_engine) as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                pass
+
+        return return row
+
 
 print("start postgres")
 
@@ -89,24 +141,26 @@ if __name__ == "__main__":
 
     db_engine2 = create_engine(configuration["dbConn"])
     postgres = PostGres(db_engine2, configuration["dryRun"])
-    geosite = postgres.geoloc_select_by_site('vallejo1')
+    geosite = postgres.geoloc_select_by_site("vallejo1")
     print(type(geosite))
     print(geosite)
 
     geodict = {}
-    geodict['accuracy'] = 128.9
-    geodict['altitude'] = 0
-    geodict['fixTimeMs'] = 1626015227705
-    #geodict['fixTimeMs'] = 1629166763219
-    geodict['latitude'] = 40.4345425
-    geodict['longitude'] = -122.2845614
-    geodict['site'] = 'bogus'
-    
+    geodict["accuracy"] = 128.9
+    geodict["altitude"] = 0
+    geodict["fixTimeMs"] = 1626015227705
+    # geodict['fixTimeMs'] = 1629166763219
+    geodict["latitude"] = 40.4345425
+    geodict["longitude"] = -122.2845614
+    geodict["site"] = "bogus"
+
     geoloc = postgres.geoloc_select_by_time(geodict)
     print(geoloc)
     geoloc = postgres.geoloc_insert(geodict)
     print(geoloc)
 
+    geoloc = postgres.geoloc_select_or_insert(geodict)
+    print(geoloc)
 
 print("stop postgres")
 

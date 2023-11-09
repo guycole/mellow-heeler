@@ -11,18 +11,19 @@ from typing import Dict, List
 
 from sql_table import GeoLoc, Wap
 
-#from domain import Observatio=
-#from domain import RawSample
+# from domain import Observatio=
+# from domain import RawSample
 
 import sqlalchemy
 
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
+
 class Hound(object):
     db_engine = None
     dry_run = False
-    
+
     def __init__(self, db_engine: sqlalchemy.engine.base.Engine, dry_run: bool):
         self.db_engine = db_engine
         self.dry_run = dry_run
@@ -90,19 +91,24 @@ class Hound(object):
 
     def process_geoloc(self, geoloc: Dict) -> GeoLoc:
         # truncate for database single precision real
-        lat = round(geoloc['latitude'], 5)
-        lng = round(geoloc['longitude'], 5)
+        lat = round(geoloc["latitude"], 5)
+        lng = round(geoloc["longitude"], 5)
 
         candidate = None
-        statement = select(GeoLoc).filter_by(fix_time_ms = geoloc['fixTimeMs'])
+        statement = select(GeoLoc).filter_by(fix_time_ms=geoloc["fixTimeMs"])
         with Session(self.db_engine) as session:
             for row in session.scalars(statement):
-                if row.accuracy == geoloc['accuracy'] and row.altitude == geoloc['altitude'] and row.latitude == lat and row.longitude == lng:
+                if (
+                    row.accuracy == geoloc["accuracy"]
+                    and row.altitude == geoloc["altitude"]
+                    and row.latitude == lat
+                    and row.longitude == lng
+                ):
                     candidate = row
 
         if candidate is None:
             # fresh insert
-            candidate = GeoLoc(geoloc['accuracy'], geoloc['altitude'], geoloc['fixTimeMs'], lat, lng)
+            candidate = GeoLoc(geoloc["accuracy"], geoloc["altitude"], geoloc["fixTimeMs"], lat, lng, 'bogus')
             if self.dry_run is True:
                 print("skipping geoloc insert")
             else:
@@ -122,14 +128,19 @@ class Hound(object):
         #    return 0
 
         candidate = None
-        statement = select(Wap).filter_by(bssid = observation['bssid'])
+        statement = select(Wap).filter_by(bssid=observation["bssid"])
         with Session(self.db_engine) as session:
             for row in session.scalars(statement):
                 candidate = row
-        
+
         if candidate is None:
             # fresh insert
-            candidate = Wap(observation['bssid'], observation['capability'], observation['frequency'], observation['ssid'])
+            candidate = Wap(
+                observation["bssid"],
+                observation["capability"],
+                observation["frequency"],
+                observation["ssid"],
+            )
             if self.dry_run is True:
                 print("skipping wap insert")
             else:
@@ -138,11 +149,15 @@ class Hound(object):
                     session.commit()
         else:
             # test for changes
-            if candidate.capability != observation['capability'] or candidate.frequency != observation['frequency'] or candidate.ssid != observation['ssid']:
+            if (
+                candidate.capability != observation["capability"]
+                or candidate.frequency != observation["frequency"]
+                or candidate.ssid != observation["ssid"]
+            ):
                 # update
-                candidate.capability = observation['capability']
-                candidate.frequency = observation['frequency']
-                candidate.ssid = observation['ssid']
+                candidate.capability = observation["capability"]
+                candidate.frequency = observation["frequency"]
+                candidate.ssid = observation["ssid"]
                 if self.dry_run is True:
                     print("skipping wap update")
                 else:
@@ -159,7 +174,7 @@ class Hound(object):
         wifi = payload["wiFi"]
 
         geoloc = self.process_geoloc(geoloc)
-        # set refresh flag 
+        # set refresh flag
 
         for observation in wifi:
             self.process_observation(geoloc.id, observation)
