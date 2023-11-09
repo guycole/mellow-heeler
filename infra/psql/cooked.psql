@@ -2,6 +2,7 @@
 -- Title: cooked.psql
 -- Description: WAP appgregate
 -- 
+-- confidence = location confidence scale 1 (worst) to 10 (best)
 -- latitude/longitude = ap location
 -- observed_first = AP first observation
 -- observed_last = most recent AP observation
@@ -9,6 +10,7 @@
 --
 create table cooked (
   id                bigserial    primary key,
+  confidence        smallint     not null,
   latitude          real         not null,
   longitude         real         not null,
   note              varchar(132) not null default 'default',

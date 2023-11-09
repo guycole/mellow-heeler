@@ -46,6 +46,7 @@ class Cooked(Base):
     __tablename__ = "cooked"
 
     id = Column(Integer, primary_key=True)
+    confidence = Column(Integer)
     latitude = Column(Float)
     longitude = Column(Float)
     note = Column(String)
@@ -56,6 +57,7 @@ class Cooked(Base):
 
     def __init__(
         self,
+        confidence,
         latitude,
         longitude,
         note,
@@ -64,6 +66,7 @@ class Cooked(Base):
         observed_last,
         wap_id,
     ):
+        self.confidence = confidence
         self.latitude = latitude
         self.longitude = longitude
         self.note = note
@@ -73,6 +76,9 @@ class Cooked(Base):
         self.wap_id = wap_id
 
     def __repr__(self):
+        if self.id == None:
+            self.id = 0
+
         return "<cooked(%d)>" % (self.id)
 
 class GeoLoc(Base):
@@ -125,17 +131,20 @@ class Observation(Base):
     id = Column(Integer, primary_key=True)
     geoloc_id = Column(BigInteger)
     level = Column(Integer)
-    time_stamp = Column(DateTime)
+    fix_time_ms = Column(BigInteger)
     wap_id = Column(BigInteger)
 
-    def __init__(self, geoloc_id, level, time_stamp, wap_id):
+    def __init__(self, geoloc_id, level, fix_time_ms, wap_id):
         self.geoloc_id = geoloc_id
         self.level = level
-        self.time_stamp = time_stamp
+        self.fix_time_ms = fix_time_ms
         self.wap_id = wap_id
 
     def __repr__(self):
-        return "<observation(%d, %d)>" % (self.id, self.time_stamp)
+        if self.id == None:
+            self.id = 0
+    
+        return "<observation(%d, %d)>" % (self.id, self.fix_time_ms)
 
 
 class Wap(Base):

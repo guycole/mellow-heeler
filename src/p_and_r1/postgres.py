@@ -10,7 +10,7 @@ import typing
 import time
 import yaml
 
-from sql_table import GeoLoc, Wap
+from sql_table import Cooked, GeoLoc, Observation, Wap
 
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session, sessionmaker
@@ -28,6 +28,27 @@ class PostGres(object):
     def __init__(self, db_engine: sqlalchemy.engine.base.Engine, dry_run: bool):
         self.db_engine = db_engine
         self.dry_run = dry_run
+    
+    def cooked_insert(self, cooked: Dict) -> Cooked:
+        lat = round(cooked["latitude"], 5)
+        lng = round(cooked["longitude"], 5)
+
+        # fix time stamp
+
+        candidate = Cooked(1, cooked["latitude"], cooked["longitude"], "note", 1, cooked["fixTimeMs"], cooked["fixTimeMs"], cooked["wap_id"])
+
+        if self.dry_run is True:
+            print(f"skipping insert for cooked {cooked['fixTimeMs']}")
+        else:
+            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+            session = Session()
+
+            session.add(candidate)
+            session.commit()
+            session.close()
+
+        return candidate
+
 
     def geoloc_insert(self, geoloc: Dict) -> GeoLoc:
         lat = round(geoloc["latitude"], 5)
@@ -88,6 +109,21 @@ class PostGres(object):
             result = self.geoloc_insert(geoloc)
 
         return result
+
+    def observation_insert(self, observation: Dict) -> Wap:
+        candidate = Observation(observation["geoloc_id"], observation["level"], observation["fixTimeMs"], observation["wap_id"])
+
+        if self.dry_run is True:
+            print(f"skipping insert for observation {observation['wap_id']}")
+        else:
+            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+            session = Session()
+
+            session.add(candidate)
+            session.commit()
+            session.close()
+
+        return candidate
 
     def wap_insert(self, wap: Dict) -> Wap:
         candidate = Wap(wap["bssid"], wap["capability"], wap["frequency"], wap["ssid"], wap["version"])
@@ -175,6 +211,22 @@ if __name__ == "__main__":
     wapdict["ssid"] = "updated"
     wap = postgres.wap_select_or_insert(wapdict)
     print(wap)
+
+    obsdict = {}
+    obsdict["geoloc_id"] = 1
+    obsdict["level"] = 123
+    obsdict["fixTimeMs"] = 1629166763219
+    obsdict["wap_id"] = 1
+
+    obs = postgres.observation_insert(obsdict)
+    print(obs)
+
+    cookdict = {}
+    cookdict["latitude"] = 40.4345425
+    cookdict["longitude"] = -122.2845614
+    cookdict["fixTimeMs"] = 1629166763219
+    cookdict["wap_id"] = 1
+  
 
 print("stop postgres")
 
