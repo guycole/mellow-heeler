@@ -8,7 +8,7 @@
 -- file_population = total files uploaded
 -- refresh_flag = true, must recalculate stats
 -- score_date = date
--- site = anderson, vallejo, mobile, etc
+-- device = anderson, vallejo, android, etc
 -- 
 create table box_score (
   id               bigserial    primary key,
@@ -18,10 +18,10 @@ create table box_score (
   file_population  smallint     not null, 
   refresh_flag     boolean      not null,
   score_date       date         not null,
-  site             varchar(16)  not null
+  device           varchar(16)  not null
 );
 
 grant select, insert, update, delete on box_score to heeler_py;
 grant usage, select on sequence box_score_id_seq to heeler_py;
 
-create index boxscore_date on box_score(score_date);
+create index boxscore_date_device on box_score(score_date, device);

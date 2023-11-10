@@ -6,23 +6,17 @@
 #
 import json
 import os
-import psycopg2
 import sys
-import yaml
-
-from heeler import Heeler
-from hound import Hound
 
 from typing import List
 
+import yaml
 from yaml.loader import SafeLoader
 
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine
 
-from sql_table import GeoLoc
-
-from sqlalchemy.orm import Session
-from sqlalchemy import select
+from heeler import Heeler
+from hound import Hound
 
 
 class Parser(object):
@@ -57,19 +51,19 @@ class Parser(object):
     def file_reader(self, file_name: str) -> List[str]:
         buffer = []
 
-        with open(file_name, "r") as infile:
+        with open(file_name, "r", encoding="utf-8") as infile:
             try:
                 buffer = infile.readlines()
                 if len(buffer) < 1:
                     print(f"empty file noted: {file_name}")
-                    return buffer
             except:
                 print(f"file read error: {file_name}")
-                return buffer
 
         return buffer
 
     def file_processor(self, file_name: str) -> int:
+        print(file_name)
+
         status = 0
 
         buffer = self.file_reader(file_name)
@@ -77,8 +71,9 @@ class Parser(object):
         classifier = self.file_classifier(buffer)
 
         if classifier == "heeler_1":
-            heeler = Heeler(self.dry_run)
-            status = heeler.heeler_v1(buffer)
+            pass
+            # heeler = Heeler(self.db_engine, self.dry_run)
+            # status = heeler.heeler_v1(buffer)
         elif classifier == "hound_1":
             hound = Hound(self.db_engine, self.dry_run)
             status = hound.hound_v1(buffer)
@@ -127,11 +122,11 @@ print("start parser")
 #
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        file_name = sys.argv[1]
+        config_name = sys.argv[1]
     else:
-        file_name = "config.yaml"
+        config_name = "config.yaml"
 
-    with open(file_name, "r") as stream:
+    with open(config_name, "r", encoding="utf-8") as stream:
         try:
             configuration = yaml.load(stream, Loader=SafeLoader)
         except yaml.YAMLError as exc:

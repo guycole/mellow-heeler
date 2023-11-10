@@ -7,16 +7,39 @@
 import json
 import time
 
-from typing import List
+from postgres import PostGres
 
-# from domain import Observation
+from typing import Dict, List
+
+from sql_table import Cooked, GeoLoc, Observation, Wap
+
+
+import sqlalchemy
+
+from sqlalchemy.orm import Session
+from sqlalchemy import select
 
 
 class Heeler(object):
+    db_engine = None
     dry_run = False
+    postgres = None
 
-    def __init__(self, dry_run: bool):
+    def __init__(self, db_engine: sqlalchemy.engine.base.Engine, dry_run: bool):
+        self.db_engine = db_engine
         self.dry_run = dry_run
+        self.postgres = PostGres(self.db_engine, self.dry_run)
+
+    def process_geoloc(self, geoloc: Dict) -> GeoLoc:
+        # heeler parser v1 is always a fixed site
+        print(geoloc)
+        site = geoloc["site"]
+        if site == "anderson":
+            return postgres.geoloc_select_by_device("rpi4c-anderson1")
+        elif site == "vallejo":
+            return postgres.geoloc_select_by_device("rpi4a-vallejo1")
+        else:
+            raise Exception(f"unsupported site:{site}")
 
     def heeler_v1(self, buffer: List[str]) -> int:
         print("heeler parser v1")

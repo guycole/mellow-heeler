@@ -7,14 +7,3 @@ importDir: /Users/gsc/Documents/github/mellow-heeler/samples
 #
 dbConn: "postgresql+psycopg2://heeler_py:bogus@localhost:5432/heeler_v1"
 #
-# kill below
-#
-#
-#gzipCommand: /bin/gzip
-gzipCommand: /usr/bin/gzip
-#
-dbUserName: seagull
-dbPassWord: bogus
-dbDataBase: vocal_seagull
-dbHostName: localhost
-#

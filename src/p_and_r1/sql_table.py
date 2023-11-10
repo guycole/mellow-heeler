@@ -1,5 +1,3 @@
-import datetime
-
 from sqlalchemy import Column
 from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
 
@@ -18,7 +16,7 @@ class BoxScore(Base):
     file_population = Column(Integer)
     refresh_flag = Column(Boolean)
     score_date = Column(Date)
-    site = Column(String)
+    device = Column(String)
 
     def __init__(
         self,
@@ -28,7 +26,7 @@ class BoxScore(Base):
         file_population,
         refresh_flag,
         score_date,
-        site,
+        device,
     ):
         self.bssid_new = bssid_new
         self.bssid_total = bssid_total
@@ -36,10 +34,10 @@ class BoxScore(Base):
         self.file_population = file_population
         self.refresh_flag = refresh_flag
         self.score_date = score_date
-        self.site = site
+        self.device = device
 
     def __repr__(self):
-        return "<box_score(%d, %d)>" % (self.id, self.score_date)
+        return f"<box_score({self.id}, {self.score_date}, {self.device})>"
 
 
 class Cooked(Base):
@@ -76,10 +74,11 @@ class Cooked(Base):
         self.wap_id = wap_id
 
     def __repr__(self):
-        if self.id == None:
+        if self.id is None:
             self.id = 0
 
         return "<cooked(%d)>" % (self.id)
+
 
 class GeoLoc(Base):
     __tablename__ = "geoloc"
@@ -119,10 +118,10 @@ class GeoLoc(Base):
         self.device = device
 
     def __repr__(self):
-        if self.id == None:
+        if self.id is None:
             self.id = 0
 
-        return "<geoloc(%d, %d, %s)>" % (self.id, self.fix_time_ms, self.device)
+        return f"<geoloc({self.id}, {self.fix_time_ms}, {self.device})>"
 
 
 class Observation(Base):
@@ -141,10 +140,10 @@ class Observation(Base):
         self.wap_id = wap_id
 
     def __repr__(self):
-        if self.id == None:
+        if self.id is None:
             self.id = 0
-    
-        return "<observation(%d, %d)>" % (self.id, self.fix_time_ms)
+
+        return f"<observation({self.id}, {self.fix_time_ms})>"
 
 
 class Wap(Base):
@@ -165,7 +164,7 @@ class Wap(Base):
         self.version = version
 
     def __repr__(self):
-        if self.id == None:
+        if self.id is None:
             self.id = 0
-        
+
         return "<wap(%d, %s, %s)>" % (self.id, self.bssid, self.ssid)
