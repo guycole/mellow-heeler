@@ -37,3 +37,5 @@ daily raw AP samples (# from site) select for detail
 daily new AP observed (# from site) select for detail
 daily missing AP observed (# from site) select for detail
 daily changed AP observed (# from site) select for detail
+
+https://docs.sqlalchemy.org/en/20/orm/session_basics.html#id1

@@ -10,21 +10,23 @@ import sys
 
 from typing import List
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 import yaml
 from yaml.loader import SafeLoader
 
-from sqlalchemy import create_engine
-
 from heeler import Heeler
 from hound import Hound
+from postgres import PostGres
 
 
-class Parser(object):
-    db_engine = None
+class Parser:
+    db_conn = None
     dry_run = False
 
     def __init__(self, db_conn: str, dry_run: bool):
-        self.db_engine = create_engine(db_conn)
+        self.db_conn = db_conn
         self.dry_run = dry_run
 
     def file_classifier(self, buffer: List[str]) -> str:
@@ -61,21 +63,19 @@ class Parser(object):
 
         return buffer
 
-    def file_processor(self, file_name: str) -> int:
-        print(file_name)
-
+    def file_processor(self, file_name: str, postgres: PostGres) -> int:
         status = 0
 
         buffer = self.file_reader(file_name)
 
         classifier = self.file_classifier(buffer)
+        print(f"file:{file_name} classifier:{classifier}")
 
         if classifier == "heeler_1":
-            pass
-            # heeler = Heeler(self.db_engine, self.dry_run)
-            # status = heeler.heeler_v1(buffer)
+            heeler = Heeler(postgres)
+            status = heeler.heeler_v1(buffer)
         elif classifier == "hound_1":
-            hound = Hound(self.db_engine, self.dry_run)
+            hound = Hound(postgres)
             status = hound.hound_v1(buffer)
         elif classifier == "unknown":
             status = -1
@@ -95,6 +95,10 @@ class Parser(object):
             os.rename(file_name, failure_dir + "/" + file_name)
 
     def directory_processor(self, import_dir: str, failure_dir: str):
+        db_engine = create_engine(self.db_conn)
+        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), False)
+        # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), self.dry_run)
+
         failure_counter = 0
         success_counter = 0
 
@@ -103,7 +107,10 @@ class Parser(object):
         print(f"{len(targets)} files noted")
 
         for target in targets:
-            status = self.file_processor(target)
+            if os.path.isfile(target) is False:
+                continue
+
+            status = self.file_processor(target, postgres)
 
             if status == 0:
                 success_counter += 1

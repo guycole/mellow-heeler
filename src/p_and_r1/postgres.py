@@ -4,39 +4,32 @@
 # Development Environment: OS X 12.6.9/Python 3.11.5
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import sqlalchemy
-import sys
-import typing
 import time
-import yaml
+from typing import Dict
+
+import sqlalchemy
+from sqlalchemy import select
 
 from sql_table import BoxScore, Cooked, GeoLoc, Observation, Wap
 
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy.orm import sessionmaker
 
-from typing import Dict, List
-
-from yaml.loader import SafeLoader
-
-
-class PostGres(object):
+class PostGres:
     db_engine = None
     dry_run = False
+    Session = None
 
-    def __init__(self, db_engine: sqlalchemy.engine.base.Engine, dry_run: bool):
-        self.db_engine = db_engine
+    def __init__(self, session: sqlalchemy.orm.session.sessionmaker, dry_run: bool):
+        self.Session = session
         self.dry_run = dry_run
-        self.dry_run = False
 
-    def box_score_insert(self, fix_time_ms:int, device:str) -> BoxScore:
-        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms/1000))
+    def box_score_insert(
+        self, fresh_wap: int, fix_time_ms: int, device: str
+    ) -> BoxScore:
+        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
-        candidate = BoxScore(0, 0, 0, 0, False, tweaked_date, device)
+        candidate = BoxScore(fresh_wap, 0, 0, 1, True, tweaked_date, device)
 
-        Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-        session = Session()
+        session = self.Session()
 
         session.add(candidate)
         session.commit()
@@ -44,19 +37,55 @@ class PostGres(object):
 
         return candidate
 
-    def cooked_insert(self, cooked: Dict) -> Cooked:
-        lat = round(cooked["latitude"], 5)
-        lng = round(cooked["longitude"], 5)
+    def box_score_select(self, fix_time_ms: int, device: str) -> BoxScore:
+        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
-        tweaked_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(cooked["fixTimeMs"] / 1000))
+        statement = select(BoxScore).filter_by(score_date=tweaked_date, device=device)
 
-        candidate = Cooked(1, cooked["latitude"], cooked["longitude"], "note", 1, tweaked_time, tweaked_time, cooked["wapId"])
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                return row
+
+        return None
+
+    def box_score_update(
+        self, fresh_wap: int, fix_time_ms: int, device: str
+    ) -> BoxScore:
+        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
+
+        session = self.Session()
+        candidate = session.execute(
+            select(BoxScore).filter_by(score_date=tweaked_date, device=device)
+        ).scalar_one()
+
+        candidate.fresh_wap = candidate.fresh_wap + fresh_wap
+        candidate.observed_last = tweaked_date
+        session.commit()
+
+        return candidate
+
+    def cooked_insert(self, cooked: Dict[str, str]) -> Cooked:
+        # convert from ms to calendar date
+        tweaked_time = time.strftime(
+            "%Y-%m-%d %H:%M:%S", time.gmtime(cooked["fixTimeMs"] / 1000)
+        )
+
+        candidate = Cooked(
+            1,
+            cooked["latitude"],
+            cooked["longitude"],
+            "note",
+            1,
+            tweaked_time,
+            tweaked_time,
+            cooked["wapId"],
+        )
 
         if self.dry_run is True:
             print(f"skipping insert for cooked {cooked['fixTimeMs']}")
         else:
-            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-            session = Session()
+            session = self.Session()
 
             session.add(candidate)
             session.commit()
@@ -67,25 +96,29 @@ class PostGres(object):
     def cooked_select(self, wap_id: int) -> Cooked:
         statement = select(Cooked).filter_by(wap_id=wap_id)
 
-        row = None
-        with Session(self.db_engine) as session:
+        with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                pass
+                return row
 
-        return row
+        return None
 
-    def cooked_update(self, cooked: Dict) -> Cooked:
+    def cooked_update(self, cooked: Dict[str, str]) -> Cooked:
         # update counter and observed last
-        tweaked_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(cooked["fixTimeMs"] / 1000))
+        tweaked_time = time.strftime(
+            "%Y-%m-%d %H:%M:%S", time.gmtime(cooked["fixTimeMs"] / 1000)
+        )
 
-        session = Session(self.db_engine)
-        candidate = session.execute(select(Cooked).filter_by(wap_id=cooked['wapId'])).scalar_one()
+        session = self.Session()
+        candidate = session.execute(
+            select(Cooked).filter_by(wap_id=cooked["wapId"])
+        ).scalar_one()
+
         candidate.observed_counter = candidate.observed_counter + 1
         candidate.observed_last = tweaked_time
         session.commit()
 
-    def geoloc_insert(self, geoloc: Dict) -> GeoLoc:
+    def geoloc_insert(self, geoloc: Dict[str, str]) -> GeoLoc:
         lat = round(geoloc["latitude"], 5)
         lng = round(geoloc["longitude"], 5)
 
@@ -101,8 +134,8 @@ class PostGres(object):
         if self.dry_run is True:
             print(f"skipping insert for geoloc {geoloc['fixTimeMs']}")
         else:
-            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-            session = Session()
+            # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+            session = self.Session()
 
             session.add(candidate)
             session.commit()
@@ -113,41 +146,30 @@ class PostGres(object):
     def geoloc_select_by_device(self, device: str) -> GeoLoc:
         if device not in ["rpi4c-anderson1", "rpi4a-vallejo1"]:
             raise ValueError(f"invalid device:{device}")
-
+        
         statement = select(GeoLoc).filter_by(device=device)
 
         row = None
-        with Session(self.db_engine) as session:
+        with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
                 pass
 
         return row
 
-    def geoloc_select_by_time(self, geoloc: Dict) -> GeoLoc:
+    def geoloc_select_by_time(self, geoloc: Dict[str, str]) -> GeoLoc:
         statement = select(GeoLoc).filter_by(
             fix_time_ms=geoloc["fixTimeMs"], device=geoloc["device"]
         )
 
-        lat = round(geoloc["latitude"], 5)
-        lng = round(geoloc["longitude"], 5)
-
-        row = None
-        with Session(self.db_engine) as session:
+        with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                pass
+                return row
 
-        return row
+        return None
 
-    def geoloc_select_or_insert(self, geoloc: Dict) -> GeoLoc:
-        result = self.geoloc_select_by_time(geoloc)
-        if result is None:
-            result = self.geoloc_insert(geoloc)
-
-        return result
-
-    def observation_insert(self, observation: Dict) -> Observation:
+    def observation_insert(self, observation: Dict[str, str]) -> Observation:
         candidate = Observation(
             observation["geolocId"],
             observation["level"],
@@ -158,27 +180,28 @@ class PostGres(object):
         if self.dry_run is True:
             print(f"skipping insert for observation {observation['wap_id']}")
         else:
-            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-            session = Session()
-
+            session = self.Session()
             session.add(candidate)
             session.commit()
             session.close()
 
         return candidate
 
-    def observation_select(self, geoloc:GeoLoc, observation: Dict, wap: Wap) -> Observation:
-        statement = select(Observation).filter_by(geoloc_id=geoloc.id, fix_time_ms=geoloc.fix_time_ms, wap_id=wap.id)
+    def observation_select(self, observation: Dict[str, str]) -> Observation:
+        statement = select(Observation).filter_by(
+            geoloc_id=observation["geolocId"],
+            fix_time_ms=observation["fixTimeMs"],
+            wap_id=observation["wapId"],
+        )
 
-        row = None
-        with Session(self.db_engine) as session:
+        with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                pass
+                return row
 
-        return row
+        return None
 
-    def wap_insert(self, wap: Dict) -> Wap:
+    def wap_insert(self, wap: Dict[str, str]) -> Wap:
         candidate = Wap(
             wap["bssid"],
             wap["capability"],
@@ -190,8 +213,8 @@ class PostGres(object):
         if self.dry_run is True:
             print(f"skipping insert for wap {wap['bssid']}")
         else:
-            Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-            session = Session()
+            # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+            session = self.Session()
 
             session.add(candidate)
             session.commit()
@@ -199,11 +222,10 @@ class PostGres(object):
 
         return candidate
 
-    def wap_select(self, wap: Dict) -> Wap:
+    def wap_select(self, wap: Dict[str, str]) -> Wap:
         statement = select(Wap).filter_by(bssid=wap["bssid"]).order_by(Wap.version)
 
-        row = None
-        with Session(self.db_engine) as session:
+        with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
                 if (
@@ -215,11 +237,11 @@ class PostGres(object):
 
         return None
 
-    def wap_select_or_insert(self, wap: Dict) -> Wap:
+    def wap_select_or_insert(self, wap: Dict[str, str]) -> Wap:
         statement = select(Wap).filter_by(bssid=wap["bssid"]).order_by(Wap.version)
 
         row = None
-        with Session(self.db_engine) as session:
+        with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
                 if (
@@ -236,79 +258,6 @@ class PostGres(object):
 
         return self.wap_insert(wap)
 
-
-print("start postgres")
-
-#
-# argv[1] = configuration filename
-#
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        file_name = sys.argv[1]
-    else:
-        file_name = "config.yaml"
-
-    with open(file_name, "r") as stream:
-        try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    #    db_engine2 = create_engine(configuration["dbConn"])
-    #    postgres = PostGres(db_engine2, False)
-    # postgres = PostGres(db_engine2, configuration["dryRun"])
-
-    #    geosite = postgres.geoloc_select_by_device("rpi4a-vallejo1")
-    #    print(type(geosite))
-    #    print(geosite)
-
-    geodict = {}
-    geodict["accuracy"] = 128.9
-    geodict["altitude"] = 0
-    geodict["fixTimeMs"] = 1626015227705
-    geodict["fixTimeMs"] = 1629166763219
-    geodict["latitude"] = 40.4345425
-    geodict["longitude"] = -122.2845614
-    geodict["device"] = "rpi4c-anderson1"
-
-    #    geoloc = postgres.geoloc_select_by_time(geodict)
-    #    print(geoloc)
-    # geoloc = postgres.geoloc_insert(geodict)
-    # print(geoloc)
-
-    #    geoloc = postgres.geoloc_select_or_insert(geodict)
-    #    print(geoloc)
-
-    wapdict = {}
-    wapdict["bssid"] = "56:20:5f:fd:06:15"
-    wapdict["ssid"] = "airportthru"
-    wapdict["frequency"] = 2457
-    wapdict["capability"] = "[IBSS]"
-
-    #    wap = postgres.wap_select_by_bssid(wapdict)
-    #    print(wap)
-
-    #    wapdict["ssid"] = "updated"
-    #    wap = postgres.wap_select_or_insert(wapdict)
-    #    print(wap)
-
-    obsdict = {}
-    obsdict["geoloc_id"] = 1
-    obsdict["level"] = 123
-    obsdict["fixTimeMs"] = 1629166763219
-    obsdict["wap_id"] = 1
-
-    #    obs = postgres.observation_insert(obsdict)
-    #    print(obs)
-
-    cookdict = {}
-    cookdict["latitude"] = 40.4345425
-    cookdict["longitude"] = -122.2845614
-    cookdict["fixTimeMs"] = 1629166763219
-    cookdict["wap_id"] = 1
-
-
-print("stop postgres")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
