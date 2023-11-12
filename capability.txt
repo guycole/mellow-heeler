@@ -1,0 +1,34 @@
+
+                    capability                     
+---------------------------------------------------
+ [WPA2-PSK-CCMP][WPS][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP][ESS]
+ [WPA2-EAP-CCMP][ESS][P2P]
+ [WPA2-EAP-CCMP][ESS]
+ [WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA2-PSK-CCMP][ESS]
+ [WPA2-PSK-CCMP][WPS][ESS][P2P]
+ [IBSS]
+ [ESS]
+(11 rows)
+
+Service Set
+https://en.wikipedia.org/wiki/Service_set_(802.11_network)
+
+IBSS = Independent Basic Service Set
+communicate without a WAP (ad hoc, peer to peer)
+https://www.geeksforgeeks.org/introduction-of-independent-basic-service-set-ibss/
+
+ESS = Extended Servce Set
+
+WPS = WiFi Protected Setup
+https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup
+
+P2P (WiFi direct)
+https://en.wikipedia.org/wiki/Wi-Fi_Direct
+
+WPA2-PSK-CCMP 
+
+[WPA2-EAP-CCMP][ESS][P2P]
+[WPA2-EAP-CCMP][ESS]

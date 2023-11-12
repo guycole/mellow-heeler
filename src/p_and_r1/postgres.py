@@ -146,7 +146,7 @@ class PostGres:
     def geoloc_select_by_device(self, device: str) -> GeoLoc:
         if device not in ["rpi4c-anderson1", "rpi4a-vallejo1"]:
             raise ValueError(f"invalid device:{device}")
-        
+
         statement = select(GeoLoc).filter_by(device=device)
 
         row = None
@@ -203,7 +203,7 @@ class PostGres:
 
     def wap_insert(self, wap: Dict[str, str]) -> Wap:
         candidate = Wap(
-            wap["bssid"],
+            wap["bssid"].lower(),
             wap["capability"],
             wap["frequency"],
             wap["ssid"],
@@ -223,7 +223,9 @@ class PostGres:
         return candidate
 
     def wap_select(self, wap: Dict[str, str]) -> Wap:
-        statement = select(Wap).filter_by(bssid=wap["bssid"]).order_by(Wap.version)
+        statement = (
+            select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
+        )
 
         with self.Session() as session:
             rows = session.scalars(statement).all()
@@ -238,7 +240,9 @@ class PostGres:
         return None
 
     def wap_select_or_insert(self, wap: Dict[str, str]) -> Wap:
-        statement = select(Wap).filter_by(bssid=wap["bssid"]).order_by(Wap.version)
+        statement = (
+            select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
+        )
 
         row = None
         with self.Session() as session:

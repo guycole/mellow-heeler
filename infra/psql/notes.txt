@@ -25,7 +25,7 @@ observation
 wap
   bssid
   ssid
-  frequency
+  frequency ghz 2462 = 2.462 GHz
   capability
   version 
 
