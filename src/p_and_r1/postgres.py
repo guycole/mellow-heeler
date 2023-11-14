@@ -59,8 +59,9 @@ class PostGres:
             select(BoxScore).filter_by(score_date=tweaked_date, device=device)
         ).scalar_one()
 
-        candidate.fresh_wap = candidate.fresh_wap + fresh_wap
-        candidate.observed_last = tweaked_date
+        candidate.bssid_new = candidate.bssid_new + fresh_wap
+        candidate.file_population = candidate.file_population + 1
+        candidate.observed_last = fix_time_ms
         session.commit()
 
         return candidate
@@ -188,6 +189,7 @@ class PostGres:
         return candidate
 
     def observation_select(self, observation: Dict[str, str]) -> Observation:
+        print(observation)
         statement = select(Observation).filter_by(
             geoloc_id=observation["geolocId"],
             fix_time_ms=observation["fixTimeMs"],
@@ -202,6 +204,12 @@ class PostGres:
         return None
 
     def wap_insert(self, wap: Dict[str, str]) -> Wap:
+#        if wap["version"] > 10:
+#            raise ValueError(f"invalid version:{wap['version']}")
+        
+#        if len(wap) > 1:
+#            raise ValueError(f"invalid wap:{wap}")
+        
         candidate = Wap(
             wap["bssid"].lower(),
             wap["capability"],
@@ -240,21 +248,39 @@ class PostGres:
         return None
 
     def wap_select_or_insert(self, wap: Dict[str, str]) -> Wap:
+        print("0x0x0x0x0x0x0")
+        print(wap)
         statement = (
             select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
         )
 
         row = None
+        row2 = None
         with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
+                print(f"row version:{row.version}")
+
+                if row.capability == wap["capability"]:
+                    print("capability match")
+                if row.frequency == wap["frequency"]:
+                    print("frequency match")
+                if row.ssid == wap["ssid"]:
+                    print("ssid match")
+
                 if (
                     row.capability == wap["capability"]
                     and row.frequency == wap["frequency"]
                     and row.ssid == wap["ssid"]
                 ):
-                    return row
+                    row2 = row
+                    break
+                
 
+        print("must create new wap")
+        if row2 is not None:
+            return row2
+ 
         if row is None:
             wap["version"] = 1
         else:

@@ -67,14 +67,14 @@ class Heeler:
         temp5 = temp4.replace(".", "")
         if len(temp5) < 4:
             temp5 = temp5 + "0"
-        return temp5
+        return int(temp5)
 
     def get_level(self, buffer: str) -> int:
         # Quality=30/70  Signal level=-80 dBm
         temp1 = buffer.split(" ")
         temp2 = temp1[23]
         temp3 = temp2.split("=")
-        return temp3[1].strip()
+        return int(temp3[1].strip())
 
     def get_mode(self, buffer: str) -> int:
         # Mode:Master
@@ -84,7 +84,7 @@ class Heeler:
     def get_protocol(self, buffer: List[str]) -> str:
         # IE: IEEE 802.11i/WPA2 Version 1
         # IE: WPA Version 1
-        # print(buffer)
+        # print(buffer)        
         results = ""
         if "WPA2 Version 1" in buffer[0]:
             results = results + "WPA2"
@@ -116,35 +116,63 @@ class Heeler:
         temp = temp.strip('"')
         return temp
     
-    def write_row(self, row: Dict[str, str]) -> int:
-        print(row)
-        wap = self.postgres.wap_select_or_insert(row)
+   
+    def write_cell_dict(self, cell_dict: Dict[str, str], geoloc:GeoLoc) -> int:
+        print(cell_dict)
+
+        cell_dict["geolocId"] = geoloc.id
+        cell_dict["fixTimeMs"] = geoloc.fix_time_ms
+        cell_dict["latitude"] = geoloc.latitude
+        cell_dict["longitude"] = geoloc.longitude
+
+        if "capability" not in cell_dict:
+            # 'wXa-122-e2e1'
+            cell_dict["capability"] = "capability"
+
+        wap = self.postgres.wap_select(cell_dict)
+        if wap is None:
+            self.run_stat_bump("fresh_wap")
+            wap = self.postgres.wap_select_or_insert(cell_dict)
+
+        cell_dict["wapId"] = wap.id
+
+        observation = self.postgres.observation_select(cell_dict)
+        if observation is None:
+            self.run_stat_bump("fresh_observation")
+            observation = self.postgres.observation_insert(cell_dict)
+
+        cooked = self.postgres.cooked_select(wap.id)
+        if cooked is None:
+            self.run_stat_bump("fresh_cooked")
+            cooked = self.postgres.cooked_insert(cell_dict)
+        else:
+            print("update")
+            cooked = self.postgres.cooked_update(cell_dict)
+
         return 0
 
-    def extractor(self, buffer: List[str]) -> Dict[str, str]:
-        result = {}
+#    def extractor(self, buffer: List[str]) -> Dict[str, str]:
+#        result = {}
+#
+#        for ndx in range(1, len(buffer)):
+#            if "Address:" in buffer[ndx]:
+#                result["bssid"] = self.get_bssid(buffer[ndx])
+#            if "Cell" in buffer[ndx]:
+#                if len(result) > 1:
+#                    self.write_cell_dict(result)
+#                    result.clear()
+#            if "Encryption key" in buffer[ndx]:
+#                result["encryption"] = self.get_encryption_key(buffer[ndx])
+#            if "ESSID" in buffer[ndx]:
+#                result["ssid"] = self.get_ssid(buffer[ndx])
+#            if "Frequency:" in buffer[ndx]:
+#                result["frequency"] = self.get_frequency(buffer[ndx])
+#            if "Mode" in buffer[ndx]:
+#                result["mode"] = self.get_mode(buffer[ndx])
+#            if "WPA" in buffer[ndx]:
+#                result["capability"] = self.get_protocol(buffer[ndx : ndx + 4])
 
-        for ndx in range(1, len(buffer)):
-            if "Address:" in buffer[ndx]:
-                result["bssid"] = self.get_bssid(buffer[ndx])
-            if "Cell" in buffer[ndx]:
-                if len(result) > 1:
-                    self.write_row(result)
-                    result.clear()
-            if "Encryption key" in buffer[ndx]:
-                result["encryption"] = self.get_encryption_key(buffer[ndx])
-            if "ESSID" in buffer[ndx]:
-                result["ssid"] = self.get_ssid(buffer[ndx])
-            if "Frequency:" in buffer[ndx]:
-                result["frequency"] = self.get_frequency(buffer[ndx])
-            if "Mode" in buffer[ndx]:
-                result["mode"] = self.get_mode(buffer[ndx])
-            if "Signal level" in buffer[ndx]:
-                result["level"] = self.get_level(buffer[ndx])
-            if "WPA" in buffer[ndx]:
-                result["capability"] = self.get_protocol(buffer[ndx : ndx + 4])
-
-        self.write_row(result)
+#        self.write_cell_dict(result)
 
     def heeler_v1(self, buffer: List[str]) -> int:
         print("heeler parser v1")
@@ -152,15 +180,40 @@ class Heeler:
         payload = json.loads(buffer[0])
         geoloc1 = payload["geoLoc"]
 
-        # heeler v1 is always fixed site location
-        geoloc1 = self.geoloc_select(geoloc1, payload["zTimeMs"])
+        # heeler v1 is always fixed site location, select should never fail
+        geoloc2 = self.geoloc_select(geoloc1, payload["zTimeMs"])
 
-        self.extractor(buffer)
+        cell_dict = {}
+        for ndx in range(1, len(buffer)):
+            if "Cell" in buffer[ndx]:
+                if len(cell_dict) > 1:
+                    self.write_cell_dict(cell_dict, geoloc2)
+                    cell_dict.clear()
+            if "Address:" in buffer[ndx]:
+                # a6:6a:44:db:95:2b
+                cell_dict["bssid"] = self.get_bssid(buffer[ndx])
+            if "Frequency:" in buffer[ndx]:
+                cell_dict["frequency"] = self.get_frequency(buffer[ndx])
+            if "ESSID" in buffer[ndx]:
+                cell_dict["ssid"] = self.get_ssid(buffer[ndx])
+            if "Signal level" in buffer[ndx]:
+                cell_dict["level"] = self.get_level(buffer[ndx])
+            if "WPA" in buffer[ndx]:
+                # cell_dict["capability"] = self.get_protocol(buffer[ndx : ndx + 4])
+                cell_dict["capability"] = "capability"
 
+        self.write_cell_dict(cell_dict, geoloc2)
 
+        self.run_stat_dump()
+
+        box_score = self.postgres.box_score_select(geoloc2.fix_time_ms, geoloc2.device)
+
+        if box_score is None:
+            box_score = self.postgres.box_score_insert(self.run_stats["fresh_wap"], geoloc2.fix_time_ms, geoloc2.device)
+        else:
+            box_score = self.postgres.box_score_update(self.run_stats["fresh_wap"], geoloc2.fix_time_ms, geoloc2.device)
 
         return 0
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
