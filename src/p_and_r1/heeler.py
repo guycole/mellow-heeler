@@ -65,7 +65,7 @@ class Heeler:
         temp3 = temp2.split(":")
         temp4 = temp3[1].strip()
         temp5 = temp4.replace(".", "")
-        if len(temp5) < 4:
+        while len(temp5) < 4:
             temp5 = temp5 + "0"
         return int(temp5)
 
