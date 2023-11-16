@@ -1,5 +1,5 @@
 #
-# Title: parser1.py
+# Title: parser.py
 # Description:
 # Development Environment: OS X 12.6.9/Python 3.11.5
 # Author: G.S. Cole (guycole at gmail dot com)
@@ -30,6 +30,7 @@ class Parser:
         self.dry_run = dry_run
 
     def file_classifier(self, buffer: List[str]) -> str:
+        """discover file format, i.e. heeler_v1, hound_v1, etc"""
         file_type = "unknown"
 
         if len(buffer) == 1:

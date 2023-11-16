@@ -1,6 +1,8 @@
 --
 -- Title: wap.psql
 -- Description: all the wap
+--
+-- frequency is always 4 digits, either 2.xxx GHz or 5.xxx GHz
 -- 
 create table wap (
   id          bigserial    primary key,
