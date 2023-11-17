@@ -22,7 +22,6 @@ from postgres import PostGres
 
 
 class InformationElement:
-
     def file_reader(self, file_name: str) -> List[str]:
         buffer = []
 
@@ -38,14 +37,14 @@ class InformationElement:
 
     def service_set_identity(self, raw_item: str) -> str:
         # empty ssid returns empty string
-        #print(raw_item)
+        # print(raw_item)
 
         element_id = raw_item[0:2]
         element_length = raw_item[2:4]
 
         buffer = ""
         for ndx in range(4, len(raw_item), 2):
-            buffer += chr(int(raw_item[ndx:ndx+2], 16))
+            buffer += chr(int(raw_item[ndx : ndx + 2], 16))
 
         return buffer
 
@@ -60,7 +59,7 @@ class InformationElement:
 
     def contention_free(self, raw_item: str):
         pass
- 
+
     def traffic_indication_map(self, raw_item: str):
         pass
 
@@ -73,7 +72,7 @@ class InformationElement:
 
         buffer = ""
         for ndx in range(4, 10, 2):
-            buffer += chr(int(raw_item[ndx:ndx+2], 16))
+            buffer += chr(int(raw_item[ndx : ndx + 2], 16))
 
         return buffer
 
@@ -128,10 +127,11 @@ class InformationElement:
     def driver(self, file_name: str):
         buffer = self.file_reader(file_name)
         for ndx in range(1, len(buffer)):
-            #print(buffer[ndx])
+            # print(buffer[ndx])
 
             if buffer[ndx].startswith("                    IE: Unknown:"):
                 self.ie_classifier(buffer[ndx].strip())
+
 # 000A41545438753669326E38
 
 print("start ie")
@@ -141,10 +141,10 @@ print("start ie")
 #
 if __name__ == "__main__":
     candidate = "../../samples/1f99eb09-033d-4e99-b51f-4165762cf995"
-    #candidate = "../../samples/c1eed425-2a27-4a09-92e3-4ddd83c55c31"
+    # candidate = "../../samples/c1eed425-2a27-4a09-92e3-4ddd83c55c31"
 
     ie = InformationElement()
-    ie.driver(candidate) 
+    ie.driver(candidate)
 
 print("stop ie")
 

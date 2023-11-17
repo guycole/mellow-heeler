@@ -204,12 +204,12 @@ class PostGres:
         return None
 
     def wap_insert(self, wap: Dict[str, str]) -> Wap:
-#        if wap["version"] > 10:
-#            raise ValueError(f"invalid version:{wap['version']}")
-        
-#        if len(wap) > 1:
-#            raise ValueError(f"invalid wap:{wap}")
-        
+        #        if wap["version"] > 10:
+        #            raise ValueError(f"invalid version:{wap['version']}")
+
+        #        if len(wap) > 1:
+        #            raise ValueError(f"invalid wap:{wap}")
+
         candidate = Wap(
             wap["bssid"].lower(),
             wap["capability"],
@@ -275,12 +275,11 @@ class PostGres:
                 ):
                     row2 = row
                     break
-                
 
         print("must create new wap")
         if row2 is not None:
             return row2
- 
+
         if row is None:
             wap["version"] = 1
         else:

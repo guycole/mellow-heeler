@@ -1,16 +1,12 @@
 mellow-heeler
 =============
 
-[WarDriving](http://en.wikipedia.org/wiki/Wardriving) client for [Mellow Wombat](https://github.com/guycole/mellow-wombat).  
+[Wireless Access Point](https://en.wikipedia.org/wiki/Wireless_access_point) collection, processing and reporting applications.
 
 ## Introduction
-Mellow Heeler observes WiFi access points at predetermined intervals (default of one minute), using a dedicated [Raspberry Pi](https://www.raspberrypi.org/).  Unlike other Mellow Wombat components, Mellow Heeler is not a dedicated shelf and relies upon Mellow Wombat to provide power, database storage, geographic locaation and time information, etc.
+A Mellow Heeler client observes [wireless beacons](https://en.wikipedia.org/wiki/Beacon_frame) and shares the observation w/a Mellow Heeler backend for parsing, storage and reporting.
 
-Originally deployed on Android devices, but recent Android versions are broken for background processes.
+Fixed site Mellow Heeler collection assets use a dedicated [Raspberry Pi 4](https://www.raspberrypi.org/).  Mobile collection is performed using a [BeagleBone Black](https://www.beagleboard.org/boards/beaglebone-black) augmented w/a USB WiFi adapter such as TP Link AC1300.
 
 ## Features
-1. Autonomous collection of WiFi access points for 2.4 and 5 GHz.
-
-## Documentation
-+ [Bill of Materials](https://github.com/guycole/mellow-heeler/blob/main/dox/BOM.md)
-+ [History](https://github.com/guycole/mellow-heeler/blob/main/dox/HISTORY.md)
+1. Autonomous collection of Wireless beacons for 2.4 and 5 GHz.
