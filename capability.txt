@@ -1,3 +1,10 @@
+https://w1.fi/cgit/hostap/tree/wpa_supplicant/ctrl_iface.c?id=7b42862ac87f333b0efb0f0bae822dcdf606bc69#n2169
+static int wpa_supplicant_ctrl_iface_scan_result
+
+from iwlist.c
+case 0xdd:	/* WPA1 (and other) */
+case 0x30:	/* WPA2 */
+iw_print_ie_wpa()
 
                     capability                     
 ---------------------------------------------------
