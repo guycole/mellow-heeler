@@ -8,7 +8,7 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start move"
-cd /var/mellow-heeler
+cd /var/mellow/rawap
 aws s3 mv s3://mellow-heeler.braingang.net/anderson1 . --recursive --profile=cli_braingang
 aws s3 mv s3://mellow-heeler.braingang.net/vallejo1 . --recursive --profile=cli_braingang
 echo "end move"
