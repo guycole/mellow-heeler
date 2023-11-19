@@ -25,13 +25,13 @@ class PostGres:
         self.dry_run = dry_run
 
     def box_score_insert(
-        self, fresh_wap: int, fix_time_ms: int, device: str
+        self, fresh_wap: int, updated_wap: int, fix_time_ms: int, device: str
     ) -> BoxScore:
         """box_score row insert"""
 
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
-        candidate = BoxScore(fresh_wap, 0, 0, 1, True, tweaked_date, device)
+        candidate = BoxScore(fresh_wap, 0, updated_wap, 1, True, tweaked_date, device)
 
         session = self.Session()
 
@@ -56,7 +56,7 @@ class PostGres:
         return None
 
     def box_score_update(
-        self, fresh_wap: int, fix_time_ms: int, device: str
+        self, fresh_wap: int, updated_wap: int, fix_time_ms: int, device: str
     ) -> BoxScore:
         """box_score row update"""
 
@@ -68,6 +68,7 @@ class PostGres:
         ).scalar_one()
 
         candidate.bssid_new = candidate.bssid_new + fresh_wap
+        candidate.bssid_updated = candidate.bssid_updated + updated_wap
         candidate.file_population = candidate.file_population + 1
         candidate.observed_last = fix_time_ms
         session.commit()

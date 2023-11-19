@@ -21,6 +21,7 @@ class Heeler:
         self.run_stats["fresh_cooked"] = 0
         self.run_stats["fresh_observation"] = 0
         self.run_stats["fresh_wap"] = 0
+        self.run_stats["update_wap"] = 0
 
     def run_stat_bump(self, key: str):
         """increment a run_stat"""
@@ -212,6 +213,8 @@ class Heeler:
         if wap is None:
             self.run_stat_bump("fresh_wap")
             wap = self.postgres.wap_select_or_insert(cell_dict)
+        else:
+            self.run_stat_bump("update_wap")
 
         cell_dict["wapId"] = wap.id
 
@@ -276,15 +279,14 @@ class Heeler:
 
         if box_score is None:
             box_score = self.postgres.box_score_insert(
-                self.run_stats["fresh_wap"], geoloc2.fix_time_ms, geoloc2.device
+                self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms, geoloc2.device
             )
         else:
             box_score = self.postgres.box_score_update(
-                self.run_stats["fresh_wap"], geoloc2.fix_time_ms, geoloc2.device
+                self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms, geoloc2.device
             )
 
         return 0
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

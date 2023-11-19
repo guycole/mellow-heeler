@@ -2,16 +2,21 @@
 PostGreSQL 12.16 (heeler_v1 database)
 
 ## BOX_SCORE
-+ note 
++ one row daily and device
++ simple collection stats
 
 ## COOKED
-+ note 
++ estimated location
++ observed population
++ observed first and last time
++ and wap
 
 ## GEOLOC
-+ note 
++ for fixed sites, geographic location only
++ for mobile observations, geographic location and time stamp
 
 ## OBSERVATION
-+ note
++ map geoloc, wap, time stamp and signal level
 
 ## WAP
 + each wireless access point beacon has at least one row 
