@@ -16,7 +16,8 @@ Fixed site Mellow Heeler collection assets use a dedicated [Raspberry Pi 4](http
 3. HTML based summary of observations.
 
 ## Applications
-[1.  bin/s3-move.sh 
+[1.  bin/s3-move.sh to move collection files from AWS S3 to local 
+ 
 
 ## History
 1. Mellow Hound original WAP collector.  Based on Android, the output report is json formatted.  Sadly, modern Android makes it difficult to run background applications and this project is abandoned.  There are many legacy files, and the format is still supported as "hound_1".  Most (if not all) of these observations are 2.4 GHz and will include a GPS location and timestamp.
