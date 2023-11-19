@@ -1,11 +1,11 @@
-#
-# Title: postgres.py
-# Description:
-# Development Environment: OS X 12.6.9/Python 3.11.5
-# Author: G.S. Cole (guycole at gmail dot com)
-#
+"""mellow heeler postgresql support"""
+
+import datetime
 import time
+
 from typing import Dict
+
+import pytz
 
 import sqlalchemy
 from sqlalchemy import select
@@ -14,6 +14,8 @@ from sql_table import BoxScore, Cooked, GeoLoc, Observation, Wap
 
 
 class PostGres:
+    """mellow heeler postgresql support"""
+
     db_engine = None
     dry_run = False
     Session = None
@@ -25,6 +27,8 @@ class PostGres:
     def box_score_insert(
         self, fresh_wap: int, fix_time_ms: int, device: str
     ) -> BoxScore:
+        """box_score row insert"""
+
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
         candidate = BoxScore(fresh_wap, 0, 0, 1, True, tweaked_date, device)
@@ -38,6 +42,8 @@ class PostGres:
         return candidate
 
     def box_score_select(self, fix_time_ms: int, device: str) -> BoxScore:
+        """box_score row select"""
+
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
         statement = select(BoxScore).filter_by(score_date=tweaked_date, device=device)
@@ -52,6 +58,8 @@ class PostGres:
     def box_score_update(
         self, fresh_wap: int, fix_time_ms: int, device: str
     ) -> BoxScore:
+        """box_score row update"""
+
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
         session = self.Session()
@@ -67,6 +75,8 @@ class PostGres:
         return candidate
 
     def cooked_insert(self, cooked: Dict[str, str]) -> Cooked:
+        """cooked row insert"""
+
         # convert from ms to calendar date
         tweaked_time = time.strftime(
             "%Y-%m-%d %H:%M:%S", time.gmtime(cooked["fixTimeMs"] / 1000)
@@ -95,6 +105,8 @@ class PostGres:
         return candidate
 
     def cooked_select(self, wap_id: int) -> Cooked:
+        """cooked row select"""
+
         statement = select(Cooked).filter_by(wap_id=wap_id)
 
         with self.Session() as session:
@@ -105,21 +117,29 @@ class PostGres:
         return None
 
     def cooked_update(self, cooked: Dict[str, str]) -> Cooked:
-        # update counter and observed last
-        tweaked_time = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.gmtime(cooked["fixTimeMs"] / 1000)
-        )
+        """cooked row update"""
+
+        tweaked_seconds = cooked["fixTimeMs"] / 1000
+        tweaked_date = datetime.datetime.fromtimestamp(tweaked_seconds, pytz.utc)
+        tweaked_time = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(tweaked_seconds))
+
+        candidate = self.cooked_select(cooked["wapId"])
+        candidate.observed_counter = candidate.observed_counter + 1
+
+        # ensure first/last dates are correct
+        if candidate.observed_first > tweaked_date:
+            candidate.observed_first = tweaked_time
+        elif candidate.observed_last < tweaked_date:
+            candidate.observed_last = tweaked_time
 
         session = self.Session()
-        candidate = session.execute(
-            select(Cooked).filter_by(wap_id=cooked["wapId"])
-        ).scalar_one()
-
-        candidate.observed_counter = candidate.observed_counter + 1
-        candidate.observed_last = tweaked_time
+        session.add(candidate)
         session.commit()
+        session.close()
 
     def geoloc_insert(self, geoloc: Dict[str, str]) -> GeoLoc:
+        """geoloc row insert"""
+
         lat = round(geoloc["latitude"], 5)
         lng = round(geoloc["longitude"], 5)
 
@@ -145,6 +165,8 @@ class PostGres:
         return candidate
 
     def geoloc_select_by_device(self, device: str) -> GeoLoc:
+        """geoloc select row for a device"""
+
         if device not in ["rpi4c-anderson1", "rpi4a-vallejo1"]:
             raise ValueError(f"invalid device:{device}")
 
@@ -159,6 +181,8 @@ class PostGres:
         return row
 
     def geoloc_select_by_time(self, geoloc: Dict[str, str]) -> GeoLoc:
+        """geoloc select row for a time"""
+
         statement = select(GeoLoc).filter_by(
             fix_time_ms=geoloc["fixTimeMs"], device=geoloc["device"]
         )
@@ -171,6 +195,8 @@ class PostGres:
         return None
 
     def observation_insert(self, observation: Dict[str, str]) -> Observation:
+        """observation insert row"""
+
         candidate = Observation(
             observation["geolocId"],
             observation["level"],
@@ -189,7 +215,8 @@ class PostGres:
         return candidate
 
     def observation_select(self, observation: Dict[str, str]) -> Observation:
-        print(observation)
+        """observation select row"""
+
         statement = select(Observation).filter_by(
             geoloc_id=observation["geolocId"],
             fix_time_ms=observation["fixTimeMs"],
@@ -204,11 +231,7 @@ class PostGres:
         return None
 
     def wap_insert(self, wap: Dict[str, str]) -> Wap:
-        #        if wap["version"] > 10:
-        #            raise ValueError(f"invalid version:{wap['version']}")
-
-        #        if len(wap) > 1:
-        #            raise ValueError(f"invalid wap:{wap}")
+        """wap insert row"""
 
         candidate = Wap(
             wap["bssid"].lower(),
@@ -231,6 +254,8 @@ class PostGres:
         return candidate
 
     def wap_select(self, wap: Dict[str, str]) -> Wap:
+        """wap select row"""
+
         statement = (
             select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
         )
@@ -248,37 +273,22 @@ class PostGres:
         return None
 
     def wap_select_or_insert(self, wap: Dict[str, str]) -> Wap:
-        print("0x0x0x0x0x0x0")
-        print(wap)
+        """discover if wap exists or if not, max version for insert"""
+
         statement = (
             select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
         )
 
         row = None
-        row2 = None
         with self.Session() as session:
             rows = session.scalars(statement).all()
             for row in rows:
-                print(f"row version:{row.version}")
-
-                if row.capability == wap["capability"]:
-                    print("capability match")
-                if row.frequency == wap["frequency"]:
-                    print("frequency match")
-                if row.ssid == wap["ssid"]:
-                    print("ssid match")
-
                 if (
                     row.capability == wap["capability"]
                     and row.frequency == wap["frequency"]
                     and row.ssid == wap["ssid"]
                 ):
-                    row2 = row
-                    break
-
-        print("must create new wap")
-        if row2 is not None:
-            return row2
+                    return row
 
         if row is None:
             wap["version"] = 1

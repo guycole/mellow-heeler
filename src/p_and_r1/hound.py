@@ -1,9 +1,5 @@
-#
-# Title: hound.py
-# Description:
-# Development Environment: OS X 12.6.9/Python 3.11.5
-# Author: G.S. Cole (guycole at gmail dot com)
-#
+"""mellow heeler hound file parser and database loader"""
+
 import json
 
 from typing import List
@@ -12,6 +8,8 @@ from postgres import PostGres
 
 
 class Hound:
+    """mellow heeler hound file parser and database loader"""
+
     postgres = None
     run_stats = {}
 
@@ -23,17 +21,23 @@ class Hound:
         self.run_stats["fresh_wap"] = 0
 
     def run_stat_bump(self, key: str):
+        """increment a run_stat"""
+
         if key in self.run_stats:
             self.run_stats[key] = self.run_stats[key] + 1
         else:
             print(f"unknown run_stats key: {key}")
 
     def run_stat_dump(self):
+        """print run_stats summary"""
+
         print(
             f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
         )
 
     def hound_v1(self, buffer: List[str]) -> int:
+        """hound parser v1"""
+
         print("hound parser v1")
 
         payload = json.loads(buffer[0])
@@ -47,7 +51,7 @@ class Hound:
         if geoloc2 is None:
             geoloc2 = self.postgres.geoloc_insert(geoloc1)
         else:
-            print("duplicate geoloc")
+            # print("duplicate geoloc")
             return 0
 
         for observation1 in wifi:
@@ -72,7 +76,6 @@ class Hound:
                 self.run_stat_bump("fresh_cooked")
                 cooked = self.postgres.cooked_insert(observation1)
             else:
-                print("update")
                 cooked = self.postgres.cooked_update(observation1)
 
         self.run_stat_dump()

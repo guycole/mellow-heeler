@@ -1,3 +1,5 @@
+"""mellow heeler database table definitions"""
+
 from sqlalchemy import Column
 from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
 
@@ -7,6 +9,8 @@ Base = declarative_base()
 
 
 class BoxScore(Base):
+    """box_score table definition"""
+
     __tablename__ = "box_score"
 
     id = Column(Integer, primary_key=True)
@@ -41,6 +45,8 @@ class BoxScore(Base):
 
 
 class Cooked(Base):
+    """cooked table definition"""
+
     __tablename__ = "cooked"
 
     id = Column(Integer, primary_key=True)
@@ -81,6 +87,8 @@ class Cooked(Base):
 
 
 class GeoLoc(Base):
+    """geoloc table definition"""
+
     __tablename__ = "geoloc"
 
     id = Column(Integer, primary_key=True)
@@ -125,6 +133,8 @@ class GeoLoc(Base):
 
 
 class Observation(Base):
+    """observation table definition"""
+
     __tablename__ = "observation"
 
     id = Column(Integer, primary_key=True)
@@ -147,6 +157,8 @@ class Observation(Base):
 
 
 class Wap(Base):
+    """wap table definition"""
+
     __tablename__ = "wap"
 
     id = Column(Integer, primary_key=True)

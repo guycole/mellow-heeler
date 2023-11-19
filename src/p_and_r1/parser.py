@@ -1,9 +1,5 @@
-#
-# Title: parser.py
-# Description:
-# Development Environment: OS X 12.6.9/Python 3.11.5
-# Author: G.S. Cole (guycole at gmail dot com)
-#
+"""mellow heeler file parser and database loader"""
+
 import json
 import os
 import sys
@@ -22,6 +18,8 @@ from postgres import PostGres
 
 
 class Parser:
+    """mellow heeler file parser and database loader"""
+
     db_conn = None
     dry_run = False
 
@@ -31,6 +29,7 @@ class Parser:
 
     def file_classifier(self, buffer: List[str]) -> str:
         """discover file format, i.e. heeler_v1, hound_v1, etc"""
+
         file_type = "unknown"
 
         if len(buffer) == 1:
@@ -52,6 +51,8 @@ class Parser:
         return file_type
 
     def file_reader(self, file_name: str) -> List[str]:
+        """read a mellow heeler file into a buffer"""
+
         buffer = []
 
         with open(file_name, "r", encoding="utf-8") as infile:
@@ -65,6 +66,8 @@ class Parser:
         return buffer
 
     def file_processor(self, file_name: str, postgres: PostGres) -> int:
+        """dispatch to approprate file parser/loader"""
+
         status = 0
 
         buffer = self.file_reader(file_name)
@@ -84,18 +87,24 @@ class Parser:
         return status
 
     def file_success(self, file_name: str):
+        """file was successfully processed"""
+
         if self.dry_run is True:
             print(f"skip file delete for {file_name}")
         else:
             os.unlink(file_name)
 
     def file_failure(self, file_name: str, failure_dir: str):
+        """problem file, retain for review"""
+
         if self.dry_run is True:
             print(f"skip file move for {file_name}")
         else:
             os.rename(file_name, failure_dir + "/" + file_name)
 
     def directory_processor(self, import_dir: str, failure_dir: str):
+        """process all files in directory"""
+
         db_engine = create_engine(self.db_conn)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), False)
         # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), self.dry_run)

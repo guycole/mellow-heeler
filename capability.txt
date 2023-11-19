@@ -1,9 +1,11 @@
 https://w1.fi/cgit/hostap/tree/wpa_supplicant/ctrl_iface.c?id=7b42862ac87f333b0efb0f0bae822dcdf606bc69#n2169
 static int wpa_supplicant_ctrl_iface_scan_result
 
+https://android.googlesource.com/platform/external/wpa_supplicant_8/+/b4d426d/wpa_supplicant/ctrl_iface.c
+
 from iwlist.c
-case 0xdd:	/* WPA1 (and other) */
-case 0x30:	/* WPA2 */
+case 0xdd:	/* WPA1 (and other) */ 221
+case 0x30:	/* WPA2 */ 48
 iw_print_ie_wpa()
 
                     capability                     
@@ -16,9 +18,12 @@ iw_print_ie_wpa()
  [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
  [WPA2-PSK-CCMP][ESS]
  [WPA2-PSK-CCMP][WPS][ESS][P2P]
- [IBSS]
- [ESS]
+ [IBSS] 
+ [ESS]  
 (11 rows)
+
+every AP is a ESS?
+no obvious way iwlist(1) reports IBSS
 
 Service Set
 https://en.wikipedia.org/wiki/Service_set_(802.11_network)
@@ -50,6 +55,7 @@ IE: IEEE 802.11i/WPA2 Version 1
     Authentication Suites (1) : PSK
 
 // how to discover WPS?
+// how to discover ESS?
 
 271 | 10:0c:6b:53:5c:1e | [WPA2-PSK-CCMP][WPS][ESS]                         |      2457 | NETGEAR55                                |       1
 607 | 10:0c:6b:53:5c:1e | capability                                        |      2417 | NETGEAR55                                |       2

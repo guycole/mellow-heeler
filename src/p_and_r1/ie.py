@@ -123,6 +123,38 @@ class InformationElement:
             print(temp)
         elif temp.startswith("10"):
             print(temp)
+        elif temp.startswith("30"):
+            print(temp)
+        elif temp.startswith("DD"):
+            print(temp)
+
+    def wpa(self, raw_list: List[str]):
+        print("ryryryryy")
+
+        args = {}
+        temp = []
+        for current in raw_list:
+            temp.append(current.strip())
+
+        for ndx in temp:
+            if ndx == "IE: WPA Version 1":
+                args["wpa"] = "wpa1v1"
+            elif ndx == "IE: IEEE 802.11i/WPA2 Version 1":
+                args["wpa"] = "wpa2v1"
+            elif ndx.startswith("Group Cipher"):
+                args["group_cipher"] = ndx.split(":")[1].strip()
+            elif ndx.startswith("Pairwise Ciphers"):
+                args["pairwise_ciphers"] = ndx.split(":")[1].strip()
+            elif ndx.startswith("Authentication Suites"):
+                args["authentication_suites"] = ndx.split(":")[1].strip()
+
+        #    IE: IEEE 802.11i/WPA2 Version 1
+        #                        Group Cipher : TKIP
+        #                        Pairwise Ciphers (2) : CCMP TKIP
+        #                        Authentication Suites (1) : PSK
+
+        print(args)
+        print("ryryryryy")
 
     def driver(self, file_name: str):
         buffer = self.file_reader(file_name)
@@ -131,8 +163,13 @@ class InformationElement:
 
             if buffer[ndx].startswith("                    IE: Unknown:"):
                 self.ie_classifier(buffer[ndx].strip())
+            elif buffer[ndx].startswith(
+                "                    IE: IEEE 802.11i/WPA2 Version 1"
+            ):
+                self.wpa(buffer[ndx : ndx + 4])
+            elif buffer[ndx].startswith("                    IE: WPA Version 1"):
+                self.wpa(buffer[ndx : ndx + 4])
 
-# 000A41545438753669326E38
 
 print("start ie")
 
