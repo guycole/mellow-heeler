@@ -16,7 +16,8 @@ Fixed site Mellow Heeler collection assets use a dedicated [Raspberry Pi 4](http
 3. HTML based summary of observations.
 
 ## Applications
-[1.  bin/s3-move.sh to move collection files from AWS S3 to local 
+1.  bin/parser.sh to parse collection files and load into postgres
+1.  bin/s3-move.sh to move collection files from AWS S3 to local 
  
 
 ## History
