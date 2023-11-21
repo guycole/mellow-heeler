@@ -1,5 +1,7 @@
 """mellow heeler database table definitions"""
 
+from datetime import datetime, timezone
+
 from sqlalchemy import Column
 from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
 
@@ -85,7 +87,6 @@ class Cooked(Base):
 
         return "<cooked(%d)>" % (self.id)
 
-
 class GeoLoc(Base):
     """geoloc table definition"""
 
@@ -131,6 +132,26 @@ class GeoLoc(Base):
 
         return f"<geoloc({self.id}, {self.fix_time_ms}, {self.device})>"
 
+class LoadLog(Base):
+    """load_log table definition"""
+
+    __tablename__ = "load_log"
+
+    id = Column(Integer, primary_key=True)
+    file_name = Column(String)
+    file_type = Column(String)
+    time_stamp = Column(DateTime)
+
+    def __init__(self, file_name, file_type):
+        self.file_name = file_name
+        self.file_type = file_type
+        self.time_stamp = datetime.now(timezone.utc)
+ 
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"<load_log({self.id}, {self.file_name}, {self.file_type})>"
 
 class Observation(Base):
     """observation table definition"""
@@ -179,4 +200,4 @@ class Wap(Base):
         if self.id is None:
             self.id = 0
 
-        return "<wap(%d, %s, %s)>" % (self.id, self.bssid, self.ssid)
+        return "<wap(%d, %s, %d, %s)>" % (self.id, self.bssid, self.version, self.ssid)

@@ -3,6 +3,8 @@ static int wpa_supplicant_ctrl_iface_scan_result
 
 https://android.googlesource.com/platform/external/wpa_supplicant_8/+/b4d426d/wpa_supplicant/ctrl_iface.c
 
+compare 3e:8c:f8:f9:2b:bb 
+
 from iwlist.c
 case 0xdd:	/* WPA1 (and other) */ 221
 case 0x30:	/* WPA2 */ 48

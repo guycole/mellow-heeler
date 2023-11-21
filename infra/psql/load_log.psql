@@ -1,0 +1,16 @@
+--
+-- Title: load_log.psql
+-- Description: file load history
+--
+-- file_type i.e. heeler_v1
+-- population is quantity of observations in file
+--
+create table load_log (
+  id          bigserial    primary key,
+  file_name   varchar(48)  unique not null,
+  file_type   varchar(16)  not null,
+  time_stamp  timestamptz  not null default CURRENT_TIMESTAMP
+);
+
+grant select, insert, update, delete on load_log to heeler_py;
+grant usage, select on sequence load_log_id_seq to heeler_py;

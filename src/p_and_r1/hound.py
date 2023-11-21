@@ -51,30 +51,29 @@ class Hound:
         geoloc2 = self.postgres.geoloc_select_by_time(geoloc1)
         if geoloc2 is None:
             geoloc2 = self.postgres.geoloc_insert(geoloc1)
-        else:
-            # print("duplicate geoloc")
-            return 0
 
         for observation1 in wifi:
-            wap = self.postgres.wap_select(observation1)
-            if wap is None:
-                self.run_stat_bump("fresh_wap")
-                wap = self.postgres.wap_select_or_insert(observation1)
-            else:
-                self.run_stat_bump("update_wap")
+            wap0 = self.postgres.wap_select(observation1)
+            wap1 = self.postgres.wap_select_or_insert(observation1)
+
+            if wap0 is None:
+                if wap1.version > 1:
+                    self.run_stat_bump("update_wap")
+                else:
+                    self.run_stat_bump("fresh_wap")
 
             observation1["fixTimeMs"] = geoloc2.fix_time_ms
             observation1["geolocId"] = geoloc2.id
             observation1["latitude"] = geoloc2.latitude
             observation1["longitude"] = geoloc2.longitude
-            observation1["wapId"] = wap.id
+            observation1["wapId"] = wap1.id
 
             observation2 = self.postgres.observation_select(observation1)
             if observation2 is None:
                 self.run_stat_bump("fresh_observation")
                 observation2 = self.postgres.observation_insert(observation1)
 
-            cooked = self.postgres.cooked_select(wap.id)
+            cooked = self.postgres.cooked_select(wap1.id)
             if cooked is None:
                 self.run_stat_bump("fresh_cooked")
                 cooked = self.postgres.cooked_insert(observation1)

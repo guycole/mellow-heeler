@@ -209,24 +209,23 @@ class Heeler:
 
         cell_dict["capability"] = self.build_capability(cell_dict)
 
-        wap = self.postgres.wap_select(cell_dict)
-        if wap is None:
-            self.run_stat_bump("fresh_wap")
-            wap = self.postgres.wap_select_or_insert(cell_dict)
-        else:
-            self.run_stat_bump("update_wap")
+        wap0 = self.postgres.wap_select(cell_dict)
+        wap1= self.postgres.wap_select_or_insert(cell_dict)
 
-        cell_dict["wapId"] = wap.id
+        if wap0 is None:
+            if wap1.version > 1:
+                self.run_stat_bump("update_wap")
+            else:
+                self.run_stat_bump("fresh_wap")
+
+        cell_dict["wapId"] = wap1.id
 
         observation = self.postgres.observation_select(cell_dict)
         if observation is None:
             self.run_stat_bump("fresh_observation")
             observation = self.postgres.observation_insert(cell_dict)
-        else:
-            # skip duplicate file
-            return 0
 
-        cooked = self.postgres.cooked_select(wap.id)
+        cooked = self.postgres.cooked_select(wap1.id)
         if cooked is None:
             self.run_stat_bump("fresh_cooked")
             cooked = self.postgres.cooked_insert(cell_dict)
@@ -245,6 +244,9 @@ class Heeler:
 
         # heeler v1 is always fixed site location, select should never fail
         geoloc2 = self.geoloc_select(geoloc1, payload["zTimeMs"])
+        if geoloc2 is None:
+            print("missing geoloc site")
+            return -1
 
         cell_dict = {}
         for ndx in range(1, len(buffer)):

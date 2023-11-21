@@ -10,7 +10,7 @@ import pytz
 import sqlalchemy
 from sqlalchemy import select
 
-from sql_table import BoxScore, Cooked, GeoLoc, Observation, Wap
+from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
 
 
 class PostGres:
@@ -187,6 +187,33 @@ class PostGres:
         statement = select(GeoLoc).filter_by(
             fix_time_ms=geoloc["fixTimeMs"], device=geoloc["device"]
         )
+
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                return row
+
+        return None
+
+    def load_log_insert(self, file_name:str, file_type:str) -> LoadLog:
+        """load_log insert row"""
+
+        candidate = LoadLog(file_name, file_type)
+
+        if self.dry_run is True:
+            print(f"skipping insert for load_log {file_name}")
+        else:
+            session = self.Session()
+            session.add(candidate)
+            session.commit()
+            session.close()
+
+        return candidate
+
+    def load_log_select(self, file_name:str) -> LoadLog:
+        """load_log select row"""
+
+        statement = select(LoadLog).filter_by(file_name=file_name)
 
         with self.Session() as session:
             rows = session.scalars(statement).all()

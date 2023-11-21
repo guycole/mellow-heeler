@@ -11,5 +11,5 @@ echo "start parser"
 cd /Users/gsc/Documents/github/mellow-heeler/src/p_and_r1
 #cd /home/gsc/github/mellow-heeler/src/p_and_r1
 source venv/bin/activate
-python3 ./parser.py
+time python3 ./parser.py
 echo "end parser"

@@ -75,6 +75,11 @@ class Parser:
         classifier = self.file_classifier(buffer)
         print(f"file:{file_name} classifier:{classifier}")
 
+        load_log = postgres.load_log_select(file_name)
+        if load_log is not None:
+            print("skipping duplicate file")
+            return 0
+
         if classifier == "heeler_1":
             heeler = Heeler(postgres)
             status = heeler.heeler_v1(buffer)
@@ -83,6 +88,9 @@ class Parser:
             status = hound.hound_v1(buffer)
         elif classifier == "unknown":
             status = -1
+
+        if status == 0:
+            postgres.load_log_insert(file_name, classifier)
 
         return status
 
