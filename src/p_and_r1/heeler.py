@@ -199,8 +199,10 @@ class Heeler:
 
         return results
 
-    def write_cell_dict(self, cell_dict: Dict[str, str], geoloc: GeoLoc) -> int:
+    def write_cell_dict(self, cell_dict: Dict[str, str], geoloc: GeoLoc, load_log_id: int) -> int:
         """write parsed elements to postgresql"""
+
+        cell_dict["loadlogId"] = load_log_id
 
         cell_dict["geolocId"] = geoloc.id
         cell_dict["fixTimeMs"] = geoloc.fix_time_ms
@@ -209,23 +211,21 @@ class Heeler:
 
         cell_dict["capability"] = self.build_capability(cell_dict)
 
-        wap0 = self.postgres.wap_select(cell_dict)
-        wap1= self.postgres.wap_select_or_insert(cell_dict)
+        wap = self.postgres.wap_select_or_insert(cell_dict)
 
-        if wap0 is None:
-            if wap1.version > 1:
-                self.run_stat_bump("update_wap")
-            else:
-                self.run_stat_bump("fresh_wap")
+        if wap.insert_flag is True:
+            self.run_stat_bump("fresh_wap")
+        elif wap.update_flag is True:
+            self.run_stat_bump("update_wap")
 
-        cell_dict["wapId"] = wap1.id
+        cell_dict["wapId"] = wap.id
 
         observation = self.postgres.observation_select(cell_dict)
         if observation is None:
             self.run_stat_bump("fresh_observation")
             observation = self.postgres.observation_insert(cell_dict)
 
-        cooked = self.postgres.cooked_select(wap1.id)
+        cooked = self.postgres.cooked_select(wap.id)
         if cooked is None:
             self.run_stat_bump("fresh_cooked")
             cooked = self.postgres.cooked_insert(cell_dict)
@@ -234,7 +234,7 @@ class Heeler:
 
         return 0
 
-    def heeler_v1(self, buffer: List[str]) -> int:
+    def heeler_v1(self, buffer: List[str], load_log_id:int) -> int:
         """heeler parser v1"""
 
         print("heeler parser v1")
@@ -253,7 +253,7 @@ class Heeler:
             if "Cell" in buffer[ndx]:
                 # Cell 06 - Address: 16:D4:50:45:52:29
                 if len(cell_dict) > 1:
-                    self.write_cell_dict(cell_dict, geoloc2)
+                    self.write_cell_dict(cell_dict, geoloc2, load_log_id)
                     cell_dict.clear()
 
                 cell_dict["bssid"] = self.get_bssid(buffer[ndx])
@@ -273,20 +273,16 @@ class Heeler:
             elif buffer[ndx].startswith("                    IE: WPA Version 1"):
                 cell_dict["wpa1v1"] = self.get_wpa(buffer[ndx : ndx + 4])
 
-        self.write_cell_dict(cell_dict, geoloc2)
+        self.write_cell_dict(cell_dict, geoloc2, load_log_id)
 
         self.run_stat_dump()
 
         box_score = self.postgres.box_score_select(geoloc2.fix_time_ms, geoloc2.device)
 
         if box_score is None:
-            box_score = self.postgres.box_score_insert(
-                self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms, geoloc2.device
-            )
+            box_score = self.postgres.box_score_insert(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
         else:
-            box_score = self.postgres.box_score_update(
-                self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms, geoloc2.device
-            )
+            box_score = self.postgres.box_score_update(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
 
         return 0
 

@@ -36,7 +36,7 @@ class Hound:
             f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
         )
 
-    def hound_v1(self, buffer: List[str]) -> int:
+    def hound_v1(self, buffer: List[str], load_log_id:int) -> int:
         """hound parser v1"""
 
         print("hound parser v1")
@@ -53,27 +53,28 @@ class Hound:
             geoloc2 = self.postgres.geoloc_insert(geoloc1)
 
         for observation1 in wifi:
-            wap0 = self.postgres.wap_select(observation1)
-            wap1 = self.postgres.wap_select_or_insert(observation1)
+            wap = self.postgres.wap_select_or_insert(observation1)
 
-            if wap0 is None:
-                if wap1.version > 1:
-                    self.run_stat_bump("update_wap")
-                else:
-                    self.run_stat_bump("fresh_wap")
+            if wap.insert_flag is True:
+                self.run_stat_bump("fresh_wap")
+            elif wap.update_flag is True:
+                self.run_stat_bump("update_wap")
 
+            observation1["loadlogId"] = load_log_id
+
+            observation1["device"] = geoloc2.device
             observation1["fixTimeMs"] = geoloc2.fix_time_ms
             observation1["geolocId"] = geoloc2.id
             observation1["latitude"] = geoloc2.latitude
             observation1["longitude"] = geoloc2.longitude
-            observation1["wapId"] = wap1.id
+            observation1["wapId"] = wap.id
 
             observation2 = self.postgres.observation_select(observation1)
             if observation2 is None:
                 self.run_stat_bump("fresh_observation")
                 observation2 = self.postgres.observation_insert(observation1)
 
-            cooked = self.postgres.cooked_select(wap1.id)
+            cooked = self.postgres.cooked_select(wap.id)
             if cooked is None:
                 self.run_stat_bump("fresh_cooked")
                 cooked = self.postgres.cooked_insert(observation1)
@@ -85,13 +86,9 @@ class Hound:
         box_score = self.postgres.box_score_select(geoloc2.fix_time_ms, geoloc2.device)
 
         if box_score is None:
-            box_score = self.postgres.box_score_insert(
-                self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms, geoloc2.device
-            )
+            box_score = self.postgres.box_score_insert(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
         else:
-            box_score = self.postgres.box_score_update(
-                self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms, geoloc2.device
-            )
+            box_score = self.postgres.box_score_update(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
 
         return 0
 

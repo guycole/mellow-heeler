@@ -10,8 +10,8 @@ export PGHOST=localhost
 export PGPASSWORD=woofwoof
 export PGUSER=heeler_admin
 #
-psql $PGDATABASE -c "drop table load_log"
 psql $PGDATABASE -c "drop table observation"
+psql $PGDATABASE -c "drop table load_log"
 psql $PGDATABASE -c "drop table box_score"
 psql $PGDATABASE -c "drop table geoloc"
 psql $PGDATABASE -c "drop table cooked"

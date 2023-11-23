@@ -3,11 +3,12 @@
 import datetime
 import time
 
-from typing import Dict
+from typing import List, Dict
 
 import pytz
 
 import sqlalchemy
+from sqlalchemy import func, and_
 from sqlalchemy import select
 
 from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
@@ -24,14 +25,12 @@ class PostGres:
         self.Session = session
         self.dry_run = dry_run
 
-    def box_score_insert(
-        self, fresh_wap: int, updated_wap: int, fix_time_ms: int, device: str
-    ) -> BoxScore:
+    def box_score_insert(self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int) -> BoxScore:
         """box_score row insert"""
 
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
-        candidate = BoxScore(fresh_wap, 0, updated_wap, 1, True, tweaked_date, device)
+        candidate = BoxScore(fresh_wap, 0, updated_wap, device, 1, True, tweaked_date)
 
         session = self.Session()
 
@@ -55,17 +54,38 @@ class PostGres:
 
         return None
 
+    def box_score_select_refresh(self) -> List[BoxScore]:
+        """return all rows with active refresh flag"""
+
+        statement = select(BoxScore).filter_by(refresh_flag=True)
+        results = []
+
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                results.append(row)
+
+        return results
+
+    def box_score_refresh(self, candidate: BoxScore) -> BoxScore:
+        """box_score row refresh"""
+
+        session = self.Session()
+        session.add(candidate)
+        session.commit()
+        session.close()
+
+        return candidate
+
     def box_score_update(
-        self, fresh_wap: int, updated_wap: int, fix_time_ms: int, device: str
+        self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
     ) -> BoxScore:
         """box_score row update"""
 
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
         session = self.Session()
-        candidate = session.execute(
-            select(BoxScore).filter_by(score_date=tweaked_date, device=device)
-        ).scalar_one()
+        candidate = session.execute(select(BoxScore).filter_by(score_date=tweaked_date, device=device)).scalar_one()
 
         candidate.bssid_new = candidate.bssid_new + fresh_wap
         candidate.bssid_updated = candidate.bssid_updated + updated_wap
@@ -222,13 +242,24 @@ class PostGres:
 
         return None
 
+    def observation_count(self, start_time_ms:int, stop_time_ms:int, device:str) -> int:
+        """count observations between times"""
+
+        counter = 0
+        with self.Session() as session:
+            for row in session.query(Observation, GeoLoc).filter(Observation.geoloc_id == GeoLoc.id).filter(GeoLoc.device == device, and_(Observation.fix_time_ms>=start_time_ms, Observation.fix_time_ms<=stop_time_ms)).all():
+                counter = counter + 1
+         
+        return counter
+
     def observation_insert(self, observation: Dict[str, str]) -> Observation:
         """observation insert row"""
 
         candidate = Observation(
+            observation["fixTimeMs"],
             observation["geolocId"],
             observation["level"],
-            observation["fixTimeMs"],
+            observation["loadlogId"],
             observation["wapId"],
         )
 
@@ -316,15 +347,23 @@ class PostGres:
                     and row.frequency == wap["frequency"]
                     and row.ssid == wap["ssid"]
                 ):
+                    row.insert_flag = False
+                    row.update_flag = False
                     return row
 
         if row is None:
             wap["version"] = 1
+            insert_flag = True
+            update_flag = False
         else:
             wap["version"] = row.version + 1
+            insert_flag = False
+            update_flag = True
 
-        return self.wap_insert(wap)
-
+        result = self.wap_insert(wap)
+        result.insert_flag = insert_flag
+        result.update_flag = update_flag
+        return result
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

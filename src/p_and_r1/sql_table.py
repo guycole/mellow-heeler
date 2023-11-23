@@ -5,10 +5,15 @@ from datetime import datetime, timezone
 from sqlalchemy import Column
 from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
 
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import registry
+from sqlalchemy.ext.declarative import declared_attr
 
-Base = declarative_base()
+mapper_registry = registry()
 
+from sqlalchemy.orm import DeclarativeBase
+
+class Base(DeclarativeBase):
+    pass
 
 class BoxScore(Base):
     """box_score table definition"""
@@ -19,28 +24,28 @@ class BoxScore(Base):
     bssid_new = Column(Integer)
     bssid_total = Column(Integer)
     bssid_updated = Column(Integer)
+    device = Column(String)
     file_population = Column(Integer)
     refresh_flag = Column(Boolean)
     score_date = Column(Date)
-    device = Column(String)
 
     def __init__(
         self,
         bssid_new,
         bssid_total,
         bssid_updated,
+        device,
         file_population,
         refresh_flag,
         score_date,
-        device,
     ):
         self.bssid_new = bssid_new
         self.bssid_total = bssid_total
         self.bssid_updated = bssid_updated
+        self.device = device
         self.file_population = file_population
         self.refresh_flag = refresh_flag
         self.score_date = score_date
-        self.device = device
 
     def __repr__(self):
         return f"<box_score({self.id}, {self.score_date}, {self.device})>"
@@ -56,7 +61,7 @@ class Cooked(Base):
     latitude = Column(Float)
     longitude = Column(Float)
     note = Column(String)
-    observed_counter = Column(Integer)
+    observed_counter = Column(BigInteger)
     observed_first = Column(DateTime)
     observed_last = Column(DateTime)
     wap_id = Column(BigInteger)
@@ -159,22 +164,24 @@ class Observation(Base):
     __tablename__ = "observation"
 
     id = Column(Integer, primary_key=True)
+    fix_time_ms = Column(BigInteger)
     geoloc_id = Column(BigInteger)
     level = Column(Integer)
-    fix_time_ms = Column(BigInteger)
+    load_log_id = Column(BigInteger)
     wap_id = Column(BigInteger)
 
-    def __init__(self, geoloc_id, level, fix_time_ms, wap_id):
+    def __init__(self, fix_time_ms, geoloc_id, level, load_log_id, wap_id):
+        self.fix_time_ms = fix_time_ms
         self.geoloc_id = geoloc_id
         self.level = level
-        self.fix_time_ms = fix_time_ms
+        self.load_log_id = load_log_id
         self.wap_id = wap_id
 
     def __repr__(self):
         if self.id is None:
             self.id = 0
 
-        return f"<observation({self.id}, {self.fix_time_ms})>"
+        return f"<observation({self.id}, {self.fix_time_ms}, {self.load_log_id})>"
 
 
 class Wap(Base):

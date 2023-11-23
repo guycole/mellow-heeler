@@ -14,7 +14,7 @@ create table cooked (
   latitude          real         not null,
   longitude         real         not null,
   note              varchar(132) not null default 'default',
-  observed_counter  int          not null,
+  observed_counter  bigint       not null,
   observed_first    timestamptz  not null default CURRENT_TIMESTAMP,
   observed_last     timestamptz  not null default CURRENT_TIMESTAMP,
   wap_id            bigint       unique not null,

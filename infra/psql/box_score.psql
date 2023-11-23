@@ -5,6 +5,7 @@
 -- bssid_new = new AP discovered today
 -- bssid_total = total AP heard today
 -- bssid_updated = total AP updated today
+-- device = rpi4 anderson, vallejo, android, etc
 -- file_population = total files uploaded
 -- refresh_flag = true, must recalculate stats
 -- score_date = date
@@ -15,10 +16,10 @@ create table box_score (
   bssid_new        smallint     not null, 
   bssid_total      smallint     not null,
   bssid_updated    smallint     not null, 
+  device           varchar(16)  not null,
   file_population  smallint     not null, 
   refresh_flag     boolean      not null,
-  score_date       date         not null,
-  device           varchar(16)  not null
+  score_date       date         not null
 );
 
 grant select, insert, update, delete on box_score to heeler_py;
