@@ -199,7 +199,9 @@ class Heeler:
 
         return results
 
-    def write_cell_dict(self, cell_dict: Dict[str, str], geoloc: GeoLoc, load_log_id: int) -> int:
+    def write_cell_dict(
+        self, cell_dict: Dict[str, str], geoloc: GeoLoc, load_log_id: int
+    ) -> int:
         """write parsed elements to postgresql"""
 
         cell_dict["loadlogId"] = load_log_id
@@ -234,7 +236,7 @@ class Heeler:
 
         return 0
 
-    def heeler_v1(self, buffer: List[str], load_log_id:int) -> int:
+    def heeler_v1(self, buffer: List[str], load_log_id: int) -> int:
         """heeler parser v1"""
 
         print("heeler parser v1")
@@ -280,11 +282,22 @@ class Heeler:
         box_score = self.postgres.box_score_select(geoloc2.fix_time_ms, geoloc2.device)
 
         if box_score is None:
-            box_score = self.postgres.box_score_insert(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
+            box_score = self.postgres.box_score_insert(
+                geoloc2.device,
+                self.run_stats["fresh_wap"],
+                self.run_stats["update_wap"],
+                geoloc2.fix_time_ms,
+            )
         else:
-            box_score = self.postgres.box_score_update(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
+            box_score = self.postgres.box_score_update(
+                geoloc2.device,
+                self.run_stats["fresh_wap"],
+                self.run_stats["update_wap"],
+                geoloc2.fix_time_ms,
+            )
 
         return 0
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

@@ -8,7 +8,7 @@ from typing import List, Dict
 import pytz
 
 import sqlalchemy
-from sqlalchemy import func, and_
+from sqlalchemy import and_
 from sqlalchemy import select
 
 from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
@@ -25,7 +25,9 @@ class PostGres:
         self.Session = session
         self.dry_run = dry_run
 
-    def box_score_insert(self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int) -> BoxScore:
+    def box_score_insert(
+        self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
+    ) -> BoxScore:
         """box_score row insert"""
 
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
@@ -85,7 +87,9 @@ class PostGres:
         tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
 
         session = self.Session()
-        candidate = session.execute(select(BoxScore).filter_by(score_date=tweaked_date, device=device)).scalar_one()
+        candidate = session.execute(
+            select(BoxScore).filter_by(score_date=tweaked_date, device=device)
+        ).scalar_one()
 
         candidate.bssid_new = candidate.bssid_new + fresh_wap
         candidate.bssid_updated = candidate.bssid_updated + updated_wap
@@ -215,7 +219,7 @@ class PostGres:
 
         return None
 
-    def load_log_insert(self, file_name:str, file_type:str) -> LoadLog:
+    def load_log_insert(self, file_name: str, file_type: str) -> LoadLog:
         """load_log insert row"""
 
         candidate = LoadLog(file_name, file_type)
@@ -230,7 +234,7 @@ class PostGres:
 
         return candidate
 
-    def load_log_select(self, file_name:str) -> LoadLog:
+    def load_log_select(self, file_name: str) -> LoadLog:
         """load_log select row"""
 
         statement = select(LoadLog).filter_by(file_name=file_name)
@@ -242,15 +246,38 @@ class PostGres:
 
         return None
 
-    def observation_count(self, start_time_ms:int, stop_time_ms:int, device:str) -> int:
+    def observation_count(
+        self, start_time_ms: int, stop_time_ms: int, device: str
+    ) -> int:
         """count observations between times"""
 
-        counter = 0
+        # start_time_ms, stop_time_ms are the midnight boundaries
+        # device = target device, i.e. 'android1'
+        # return the population of observed distinct wap for the period and device
+
+        # select observation.geoloc_id, observation.fix_time_ms, observation.wap_id,
+        # geoloc.device from observation inner join geoloc on
+        # observation.geoloc_id = geoloc.id where geoloc.device = 'android1';
+
+        # TODO find the sqlalchemy equivalent and delete the kludge dictionary
+
+        kludge = {}
         with self.Session() as session:
-            for row in session.query(Observation, GeoLoc).filter(Observation.geoloc_id == GeoLoc.id).filter(GeoLoc.device == device, and_(Observation.fix_time_ms>=start_time_ms, Observation.fix_time_ms<=stop_time_ms)).all():
-                counter = counter + 1
-         
-        return counter
+            for row in (
+                session.query(Observation, GeoLoc)
+                .filter(Observation.geoloc_id == GeoLoc.id)
+                .filter(
+                    GeoLoc.device == device,
+                    and_(
+                        Observation.fix_time_ms >= start_time_ms,
+                        Observation.fix_time_ms <= stop_time_ms,
+                    ),
+                )
+                .all()
+            ):
+                kludge[row[0].wap_id] = "kludge"
+
+        return len(kludge)
 
     def observation_insert(self, observation: Dict[str, str]) -> Observation:
         """observation insert row"""
@@ -364,6 +391,7 @@ class PostGres:
         result.insert_flag = insert_flag
         result.update_flag = update_flag
         return result
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

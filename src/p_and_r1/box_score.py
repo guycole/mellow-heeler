@@ -1,18 +1,11 @@
 """utility to refresh box_score table values"""
 
-import json
-import os
 import sys
 
 import calendar
 import datetime
-import time
-
-from typing import Dict
 
 import pytz
-
-from typing import List
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -20,12 +13,11 @@ from sqlalchemy.orm import sessionmaker
 import yaml
 from yaml.loader import SafeLoader
 
-from heeler import Heeler
-from hound import Hound
 from postgres import PostGres
 from sql_table import BoxScore
 
-class BoxScore:
+
+class BoxScoreFixer:
     """utility to refresh box_score table values"""
 
     db_conn = None
@@ -35,13 +27,31 @@ class BoxScore:
         self.db_conn = db_conn
         self.dry_run = dry_run
 
-    def daily_bissid_total(self, candidate:BoxScore, postgres:PostGres) -> int:
-        """calculate bssid total"""
+    def daily_bissid_total(self, candidate: BoxScore, postgres: PostGres) -> int:
+        """calculate distinct wap total for day"""
 
-        start_time = datetime.datetime(candidate.score_date.year, candidate.score_date.month, candidate.score_date.day, 0, 0, 0, 0, pytz.utc)
+        start_time = datetime.datetime(
+            candidate.score_date.year,
+            candidate.score_date.month,
+            candidate.score_date.day,
+            0,
+            0,
+            0,
+            0,
+            pytz.utc,
+        )
         start_time_ms = 1000 * calendar.timegm(start_time.timetuple())
 
-        stop_time = datetime.datetime(candidate.score_date.year, candidate.score_date.month, candidate.score_date.day, 23, 59, 59, 999999, pytz.utc)
+        stop_time = datetime.datetime(
+            candidate.score_date.year,
+            candidate.score_date.month,
+            candidate.score_date.day,
+            23,
+            59,
+            59,
+            999999,
+            pytz.utc,
+        )
         stop_time_ms = 1000 * calendar.timegm(stop_time.timetuple())
 
         return postgres.observation_count(start_time_ms, stop_time_ms, candidate.device)
@@ -49,7 +59,7 @@ class BoxScore:
     def execute(self):
         """process all box_score rows"""
 
-        db_engine = create_engine(self.db_conn)
+        db_engine = create_engine(self.db_conn, echo=True)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), False)
         # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), self.dry_run)
 
@@ -61,6 +71,7 @@ class BoxScore:
             box_score.refresh_flag = False
 
             postgres.box_score_refresh(box_score)
+
 
 print("start box_score")
 
@@ -79,11 +90,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    driver = BoxScore(configuration["dbConn"], configuration["dryRun"])
+    driver = BoxScoreFixer(configuration["dbConn"], configuration["dryRun"])
     driver.execute()
-
-#    bsdr = BoxScoreDateRange()
-#    bsdr.date_range(1698813722129)
 
 print("stop box_score")
 

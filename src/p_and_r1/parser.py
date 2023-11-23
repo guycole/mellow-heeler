@@ -112,7 +112,7 @@ class Parser:
     def directory_processor(self, import_dir: str, failure_dir: str):
         """process all files in directory"""
 
-        db_engine = create_engine(self.db_conn)
+        db_engine = create_engine(self.db_conn, echo=False)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), False)
         # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), self.dry_run)
 

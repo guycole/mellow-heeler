@@ -36,7 +36,7 @@ class Hound:
             f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
         )
 
-    def hound_v1(self, buffer: List[str], load_log_id:int) -> int:
+    def hound_v1(self, buffer: List[str], load_log_id: int) -> int:
         """hound parser v1"""
 
         print("hound parser v1")
@@ -86,9 +86,19 @@ class Hound:
         box_score = self.postgres.box_score_select(geoloc2.fix_time_ms, geoloc2.device)
 
         if box_score is None:
-            box_score = self.postgres.box_score_insert(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
+            box_score = self.postgres.box_score_insert(
+                geoloc2.device,
+                self.run_stats["fresh_wap"],
+                self.run_stats["update_wap"],
+                geoloc2.fix_time_ms,
+            )
         else:
-            box_score = self.postgres.box_score_update(geoloc2.device, self.run_stats["fresh_wap"], self.run_stats['update_wap'], geoloc2.fix_time_ms)
+            box_score = self.postgres.box_score_update(
+                geoloc2.device,
+                self.run_stats["fresh_wap"],
+                self.run_stats["update_wap"],
+                geoloc2.fix_time_ms,
+            )
 
         return 0
 

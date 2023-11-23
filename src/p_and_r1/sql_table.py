@@ -12,8 +12,10 @@ mapper_registry = registry()
 
 from sqlalchemy.orm import DeclarativeBase
 
+
 class Base(DeclarativeBase):
     pass
+
 
 class BoxScore(Base):
     """box_score table definition"""
@@ -92,6 +94,7 @@ class Cooked(Base):
 
         return "<cooked(%d)>" % (self.id)
 
+
 class GeoLoc(Base):
     """geoloc table definition"""
 
@@ -137,6 +140,7 @@ class GeoLoc(Base):
 
         return f"<geoloc({self.id}, {self.fix_time_ms}, {self.device})>"
 
+
 class LoadLog(Base):
     """load_log table definition"""
 
@@ -151,12 +155,13 @@ class LoadLog(Base):
         self.file_name = file_name
         self.file_type = file_type
         self.time_stamp = datetime.now(timezone.utc)
- 
+
     def __repr__(self):
         if self.id is None:
             self.id = 0
 
         return f"<load_log({self.id}, {self.file_name}, {self.file_type})>"
+
 
 class Observation(Base):
     """observation table definition"""
