@@ -12,12 +12,12 @@ iw_print_ie_wpa()
 
                     capability                     
 ---------------------------------------------------
- [WPA2-PSK-CCMP][WPS][ESS]
+ [WPA2-PSK-CCMP][WPS][ESS]                            test01
  [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP][ESS]
- [WPA2-EAP-CCMP][ESS][P2P]
+ [WPA2-EAP-CCMP][ESS][P2P]                            test02
  [WPA2-EAP-CCMP][ESS]
  [WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]
- [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]    test04
  [WPA2-PSK-CCMP][ESS]
  [WPA2-PSK-CCMP][WPS][ESS][P2P]
  [IBSS] 
@@ -78,7 +78,7 @@ IE: IEEE 802.11i/WPA2 Version 1
     Authentication Suites (1) : PSK
 
  11 | 3c:8c:f8:f9:2b:bb | capability                                        |      2412 | TRENDnet740_QCDJ                         |       1
- 52 | 3c:8c:f8:f9:2b:bb | [WPA2-EAP-CCMP][ESS]                              |      2412 | TRENDnet740_QCDJ                         |       2
+ 52 | 3c:8c:f8:f9:2b:bb | [WPA2-EAP-CCMP][ESS]                              |      2412 |                          |       2
  Encryption key:on
  Mode:Master
 IE: IEEE 802.11i/WPA2 Version 1
@@ -142,3 +142,70 @@ IE: IEEE 802.11i/WPA2 Version 1
     Authentication Suites (1) : PSK
 
 weirdo wXa-122-e2e1
+
+original hound (android) capability strings
+
+                        capability                         
+-----------------------------------------------------------
+ [ESS]
+ [ESS][P2P]
+ [IBSS]
+ [WEP][ESS]
+ [WEP][IBSS]
+ [WPA-?][ESS]
+ [WPA-EAP+PSK-CCMP+TKIP][WPA2-EAP+PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP+TKIP][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP+TKIP][WPS][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP][ESS]
+ [WPA-EAP-CCMP][WPA2-EAP-CCMP][ESS]
+ [WPA-EAP-CCMP][WPA2-EAP-CCMP][WPS][ESS]
+ [WPA-EAP-TKIP][WPA2-EAP-CCMP][ESS]
+ [WPA-PSK-CCMP+TKIP][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP-preauth][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP-preauth][WPS][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]  //test04
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS]
+ [WPA-PSK-CCMP][WPS][ESS]
+ [WPA-PSK-TKIP][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP-preauth][WPS][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP][WPS][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-TKIP][ESS]
+ [WPA-PSK-TKIP][WPS][ESS]
+ [WPA2--CCMP][ESS]
+ [WPA2-?][ESS]
+ [WPA2-EAP-CCMP-preauth][ESS]
+ [WPA2-EAP-CCMP][ESS]                // test02
+ [WPA2-EAP-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP+TKIP-preauth][ESS]
+ [WPA2-PSK-CCMP+TKIP][ESS]           // test03
+ [WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA2-PSK-CCMP-preauth][ESS]
+ [WPA2-PSK-CCMP][ESS]                // test01
+ [WPA2-PSK-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP][IBSS]
+ [WPA2-EAP-CCMP-preauth][ESS]
+ [WPA2-EAP-CCMP][ESS]
+ [WPA2-EAP-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP+TKIP-preauth][ESS]
+ [WPA2-PSK-CCMP+TKIP][ESS]
+ [WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA2-PSK-CCMP-preauth][ESS]
+ [WPA2-PSK-CCMP][ESS]
+ [WPA2-PSK-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP][IBSS]
+ [WPA2-PSK-CCMP][WPS-AUTH][ESS][P2P]
+ [WPA2-PSK-CCMP][WPS-PBC][ESS]
+ [WPA2-PSK-CCMP][WPS-PBC][ESS][P2P]
+ [WPA2-PSK-CCMP][WPS][ESS]
+ [WPA2-PSK-CCMP][WPS][ESS][P2P]
+ [WPA2-PSK-TKIP-preauth][ESS]
+ [WPA2-PSK-TKIP][ESS]
+ [WPA2-PSK-][ESS]
+ [WPS][ESS]

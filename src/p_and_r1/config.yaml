@@ -1,7 +1,11 @@
 # dryRun true is parse only, not load database and not delete/move files
-dryRun: true
+dryRun: false
+# processed files
+#successDir: /Users/gsc/Documents/github/mellow-heeler/success
+successDir: /var/mellow/heeler-success
 # problem files
-failureDir: /Users/gsc/Documents/github/mellow-heeler/failures
+#failureDir: /Users/gsc/Documents/github/mellow-heeler/failure
+failureDir: /var/mellow/heeler-failure
 # raw files to process
 #importDir: /Users/gsc/Documents/github/mellow-heeler/samples
 importDir: /var/mellow/rawap

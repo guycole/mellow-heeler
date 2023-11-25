@@ -21,11 +21,9 @@ class BoxScoreFixer:
     """utility to refresh box_score table values"""
 
     db_conn = None
-    dry_run = False
-
-    def __init__(self, db_conn: str, dry_run: bool):
+ 
+    def __init__(self, db_conn: str):
         self.db_conn = db_conn
-        self.dry_run = dry_run
 
     def daily_bissid_total(self, candidate: BoxScore, postgres: PostGres) -> int:
         """calculate distinct wap total for day"""
@@ -60,9 +58,8 @@ class BoxScoreFixer:
         """process all box_score rows"""
 
         db_engine = create_engine(self.db_conn, echo=True)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), False)
-        # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), self.dry_run)
-
+        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+ 
         box_score_rows = postgres.box_score_select_refresh()
         for box_score in box_score_rows:
             population = self.daily_bissid_total(box_score, postgres)
@@ -90,7 +87,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    driver = BoxScoreFixer(configuration["dbConn"], configuration["dryRun"])
+    driver = BoxScoreFixer(configuration["dbConn"])
     driver.execute()
 
 print("stop box_score")

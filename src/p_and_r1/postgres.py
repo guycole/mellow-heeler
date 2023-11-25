@@ -18,12 +18,10 @@ class PostGres:
     """mellow heeler postgresql support"""
 
     db_engine = None
-    dry_run = False
     Session = None
 
-    def __init__(self, session: sqlalchemy.orm.session.sessionmaker, dry_run: bool):
+    def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
-        self.dry_run = dry_run
 
     def box_score_insert(
         self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
@@ -118,14 +116,11 @@ class PostGres:
             cooked["wapId"],
         )
 
-        if self.dry_run is True:
-            print(f"skipping insert for cooked {cooked['fixTimeMs']}")
-        else:
-            session = self.Session()
+        session = self.Session()
 
-            session.add(candidate)
-            session.commit()
-            session.close()
+        session.add(candidate)
+        session.commit()
+        session.close()
 
         return candidate
 
@@ -177,15 +172,12 @@ class PostGres:
             geoloc["device"],
         )
 
-        if self.dry_run is True:
-            print(f"skipping insert for geoloc {geoloc['fixTimeMs']}")
-        else:
-            # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-            session = self.Session()
+        # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+        session = self.Session()
 
-            session.add(candidate)
-            session.commit()
-            session.close()
+        session.add(candidate)
+        session.commit()
+        session.close()
 
         return candidate
 
@@ -224,13 +216,10 @@ class PostGres:
 
         candidate = LoadLog(file_name, file_type)
 
-        if self.dry_run is True:
-            print(f"skipping insert for load_log {file_name}")
-        else:
-            session = self.Session()
-            session.add(candidate)
-            session.commit()
-            session.close()
+        session = self.Session()
+        session.add(candidate)
+        session.commit()
+        session.close()
 
         return candidate
 
@@ -290,13 +279,10 @@ class PostGres:
             observation["wapId"],
         )
 
-        if self.dry_run is True:
-            print(f"skipping insert for observation {observation['wap_id']}")
-        else:
-            session = self.Session()
-            session.add(candidate)
-            session.commit()
-            session.close()
+        session = self.Session()
+        session.add(candidate)
+        session.commit()
+        session.close()
 
         return candidate
 
@@ -327,15 +313,12 @@ class PostGres:
             wap["version"],
         )
 
-        if self.dry_run is True:
-            print(f"skipping insert for wap {wap['bssid']}")
-        else:
-            # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-            session = self.Session()
+        # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
+        session = self.Session()
 
-            session.add(candidate)
-            session.commit()
-            session.close()
+        session.add(candidate)
+        session.commit()
+        session.close()
 
         return candidate
 

@@ -93,13 +93,13 @@ class Parser:
 
         return status
 
-    def file_success(self, file_name: str):
+    def file_success(self, file_name: str, success_dir: str):
         """file was successfully processed"""
 
         if self.dry_run is True:
-            print(f"skip file delete for {file_name}")
+            print(f"skip file move for {file_name}")
         else:
-            os.unlink(file_name)
+            os.rename(file_name, success_dir + "/" + file_name)
 
     def file_failure(self, file_name: str, failure_dir: str):
         """problem file, retain for review"""
@@ -109,12 +109,11 @@ class Parser:
         else:
             os.rename(file_name, failure_dir + "/" + file_name)
 
-    def directory_processor(self, import_dir: str, failure_dir: str):
+    def directory_processor(self, import_dir: str, failure_dir: str, success_dir: str):
         """process all files in directory"""
 
         db_engine = create_engine(self.db_conn, echo=False)
-        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), False)
-        # postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False), self.dry_run)
+        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
         failure_counter = 0
         success_counter = 0
@@ -131,7 +130,7 @@ class Parser:
 
             if status == 0:
                 success_counter += 1
-                self.file_success(target)
+                self.file_success(target, success_dir)
             else:
                 failure_counter += 1
                 self.file_failure(target, failure_dir)
@@ -157,7 +156,11 @@ if __name__ == "__main__":
             print(exc)
 
     parser = Parser(configuration["dbConn"], configuration["dryRun"])
-    parser.directory_processor(configuration["importDir"], configuration["failureDir"])
+    parser.directory_processor(
+        configuration["importDir"],
+        configuration["failureDir"],
+        configuration["successDir"],
+    )
 
 print("stop parser")
 
