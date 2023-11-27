@@ -4,3 +4,16 @@ Debian 10 buster
 https://ostechnix.com/install-tp-link-ac600-archer-t2u-nano-wifi-usb-adapter-in-linux/
 
 timedatectl set-timezone GMT
+
+{
+    "wiFi": [{"bssid":"e8:ba:70:30:31:e2", "ssid":"Tehama-County-Public", "level":-85, "frequency":2462, "capability":"[WPA2-PSK-CCMP][ESS]"}],
+    "project": "heeler", "version": 2, "zTime": 1234567890, "device": "device1-site1",
+    "geoLoc":{"fixTimeMs":1629166763219, "longitude":-122.2835223, "latitude":40.3702153, "accuracy":87.6, "altitude":0}
+}
+
+wiFi = list of AP beacon observations, zero to many
+project = heeler
+version = json version
+zTime = observation time stamps, epoch seconds
+device = collection device and optional site location
+geoLoc = optional geographic location stanza
