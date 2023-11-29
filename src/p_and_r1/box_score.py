@@ -21,7 +21,7 @@ class BoxScoreFixer:
     """utility to refresh box_score table values"""
 
     db_conn = None
- 
+
     def __init__(self, db_conn: str):
         self.db_conn = db_conn
 
@@ -59,7 +59,7 @@ class BoxScoreFixer:
 
         db_engine = create_engine(self.db_conn, echo=True)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
- 
+
         box_score_rows = postgres.box_score_select_refresh()
         for box_score in box_score_rows:
             population = self.daily_bissid_total(box_score, postgres)

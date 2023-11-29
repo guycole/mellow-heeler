@@ -22,7 +22,7 @@ class Reporter:
     """utility to refresh box_score table values"""
 
     db_conn = None
- 
+
     def __init__(self, db_conn: str):
         self.db_conn = db_conn
 
@@ -60,7 +60,7 @@ class Reporter:
 
         db_engine = create_engine(self.db_conn, echo=True)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
- 
+
         box_score_rows = postgres.box_score_select_refresh()
         for box_score in box_score_rows:
             population = self.daily_bissid_total(box_score, postgres)
@@ -91,9 +91,10 @@ if __name__ == "__main__":
 #    driver = Reporter(configuration["dbConn"])
 #    driver.execute()
 
-environment = jinja2.Environment()
-template = environment.from_string("Hello, {{ name }}!")
-template.render(name="World")
+environment = jinja2.Environment(loader=jinja2.PackageLoader("p_and_r1", "templates"), autoescape=jinja2.select_autoescape())
+
+#template = environment.from_string("Hello, {{ name }}!")
+#template.render(name="World")
 
 print("stop report")
 
