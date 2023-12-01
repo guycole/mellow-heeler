@@ -1,14 +1,24 @@
 # dryRun true is parse only, not load database and not delete/move files
 dryRun: false
+#
 # processed files
 #successDir: /Users/gsc/Documents/github/mellow-heeler/success
 successDir: /var/mellow/heeler-success
+#
 # problem files
 #failureDir: /Users/gsc/Documents/github/mellow-heeler/failure
 failureDir: /var/mellow/heeler-failure
+#
 # raw files to process
 #importDir: /Users/gsc/Documents/github/mellow-heeler/samples
 importDir: /var/mellow/rawap
 #
+# HTML output from report
+reportDir: /Users/gsc/Documents/github/mellow-heeler/src/web1
+#
+# Root URL of report
+baseUrl: "http://braingang.net/mellow-heeler"
+#
+# database connection
 dbConn: "postgresql+psycopg2://heeler_py:bogus@localhost:5432/heeler_v1"
 #
