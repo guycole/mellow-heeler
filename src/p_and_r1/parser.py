@@ -4,7 +4,7 @@ import json
 import os
 import sys
 
-from typing import List
+from typing import Dict, List
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -93,6 +93,33 @@ class Parser:
 
         return status
 
+    def file_time_extractor(self, candidates:List[str]) -> Dict[str, str]:
+        """extract observation timestamp from file"""
+
+        results = {}
+
+        for file_name in candidates:
+            if os.path.isfile(file_name) is False:
+                continue
+
+            buffer = self.file_reader(file_name)
+
+            classifier = self.file_classifier(buffer)
+            # print(f"file:{file_name} classifier:{classifier}")
+
+            if classifier == "heeler_1":
+                heeler = Heeler(None)
+                time_stmap_ms = heeler.heeler_v1_get_timestamp(buffer)
+            elif classifier == "hound_1":
+                hound = Hound(None)
+                time_stamp_ms = hound.hound_v1_get_timestamp(buffer)
+            elif classifier == "unknown":
+                continue
+
+            results[file_name] = time_stamp_ms            
+
+        return results
+
     def file_success(self, file_name: str, success_dir: str):
         """file was successfully processed"""
 
@@ -122,15 +149,28 @@ class Parser:
         targets = os.listdir(".")
         print(f"{len(targets)} files noted")
 
+#        lastlast = 0
+
+#        raw_files_and_times = self.file_time_extractor(targets)
+#        sorted_files_and_times = {k: v for k, v in sorted(raw_files_and_times.items(), key=lambda item: item[1])}
+#        for target in sorted_files_and_times:
+#            print(f"{target}:{sorted_files_and_times[target]}")
+
+#            if lastlast <= sorted_files_and_times[target]:
+#                lastlast = sorted_files_and_times[target]
+#            else:
+#                raise Exception("bogus")
+
         for target in targets:
             if os.path.isfile(target) is False:
                 continue
 
+            status = -1
             status = self.file_processor(target, postgres)
 
             if status == 0:
                 success_counter += 1
-                self.file_success(target, success_dir)
+#                self.file_success(target, success_dir)
             else:
                 failure_counter += 1
                 self.file_failure(target, failure_dir)

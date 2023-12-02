@@ -11,19 +11,40 @@ import pytz
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from typing import Dict, List
+
 import yaml
 from yaml.loader import SafeLoader
 
 from postgres import PostGres
 from sql_table import BoxScore
 
+
+class DailyRow:
+    bssid_new = None
+    bssid_total = None
+    bssid_updated = None
+    device = None
+    file_population = None
+    score_date = None
+
+    def __init__(self, args: BoxScore):
+        self.bssid_new = args.bssid_new
+        self.bssid_total = args.bssid_total
+        self.bssid_updated = args.bssid_updated
+        self.device = args.device
+        self.file_population = args.file_population
+        self.score_date = args.score_date
+
+
 class YearRow:
     caption = None
     href = None
 
-    def __init__(self, base_url:str, year: int):
+    def __init__(self, base_url: str, year: int):
         self.caption = str(year)
         self.href = f"{base_url}/{self.caption}.html"
+
 
 class Reporter:
     """utility to create static HTML report"""
@@ -32,18 +53,47 @@ class Reporter:
     db_conn = None
     report_dir = None
 
-    def __init__(self, base_url: str, report_dir:str, db_conn: str):
+    def __init__(self, base_url: str, report_dir: str, db_conn: str):
         self.base_url = base_url
         self.report_dir = report_dir
         self.db_conn = db_conn
 
-    def write_index(self, environment: jinja2.environment.Environment):
-        """write index.html"""
-        date_time_stamp = datetime.datetime.utcnow()
-        formatted_date_time = date_time_stamp.strftime('%Y-%b-%d %H:%M:%S')
+    def get_years(self) -> List[int]:
+        """return all known years"""
+
+        years = [2020, 2021, 2022, 2023]
+        return years
+
+    def write_year(self, environment: jinja2.environment.Environment, year: int):
+        """write each daily box score for year"""
+
+        range_limit = 366 if calendar.isleap(year) else 365
+        new_years_day = datetime.date(year, 1, 1).toordinal()
 
         rows = []
-        years = [2020, 2021, 2022, 2023]
+        for ndx in range(range_limit):
+            desired_ordinal = new_years_day + int(ndx)
+            target_date = datetime.date.fromordinal(desired_ordinal)
+            box_score = BoxScore(11, 22, 33, "device-vallejo", 44, False, target_date)
+            rows.append(DailyRow(box_score))
+
+        template = environment.get_template("year.jinja")
+
+        content = template.render(daily_list=rows, year=year)
+
+        out_filename = f"{self.report_dir}/{year}.html"
+        with open(out_filename, mode="w", encoding="utf-8") as message:
+            message.write(content)
+
+    def write_index(
+        self, environment: jinja2.environment.Environment, years: List[int]
+    ):
+        """write index.html"""
+
+        date_time_stamp = datetime.datetime.utcnow()
+        formatted_date_time = date_time_stamp.strftime("%Y-%b-%d %H:%M:%S")
+
+        rows = []
 
         for ndx in years:
             rows.append(YearRow(self.base_url, ndx))
@@ -61,10 +111,15 @@ class Reporter:
 
         db_engine = create_engine(self.db_conn, echo=True)
         postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        years = self.get_years()
 
         environment = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 
-        self.write_index(environment)
+        self.write_index(environment, years)
+
+        for ndx in years:
+            self.write_year(environment, ndx)
+
 
 print("start report")
 
@@ -83,7 +138,9 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    driver = Reporter(configuration["baseUrl"], configuration["reportDir"], configuration["dbConn"])
+    driver = Reporter(
+        configuration["baseUrl"], configuration["reportDir"], configuration["dbConn"]
+    )
     driver.execute()
 
 print("stop report")

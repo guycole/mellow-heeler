@@ -145,6 +145,12 @@ class Heeler:
 
         return 0
 
+    def heeler_v1_get_timestamp(self, buffer: List[str]) -> int:
+        """return file timestamp"""
+
+        payload = json.loads(buffer[0])
+        return payload["zTimeMs"]
+
     def heeler_v1(self, buffer: List[str], load_log_id: int) -> int:
         """heeler parser v1"""
 

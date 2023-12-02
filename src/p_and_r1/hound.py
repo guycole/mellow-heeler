@@ -36,6 +36,13 @@ class Hound:
             f"cooked: {self.run_stats['fresh_cooked']} observation: {self.run_stats['fresh_observation']} wap: {self.run_stats['fresh_wap']}"
         )
 
+    def hound_v1_get_timestamp(self, buffer: List[str]) -> int:
+        """return file timestamp"""
+
+        payload = json.loads(buffer[0])
+        geoloc = payload["geoLoc"]
+        return geoloc['fixTimeMs']
+
     def hound_v1(self, buffer: List[str], load_log_id: int) -> int:
         """hound parser v1"""
 
