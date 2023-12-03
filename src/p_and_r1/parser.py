@@ -170,7 +170,7 @@ class Parser:
 
             if status == 0:
                 success_counter += 1
-#                self.file_success(target, success_dir)
+                self.file_success(target, success_dir)
             else:
                 failure_counter += 1
                 self.file_failure(target, failure_dir)

@@ -61,11 +61,17 @@ class Reporter:
     def get_years(self) -> List[int]:
         """return all known years"""
 
-        years = [2020, 2021, 2022, 2023]
+        years = []
+        for ndx in range(2021, 2025):
+          years.append(ndx)
+
         return years
 
     def write_year(self, environment: jinja2.environment.Environment, year: int):
         """write each daily box score for year"""
+
+        db_engine = create_engine(self.db_conn, echo=False)
+        postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
         range_limit = 366 if calendar.isleap(year) else 365
         new_years_day = datetime.date(year, 1, 1).toordinal()
@@ -74,8 +80,11 @@ class Reporter:
         for ndx in range(range_limit):
             desired_ordinal = new_years_day + int(ndx)
             target_date = datetime.date.fromordinal(desired_ordinal)
-            box_score = BoxScore(11, 22, 33, "device-vallejo", 44, False, target_date)
-            rows.append(DailyRow(box_score))
+
+            candidates = postgres.box_score_select_daily(target_date)
+            if len(candidates) > 0:
+                for row in candidates:
+                    rows.append(DailyRow(row))
 
         template = environment.get_template("year.jinja")
 
@@ -94,7 +103,6 @@ class Reporter:
         formatted_date_time = date_time_stamp.strftime("%Y-%b-%d %H:%M:%S")
 
         rows = []
-
         for ndx in years:
             rows.append(YearRow(self.base_url, ndx))
 

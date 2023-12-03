@@ -54,6 +54,20 @@ class PostGres:
 
         return None
 
+    def box_score_select_daily(self, target_date: str) -> List[BoxScore]:
+        """return all rows for a specific date"""
+
+        statement = select(BoxScore).filter_by(score_date=target_date).order_by(BoxScore.device)
+
+        results = []
+
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                results.append(row)
+
+        return results
+
     def box_score_select_refresh(self) -> List[BoxScore]:
         """return all rows with active refresh flag"""
 

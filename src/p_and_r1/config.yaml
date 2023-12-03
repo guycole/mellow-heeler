@@ -14,7 +14,8 @@ failureDir: /var/mellow/heeler-failure
 importDir: /var/mellow/rawap
 #
 # HTML output from report
-reportDir: /Users/gsc/Documents/github/mellow-heeler/src/web1
+#reportDir: /Users/gsc/Documents/github/mellow-heeler/web
+reportDir: /var/mellow/heeler-web
 #
 # Root URL of report
 baseUrl: "http://braingang.net/mellow-heeler"

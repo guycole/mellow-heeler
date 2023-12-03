@@ -8,6 +8,7 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start web copy" 
-cd /Users/gsc/Documents/github/mellow-heeler/src
-aws s3 cp web1/* s3://braingang.net/mellow-heeler/ --profile=cli_braingang
+cd /var/mellow/heeler-web
+aws s3 cp . s3://braingang.net/mellow-heeler --recursive --profile=cli_braingang
 echo "end web copy" 
+#
