@@ -21,9 +21,11 @@ Fixed site Mellow Heeler collection assets use a dedicated [Raspberry Pi 4](http
 
 ## Applications
 1.  bin/box_score.sh updates box_score.bssid_total for days w/refresh_flag = true
+1.  bin/full_cycle.sh performs full downlowd, parse and report cycle
 1.  bin/parser.sh to parse collection files and load into postgres
 1.  bin/reporter.sh creates static HTML reporting files
 1.  bin/s3-move.sh to move collection files from AWS S3 to local 
+1.  bin/web-copy.sh to move report HTML files from local to AWS S3
  
 ## History
 1. Mellow Hound original WAP collector.  Based on Android, the output report is json formatted.  Sadly, modern Android makes it difficult to run background applications and this project is abandoned.  There are many legacy files, and the format is still supported as "hound_1".  Most (if not all) of these observations are 2.4 GHz and will include a GPS location and timestamp.  It turns out that if stationary, the GPS time stamp does not update so this was not a good choice for observation time.
