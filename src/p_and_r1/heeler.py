@@ -174,6 +174,7 @@ class Heeler:
                     cell_dict.clear()
 
                 cell_dict["bssid"] = self.get_bssid(buffer[ndx])
+                cell_dict["ssid"] = ""
             elif "ESSID" in buffer[ndx]:
                 # ESSID:"Gate K"
                 cell_dict["ssid"] = self.get_ssid(buffer[ndx])
