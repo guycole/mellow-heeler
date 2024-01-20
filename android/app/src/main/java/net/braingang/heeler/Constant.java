@@ -42,6 +42,9 @@ public class Constant {
   public static final String OK = "OK";
   public static final String UNKNOWN = "Unknown";
 
+  public static final Float ONE_KILOMETER = 1000.0f;
+  public static final Long ONE_MINUTE = 60 * 1000L;
+
   // MenuActivity
   public static final String INTENT_ACTION_ABOUT = "INTENT_ACTION_ABOUT";
   public static final String INTENT_ACTION_ALARM = "INTENT_ACTION_ALARM";

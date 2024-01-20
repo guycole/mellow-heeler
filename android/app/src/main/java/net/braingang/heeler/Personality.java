@@ -1,5 +1,7 @@
 package net.braingang.heeler;
 
+import android.app.PendingIntent;
+
 import com.google.android.gms.location.LocationResult;
 
 public class Personality {
@@ -8,6 +10,7 @@ public class Personality {
      *
      */
     public static LocationResult locationResult;
+    public static PendingIntent geoLocPending;
 
     /*
     public static String AwsAccessKey = "bogus";
