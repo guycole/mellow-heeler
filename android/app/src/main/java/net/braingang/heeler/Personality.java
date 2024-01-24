@@ -11,6 +11,8 @@ public class Personality {
      */
     public static LocationResult locationResult;
     public static PendingIntent geoLocPending;
+    // true services should exit
+    public static boolean gracefulExit = false;
 
     /*
     public static String AwsAccessKey = "bogus";

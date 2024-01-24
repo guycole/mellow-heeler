@@ -2,9 +2,6 @@ package net.braingang.heeler;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.Intent;
 import android.content.Context;
 import android.location.Criteria;
@@ -30,17 +27,6 @@ public class GeoLocService extends IntentService {
 
     public static final float GEO_MIN_DISTANCE = Constant.ONE_KILOMETER;
     public static final long GEO_MIN_TIME = Constant.ONE_MINUTE;
-
-    /*
-    public static final long BLE_SCAN_DURATION = 3333L;
-
-    private Boolean bleScanComplete = false;
-    private Handler bleScanHandler = new Handler();
-
-    private FileFacade fileFacade = new FileFacade();
-    private Observation observation;
-    private UserPreferenceHelper userPreferenceHelper = new UserPreferenceHelper();
-*/
 
     public GeoLocService() {
         super("GeoLocService");
