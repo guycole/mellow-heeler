@@ -1,118 +1,135 @@
 package net.braingang.heeler;
 
-import android.Manifest;
-import android.os.Bundle;
-import android.util.Log;
-
-import android.app.AlarmManager;
-
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
-import pub.devrel.easypermissions.EasyPermissions;
+import java.util.ArrayList;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String LOG_TAG = MainActivity.class.getName();
 
-    public static final int PERMISSION_REQUEST = 12321;
-    public static final int PERMISSION_REQUEST_BACKGROUND_LOCATION = 1234321;
+    private boolean runFlag;
 
-    //LocationManager locationManager;
-    String provider;
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<String>();
+    private ArrayList<String> permissions = new ArrayList<String>();
+
+    private final static int ALL_PERMISSIONS_RESULT = 101;
+    HeelerService heelerService;
+
+    private void setRunMode(boolean flag) {
+        Log.d("heeler", "set run mode");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.i(LOG_TAG, "onCreate");
-
         setContentView(R.layout.activity_main);
 
-        Button buttonStart = (Button) findViewById(R.id.button_start);
-        buttonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(LOG_TAG, "onClick");
+        permissions.add(ACCESS_FINE_LOCATION);
+        permissions.add(ACCESS_COARSE_LOCATION);
+
+        permissionsToRequest = findUnAskedPermissions(permissions);
+        //get the permissions we have asked for before but are not granted..
+        //we will store this in a global list to access later.
+
+
+        Button button_start = (Button) findViewById(R.id.button_start);
+        button_start.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View vv) {
+                setRunMode(true);
             }
         });
 
-        Button buttonStop = (Button) findViewById(R.id.button_stop);
-        buttonStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(LOG_TAG, "onClick");
+        Button button_stop = (Button) findViewById(R.id.button_stop);
+        button_stop.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View vv) {
+                setRunMode(false);
             }
         });
-
-        Button buttonUpload = (Button) findViewById(R.id.button_upload);
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(LOG_TAG, "onClick");
-                //DataBaseHelper.startUploadService(this);
-            }
-        });
-
-        requestLocationPermission();
-
-        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //provider = locationManager.getBestProvider(new Criteria(), false);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
+        ArrayList<String> result = new ArrayList<String>();
 
-        Log.i(LOG_TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(LOG_TAG, "onResume");
-
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        if (api.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
-            Log.i(LOG_TAG, "Google API noted");
-        } else {
-            Log.e(LOG_TAG, "Google API missing");
+        for (String perm:wanted) {
+           if (!hasPermission(perm)) {
+                result.add(perm);
+            }
         }
+
+        return result;
     }
 
+    private boolean hasPermission(String permission) {
+        if (canMakeSmores()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+            }
+        }
+
+        return true;
+    }
+
+    private boolean canMakeSmores() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.i(LOG_TAG, "onRequestPermissonsResult");
+        Log.d("heeler", "aaa");
+        switch (requestCode) {
 
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
+            case ALL_PERMISSIONS_RESULT:
+                for (String perms : permissionsToRequest) {
+                    if (!hasPermission(perms)) {
+                        permissionsRejected.add(perms);
+                    }
+                }
 
-    //@AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
-    public void requestLocationPermission() {
-        Log.i(LOG_TAG, "requestLocationPermission");
+                Log.d("heeler", "bbb");
 
-        String[] perms = {
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.CHANGE_WIFI_STATE,
-        };
+                if (permissionsRejected.size() > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                            Log.d("heeler", "perms perms perms");
+                            /*
+                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                requestPermissions(permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
+                                            }
+                                        }
+                                    });
+                            return;
 
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            Toast.makeText(this, "permission noted", Toast.LENGTH_SHORT).show();
-        } else {
-            EasyPermissions.requestPermissions(this, "grant all the things", PERMISSION_REQUEST, perms);
+                             */
+                        }
+                    }
+
+                }
+
+                break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //heelerService.stopListener();
+    }
 }
+
+//https://www.digitalocean.com/community/tutorials/android-location-api-tracking-gps
