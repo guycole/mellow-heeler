@@ -1,0 +1,37 @@
+{"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1736031721571, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
+RAWBUFFER
+wlan0     Scan completed :
+          Cell 01 - Address: 6C:CD:D6:2A:62:06
+                    Channel:6
+                    Frequency:2.437 GHz (Channel 6)
+                    Quality=44/70  Signal level=-66 dBm  
+                    Encryption key:on
+                    ESSID:"braingang2_2GEXT"
+                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 9 Mb/s
+                              18 Mb/s; 36 Mb/s; 54 Mb/s
+                    Bit Rates:6 Mb/s; 12 Mb/s; 24 Mb/s; 48 Mb/s
+                    Mode:Master
+                    Extra:tsf=0000000000000000
+                    Extra: Last beacon: 3404530ms ago
+                    IE: Unknown: 0010627261696E67616E67325F3247455854
+                    IE: Unknown: 010882848B961224486C
+                    IE: Unknown: 030106
+                    IE: Unknown: 32040C183060
+                    IE: Unknown: 0706555320010B14
+                    IE: Unknown: 33082001020304050607
+                    IE: Unknown: 33082105060708090A0B
+                    IE: Unknown: 050401020018
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : CCMP
+                        Pairwise Ciphers (1) : CCMP
+                        Authentication Suites (1) : PSK
+                    IE: Unknown: DD310050F204104A000110104400010210470010FB08076B59DE970F343D32C91CB4EDB5103C0001011049000600372A000120
+                    IE: Unknown: 2A0104
+                    IE: Unknown: 2D1AEC0117FFFF0000000000000000000000000000000C0000000000
+                    IE: Unknown: 3D1606000500000000000000000000000000000000000000
+                    IE: Unknown: 7F080100000000000000
+                    IE: Unknown: DD180050F2020101800003A4000027A4000042435E0062322F00
+                    IE: Unknown: DD07000C4307000000
+                    IE: Unknown: 0706555320010B10
+                    IE: Unknown: DD880050F204104A0001101044000102103B00010310470010FB08076B59DE970F343D32C91CB4EDB51021000D4E4554474541522C20496E632E10230006455836313230102400064558363132301042000D344433433133374241423137431054000800060050F20400011011000645583631323010080002218C103C0001011049000600372A000120
+
