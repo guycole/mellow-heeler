@@ -21,9 +21,9 @@ class Converter(object):
 
     def get_preamble(self) -> typing.Dict:
         geo_loc = {}
-        geo_loc['site'] = 'vallejo'
-        geo_loc['latitude'] = 38.1085
-        geo_loc['longitude'] = -122.2680
+        geo_loc['site'] = 'anderson'
+        geo_loc['latitude'] = 44.30
+        geo_loc['longitude'] = -122.17
 
         preamble = {}
         preamble['wifi'] = []
