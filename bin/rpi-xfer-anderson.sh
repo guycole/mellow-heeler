@@ -8,6 +8,6 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 echo "start transfer"
-cd /home/gsc/github/mellow-heeler
-aws s3 mv aws_export s3://mellow-heeler.braingang.net/anderson1 --profile=heeler-rpi --recursive
+cd /home/gsc/Documents/github/mellow-heeler
+aws s3 mv aws-export s3://mellow-heeler.braingang.net/anderson1 --profile=wombat01 --recursive
 echo "end transfer"
