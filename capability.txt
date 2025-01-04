@@ -1,0 +1,211 @@
+https://w1.fi/cgit/hostap/tree/wpa_supplicant/ctrl_iface.c?id=7b42862ac87f333b0efb0f0bae822dcdf606bc69#n2169
+static int wpa_supplicant_ctrl_iface_scan_result
+
+https://android.googlesource.com/platform/external/wpa_supplicant_8/+/b4d426d/wpa_supplicant/ctrl_iface.c
+
+compare 3e:8c:f8:f9:2b:bb 
+
+from iwlist.c
+case 0xdd:	/* WPA1 (and other) */ 221
+case 0x30:	/* WPA2 */ 48
+iw_print_ie_wpa()
+
+                    capability                     
+---------------------------------------------------
+ [WPA2-PSK-CCMP][WPS][ESS]                            test01
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP][ESS]
+ [WPA2-EAP-CCMP][ESS][P2P]                            test02
+ [WPA2-EAP-CCMP][ESS]
+ [WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]    test04
+ [WPA2-PSK-CCMP][ESS]
+ [WPA2-PSK-CCMP][WPS][ESS][P2P]
+ [IBSS] 
+ [ESS]  
+(11 rows)
+
+every AP is a ESS?
+no obvious way iwlist(1) reports IBSS
+
+Service Set
+https://en.wikipedia.org/wiki/Service_set_(802.11_network)
+
+IBSS = Independent Basic Service Set
+communicate without a WAP (ad hoc, peer to peer)
+https://www.geeksforgeeks.org/introduction-of-independent-basic-service-set-ibss/
+
+ESS = Extended Servce Set
+
+WPS = WiFi Protected Setup
+https://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup
+
+P2P (WiFi direct)
+https://en.wikipedia.org/wiki/Wi-Fi_Direct
+
+WPA2-PSK-CCMP 
+
+[WPA2-EAP-CCMP][ESS][P2P]
+[WPA2-EAP-CCMP][ESS]
+
+ 379 | 0c:ea:c9:d0:37:20 | capability                                        |      2462 | ATTWIMZwjA                               |       2
+ 357 | 0c:ea:c9:d0:37:20 | [WPA2-PSK-CCMP][WPS][ESS]                         |      2462 | ATTWIMZwjA                               |       1
+
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : CCMP
+    Pairwise Ciphers (1) : CCMP
+    Authentication Suites (1) : PSK
+
+// how to discover WPS?
+// how to discover ESS?
+
+271 | 10:0c:6b:53:5c:1e | [WPA2-PSK-CCMP][WPS][ESS]                         |      2457 | NETGEAR55                                |       1
+607 | 10:0c:6b:53:5c:1e | capability                                        |      2417 | NETGEAR55                                |       2
+
+  68 | 20:f3:75:5e:d3:80 | capability                                        |      2417 | ATT8u6i2n8                               |       3
+  73 | 20:f3:75:5e:d3:80 | capability                                        |      2447 | ATT8u6i2n8                               |       4
+  64 | 20:f3:75:5e:d3:80 | [WPA2-PSK-CCMP][WPS][ESS]                         |      2462 | ATT8u6i2n8                               |       2
+ 551 | 20:f3:75:5e:d3:80 | capability                                        |      2412 | ATT8u6i2n8                               |       7
+   9 | 20:f3:75:5e:d3:80 | capability                                        |      2452 | ATT8u6i2n8                               |       1
+ 175 | 20:f3:75:5e:d3:80 | capability                                        |      2422 | ATT8u6i2n8                               |       6
+ 169 | 20:f3:75:5e:d3:80 | [WPA2-PSK-CCMP][WPS][ESS]                         |      2412 | ATT8u6i2n8                               |       5
+
+Encryption key:on
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : CCMP
+    Pairwise Ciphers (1) : CCMP
+    Authentication Suites (1) : PSK
+
+ 11 | 3c:8c:f8:f9:2b:bb | capability                                        |      2412 | TRENDnet740_QCDJ                         |       1
+ 52 | 3c:8c:f8:f9:2b:bb | [WPA2-EAP-CCMP][ESS]                              |      2412 |                          |       2
+ Encryption key:on
+ Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : TKIP
+    Pairwise Ciphers (1) : CCMP
+    Authentication Suites (1) : 802.1x
+
+28 | 3e:8c:f8:f9:2b:bb | capability                                        |      2412 | Gate K                                   |       1
+51 | 3e:8c:f8:f9:2b:bb | [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]      |      2412 | Gate K                                   |       2
+Encryption key:on
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : TKIP
+    Pairwise Ciphers (2) : CCMP TKIP
+    Authentication Suites (1) : PSK
+IE: WPA Version 1
+    Group Cipher : TKIP
+    Pairwise Ciphers (2) : CCMP TKIP
+    Authentication Suites (1) : PSK
+
+ 336 | 42:94:ed:1f:8f:c8 | capability                                        |      2427 |                                          |       1
+ 461 | 42:94:ed:1f:8f:c8 | [WPA2-PSK-CCMP][ESS]                              |      2452 |                                          |       2
+
+419 | 64:09:ac:9d:3c:fb | capability                                        |      2422 | Alcatel_linkzone 2_4802_2.4GHz           |       2
+338 | 64:09:ac:9d:3c:fb | [WPA2-PSK-CCMP+TKIP][WPS][ESS]                    |      2462 | Alcatel_linkzone 2_4802_2.4GHz           |       1
+Encryption key:on
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : TKIP
+    Pairwise Ciphers (2) : CCMP TKIP
+    Authentication Suites (1) : PSK
+
+431 | 80:2a:a8:d7:ec:1e | capability                                        |      2412 |                                          |       4
+269 | 80:2a:a8:d7:ec:1e | capability                                        |      2437 |                                          |       1
+302 | 80:2a:a8:d7:ec:1e | capability                                        |      2462 |                                          |       2
+361 | 80:2a:a8:d7:ec:1e | [WPA2-PSK-CCMP][ESS]                              |      2452 |                                          |       3
+Encryption key:on
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : CCMP
+    Pairwise Ciphers (1) : CCMP
+    Authentication Suites (1) : PSK
+
+321 | 84:16:f9:59:ab:23 | [WPA2-PSK-CCMP][WPS][ESS]                         |      2462 | OmniCam                                  |       1
+328 | 84:16:f9:59:ab:23 | capability                                        |      2412 | OmniCam                                  |       2
+Encryption key:on
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : CCMP
+    Pairwise Ciphers (1) : CCMP
+    Authentication Suites (1) : PSK
+
+ 187 | b0:95:75:64:4b:72 | [WPA2-PSK-CCMP][ESS]                              |      2462 | MIBREW                                   |       2
+ 327 | b0:95:75:64:4b:72 | capability                                        |      2412 | MIBREW                                   |       3
+  65 | b0:95:75:64:4b:72 | [WPA2-PSK-CCMP][ESS]                              |      2437 | MIBREW                                   |       1
+Encryption key:on
+Mode:Master
+IE: IEEE 802.11i/WPA2 Version 1
+    Group Cipher : CCMP
+    Pairwise Ciphers (1) : CCMP
+    Authentication Suites (1) : PSK
+
+weirdo wXa-122-e2e1
+
+original hound (android) capability strings
+
+                        capability                         
+-----------------------------------------------------------
+ [ESS]
+ [ESS][P2P]
+ [IBSS]
+ [WEP][ESS]
+ [WEP][IBSS]
+ [WPA-?][ESS]
+ [WPA-EAP+PSK-CCMP+TKIP][WPA2-EAP+PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP+TKIP][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP+TKIP][WPS][ESS]
+ [WPA-EAP-CCMP+TKIP][WPA2-EAP-CCMP][ESS]
+ [WPA-EAP-CCMP][WPA2-EAP-CCMP][ESS]
+ [WPA-EAP-CCMP][WPA2-EAP-CCMP][WPS][ESS]
+ [WPA-EAP-TKIP][WPA2-EAP-CCMP][ESS]
+ [WPA-PSK-CCMP+TKIP][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP-preauth][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP-preauth][WPS][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]  //test04
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS]
+ [WPA-PSK-CCMP][WPS][ESS]
+ [WPA-PSK-TKIP][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP-preauth][WPS][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-CCMP][WPS][ESS]
+ [WPA-PSK-TKIP][WPA2-PSK-TKIP][ESS]
+ [WPA-PSK-TKIP][WPS][ESS]
+ [WPA2--CCMP][ESS]
+ [WPA2-?][ESS]
+ [WPA2-EAP-CCMP-preauth][ESS]
+ [WPA2-EAP-CCMP][ESS]                // test02
+ [WPA2-EAP-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP+TKIP-preauth][ESS]
+ [WPA2-PSK-CCMP+TKIP][ESS]           // test03
+ [WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA2-PSK-CCMP-preauth][ESS]
+ [WPA2-PSK-CCMP][ESS]                // test01
+ [WPA2-PSK-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP][IBSS]
+ [WPA2-EAP-CCMP-preauth][ESS]
+ [WPA2-EAP-CCMP][ESS]
+ [WPA2-EAP-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP+TKIP-preauth][ESS]
+ [WPA2-PSK-CCMP+TKIP][ESS]
+ [WPA2-PSK-CCMP+TKIP][WPS][ESS]
+ [WPA2-PSK-CCMP-preauth][ESS]
+ [WPA2-PSK-CCMP][ESS]
+ [WPA2-PSK-CCMP][ESS][P2P]
+ [WPA2-PSK-CCMP][IBSS]
+ [WPA2-PSK-CCMP][WPS-AUTH][ESS][P2P]
+ [WPA2-PSK-CCMP][WPS-PBC][ESS]
+ [WPA2-PSK-CCMP][WPS-PBC][ESS][P2P]
+ [WPA2-PSK-CCMP][WPS][ESS]
+ [WPA2-PSK-CCMP][WPS][ESS][P2P]
+ [WPA2-PSK-TKIP-preauth][ESS]
+ [WPA2-PSK-TKIP][ESS]
+ [WPA2-PSK-][ESS]
+ [WPS][ESS]

@@ -47,11 +47,6 @@ class Converter(object):
          #   for line in buffer:
   #              outfile.write(buffer)
 
-#with open("shopping_memo.txt", "w") as f:
-#    for i in range(len(shopping_list)):
-#        item = shopping_list[i] + "\n"
-#        f.write(str(i+1) + ": " + item)
-
     def execute(self, file_name: str):
         with open(file_name, "r") as infile:
             try:
@@ -94,5 +89,3 @@ print("stop collection")
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***
-
-#{"wiFi":[{"key":"value"}],"geoLoc":{"site":"vallejo", "latitude":12.34, "longitude":123.45}, "project":"heeler","version":1, "platform":"rpi", "zTimeMs": 12345}
