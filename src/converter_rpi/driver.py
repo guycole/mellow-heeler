@@ -16,20 +16,34 @@ import yaml
 from yaml.loader import SafeLoader
 
 class Converter(object):
+    def __init__(self, export_dir, site, host):
+        self.export_dir = export_dir
+        self.host = host
+        self.site = site
+
     def get_filename(self) -> str:
-        return "%s/%s" % (export_dir, str(uuid.uuid4()))
+        return "%s/%s" % (self.export_dir, str(uuid.uuid4()))
 
     def get_preamble(self) -> typing.Dict:
         geo_loc = {}
-        geo_loc['site'] = 'anderson'
-        geo_loc['latitude'] = 44.30
-        geo_loc['longitude'] = -122.17
+        geo_loc['site'] = self.site
+
+        if site == "anderson":
+            geo_loc['latitude'] = 44.30
+            geo_loc['longitude'] = -122.17
+        elif site == "vallejo":
+            geo_loc['latitude'] = 44.30
+            geo_loc['longitude'] = -122.17
+        else:
+            print("unsupported site:", self.site)
+            geo_loc['latitude'] = 0.0
+            geo_loc['longitude'] = 0.0
 
         preamble = {}
         preamble['wifi'] = []
         preamble['project'] = 'heeler'
         preamble['version'] = 1
-        preamble['platform'] = 'rpi'
+        preamble['platform'] = self.host
         preamble['zTimeMs'] = round(time.time() * 1000)
 
         preamble['geoLoc'] = geo_loc
@@ -37,15 +51,11 @@ class Converter(object):
         return preamble
     
     def converter(self, buffer:typing.List[str]):
-#        print(buffer)
-
         with open(self.get_filename(), "w") as outfile:
             json_preamble = json.dumps(self.get_preamble())
             outfile.write(json_preamble + "\n")
             outfile.write("RAWBUFFER\n")
             outfile.writelines(buffer)
-         #   for line in buffer:
-  #              outfile.write(buffer)
 
     def execute(self, file_name: str):
         with open(file_name, "r") as infile:
@@ -80,8 +90,10 @@ if __name__ == "__main__":
             print(exc)
 
     export_dir = configuration["exportDir"]
+    site = configuration["site"]
+    host = configuration["host"]
 
-    converter = Converter()
+    converter = Converter(export_dir, site, host)
     converter.execute("/tmp/iwlist.scan")
 
 print("stop collection")

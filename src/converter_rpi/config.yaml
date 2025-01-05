@@ -2,7 +2,13 @@
 #exportDir: /Users/gsc/Documents/github/mellow-heeler/aws_export
 #exportDir: /home/gsc/github/mellow-heeler/aws_export
 #exportDir: /home/gsc/github/mellow-heeler/aws_export
-exportDir: /home/gsc/Documents/github/mellow-heeler/aws-export
+#exportDir: /home/gsc/Documents/github/mellow-heeler/aws-export
+exportDir: /var/mellow/heeler
+#
+site: anderson
+#site: vallejo
+#
+host: rpi3c
 #
 #AWS_ACCESS_KEY_ID: bogus
 #AWS_SECRET_ACCESS_KEY: bogus
