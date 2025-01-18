@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace = "net.braingang.heeler"
-    compileSdk = 19
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "net.braingang.heeler"
-        minSdk = 19
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -19,10 +19,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
