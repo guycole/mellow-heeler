@@ -1,0 +1,1850 @@
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/net.braingang.heeler.MainActivity(10862): onCreate
+I/net.braingang.heeler.MainActivity(10862): scan started
+I/Finsky  ( 9646): [1548] eos.a(-1): Asset module broadcast after update successful for package net.braingang.heeler. 0 sessions broadcast.
+I/ChromeSync( 1910): [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/FontLog ( 1910): Package net.braingang.heeler has no metadata [CONTEXT service_id=132 ]
+E/ChromeSync( 1910): [Sync,SyncIntentOperation] Error handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:13
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:9
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:10
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:11
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:11
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=recreate
+I/net.braingang.heeler.MainActivity(10862): onCreate
+I/net.braingang.heeler.MainActivity(10862): scan started
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:29
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:29
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:33
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:33
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:33
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:33
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:24
+I/net.braingang.heeler.MainActivity(10862): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(10862): scan results:24
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=pause
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/PersonaManagerService(  774): needVerificationForPackage net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_REMOVED, package : net.braingang.heeler
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_ADDED, package : net.braingang.heeler
+D/elm:14132( 9343): ELMAbstractReceiver.onReceive() : Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.receiver.MainReceiver (has extras) }
+D/RCPManagerService(  774): App Installed with packageNAme = net.braingang.heeler
+D/elm:14132( 9343): ELMAbstractReceiver : Receive Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) } END.
+D/elm:14132( 9343): ElmAgentService : onHandleIntent() Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) }
+D/EnterpriseDeviceManagerService(  774): onPackageUpdateFinished - packageName: net.braingang.heeler, uid: 10183
+D/CapabilityManagerService New( 9474): The package(net.braingang.heeler) updated
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_REMOVED net.braingang.heeler
+E/SPPClientService( 8900): [PackageInfoChangeReceiver] [handlePkgRemovedEvent] PackageName : net.braingang.heeler, true, false
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1] nzq.c(3): Installer: package net.braingang.heeler was removed. replacing: true
+I/Finsky  ( 9646): [1] oao.a(199): Installer: Notifying status update. package=net.braingang.heeler, status=UNINSTALLED
+I/Finsky  ( 9646): [1557] eov.a(-1): Cancelled 0 ongoing asset module downloads for package net.braingang.heeler due to a concurrent app update.
+I/Finsky  ( 9646): [1521] oms.b(66): IQ: Notifying installation update. package=net.braingang.heeler, status=UNINSTALLED
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/CrashAnrDetector(  774): onPackageUpdateFinished : net.braingang.heeler
+E/dalvikvm(11413): >>>>> net.braingang.heeler [ userId:0 | appId:10183 ]
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=create
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_ADDED net.braingang.heeler
+D/MagazineService::MagazineService( 9523): [onHandleIntent] Send broadcast to (net.braingang.heeler).
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1557] eos.a(-1): Asset module broadcast after update successful for package net.braingang.heeler. 0 sessions broadcast.
+I/net.braingang.heeler.MainActivity(11413): onCreate
+I/net.braingang.heeler.MainActivity(11413): scan started
+I/ChromeSync( 1910): [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/FontLog ( 1910): Package net.braingang.heeler has no metadata [CONTEXT service_id=132 ]
+E/ChromeSync( 1910): [Sync,SyncIntentOperation] Error handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:16
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:17
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:17
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:6
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:6
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:9
+I/net.braingang.heeler.MainActivity(11413): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(11413): scan results:11
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/ActivityManager(  774): Killing 11413:net.braingang.heeler/u0a183 (adj 0): stop net.braingang.heeler
+W/ActivityManager(  774): Force removing ActivityRecord{436fbf88 u0 net.braingang.heeler/.MainActivity t28}: app died, no saved state
+I/WindowState(  774): WIN DEATH: Window{42f855a8 u0 net.braingang.heeler/net.braingang.heeler.MainActivity}
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=pause
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/PersonaManagerService(  774): needVerificationForPackage net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/PackageManager(  774): Package net.braingang.heeler codePath changed from /data/app/net.braingang.heeler-5.apk to /data/app/net.braingang.heeler-6.apk; Retaining data and using new
+W/PackageManager(  774): Code path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-5.apk to /data/app/net.braingang.heeler-6.apk
+W/PackageManager(  774): Resource path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-5.apk to /data/app/net.braingang.heeler-6.apk
+I/MSTG    (  774): net.braingang.heeler is installing..
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.REMOVED_FOR_ALL_USERS=false, android.intent.extra.UID=10183, android.intent.extra.DATA_REMOVED=false, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_REMOVED, package : net.braingang.heeler
+D/elm:14132( 9343): ELMAbstractReceiver.onReceive() : Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.receiver.MainReceiver (has extras) }
+D/elm:14132( 9343): ELMAbstractReceiver : Receive Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) } END.
+D/elm:14132( 9343): ElmAgentService : onHandleIntent() Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) }
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REPLACED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_ADDED, package : net.braingang.heeler
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.MY_PACKAGE_REPLACED flg=0x4000000 pkg=net.braingang.heeler Bundle[{android.intent.extra.user_handle=0}]
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/RCPManagerService(  774): App Installed with packageNAme = net.braingang.heeler
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/EnterpriseDeviceManagerService(  774): onPackageUpdateFinished - packageName: net.braingang.heeler, uid: 10183
+D/CapabilityManagerService New( 9474): The package(net.braingang.heeler) updated
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_REMOVED net.braingang.heeler
+E/SPPClientService( 8900): [PackageInfoChangeReceiver] [handlePkgRemovedEvent] PackageName : net.braingang.heeler, true, false
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1] nzq.c(3): Installer: package net.braingang.heeler was removed. replacing: true
+I/Finsky  ( 9646): [1] oao.a(199): Installer: Notifying status update. package=net.braingang.heeler, status=UNINSTALLED
+I/Finsky  ( 9646): [1567] eov.a(-1): Cancelled 0 ongoing asset module downloads for package net.braingang.heeler due to a concurrent app update.
+I/Finsky  ( 9646): [1521] oms.b(66): IQ: Notifying installation update. package=net.braingang.heeler, status=UNINSTALLED
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+E/dalvikvm(12022): >>>>> net.braingang.heeler [ userId:0 | appId:10183 ]
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=create
+I/CrashAnrDetector(  774): onPackageUpdateFinished : net.braingang.heeler
+I/dalvikvm(12022): Could not find method android.net.wifi.ScanResult.getWifiSsid, referenced from method net.braingang.heeler.MainActivity.parseScanResults
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_ADDED net.braingang.heeler
+D/MagazineService::MagazineService( 9523): [onHandleIntent] Send broadcast to (net.braingang.heeler).
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/net.braingang.heeler.MainActivity(12022): onCreate
+I/net.braingang.heeler.MainActivity(12022): scan started
+I/Finsky  ( 9646): [1567] eos.a(-1): Asset module broadcast after update successful for package net.braingang.heeler. 0 sessions broadcast.
+I/ChromeSync( 1910): [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/FontLog ( 1910): Package net.braingang.heeler has no metadata [CONTEXT service_id=132 ]
+E/ChromeSync( 1910): [Sync,SyncIntentOperation] Error handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(12022): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12022): scan results:11
+I/net.braingang.heeler.MainActivity(12022): a6:e7:ae:af:65:63
+E/AndroidRuntime(12022): Process: net.braingang.heeler, PID: 12022
+E/AndroidRuntime(12022): 	at net.braingang.heeler.MainActivity.parseScanResults(MainActivity.java:55)
+E/AndroidRuntime(12022): 	at net.braingang.heeler.MainActivity.-$$Nest$mparseScanResults(MainActivity.java)
+E/AndroidRuntime(12022): 	at net.braingang.heeler.MainActivity$1.onReceive(MainActivity.java:67)
+W/ActivityManager(  774):   Force finishing activity net.braingang.heeler/.MainActivity
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=pause
+D/CrashAnrDetector(  774): processName: net.braingang.heeler
+D/CrashAnrDetector(  774): broadcastEvent : net.braingang.heeler data_app_crash
+W/BroadcastQueue(  774): Skipping deliver [background] BroadcastRecord{449b6060 u-1 android.net.wifi.SCAN_RESULTS} to ReceiverList{445ef5e0 12022 net.braingang.heeler/10183/u0 remote:43d3ebd0}: process crashing
+W/BroadcastQueue(  774): Skipping deliver [background] BroadcastRecord{43d1a090 u-1 android.net.wifi.SCAN_RESULTS} to ReceiverList{445ef5e0 12022 net.braingang.heeler/10183/u0 remote:43d3ebd0}: process crashing
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/ActivityManager(  774): Killing 12022:net.braingang.heeler/u0a183 (adj 9): stop net.braingang.heeler
+I/WindowState(  774): WIN DEATH: Window{43902998 u0 net.braingang.heeler/net.braingang.heeler.MainActivity}
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/PersonaManagerService(  774): needVerificationForPackage net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/PackageManager(  774): Package net.braingang.heeler codePath changed from /data/app/net.braingang.heeler-6.apk to /data/app/net.braingang.heeler-7.apk; Retaining data and using new
+W/PackageManager(  774): Code path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-6.apk to /data/app/net.braingang.heeler-7.apk
+W/PackageManager(  774): Resource path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-6.apk to /data/app/net.braingang.heeler-7.apk
+I/MSTG    (  774): net.braingang.heeler is installing..
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.REMOVED_FOR_ALL_USERS=false, android.intent.extra.UID=10183, android.intent.extra.DATA_REMOVED=false, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_REMOVED, package : net.braingang.heeler
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REPLACED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_ADDED, package : net.braingang.heeler
+D/elm:14132( 9343): ELMAbstractReceiver.onReceive() : Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.receiver.MainReceiver (has extras) }
+D/elm:14132( 9343): ELMAbstractReceiver : Receive Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) } END.
+D/elm:14132( 9343): ElmAgentService : onHandleIntent() Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) }
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.MY_PACKAGE_REPLACED flg=0x4000000 pkg=net.braingang.heeler Bundle[{android.intent.extra.user_handle=0}]
+D/RCPManagerService(  774): App Installed with packageNAme = net.braingang.heeler
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/EnterpriseDeviceManagerService(  774): onPackageUpdateFinished - packageName: net.braingang.heeler, uid: 10183
+D/CapabilityManagerService New( 9474): The package(net.braingang.heeler) updated
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_REMOVED net.braingang.heeler
+E/SPPClientService( 8900): [PackageInfoChangeReceiver] [handlePkgRemovedEvent] PackageName : net.braingang.heeler, true, false
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1] nzq.c(3): Installer: package net.braingang.heeler was removed. replacing: true
+I/Finsky  ( 9646): [1] oao.a(199): Installer: Notifying status update. package=net.braingang.heeler, status=UNINSTALLED
+I/Finsky  ( 9646): [1575] eov.a(-1): Cancelled 0 ongoing asset module downloads for package net.braingang.heeler due to a concurrent app update.
+I/Finsky  ( 9646): [1521] oms.b(66): IQ: Notifying installation update. package=net.braingang.heeler, status=UNINSTALLED
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+E/dalvikvm(12364): >>>>> net.braingang.heeler [ userId:0 | appId:10183 ]
+I/CrashAnrDetector(  774): onPackageUpdateFinished : net.braingang.heeler
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=create
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_ADDED net.braingang.heeler
+D/MagazineService::MagazineService( 9523): [onHandleIntent] Send broadcast to (net.braingang.heeler).
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1575] eos.a(-1): Asset module broadcast after update successful for package net.braingang.heeler. 0 sessions broadcast.
+I/ChromeSync( 1910): [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(12364): onCreate
+I/net.braingang.heeler.MainActivity(12364): scan started
+I/FontLog ( 1910): Package net.braingang.heeler has no metadata [CONTEXT service_id=132 ]
+E/ChromeSync( 1910): [Sync,SyncIntentOperation] Error handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:14
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:10
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12364): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:10
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12364): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:12
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12364): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=recreate
+I/net.braingang.heeler.MainActivity(12364): onCreate
+I/net.braingang.heeler.MainActivity(12364): scan started
+I/WindowManager(  774): Screen frozen for +235ms due to Window{43cd7d68 u0 net.braingang.heeler/net.braingang.heeler.MainActivity}
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:11
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:11
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:13
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:13
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0a
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_5GEXT
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:12
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:12
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:10
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:10
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): Gate K
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:5
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:5
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:11
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12364): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12364): scan results:11
+I/net.braingang.heeler.MainActivity(12364): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12364): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12364): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12364): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12364): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12364): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12364): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12364): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12364): 1a:d9:5e:82:70:ef
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/ActivityManager(  774): Killing 12364:net.braingang.heeler/u0a183 (adj 0): stop net.braingang.heeler
+W/ActivityManager(  774): Force removing ActivityRecord{43242550 u0 net.braingang.heeler/.MainActivity t30}: app died, no saved state
+I/WindowState(  774): WIN DEATH: Window{43cd7d68 u0 net.braingang.heeler/net.braingang.heeler.MainActivity}
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=pause
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/PersonaManagerService(  774): needVerificationForPackage net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/PackageManager(  774): Package net.braingang.heeler codePath changed from /data/app/net.braingang.heeler-7.apk to /data/app/net.braingang.heeler-8.apk; Retaining data and using new
+W/PackageManager(  774): Code path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-7.apk to /data/app/net.braingang.heeler-8.apk
+W/PackageManager(  774): Resource path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-7.apk to /data/app/net.braingang.heeler-8.apk
+I/MSTG    (  774): net.braingang.heeler is installing..
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.REMOVED_FOR_ALL_USERS=false, android.intent.extra.UID=10183, android.intent.extra.DATA_REMOVED=false, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REPLACED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_REMOVED, package : net.braingang.heeler
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_ADDED, package : net.braingang.heeler
+D/elm:14132( 9343): ELMAbstractReceiver.onReceive() : Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.receiver.MainReceiver (has extras) }
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.MY_PACKAGE_REPLACED flg=0x4000000 pkg=net.braingang.heeler Bundle[{android.intent.extra.user_handle=0}]
+D/elm:14132( 9343): ELMAbstractReceiver : Receive Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) } END.
+D/elm:14132( 9343): ElmAgentService : onHandleIntent() Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) }
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/RCPManagerService(  774): App Installed with packageNAme = net.braingang.heeler
+D/EnterpriseDeviceManagerService(  774): onPackageUpdateFinished - packageName: net.braingang.heeler, uid: 10183
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/CapabilityManagerService New( 9474): The package(net.braingang.heeler) updated
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_REMOVED net.braingang.heeler
+E/SPPClientService( 8900): [PackageInfoChangeReceiver] [handlePkgRemovedEvent] PackageName : net.braingang.heeler, true, false
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1] nzq.c(3): Installer: package net.braingang.heeler was removed. replacing: true
+I/Finsky  ( 9646): [1] oao.a(199): Installer: Notifying status update. package=net.braingang.heeler, status=UNINSTALLED
+E/dalvikvm(12936): >>>>> net.braingang.heeler [ userId:0 | appId:10183 ]
+I/Finsky  ( 9646): [1585] eov.a(-1): Cancelled 0 ongoing asset module downloads for package net.braingang.heeler due to a concurrent app update.
+I/Finsky  ( 9646): [1521] oms.b(66): IQ: Notifying installation update. package=net.braingang.heeler, status=UNINSTALLED
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=create
+I/net.braingang.heeler.MainActivity(12936): onCreate
+I/net.braingang.heeler.MainActivity(12936): scan started
+I/CrashAnrDetector(  774): onPackageUpdateFinished : net.braingang.heeler
+D/MagazineService::MagazineBroadcastReceiver( 9523): [onReceive] android.intent.action.PACKAGE_ADDED net.braingang.heeler
+D/MagazineService::MagazineService( 9523): [onHandleIntent] Send broadcast to (net.braingang.heeler).
+I/Finsky  ( 9646): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  ( 9646): [1585] eos.a(-1): Asset module broadcast after update successful for package net.braingang.heeler. 0 sessions broadcast.
+I/ChromeSync( 1910): [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/FontLog ( 1910): Package net.braingang.heeler has no metadata [CONTEXT service_id=132 ]
+E/ChromeSync( 1910): [Sync,SyncIntentOperation] Error handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:4
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:7
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:8
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:9
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:6
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:7
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:4
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:14
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:2a:86:94
+I/net.braingang.heeler.MainActivity(12936): Fernweh
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:43:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:25
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:2a:86:94
+I/net.braingang.heeler.MainActivity(12936): Fernweh
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:43:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:0d:97:0b:73:29
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:63:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:23:fa:17
+I/net.braingang.heeler.MainActivity(12936): STARLINK
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:28
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:2a:86:94
+I/net.braingang.heeler.MainActivity(12936): Fernweh
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:43:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:0d:97:0b:73:29
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:63:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:23:fa:17
+I/net.braingang.heeler.MainActivity(12936): STARLINK
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:21:47:dc
+I/net.braingang.heeler.MainActivity(12936): SMITH&WESSON
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:51:47:dc
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:29
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:2a:86:94
+I/net.braingang.heeler.MainActivity(12936): Fernweh
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:43:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:0d:97:0b:73:29
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:63:fa:17
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 5e:24:c3:23:fa:17
+I/net.braingang.heeler.MainActivity(12936): STARLINK
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:21:47:dc
+I/net.braingang.heeler.MainActivity(12936): SMITH&WESSON
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:51:47:dc
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:0d:97:0b:e5:1d
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:24
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:21:47:dc
+I/net.braingang.heeler.MainActivity(12936): SMITH&WESSON
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:51:47:dc
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:0d:97:0b:e5:1d
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:23
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): fe:df:bc:21:47:dc
+I/net.braingang.heeler.MainActivity(12936): SMITH&WESSON
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:0d:97:0b:e5:1d
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:22
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 78:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719_8
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 7e:2d:7e:1b:17:19
+I/net.braingang.heeler.MainActivity(12936): TRENDnet840_1719
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:22
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b2:c0
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:22
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:8f:40
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b2:c0
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:4a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:22
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b2:c0
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 06:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): City of Vallejo
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:4a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:18
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:4a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:17
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:20
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:22:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:82:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): b4:a2:5c:9d:b3:80
+I/net.braingang.heeler.MainActivity(12936): The Mare Island Company
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP-preauth][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 00:14:d1:d6:64:00
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:62:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:52:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:6a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a2:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad
+I/net.braingang.heeler.MainActivity(12936): [WPA2-FT/EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 9c:05:d6:0c:78:1a
+I/net.braingang.heeler.MainActivity(12936): Knot Bad Guest
+I/net.braingang.heeler.MainActivity(12936): [ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): scan results:11
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a6:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:60
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): a0:e7:ae:af:65:63
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:72:70:ef
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:42:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3c:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): TRENDnet740_QCDJ
+I/net.braingang.heeler.MainActivity(12936): [WPA2-EAP-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): c8:9e:43:5e:3a:0b
+I/net.braingang.heeler.MainActivity(12936): ATTebV5XEa_2GEXT
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 3e:8c:f8:f9:2b:bb
+I/net.braingang.heeler.MainActivity(12936): Gate K
+I/net.braingang.heeler.MainActivity(12936): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 1a:d9:5e:32:70:ef
+I/net.braingang.heeler.MainActivity(12936): S3ctorN1n3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): 26:18:0a:27:ee:9c
+I/net.braingang.heeler.MainActivity(12936): F3
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(12936): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(12936): e2:02:34:4a:86:94
+I/net.braingang.heeler.MainActivity(12936): [WPA2-PSK-CCMP][ESS]
