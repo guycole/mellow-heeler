@@ -17,3 +17,5 @@ version = json version
 zTime = observation time stamps, epoch seconds
 device = collection device and optional site location
 geoLoc = optional geographic location stanza
+
+android is "no activity"
