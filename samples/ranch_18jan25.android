@@ -1,0 +1,201 @@
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+D/PersonaManagerService(  774): needVerificationForPackage net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+I/PackageManager(  774): Package net.braingang.heeler codePath changed from /data/app/net.braingang.heeler-8.apk to /data/app/net.braingang.heeler-9.apk; Retaining data and using new
+W/PackageManager(  774): Code path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-8.apk to /data/app/net.braingang.heeler-9.apk
+W/PackageManager(  774): Resource path for pkg : net.braingang.heeler changing from /data/app/net.braingang.heeler-8.apk to /data/app/net.braingang.heeler-9.apk
+I/MSTG    (  774): net.braingang.heeler is installing..
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.REMOVED_FOR_ALL_USERS=false, android.intent.extra.UID=10183, android.intent.extra.DATA_REMOVED=false, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_REMOVED, package : net.braingang.heeler
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.PACKAGE_REPLACED dat=package:net.braingang.heeler flg=0x4000000 Bundle[{android.intent.extra.UID=10183, android.intent.extra.REPLACING=true, android.intent.extra.user_handle=0}]
+D/QuickConnect[1.1][2] ( 3778): SconnectManager.onReceiver - action : android.intent.action.PACKAGE_ADDED, package : net.braingang.heeler
+D/PackageManager(  774): Sending to user 0: act=android.intent.action.MY_PACKAGE_REPLACED flg=0x4000000 pkg=net.braingang.heeler Bundle[{android.intent.extra.user_handle=0}]
+D/elm:14132(18779): ELMAbstractReceiver.onReceive() : Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.receiver.MainReceiver (has extras) }
+D/elm:14132(18779): ELMAbstractReceiver : Receive Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) } END.
+D/elm:14132(18779): ElmAgentService : onHandleIntent() Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.sec.esdk.elm/.service.ElmAgentService (has extras) }
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_REMOVED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+D/EnterpriseDeviceManagerService(  774): onPackageUpdateFinished - packageName: net.braingang.heeler, uid: 10183
+D/RCPManagerService(  774): App Installed with packageNAme = net.braingang.heeler
+D/BackupManagerService(  774): Received broadcast Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 (has extras) }
+I/CrashAnrDetector(  774): onPackageUpdateFinished : net.braingang.heeler
+V/ApplicationPolicy(  774): isApplicationStateBlocked userId 0 pkgname net.braingang.heeler
+E/dalvikvm(18843): >>>>> net.braingang.heeler [ userId:0 | appId:10183 ]
+D/WfcActivityStateReceiver( 1324): onReceive(): packageName=net.braingang.heeler, activityState=create
+I/net.braingang.heeler.MainActivity(18843): onCreate
+I/net.braingang.heeler.MainActivity(18843): scan started
+D/CapabilityManagerService New(18921): The package(net.braingang.heeler) updated
+D/MagazineService::MagazineBroadcastReceiver(18970): [onReceive] android.intent.action.PACKAGE_REMOVED net.braingang.heeler
+E/SPPClientService( 8900): [PackageInfoChangeReceiver] [handlePkgRemovedEvent] PackageName : net.braingang.heeler, true, false
+I/net.braingang.heeler.MainActivity(18843): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): scan results:8
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 00:22:6b:81:03:d9
+I/net.braingang.heeler.MainActivity(18843): braingang2
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:05
+I/net.braingang.heeler.MainActivity(18843): braingang2_5GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:06
+I/net.braingang.heeler.MainActivity(18843): braingang2_2GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): e2:bb:9e:d0:b0:30
+I/net.braingang.heeler.MainActivity(18843): DIRECT-9ED03030
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/Finsky  (19071): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  (19071): [1783] eov.a(-1): Cancelled 0 ongoing asset module downloads for package net.braingang.heeler due to a concurrent app update.
+D/MagazineService::MagazineBroadcastReceiver(18970): [onReceive] android.intent.action.PACKAGE_ADDED net.braingang.heeler
+D/MagazineService::MagazineService(18970): [onHandleIntent] Send broadcast to (net.braingang.heeler).
+I/Finsky  (19071): [1] vco.d(9): Invalidating cached PackageState for net.braingang.heeler
+I/Finsky  (19071): [1783] eos.a(-1): Asset module broadcast after update successful for package net.braingang.heeler. 0 sessions broadcast.
+I/ChromeSync( 1910): [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/FontLog ( 1910): Package net.braingang.heeler has no metadata [CONTEXT service_id=132 ]
+E/ChromeSync( 1910): [Sync,SyncIntentOperation] Error handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:net.braingang.heeler flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+I/net.braingang.heeler.MainActivity(18843): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): scan results:9
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 00:22:6b:81:03:d9
+I/net.braingang.heeler.MainActivity(18843): braingang2
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:05
+I/net.braingang.heeler.MainActivity(18843): braingang2_5GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:06
+I/net.braingang.heeler.MainActivity(18843): braingang2_2GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): e2:bb:9e:d0:b0:30
+I/net.braingang.heeler.MainActivity(18843): DIRECT-9ED03030
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 20:23:51:f7:96:77
+I/net.braingang.heeler.MainActivity(18843): TP-second
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): scan results:12
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 00:22:6b:81:03:d9
+I/net.braingang.heeler.MainActivity(18843): braingang2
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:05
+I/net.braingang.heeler.MainActivity(18843): braingang2_5GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:06
+I/net.braingang.heeler.MainActivity(18843): braingang2_2GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): e2:bb:9e:d0:b0:30
+I/net.braingang.heeler.MainActivity(18843): DIRECT-9ED03030
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 20:23:51:f7:96:77
+I/net.braingang.heeler.MainActivity(18843): TP-second
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): c2:d2:f3:df:aa:06
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS][P2P]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ee:0d:e1:35:0a:6d
+I/net.braingang.heeler.MainActivity(18843): JoshLily 5 GHz
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ee:0d:e1:25:0a:6d
+I/net.braingang.heeler.MainActivity(18843): JoshLily
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxx onReceive xxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): scan results:12
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 00:22:6b:81:03:d9
+I/net.braingang.heeler.MainActivity(18843): braingang2
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:05
+I/net.braingang.heeler.MainActivity(18843): braingang2_5GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 6c:cd:d6:2a:62:06
+I/net.braingang.heeler.MainActivity(18843): braingang2_2GEXT
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): e2:bb:9e:d0:b0:30
+I/net.braingang.heeler.MainActivity(18843): DIRECT-9ED03030
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): d8:07:b6:af:c5:4e
+I/net.braingang.heeler.MainActivity(18843): TP-Link_C54F
+I/net.braingang.heeler.MainActivity(18843): [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ea:07:b6:af:c5:4f
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): 20:23:51:f7:96:77
+I/net.braingang.heeler.MainActivity(18843): TP-second
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): c2:d2:f3:df:aa:06
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][WPS][ESS][P2P]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ee:0d:e1:35:0a:6d
+I/net.braingang.heeler.MainActivity(18843): JoshLily 5 GHz
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
+I/net.braingang.heeler.MainActivity(18843): xxxxxxxxxxxx
+I/net.braingang.heeler.MainActivity(18843): ee:0d:e1:25:0a:6d
+I/net.braingang.heeler.MainActivity(18843): JoshLily
+I/net.braingang.heeler.MainActivity(18843): [WPA2-PSK-CCMP][ESS]
