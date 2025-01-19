@@ -1,118 +1,75 @@
 package net.braingang.heeler;
 
-import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 
-import android.app.AlarmManager;
-
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import androidx.core.app.ActivityCompat;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
-import pub.devrel.easypermissions.EasyPermissions;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getName();
 
-    public static final int PERMISSION_REQUEST = 12321;
-    public static final int PERMISSION_REQUEST_BACKGROUND_LOCATION = 1234321;
-
-    //LocationManager locationManager;
-    String provider;
+    private WifiManager wifiManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
 
         Log.i(LOG_TAG, "onCreate");
 
-        setContentView(R.layout.activity_main);
-
-        Button buttonStart = (Button) findViewById(R.id.button_start);
-        buttonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(LOG_TAG, "onClick");
-            }
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
         });
 
-        Button buttonStop = (Button) findViewById(R.id.button_stop);
-        buttonStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(LOG_TAG, "onClick");
-            }
-        });
-
-        Button buttonUpload = (Button) findViewById(R.id.button_upload);
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(LOG_TAG, "onClick");
-                //DataBaseHelper.startUploadService(this);
-            }
-        });
-
-        requestLocationPermission();
-
-        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //provider = locationManager.getBestProvider(new Criteria(), false);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Log.i(LOG_TAG, "onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(LOG_TAG, "onResume");
-
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        if (api.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
-            Log.i(LOG_TAG, "Google API noted");
+        registerReceiver(scanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        boolean flag = wifiManager.startScan();
+        if (flag) {
+            Log.i(LOG_TAG, "scan started");
         } else {
-            Log.e(LOG_TAG, "Google API missing");
+            Log.i(LOG_TAG, "scan not started");
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.i(LOG_TAG, "onRequestPermissonsResult");
+    private void parseScanResults(List<ScanResult> candidates) {
+        Log.i(LOG_TAG, "scan results:" + candidates.size());
 
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    //@AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
-    public void requestLocationPermission() {
-        Log.i(LOG_TAG, "requestLocationPermission");
-
-        String[] perms = {
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.CHANGE_WIFI_STATE,
-        };
-
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            Toast.makeText(this, "permission noted", Toast.LENGTH_SHORT).show();
-        } else {
-            EasyPermissions.requestPermissions(this, "grant all the things", PERMISSION_REQUEST, perms);
+        for (int ndx = 0; ndx < candidates.size(); ndx++) {
+            ScanResult temp = candidates.get(ndx);
+            Log.i(LOG_TAG, "xxxxxxxxxxxx");
+            Log.i(LOG_TAG, temp.BSSID);
+            Log.i(LOG_TAG, temp.SSID);
+            Log.i(LOG_TAG, temp.capabilities);
         }
     }
+
+    private final BroadcastReceiver scanReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context arg0, Intent arg1) {
+            Log.i(LOG_TAG, "xxxxxxx onReceive xxxxxxxxxx");
+
+            List<ScanResult> scanResults = wifiManager.getScanResults();
+            if (scanResults.size() > 0) {
+                parseScanResults(scanResults);
+            } else {
+                Log.i(LOG_TAG, "scan results empty");
+            }
+        }
+    };
 }

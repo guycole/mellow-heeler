@@ -1,4 +1,7 @@
-mellow-heeler (android client)
-==============================
+## Android is a sad story
 
-Perform beacon collection from an [Android](https://en.wikipedia.org/wiki/Android_(operating_system) device.  
+This application only runs on old phones which can run WifiManager.startScan()
+
+There used to be a Android collector for heeler, and it was nice because it had a GPS and could run in the background.  But Google decided this was too useful, and now background operations and WiFi scans are greatly restricted.  I have replaced Android with a dedicated rPi collector.
+
+I used this application to verify that my rPi heeler gave the same results as old Android phones.
