@@ -1,8 +1,4 @@
 #
-#exportDir: /Users/gsc/Documents/github/mellow-heeler/aws_export
-#exportDir: /home/gsc/github/mellow-heeler/aws_export
-#exportDir: /home/gsc/github/mellow-heeler/aws_export
-#exportDir: /home/gsc/Documents/github/mellow-heeler/aws-export
 exportDir: /var/mellow/heeler
 freshDir: /var/mellow/heeler/fresh
 #

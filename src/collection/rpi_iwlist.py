@@ -50,7 +50,7 @@ class Converter(object):
         with open(file_name, "r") as infile:
             try:
                 buffer = infile.readlines()
-                if len(buffer) < 2:
+                if len(buffer) < 3:
                     print("empty file noted")
                     return
             except Exception as error:
