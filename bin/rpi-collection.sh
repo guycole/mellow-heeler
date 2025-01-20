@@ -24,3 +24,6 @@ source venv/bin/activate
 python3 ./rpi_iwlist.py
 echo "end conversion"
 #
+echo "skunk load"
+echo "skunk load"
+#
