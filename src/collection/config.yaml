@@ -6,10 +6,12 @@
 exportDir: /var/mellow/heeler
 freshDir: /var/mellow/heeler/fresh
 #
-site: anderson
+#site: anderson
+site: development
 #site: vallejo
 #
-host: rpi3c
+host: rpi3a
+#host: rpi3c
 #
 #AWS_ACCESS_KEY_ID: bogus
 #AWS_SECRET_ACCESS_KEY: bogus
