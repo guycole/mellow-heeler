@@ -1,6 +1,6 @@
 #
-# Title: driver.py
-# Description: rpi collection
+# Title: rpi_iwlist.py
+# Description: rpi append a json header to iwlist scan output
 # Development Environment: OS X 12.6.9/Python 3.11.5
 # Author: G.S. Cole (guycole at gmail dot com)
 #
@@ -9,48 +9,37 @@ import json
 import os
 import sys
 import time
-import typing
 import uuid
 import yaml
 
 from yaml.loader import SafeLoader
 
+
 class Converter(object):
-    def __init__(self, export_dir, site, host):
-        self.export_dir = export_dir
+    def __init__(self, fresh_dir: str, site: str, host: str):
+        self.fresh_dir = fresh_dir
         self.host = host
         self.site = site
 
     def get_filename(self) -> str:
-        return "%s/%s" % (self.export_dir, str(uuid.uuid4()))
+        return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
 
-    def get_preamble(self) -> typing.Dict:
+    def get_preamble(self) -> dict[str, any]:
         geo_loc = {}
-        geo_loc['site'] = self.site
-
-        if site == "anderson":
-            geo_loc['latitude'] = 44.30
-            geo_loc['longitude'] = -122.17
-        elif site == "vallejo":
-            geo_loc['latitude'] = 44.30
-            geo_loc['longitude'] = -122.17
-        else:
-            print("unsupported site:", self.site)
-            geo_loc['latitude'] = 0.0
-            geo_loc['longitude'] = 0.0
+        geo_loc["site"] = self.site
 
         preamble = {}
-        preamble['wifi'] = []
-        preamble['project'] = 'heeler'
-        preamble['version'] = 1
-        preamble['platform'] = self.host
-        preamble['zTimeMs'] = round(time.time() * 1000)
+        preamble["wifi"] = []
+        preamble["project"] = "heeler"
+        preamble["version"] = 1
+        preamble["platform"] = self.host
+        preamble["zTimeMs"] = round(time.time() * 1000)
 
-        preamble['geoLoc'] = geo_loc
+        preamble["geoLoc"] = geo_loc
 
         return preamble
-    
-    def converter(self, buffer:typing.List[str]):
+
+    def converter(self, buffer: list[str]):
         with open(self.get_filename(), "w") as outfile:
             json_preamble = json.dumps(self.get_preamble())
             outfile.write(json_preamble + "\n")
@@ -64,15 +53,13 @@ class Converter(object):
                 if len(buffer) < 2:
                     print("empty file noted")
                     return
-            except:
-                print("file read error")
+            except Exception as error:
+                print(error)
 
         self.converter(buffer)
 
-#        preamble = self.get_preamble()
-#        print(preamble)
 
-print("start collection")
+print("start collection tweak")
 
 #
 # argv[1] = configuration filename
@@ -89,14 +76,14 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    export_dir = configuration["exportDir"]
+    fresh_dir = configuration["freshDir"]
     site = configuration["site"]
     host = configuration["host"]
 
-    converter = Converter(export_dir, site, host)
+    converter = Converter(fresh_dir, site, host)
     converter.execute("/tmp/iwlist.scan")
 
-print("stop collection")
+print("stop collection tweak")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

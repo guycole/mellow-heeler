@@ -34,3 +34,6 @@ Fixed site Mellow Heeler collection assets use a dedicated [Raspberry Pi 4](http
 
 3. Mellow Heeler "heeler_2" has fixed location and mobile collection stations.  Based on BeagleBone Black using a WiFi USB dongle.
    heeler_2 output report is json formatted  
+
+
+https://stackoverflow.com/questions/65731968/how-to-get-wifi-security-keywpa-wpa2-ess-of-scanned-networks-using-nl80211-b
