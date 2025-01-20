@@ -1,15 +1,17 @@
 #!/bin/bash
 #
 # Title: rpi-xfer-wombat.sh
-# Description: move local files to wombat host
+# Description: wombat pulls files from collector
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
-WOMBAT_HOST="gsc@rpi5a"
-WORK_DIR="/var/mellow/heeler/fresh"
+#
+COLLECTOR_HOST="gsc@rpi3a"
+WORK_DIR="/var/mellow"
 #
 echo "start transfer"
 cd $WORK_DIR
-rsync -a . $WOMBAT_HOST:$WORK_DIR
+rsync --remove-source-files -avhze ssh $COLLECTOR_HOST:$WORK_DIR/heeler .
 echo "end transfer"
+#
