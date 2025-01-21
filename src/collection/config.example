@@ -9,6 +9,8 @@ site: development
 host: rpi3a
 #host: rpi3c
 #
+skunk_enable: true
+#
 #AWS_ACCESS_KEY_ID: bogus
 #AWS_SECRET_ACCESS_KEY: bogus
 #AWS_DEFAULT_REGION: us-west-2
