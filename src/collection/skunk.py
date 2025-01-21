@@ -51,7 +51,7 @@ class Skunk:
 
         for ndx in range(origin + 1, len(self.raw)):
             if "Cell" in self.raw[ndx]:
-                if start_ndx < 0:s
+                if start_ndx < 0:
                     start_ndx = ndx
                 else:
                     stop_ndx = ndx - 1
@@ -66,6 +66,7 @@ class Skunk:
     def skunk_post(self, obs_list: list[dict[str, str]]):
         payload = json.dumps(obs_list, indent=4)
 
+        payload = [{"address": "address1","essid": "essid1","frequency": "2","time_stamp": "2025-01-12T19:50:25.584981Z"},{"address": "address2","essid": "essid3","frequency": "2","time_stamp": "2025-01-12T19:50:25.584981Z"}]
         response = requests.post("http://localhost/heeler", json=payload) 
 
         print(response)
