@@ -9,11 +9,27 @@ import json
 import requests
 import sys
 
+class Observation:
+    def __init__(self, args:dict[str, any]):
+        self.args = args
+        self.bssid = args["bssid"]
+        self.frequency = args["frequency"]
+        self.ssid = args["ssid"]
+
+    def __repr__(self):
+        return self.ssid
+
+    def __str__(self):
+        return self.ssid
+    
+    def __eq__(self, other):
+        return self.bssid == other.bssid and self.ssid == other.ssid and self.frequency == other.frequency
+
 class Skunk:
     def __init__(self, raw: list[str]):
         self.raw = raw
 
-    def parse_cell(self, start_ndx: int, stop_ndx: int) -> dict[str, str]:
+    def parse_cell(self, start_ndx: int, stop_ndx: int) -> Observation:
         """parse a cell stanza"""
 
         obs = {}
@@ -36,8 +52,9 @@ class Skunk:
                 temp1 = line.split()
                 temp2 = temp1[0].split(":")
                 obs["frequency"] = int(1000 * float(temp2[1]))
-        
-        return obs
+
+        result = Observation(obs)
+        return result
 
     def discover_indices(self, origin: int) -> tuple[int, int]:
         """discover the start and stop indices of a cell stanza"""
@@ -63,15 +80,16 @@ class Skunk:
 
         return [start_ndx, stop_ndx]
 
-    def skunk_post(self, obs_list: list[dict[str, str]]):
-        payload = json.dumps(obs_list, indent=4)
+    def skunk_post(self, obs_list: list[Observation]) -> None:
+        payload = []
 
-        payload = [{"address": "address1","essid": "essid1","frequency": "2","time_stamp": "2025-01-12T19:50:25.584981Z"},{"address": "address2","essid": "essid3","frequency": "2","time_stamp": "2025-01-12T19:50:25.584981Z"}]
-        response = requests.post("http://localhost/heeler", json=payload) 
+        for current in obs_list:
+            payload.append(current.args)
 
+        response = requests.post("http://localhost:8000/heeler/", json=payload)
         print(response)
 
-    def loader(self):
+    def loader(self) -> None:
         obs_list = []
         origin_ndx = -1
 
@@ -86,8 +104,9 @@ class Skunk:
 
             origin_ndx = stop_ndx
 
-            obs_dict = self.parse_cell(start_ndx, stop_ndx)
-            obs_list.append(obs_dict)
+            obs = self.parse_cell(start_ndx, stop_ndx)
+            if obs not in obs_list:
+                obs_list.append(obs)
 
         self.skunk_post(obs_list)
 
