@@ -7,6 +7,7 @@
 
 The files in /var/mellow/heeler/fresh will be periodically collected.  
 
-If this crate has a housekeeper, then housekeeper will collect, process and then forward to AWS.
+If this crate has a housekeeper, then housekeeper will collect, process and then forward to AWS.  i.e. rpi-xfer-wombat.sh (invoked on wombat)
 
-In the absence of a housekeeper, another cronjob will forward to AWS.
+In the absence of a housekeeper, another cronjob will forward to AWS.  i.e. rpi-xfer-vallejo.sh
+
