@@ -9,8 +9,9 @@ import json
 import requests
 import sys
 
+
 class Observation:
-    def __init__(self, args:dict[str, any]):
+    def __init__(self, args: dict[str, any]):
         self.args = args
         self.bssid = args["bssid"]
         self.frequency = args["frequency"]
@@ -21,9 +22,14 @@ class Observation:
 
     def __str__(self):
         return self.ssid
-    
+
     def __eq__(self, other):
-        return self.bssid == other.bssid and self.ssid == other.ssid and self.frequency == other.frequency
+        return (
+            self.bssid == other.bssid
+            and self.ssid == other.ssid
+            and self.frequency == other.frequency
+        )
+
 
 class Skunk:
     def __init__(self, raw: list[str]):
@@ -86,8 +92,10 @@ class Skunk:
         for current in obs_list:
             payload.append(current.args)
 
+        print(payload)
         response = requests.post("http://localhost:8000/heeler/", json=payload)
         print(response)
+        print(response.text)
 
     def loader(self) -> None:
         obs_list = []
