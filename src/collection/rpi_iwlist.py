@@ -14,13 +14,15 @@ import yaml
 
 from yaml.loader import SafeLoader
 
+from skunk import Skunk
 
 class Converter(object):
-    def __init__(self, fresh_dir: str, host: str, site: str, skunk_flag: bool):
+    def __init__(self, fresh_dir: str, host: str, site: str, skunk_flag: bool, skunk_url: str):
         self.fresh_dir = fresh_dir
         self.host = host
         self.site = site
         self.skunk_flag = skunk_flag
+        self.skunk_url = skunk_url
 
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
@@ -60,7 +62,8 @@ class Converter(object):
         self.converter(buffer)
 
         if self.skunk_flag:
-            print("must load skunk")
+            skunk = Skunk(buffer, skunk_url)
+            skunk.execute()
 
 
 print("start collection tweak")
@@ -84,8 +87,9 @@ if __name__ == "__main__":
     host = configuration["host"]
     site = configuration["site"]
     skunk = configuration["skunk_enable"]
+    skunk_url = configuration["skunk_url"]
 
-    converter = Converter(fresh_dir, host, site, skunk)
+    converter = Converter(fresh_dir, host, site, skunk, skunk_url)
     converter.execute("/tmp/iwlist.scan")
 
 print("stop collection tweak")

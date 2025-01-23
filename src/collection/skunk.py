@@ -32,8 +32,9 @@ class Observation:
 
 
 class Skunk:
-    def __init__(self, raw: list[str]):
+    def __init__(self, raw: list[str], url: str):
         self.raw = raw
+        self.url = url
 
     def parse_cell(self, start_ndx: int, stop_ndx: int) -> Observation:
         """parse a cell stanza"""
@@ -93,11 +94,11 @@ class Skunk:
             payload.append(current.args)
 
         print(payload)
-        response = requests.post("http://localhost:8000/heeler/", json=payload)
+        response = requests.post(self.url, json=payload)
         print(response)
-        print(response.text)
+#        print(response.text)
 
-    def loader(self) -> None:
+    def execute(self) -> None:
         obs_list = []
         origin_ndx = -1
 
@@ -118,9 +119,6 @@ class Skunk:
 
         self.skunk_post(obs_list)
 
-
-print("start test")
-
 #
 # argv[1] = configuration filename
 #
@@ -139,8 +137,6 @@ if __name__ == "__main__":
 
         skunk = Skunk(buffer)
         skunk.loader()
-
-print("stop test")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
