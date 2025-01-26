@@ -1,7 +1,7 @@
 #
 # Title: skunk.py
-# Description:
-# Development Environment: OS X 12.7.6/Python 3.13.0
+# Description: parse iwlist and extract elements
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
@@ -11,6 +11,8 @@ import sys
 
 
 class Observation:
+    """container, helps prune duplicate items"""
+
     def __init__(self, args: dict[str, any]):
         self.args = args
         self.bssid = args["bssid"]
@@ -88,6 +90,8 @@ class Skunk:
         return [start_ndx, stop_ndx]
 
     def skunk_post(self, obs_list: list[Observation]) -> None:
+        """http post to mellow-skunk"""
+
         payload = []
 
         for current in obs_list:
@@ -96,7 +100,8 @@ class Skunk:
         print(payload)
         response = requests.post(self.url, json=payload)
         print(response)
-#        print(response.text)
+
+    #        print(response.text)
 
     def execute(self) -> None:
         obs_list = []
@@ -118,6 +123,7 @@ class Skunk:
                 obs_list.append(obs)
 
         self.skunk_post(obs_list)
+
 
 #
 # argv[1] = configuration filename

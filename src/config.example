@@ -1,0 +1,16 @@
+#
+freshDir: /var/mellow/heeler/fresh
+#
+#site: anderson
+site: development
+#site: vallejo
+#
+host: rpi3a
+#host: rpi3c
+#
+skunk_url: "http://localhost:8000/heeler/"
+skunk_url: "http://localhost/heeler/"
+#
+wombat_url: "http://localhost:8000/heeler/"
+wombat_url: "http://rpi5a/heeler/"
+#

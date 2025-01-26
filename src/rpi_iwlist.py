@@ -1,7 +1,7 @@
 #
 # Title: rpi_iwlist.py
 # Description: rpi append a json header to iwlist scan output
-# Development Environment: OS X 12.6.9/Python 3.11.5
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import logging
@@ -14,15 +14,12 @@ import yaml
 
 from yaml.loader import SafeLoader
 
-from skunk import Skunk
 
 class Converter(object):
-    def __init__(self, fresh_dir: str, host: str, site: str, skunk_flag: bool, skunk_url: str):
+    def __init__(self, fresh_dir: str, host: str, site: str):
         self.fresh_dir = fresh_dir
         self.host = host
         self.site = site
-        self.skunk_flag = skunk_flag
-        self.skunk_url = skunk_url
 
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
@@ -59,14 +56,21 @@ class Converter(object):
             except Exception as error:
                 print(error)
 
-        self.converter(buffer)
+        json_preamble = json.dumps(self.get_preamble())
 
-        if self.skunk_flag:
-            skunk = Skunk(buffer, skunk_url)
-            skunk.execute()
+        file_name = self.get_filename()
+        print(f"filename: {file_name}")
+
+        with open(file_name, "w") as outfile:
+            try:
+                outfile.write(json_preamble + "\n")
+                outfile.write("RAWBUFFER\n")
+                outfile.writelines(buffer)
+            except Exception as error:
+                print(error)
 
 
-print("start collection tweak")
+print("start rpi_iwlist")
 
 #
 # argv[1] = configuration filename
@@ -86,13 +90,11 @@ if __name__ == "__main__":
     fresh_dir = configuration["freshDir"]
     host = configuration["host"]
     site = configuration["site"]
-    skunk = configuration["skunk_enable"]
-    skunk_url = configuration["skunk_url"]
 
-    converter = Converter(fresh_dir, host, site, skunk, skunk_url)
+    converter = Converter(fresh_dir, host, site)
     converter.execute("/tmp/iwlist.scan")
 
-print("stop collection tweak")
+print("stop rpi_iwlist")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

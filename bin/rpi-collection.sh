@@ -2,7 +2,7 @@
 #
 # Title: rpi-collection.sh
 # Description: scan for wireless access points
-# Development Environment: Debian 10 (buster)/raspian
+# Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
 # */10 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-collection.sh > /dev/null 2>&1
@@ -19,7 +19,7 @@ chmod 666 $FILENAME
 echo "end scan"
 #
 echo "start conversion"
-cd $HOME_DIR/mellow-heeler/src/collection
+cd $HOME_DIR/mellow-heeler/src
 source venv/bin/activate
 python3 ./rpi_iwlist.py
 echo "end conversion"

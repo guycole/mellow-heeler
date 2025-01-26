@@ -9,9 +9,9 @@ site: development
 host: rpi3a
 #host: rpi3c
 #
-skunk_enable: true
+skunk_enable: false
 skunk_url: "http://localhost:8000/heeler/"
-skunk_url: "http://localhost/heeler/"
+wombat_url: "http://localhost:8000/heeler/"
 #
 #AWS_ACCESS_KEY_ID: bogus
 #AWS_SECRET_ACCESS_KEY: bogus
