@@ -27,6 +27,8 @@ class Skunk:
         for current in obs_list:
             payload.append(current.args)
 
+        print(f"payload size {len(payload)}")
+
         response = requests.post(self.url, json=payload)
         print(response)
         # print(response.text)
@@ -47,9 +49,6 @@ class Skunk:
         obs_list = parser.parser()
         self.skunk_post(obs_list)
 
-
-print("start skunk post")
-
 #
 # argv[1] = configuration filename
 #
@@ -67,13 +66,11 @@ if __name__ == "__main__":
 
     url = configuration["skunk_url"]
 
-    file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
-    #    file_name = "/tmp/iwlist.scan"
+    #file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
+    file_name = "/tmp/iwlist.scan"
 
     skunk = Skunk(url)
     skunk.execute(file_name)
-
-print("stop skunk post")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

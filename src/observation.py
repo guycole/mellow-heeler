@@ -95,7 +95,7 @@ class Parser:
         while True:
             (start_ndx, stop_ndx) = self.discover_indices(origin_ndx)
 
-            print(f"{start_ndx} {stop_ndx}")
+            # print(f"{start_ndx} {stop_ndx}")
 
             if start_ndx == stop_ndx:
                 print("file consumed")

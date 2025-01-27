@@ -1,22 +1,16 @@
 #!/bin/bash
 #
-# Title: rpi-collection.sh
+# Title: rpi-process.sh
 # Description: scan for wireless access points
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
-# */10 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-collection.sh > /dev/null 2>&1
+# 1,11,21,31,41,51 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-collection.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 FILENAME="/tmp/iwlist.scan"
 HOME_DIR="/home/gsc/Documents/github"
-#
-echo "start scan"
-unlink $FILENAME
-/sbin/iwlist scan > $FILENAME
-chmod 666 $FILENAME
-echo "end scan"
 #
 echo "start conversion"
 cd $HOME_DIR/mellow-heeler/src
@@ -24,6 +18,9 @@ source venv/bin/activate
 python3 ./rpi_iwlist.py
 echo "end conversion"
 #
-echo "skunk load"
-echo "skunk load"
+echo "start skunk post"
+cd $HOME_DIR/mellow-heeler/src
+source venv/bin/activate
+python3 ./skunk_post.py
+echo "end skunk post"
 #

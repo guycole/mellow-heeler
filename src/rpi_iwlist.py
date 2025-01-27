@@ -69,9 +69,6 @@ class Converter(object):
             except Exception as error:
                 print(error)
 
-
-print("start rpi_iwlist")
-
 #
 # argv[1] = configuration filename
 #
@@ -93,8 +90,6 @@ if __name__ == "__main__":
 
     converter = Converter(fresh_dir, host, site)
     converter.execute("/tmp/iwlist.scan")
-
-print("stop rpi_iwlist")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
