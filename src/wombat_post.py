@@ -65,8 +65,8 @@ if __name__ == "__main__":
     with open(file_name, "r") as stream:
         try:
             configuration = yaml.load(stream, Loader=SafeLoader)
-        except yaml.YAMLError as exc:
-            print(exc)
+        except yaml.YAMLError as error:
+            print(error)
 
     url = configuration["wombat_url"]
 

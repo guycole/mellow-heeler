@@ -63,7 +63,7 @@ class Reporter:
 
         years = []
         for ndx in range(2021, 2025):
-          years.append(ndx)
+            years.append(ndx)
 
         return years
 

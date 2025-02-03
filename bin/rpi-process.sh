@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Title: rpi-process.sh
-# Description: scan for wireless access points
+# Description: process output from iwlist(8) scan
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #

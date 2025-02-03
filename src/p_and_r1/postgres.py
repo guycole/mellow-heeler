@@ -57,7 +57,9 @@ class PostGres:
     def box_score_select_daily(self, target_date: str) -> List[BoxScore]:
         """return all rows for a specific date"""
 
-        statement = select(BoxScore).filter_by(score_date=target_date).order_by(BoxScore.device)
+        statement = (
+            select(BoxScore).filter_by(score_date=target_date).order_by(BoxScore.device)
+        )
 
         results = []
 

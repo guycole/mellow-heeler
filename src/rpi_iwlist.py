@@ -69,6 +69,7 @@ class Converter(object):
             except Exception as error:
                 print(error)
 
+
 #
 # argv[1] = configuration filename
 #
@@ -81,8 +82,8 @@ if __name__ == "__main__":
     with open(file_name, "r") as stream:
         try:
             configuration = yaml.load(stream, Loader=SafeLoader)
-        except yaml.YAMLError as exc:
-            print(exc)
+        except yaml.YAMLError as error:
+            print(error)
 
     fresh_dir = configuration["freshDir"]
     host = configuration["host"]

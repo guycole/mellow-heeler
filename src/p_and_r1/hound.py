@@ -41,7 +41,7 @@ class Hound:
 
         payload = json.loads(buffer[0])
         geoloc = payload["geoLoc"]
-        return geoloc['fixTimeMs']
+        return geoloc["fixTimeMs"]
 
     def hound_v1(self, buffer: List[str], load_log_id: int) -> int:
         """hound parser v1"""
