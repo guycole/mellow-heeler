@@ -17,6 +17,7 @@ import heeler2
 import observation
 import postgres2
 
+
 class Parser:
     def classifier(self, preamble: dict[str, str]) -> str:
         """discover file format, i.e. heeler_v1, etc"""
@@ -45,7 +46,7 @@ class Parser:
                 print(f"file read error: {file_name}")
 
         return buffer
-    
+
     def geo_location(self, preamble: dict[str, str]) -> str:
         """extract geolocation from the file"""
 
@@ -56,7 +57,7 @@ class Parser:
                     return "anderson1"
                 if temp["site"].startswith("val"):
                     return "vallejo1"
-                
+
         return None
 
     def obs_time(self, preamble: dict[str, str]) -> datetime.datetime:
@@ -72,7 +73,7 @@ class Parser:
 
         if "platform" in preamble:
             return preamble["platform"]
-        
+
         return "unknown"
 
     def preamble(self, buffer: list[str]) -> dict[str, str]:
@@ -86,7 +87,7 @@ class Parser:
             print(error)
 
         return preamble
-    
+
     def execute(self, file_name: str) -> list[observation.Observation]:
         """dispatch to approprate file parser"""
 
@@ -110,7 +111,7 @@ class Parser:
         if obs_time is None:
             print("obs_time not found")
             return obs_list
-        
+
         platform = self.platform(preamble)
         if platform is None:
             print("platform not found")
@@ -124,18 +125,19 @@ class Parser:
             obs_list = heeler.heeler_v1(buffer)
         elif classifier == "hound_1":
             pass
-            #hound = Hound(postgres)
-            #status = hound.hound_v1(buffer, load_log.id)
+            # hound = Hound(postgres)
+            # status = hound.hound_v1(buffer, load_log.id)
         else:
             print(f"unknown classifier:{classifier}")
-        
+
         for obs in obs_list:
             obs.file_name = file_name
             obs.obs_time = obs_time
-            obs.platform = platform 
-            obs.site = geoloc 
+            obs.platform = platform
+            obs.site = geoloc
 
         return obs_list
+
 
 class Driver:
     """mellow heeler file parser and database loader"""
@@ -169,7 +171,7 @@ class Driver:
         os.chdir(self.fresh_dir)
         targets = os.listdir(".")
         print(f"{len(targets)} files noted")
-  
+
         parser = Parser()
 
         failure_counter = 0
@@ -194,6 +196,7 @@ class Driver:
                 self.file_failure(target)
 
         print(f"success:{success_counter} failure:{failure_counter}")
+
 
 print("start parser")
 

@@ -1,6 +1,6 @@
 #
 # Title: heeler.py
-# Description: 
+# Description:
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
@@ -11,16 +11,18 @@ from yaml.loader import SafeLoader
 
 import observation
 
+
 class Heeler:
     """mellow heeler file parser"""
 
     def __init__(self):
         pass
 
-    def heeler_v1(self, buffer: list[str]) -> list[observation.Observation]:      
+    def heeler_v1(self, buffer: list[str]) -> list[observation.Observation]:
         parser = observation.Parser(buffer)
         results = parser.parser()
         return results
+
 
 #
 # argv[1] = configuration filename
@@ -38,11 +40,13 @@ if __name__ == "__main__":
             print(error)
             sys.exit(-1)
 
-#    export_dir = configuration["exportDir"]
-#    site = configuration["site"]
-#    host = configuration["host"]
+    #    export_dir = configuration["exportDir"]
+    #    site = configuration["site"]
+    #    host = configuration["host"]
 
-    file_name = "/Users/gsc/Documents/github/mellow-heeler/src/converter_rpi/sample2.scan"
+    file_name = (
+        "/Users/gsc/Documents/github/mellow-heeler/src/converter_rpi/sample2.scan"
+    )
     file_name = "/Users/gsc/Documents/github/mellow-heeler/samples/ffe08060-3068-4424-bd9d-d23507d53c87"
     file_name = "/Users/gsc/Documents/github/mellow-heeler/samples/capability_test"
 

@@ -11,6 +11,7 @@ import sys
 
 import observation
 
+
 class Observation:
     """container, helps prune duplicate items"""
 
@@ -41,10 +42,11 @@ class Observation:
             and self.frequency == other.frequency
         )
 
+
 class Parser:
     def __init__(self, raw: list[str]):
         self.raw = raw
-    
+
     def parse_capability(self, start_ndx: int, stop_ndx: int) -> str:
         results = {}
 
@@ -80,17 +82,17 @@ class Parser:
             else:
                 capabilities = f"[WPA2-{results['authentication_suite']}-{results['group_cipher']}]"
 
-# Cell 01 - Address: 6C:CD:D6:2A:62:06
-# [802.11-Auth Suite-Pair Cipher]
-# 00:22:6b:81:03:d9 | braingang2 | [WPA2-PSK-CCMP][ESS]
-# 6c:cd:d6:2a:62:05 | braingang2_5GEXT | [WPA2-PSK-CCMP][WPS][ESS]
-#
-#          IE: IEEE 802.11i/WPA2 Version 1
-#                        Group Cipher : CCMP
-#                        Pairwise Ciphers (1) : CCMP
-#                        Authentication Suites (1) : PSK
-    
-#        capabilities = "unknown"    
+        # Cell 01 - Address: 6C:CD:D6:2A:62:06
+        # [802.11-Auth Suite-Pair Cipher]
+        # 00:22:6b:81:03:d9 | braingang2 | [WPA2-PSK-CCMP][ESS]
+        # 6c:cd:d6:2a:62:05 | braingang2_5GEXT | [WPA2-PSK-CCMP][WPS][ESS]
+        #
+        #          IE: IEEE 802.11i/WPA2 Version 1
+        #                        Group Cipher : CCMP
+        #                        Pairwise Ciphers (1) : CCMP
+        #                        Authentication Suites (1) : PSK
+
+        #        capabilities = "unknown"
 
         return capabilities
 
@@ -168,6 +170,7 @@ class Parser:
                 obs_list.append(obs)
 
         return obs_list
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
