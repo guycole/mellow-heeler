@@ -1,4 +1,12 @@
-"""mellow heeler database table definitions"""
+#
+# Title: sql_table.py
+# Description: database table definitions
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
+# Author: G.S. Cole (guycole at gmail dot com)
+#
+# import sqlalchemy
+# from sqlalchemy import and_
+# from sqlalchemy import select
 
 from datetime import datetime, timezone
 
@@ -213,3 +221,7 @@ class Wap(Base):
             self.id = 0
 
         return "<wap(%d, %s, %d, %s)>" % (self.id, self.bssid, self.version, self.ssid)
+
+# ;;; Local Variables: ***
+# ;;; mode:python ***
+# ;;; End: ***

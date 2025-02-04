@@ -13,10 +13,12 @@ import sys
 import yaml
 from yaml.loader import SafeLoader
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 import heeler2
 import observation
-import postgres2
-
+import postgres
 
 class Parser:
     def classifier(self, preamble: dict[str, str]) -> str:
@@ -149,6 +151,9 @@ class Driver:
         self.failure_dir = configuration["failureDir"]
         self.fresh_dir = configuration["freshDir"]
 
+        db_engine = create_engine(self.db_conn, echo=True)
+        self.postgres = postgres.PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+
     def file_success(self, file_name: str):
         """file was successfully processed"""
 
@@ -181,14 +186,20 @@ class Driver:
             if os.path.isfile(target) is False:
                 continue
 
+            # test for duplicate file
+            selected = self.postgres.load_log_select(target)
+            if selected is not None:
+                print(f"skip duplicate file:{target}")
+                continue
+
             obs_list = parser.execute(target)
             if len(obs_list) > 0:
                 if self.dry_run is True:
                     print(f"skip database load for {target}")
                 else:
-                    postgres = postgres2.PostGres(self.db_conn)
-                    postgres.load_observations(obs_list)
-
+                    for obs in obs_list:
+                        inserted = self.postgres.observation_insert(obs)
+                
                 success_counter += 1
                 self.file_success(target)
             else:
@@ -196,7 +207,6 @@ class Driver:
                 self.file_failure(target)
 
         print(f"success:{success_counter} failure:{failure_counter}")
-
 
 print("start parser")
 
