@@ -21,7 +21,7 @@ class Observation:
         self.bssid = args["bssid"]
         self.capability = None
         self.file_name = None
-        self.frequency = args["frequency"]
+        self.frequency_mhz = args["frequency"]
         self.latitude = None
         self.longitude = None
         self.obs_time = None
@@ -39,7 +39,7 @@ class Observation:
         return (
             self.bssid == other.bssid
             and self.ssid == other.ssid
-            and self.frequency == other.frequency
+            and self.frequency_mhz == other.frequency_mhz
         )
 
 
@@ -102,8 +102,8 @@ class Parser:
         obs = {}
         obs["bssid"] = "unknown"
         obs["ssid"] = "unknown"
-        obs["frequency"] = 0
-        obs["time_stamp"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        obs["frequency_mhz"] = 0
+        obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         for ndx in range(start_ndx, stop_ndx + 1):
             line = self.raw[ndx].strip()
@@ -121,7 +121,7 @@ class Parser:
                 # Frequency:2.437 GHz (Channel 6)
                 temp1 = line.split()
                 temp2 = temp1[0].split(":")
-                obs["frequency"] = int(1000 * float(temp2[1]))
+                obs["frequency_mhz"] = int(1000 * float(temp2[1]))
 
         result = Observation(obs)
         return result
