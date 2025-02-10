@@ -1,5 +1,9 @@
-"""mellow heeler file parser and database loader"""
-
+#
+# Title: parser.py
+# Description: mellow heeler file parser and database loader
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
+# Author: G.S. Cole (guycole at gmail dot com)
+#
 import json
 import os
 import sys
@@ -93,7 +97,7 @@ class Parser:
 
         return status
 
-    def file_time_extractor(self, candidates:List[str]) -> Dict[str, str]:
+    def file_time_extractor(self, candidates: List[str]) -> Dict[str, str]:
         """extract observation timestamp from file"""
 
         results = {}
@@ -116,7 +120,7 @@ class Parser:
             elif classifier == "unknown":
                 continue
 
-            results[file_name] = time_stamp_ms            
+            results[file_name] = time_stamp_ms
 
         return results
 
@@ -149,17 +153,17 @@ class Parser:
         targets = os.listdir(".")
         print(f"{len(targets)} files noted")
 
-#        lastlast = 0
+        #        lastlast = 0
 
-#        raw_files_and_times = self.file_time_extractor(targets)
-#        sorted_files_and_times = {k: v for k, v in sorted(raw_files_and_times.items(), key=lambda item: item[1])}
-#        for target in sorted_files_and_times:
-#            print(f"{target}:{sorted_files_and_times[target]}")
+        #        raw_files_and_times = self.file_time_extractor(targets)
+        #        sorted_files_and_times = {k: v for k, v in sorted(raw_files_and_times.items(), key=lambda item: item[1])}
+        #        for target in sorted_files_and_times:
+        #            print(f"{target}:{sorted_files_and_times[target]}")
 
-#            if lastlast <= sorted_files_and_times[target]:
-#                lastlast = sorted_files_and_times[target]
-#            else:
-#                raise Exception("bogus")
+        #            if lastlast <= sorted_files_and_times[target]:
+        #                lastlast = sorted_files_and_times[target]
+        #            else:
+        #                raise Exception("bogus")
 
         for target in targets:
             if os.path.isfile(target) is False:

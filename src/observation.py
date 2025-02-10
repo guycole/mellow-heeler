@@ -9,14 +9,24 @@ import json
 import requests
 import sys
 
+import observation
+
 
 class Observation:
     """container, helps prune duplicate items"""
 
     def __init__(self, args: dict[str, any]):
+        self.altitude = None
         self.args = args
         self.bssid = args["bssid"]
-        self.frequency = args["frequency"]
+        self.capability = None
+        self.file_name = None
+        self.frequency_mhz = args["frequency"]
+        self.latitude = None
+        self.longitude = None
+        self.obs_time = None
+        self.platform = None
+        self.site = None
         self.ssid = args["ssid"]
 
     def __repr__(self):
@@ -29,7 +39,7 @@ class Observation:
         return (
             self.bssid == other.bssid
             and self.ssid == other.ssid
-            and self.frequency == other.frequency
+            and self.frequency_mhz == other.frequency_mhz
         )
 
 
@@ -37,11 +47,63 @@ class Parser:
     def __init__(self, raw: list[str]):
         self.raw = raw
 
+    def parse_capability(self, start_ndx: int, stop_ndx: int) -> str:
+        results = {}
+
+        for temp in range(start_ndx, stop_ndx + 1):
+            if "Encryption key" in self.raw[temp]:
+                if "Encryption key:on" in self.raw[temp]:
+                    results["encryption"] = True
+                else:
+                    results["encryption"] = False
+
+            if "Mode:Master" in self.raw[temp]:
+                results["mode"] = "master"
+
+            if "IE: WPA Version 1" in self.raw[temp]:
+                results["wpa"] = "wpa1v1"
+
+            if "IE: IEEE 802.11i/WPA2 Version 1" in self.raw[temp]:
+                results["wpa"] = "wpa2v1"
+
+            if "Authentication Suites" in self.raw[temp]:
+                results["authentication_suite"] = self.raw[temp].split(":")[1].strip()
+
+            if "Group Cipher" in self.raw[temp]:
+                results["group_cipher"] = self.raw[temp].split(":")[1].strip()
+
+            if "Pairwise Ciphers" in self.raw[temp]:
+                results["pair_cipher"] = self.raw[temp].split(":")[1].strip()
+
+        capabilities = "unknown"
+        if "wpa" in results:
+            if results["wpa"] == "wpa1v1":
+                pass
+            else:
+                capabilities = f"[WPA2-{results['authentication_suite']}-{results['group_cipher']}]"
+
+        # Cell 01 - Address: 6C:CD:D6:2A:62:06
+        # [802.11-Auth Suite-Pair Cipher]
+        # 00:22:6b:81:03:d9 | braingang2 | [WPA2-PSK-CCMP][ESS]
+        # 6c:cd:d6:2a:62:05 | braingang2_5GEXT | [WPA2-PSK-CCMP][WPS][ESS]
+        #
+        #          IE: IEEE 802.11i/WPA2 Version 1
+        #                        Group Cipher : CCMP
+        #                        Pairwise Ciphers (1) : CCMP
+        #                        Authentication Suites (1) : PSK
+
+        #        capabilities = "unknown"
+
+        return capabilities
+
     def parse_cell(self, start_ndx: int, stop_ndx: int) -> Observation:
         """parse a cell stanza"""
 
         obs = {}
-        obs["time_stamp"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        obs["bssid"] = "unknown"
+        obs["ssid"] = "unknown"
+        obs["frequency_mhz"] = 0
+        obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         for ndx in range(start_ndx, stop_ndx + 1):
             line = self.raw[ndx].strip()
@@ -59,7 +121,7 @@ class Parser:
                 # Frequency:2.437 GHz (Channel 6)
                 temp1 = line.split()
                 temp2 = temp1[0].split(":")
-                obs["frequency"] = int(1000 * float(temp2[1]))
+                obs["frequency_mhz"] = int(1000 * float(temp2[1]))
 
         result = Observation(obs)
         return result
@@ -94,7 +156,6 @@ class Parser:
 
         while True:
             (start_ndx, stop_ndx) = self.discover_indices(origin_ndx)
-
             # print(f"{start_ndx} {stop_ndx}")
 
             if start_ndx == stop_ndx:
@@ -105,6 +166,7 @@ class Parser:
 
             obs = self.parse_cell(start_ndx, stop_ndx)
             if obs not in obs_list:
+                obs.capability = self.parse_capability(start_ndx, stop_ndx)
                 obs_list.append(obs)
 
         return obs_list

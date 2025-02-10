@@ -1,4 +1,12 @@
-"""mellow heeler postgresql support"""
+#
+# Title: postgres.py
+# Description: postgresql support
+# Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
+# Author: G.S. Cole (guycole at gmail dot com)
+#
+# import sqlalchemy
+# from sqlalchemy import and_
+# from sqlalchemy import select
 
 import datetime
 import time
@@ -57,7 +65,9 @@ class PostGres:
     def box_score_select_daily(self, target_date: str) -> List[BoxScore]:
         """return all rows for a specific date"""
 
-        statement = select(BoxScore).filter_by(score_date=target_date).order_by(BoxScore.device)
+        statement = (
+            select(BoxScore).filter_by(score_date=target_date).order_by(BoxScore.device)
+        )
 
         results = []
 

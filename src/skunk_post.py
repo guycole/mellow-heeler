@@ -49,6 +49,7 @@ class Skunk:
         obs_list = parser.parser()
         self.skunk_post(obs_list)
 
+
 #
 # argv[1] = configuration filename
 #
@@ -61,12 +62,12 @@ if __name__ == "__main__":
     with open(file_name, "r") as stream:
         try:
             configuration = yaml.load(stream, Loader=SafeLoader)
-        except yaml.YAMLError as exc:
-            print(exc)
+        except yaml.YAMLError as error:
+            print(error)
 
     url = configuration["skunk_url"]
 
-    #file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
+    # file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
     file_name = "/tmp/iwlist.scan"
 
     skunk = Skunk(url)

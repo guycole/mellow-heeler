@@ -1,16 +1,34 @@
 #
+# repository of freshly collected observations
 freshDir: /var/mellow/heeler/fresh
+freshDir: /var/mellow/heeler/test
 #
-#site: anderson
+# repository of processed observations
+archiveDir: /var/mellow/heeler/archive
+#
+# repository of problem files
+failureDir: /var/mellow/heeler/failure
+#
+# collection host location
+#site: anderson1
 site: development
-#site: vallejo
+#site: vallejo1
 #
+# collection host
 host: rpi3a
 #host: rpi3c
 #
+# URL to post skunk update
 skunk_url: "http://localhost:8000/heeler/"
 skunk_url: "http://localhost/heeler/"
 #
+# URL to update wombat
 wombat_url: "http://localhost:8000/heeler/"
 wombat_url: "http://rpi5a/heeler/"
+#
+# dryRun true is parse only, not load database and not delete/move files
+dryRun: true
+#
+# database connection
+dbConn: "postgresql+psycopg2://heeler_py:bogus@localhost:5432/heeler_v1"
 #

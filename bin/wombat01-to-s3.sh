@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Title: s3-move.sh
-# Description: move files local file system to s3
+# Title: wombat01-to-s3.sh
+# Description: move heeler files local file system to s3
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
