@@ -21,7 +21,7 @@ class Observation:
         self.bssid = args["bssid"]
         self.capability = None
         self.file_name = None
-        self.frequency_mhz = args["frequency"]
+        self.frequency_mhz = args["frequency_mhz"]
         self.latitude = None
         self.longitude = None
         self.obs_time = None
