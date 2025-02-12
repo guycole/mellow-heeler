@@ -5,7 +5,7 @@
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
-# 1,11,21,31,41,51 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-collection.sh > /dev/null 2>&1
+# 1,11,21,31,41,51 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-process.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #

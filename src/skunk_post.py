@@ -65,13 +65,17 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    url = configuration["skunk_url"]
+    run_flag = configuration["skunkEnable"]
+    url = configuration["skunkUrl"]
 
     # file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
     file_name = "/tmp/iwlist.scan"
 
-    skunk = Skunk(url)
-    skunk.execute(file_name)
+    if run_flag:
+        skunk = Skunk(url)
+        skunk.execute(file_name)
+    else:
+        print("skunk post is disabled")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
