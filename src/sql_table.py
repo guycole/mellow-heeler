@@ -222,6 +222,7 @@ class Wap(Base):
 
         return "<wap(%d, %s, %d, %s)>" % (self.id, self.bssid, self.version, self.ssid)
 
+
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***

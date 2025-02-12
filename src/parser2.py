@@ -20,6 +20,7 @@ import heeler2
 import observation
 import postgres
 
+
 class Parser:
     def classifier(self, preamble: dict[str, str]) -> str:
         """discover file format, i.e. heeler_v1, etc"""
@@ -152,7 +153,9 @@ class Driver:
         self.fresh_dir = configuration["freshDir"]
 
         db_engine = create_engine(self.db_conn, echo=True)
-        self.postgres = postgres.PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        self.postgres = postgres.PostGres(
+            sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
     def file_success(self, file_name: str):
         """file was successfully processed"""
@@ -199,7 +202,7 @@ class Driver:
                 else:
                     for obs in obs_list:
                         inserted = self.postgres.observation_insert(obs)
-                
+
                 success_counter += 1
                 self.file_success(target)
             else:
@@ -207,6 +210,7 @@ class Driver:
                 self.file_failure(target)
 
         print(f"success:{success_counter} failure:{failure_counter}")
+
 
 print("start parser")
 

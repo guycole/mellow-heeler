@@ -7,6 +7,7 @@
 import logging
 import json
 import os
+import pygpsd
 import sys
 import time
 import uuid
@@ -16,18 +17,49 @@ from yaml.loader import SafeLoader
 
 
 class Converter(object):
-    def __init__(self, fresh_dir: str, host: str, site: str):
+    def __init__(self, fresh_dir: str, gps_flag: bool, host: str, site: str):
         self.fresh_dir = fresh_dir
+        self.gps_flag = gps_flag
         self.host = host
         self.site = site
 
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
 
-    def get_preamble(self) -> dict[str, any]:
-        geo_loc = {}
-        geo_loc["site"] = self.site
+    def get_geoloc(self) -> dict[str, any]:
+        results = {}
+        results["site"] = self.site
 
+        if self.gps_flag:
+            print("...must read GPS...")
+
+            gpsd = pygpsd.GPSD()
+            datum = gpsd.poll()
+            if datum is None:
+                print("...gpsd returns none...")
+            else:
+                errors = {}
+                errors["epc"] = datum.geo.errors.epc
+                errors["epd"] = datum.geo.errors.epd
+                errors["eph"] = datum.geo.errors.eph
+                errors["epv"] = datum.geo.errors.epv
+                errors["epx"] = datum.geo.errors.epx
+                errors["epy"] = datum.geo.errors.epy
+
+                results["mode"] = int(datum.mode)
+                results["altitude"] = datum.geo.position.altitude
+                results["errors"] = errors
+                results["latitude"] = datum.geo.position.latitude
+                results["longitude"] = datum.geo.position.longitude
+                results["speed"] = datum.geo.trajectory.speed
+                results["fixTime"] = int(datum.time.timestamp())
+                results["track"] = datum.geo.trajectory.track
+        else:
+            print("...skipping GPS read...")
+
+        return results
+
+    def get_preamble(self) -> dict[str, any]:
         preamble = {}
         preamble["wifi"] = []
         preamble["project"] = "heeler"
@@ -35,16 +67,9 @@ class Converter(object):
         preamble["platform"] = self.host
         preamble["zTimeMs"] = round(time.time() * 1000)
 
-        preamble["geoLoc"] = geo_loc
+        preamble["geoLoc"] = self.get_geoloc()
 
         return preamble
-
-    def converter(self, buffer: list[str]):
-        with open(self.get_filename(), "w") as outfile:
-            json_preamble = json.dumps(self.get_preamble())
-            outfile.write(json_preamble + "\n")
-            outfile.write("RAWBUFFER\n")
-            outfile.writelines(buffer)
 
     def execute(self, file_name: str):
         with open(file_name, "r") as infile:
@@ -86,10 +111,11 @@ if __name__ == "__main__":
             print(error)
 
     fresh_dir = configuration["freshDir"]
+    gps_flag = configuration["gpsEnable"]
     host = configuration["host"]
     site = configuration["site"]
 
-    converter = Converter(fresh_dir, host, site)
+    converter = Converter(fresh_dir, gps_flag, host, site)
     converter.execute("/tmp/iwlist.scan")
 
 # ;;; Local Variables: ***
