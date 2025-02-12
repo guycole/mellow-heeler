@@ -20,6 +20,7 @@ site: development
 #host: rpi3c
 host: rpi3d
 #
+skunkEnable: False
 # URL to post skunk update
 skunkUrl: "http://localhost:8000/heeler/"
 skunkUrl: "http://localhost/heeler/"
