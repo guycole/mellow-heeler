@@ -33,8 +33,21 @@ class Converter(object):
         if self.gps_flag:
             print("...must read GPS...")
 
+            attempt = 3
             gpsd = pygpsd.GPSD()
-            datum = gpsd.poll()
+            while attempt > 0:
+                time.sleep(3)
+                
+                datum = gpsd.poll()
+                if datum.mode == 3: # fix
+                    attempt = 0
+                else:
+                    print("sleeping for another attempt")
+                    attempt = attempt - 1
+                    datum = None
+                    time.sleep(3)
+                    
+                
             if datum is None:
                 print("...gpsd returns none...")
             else:
@@ -57,6 +70,7 @@ class Converter(object):
         else:
             print("...skipping GPS read...")
 
+        print(results)
         return results
 
     def get_preamble(self) -> dict[str, any]:
