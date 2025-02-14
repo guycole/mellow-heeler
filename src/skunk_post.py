@@ -36,14 +36,14 @@ class Skunk:
     def execute(self, file_name: str) -> None:
         buffer = []
 
-        with open(file_name, "r") as infile:
-            try:
+        try:
+            with open(file_name, "r") as infile:
                 buffer = infile.readlines()
                 if len(buffer) < 3:
                     print("empty file noted")
                     return
-            except Exception as error:
-                print(error)
+        except Exception as error:
+            print(error)
 
         parser = Parser(buffer)
         obs_list = parser.parser()

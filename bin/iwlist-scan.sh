@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Title: rpi-iwlist.sh
+# Title: iwlist-scan.sh
 # Description: scan for wireless access points
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
 # must run from root crontab or iwlist will not use wlan1
-# */10 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-iwlist.sh > /dev/null 2>&1
+# * * * * * /home/gsc/Documents/github/mellow-heeler/bin/iwlist-scan.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
