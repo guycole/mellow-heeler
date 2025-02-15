@@ -5,10 +5,7 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import gps_wrapper
-import logging
 import json
-import os
-import pygpsd
 import sys
 import time
 import uuid
@@ -60,7 +57,7 @@ class Converter(object):
             with open(file_name, "r") as infile:
                 buffer = infile.readlines()
                 if len(buffer) < 3:
-                    print("empty file noted")
+                    print("empty scan file noted")
                     return
         except Exception as error:
             print(error)

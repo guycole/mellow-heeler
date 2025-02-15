@@ -4,13 +4,10 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import logging
 import json
-import os
 import pygpsd
 import sys
 import time
-import uuid
 import yaml
 
 from yaml.loader import SafeLoader
