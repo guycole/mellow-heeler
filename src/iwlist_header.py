@@ -1,13 +1,11 @@
 #
-# Title: rpi_iwlist.py
-# Description: rpi append a json header to iwlist scan output
+# Title: iwlist_header.py
+# Description: append a json header to iwlist scan output
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import logging
+import gps_wrapper
 import json
-import os
-import pygpsd
 import sys
 import time
 import uuid
@@ -26,40 +24,16 @@ class Converter(object):
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
 
-    def get_geoloc(self) -> dict[str, any]:
+    def get_geoloc(self, gps_sample: gps_wrapper.GpsSample) -> dict[str, any]:
         results = {}
+
+        if gps_sample is not None:
+            results = gps_sample.elements
+
         results["site"] = self.site
-
-        if self.gps_flag:
-            print("...must read GPS...")
-
-            gpsd = pygpsd.GPSD()
-            datum = gpsd.poll()
-            if datum is None:
-                print("...gpsd returns none...")
-            else:
-                errors = {}
-                errors["epc"] = datum.geo.errors.epc
-                errors["epd"] = datum.geo.errors.epd
-                errors["eph"] = datum.geo.errors.eph
-                errors["epv"] = datum.geo.errors.epv
-                errors["epx"] = datum.geo.errors.epx
-                errors["epy"] = datum.geo.errors.epy
-
-                results["mode"] = int(datum.mode)
-                results["altitude"] = datum.geo.position.altitude
-                results["errors"] = errors
-                results["latitude"] = datum.geo.position.latitude
-                results["longitude"] = datum.geo.position.longitude
-                results["speed"] = datum.geo.trajectory.speed
-                results["fixTime"] = int(datum.time.timestamp())
-                results["track"] = datum.geo.trajectory.track
-        else:
-            print("...skipping GPS read...")
-
         return results
 
-    def get_preamble(self) -> dict[str, any]:
+    def get_preamble(self, gps_sample: gps_wrapper.GpsSample) -> dict[str, any]:
         preamble = {}
         preamble["wifi"] = []
         preamble["project"] = "heeler"
@@ -67,32 +41,39 @@ class Converter(object):
         preamble["platform"] = self.host
         preamble["zTimeMs"] = round(time.time() * 1000)
 
-        preamble["geoLoc"] = self.get_geoloc()
+        preamble["geoLoc"] = self.get_geoloc(gps_sample)
 
         return preamble
 
     def execute(self, file_name: str):
-        with open(file_name, "r") as infile:
-            try:
+        gps_sample = None
+        if self.gps_flag:
+            wrapper = gps_wrapper.GpsWrapper()
+            gps_sample = wrapper.run_test()
+            if gps_sample is None:
+                return
+
+        try:
+            with open(file_name, "r") as infile:
                 buffer = infile.readlines()
                 if len(buffer) < 3:
-                    print("empty file noted")
+                    print("empty scan file noted")
                     return
-            except Exception as error:
-                print(error)
+        except Exception as error:
+            print(error)
 
-        json_preamble = json.dumps(self.get_preamble())
+        json_preamble = json.dumps(self.get_preamble(gps_sample))
 
         file_name = self.get_filename()
         print(f"filename: {file_name}")
 
-        with open(file_name, "w") as outfile:
-            try:
+        try:
+            with open(file_name, "w") as outfile:
                 outfile.write(json_preamble + "\n")
                 outfile.write("RAWBUFFER\n")
                 outfile.writelines(buffer)
-            except Exception as error:
-                print(error)
+        except Exception as error:
+            print(error)
 
 
 #

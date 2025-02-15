@@ -4,8 +4,6 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import datetime
-import json
 import requests
 import sys
 import yaml
@@ -36,14 +34,14 @@ class Skunk:
     def execute(self, file_name: str) -> None:
         buffer = []
 
-        with open(file_name, "r") as infile:
-            try:
+        try:
+            with open(file_name, "r") as infile:
                 buffer = infile.readlines()
                 if len(buffer) < 3:
-                    print("empty file noted")
+                    print("empty scan file noted")
                     return
-            except Exception as error:
-                print(error)
+        except Exception as error:
+            print(error)
 
         parser = Parser(buffer)
         obs_list = parser.parser()
