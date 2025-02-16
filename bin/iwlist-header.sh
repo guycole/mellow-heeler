@@ -1,21 +1,24 @@
 #!/bin/bash
 #
-# Title: rpi-process.sh
+# Title: iwlist-header.sh
 # Description: process output from iwlist(8) scan
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
-# 1,11,21,31,41,51 * * * * /home/gsc/Documents/github/mellow-heeler/bin/rpi-collection.sh > /dev/null 2>&1
+# * * * * * /home/gsc/Documents/github/mellow-heeler/bin/iwlist-header.sh > /dev/null 2>&1
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 FILENAME="/tmp/iwlist.scan"
 HOME_DIR="/home/gsc/Documents/github"
 #
+echo "sleeping for iwlist"
+sleep 20 
+#
 echo "start conversion"
 cd $HOME_DIR/mellow-heeler/src
 source venv/bin/activate
-python3 ./rpi_iwlist.py
+python3 ./iwlist_header.py
 echo "end conversion"
 #
 echo "start skunk post"

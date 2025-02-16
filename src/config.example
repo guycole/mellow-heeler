@@ -12,23 +12,28 @@ failureDir: /var/mellow/heeler/failure
 # collection host location
 #site: anderson1
 site: development
+#site: mobile
 #site: vallejo1
 #
 # collection host
-host: rpi3a
+#host: rpi3a
 #host: rpi3c
+host: rpi3d
 #
+skunkEnable: False
 # URL to post skunk update
-skunk_url: "http://localhost:8000/heeler/"
-skunk_url: "http://localhost/heeler/"
+skunkUrl: "http://localhost:8000/heeler/"
+skunkUrl: "http://localhost/heeler/"
 #
 # URL to update wombat
-wombat_url: "http://localhost:8000/heeler/"
-wombat_url: "http://rpi5a/heeler/"
+wombatUrl: "http://localhost:8000/heeler/"
+wombatUrl: "http://rpi5a/heeler/"
 #
 # dryRun true is parse only, not load database and not delete/move files
 dryRun: true
 #
 # database connection
 dbConn: "postgresql+psycopg2://heeler_py:bogus@localhost:5432/heeler_v1"
+#
+gpsEnable: true
 #

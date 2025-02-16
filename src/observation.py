@@ -5,11 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import json
-import requests
-import sys
-
-import observation
 
 
 class Observation:
