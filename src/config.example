@@ -12,7 +12,7 @@ failureDir: /var/mellow/heeler/failure
 # collection host location
 #site: anderson1
 site: development
-#site: mobile
+#site: mobile1
 #site: vallejo1
 #
 # collection host
