@@ -7,7 +7,7 @@
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin:~/.local/bin; export PATH
 #
-DEST="gsc@rpi5a:/mnt/pp1/gsc/mellow/heeler"
+DEST="gsc@rpi5a:/mnt/pp1/gsc/mellow/heeler/fresh"
 SRC="/var/mellow/heeler/fresh"
 #
 echo "start transfer"
