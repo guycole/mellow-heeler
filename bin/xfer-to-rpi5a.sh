@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Title: xfer-to-wombat.sh
-# Description: move local files to wombat, needs ssh authorized_keys for $DEST
+# Title: xfer-to-rpi5a.sh
+# Description: move local files to rpi5a, needs ssh authorized_keys for $DEST
 # Development Environment: Debian 10 (buster)/raspian
 # Author: Guy Cole (guycole at gmail dot com)
 #
