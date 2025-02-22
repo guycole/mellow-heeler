@@ -1,5 +1,5 @@
 #
-# Title: skunk.py
+# Title: wombat.py
 # Description: parse iwlist and extract elements
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)

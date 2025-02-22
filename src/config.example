@@ -1,13 +1,18 @@
 #
-# repository of freshly collected observations
-freshDir: /var/mellow/heeler/fresh
-freshDir: /var/mellow/heeler/test
-#
 # repository of processed observations
 archiveDir: /var/mellow/heeler/archive
 #
+# export to AWS
+exportDir: /var/mellow/heeler/export
+#
 # repository of problem files
 failureDir: /var/mellow/heeler/failure
+#
+# repository of freshly collected observations
+freshDir: /var/mellow/heeler/fresh
+#
+# test artifacts
+testDir: /var/mellow/heeler/test
 #
 # collection host location
 #site: anderson1

@@ -1,0 +1,17 @@
+rpi5a is pg15
+
+# as postgres user
+create tablespace heeler location '/mnt/pp1/postgres/heeler';
+create user heeler_admin with encrypted password 'woofwoof';
+create user heeler_client with encrypted password 'batabat';
+create database heeler owner heeler_admin tablespace heeler locale 'C.utf8' template template0;
+
+# as heeler_admin
+create schema heeler_v1;
+grant usage on schema heeler_v1 to heeler_client;
+
+#
+psql -h localhost -p 5432 -U heeler_admin -d heeler
+
+https://stackoverflow.com/questions/17338621/what-does-grant-usage-on-schema-do-exactly
+grant usage on schema heeler_v1 to heeler_client;

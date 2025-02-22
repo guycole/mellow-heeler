@@ -68,7 +68,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    url = configuration["wombat_url"]
+    url = configuration["wombatUrl"]
 
     file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
     #    file_name = "/tmp/iwlist.scan"

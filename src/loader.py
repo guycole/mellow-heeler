@@ -1,6 +1,6 @@
 #
-# Title: parser.py
-# Description: mellow heeler file parser and database loader
+# Title: loader.py
+# Description: parser mellow heeler files and load to postgresql
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
@@ -58,8 +58,11 @@ class Parser:
             if "site" in temp:
                 if temp["site"].startswith("and"):
                     return "anderson1"
-                if temp["site"].startswith("val"):
+                elif temp["site"].startswith("val"):
                     return "vallejo1"
+                elif temp["site"] == "development":
+                    print("skipping observation from development")
+                    return None
 
         return None
 
@@ -97,47 +100,47 @@ class Parser:
         obs_list = []
 
         buffer = self.file_reader(file_name)
-        if len(buffer) < 1:
-            return obs_list
+        if len(buffer) < 2:
+            return None
 
         preamble = self.preamble(buffer)
         if len(preamble) < 1:
             print("preamble not found")
-            return obs_list
+            return None
 
         geoloc = self.geo_location(preamble)
         if geoloc is None:
             print("geoloc not found")
-            return obs_list
+            return None
 
         obs_time = self.obs_time(preamble)
         if obs_time is None:
             print("obs_time not found")
-            return obs_list
+            return None
 
         platform = self.platform(preamble)
         if platform is None:
             print("platform not found")
-            return obs_list
+            return None
 
         classifier = self.classifier(preamble)
         print(f"file:{file_name} classifier:{classifier}")
 
-        if classifier == "heeler_1":
-            heeler = heeler2.Heeler()
-            obs_list = heeler.heeler_v1(buffer)
-        elif classifier == "hound_1":
-            pass
-            # hound = Hound(postgres)
-            # status = hound.hound_v1(buffer, load_log.id)
-        else:
-            print(f"unknown classifier:{classifier}")
-
-        for obs in obs_list:
-            obs.file_name = file_name
-            obs.obs_time = obs_time
-            obs.platform = platform
-            obs.site = geoloc
+#        if classifier == "heeler_1":
+#            heeler = heeler2.Heeler()
+#            obs_list = heeler.heeler_v1(buffer)
+#        elif classifier == "hound_1":
+#            pass
+#            # hound = Hound(postgres)
+#            # status = hound.hound_v1(buffer, load_log.id)
+#        else:
+#            print(f"unknown classifier:{classifier}")
+#
+ #       for obs in obs_list:
+ #           obs.file_name = file_name
+ #           obs.obs_time = obs_time
+ #           obs.platform = platform
+ #           obs.site = geoloc
 
         return obs_list
 
@@ -152,10 +155,9 @@ class Driver:
         self.failure_dir = configuration["failureDir"]
         self.fresh_dir = configuration["freshDir"]
 
-        db_engine = create_engine(self.db_conn, echo=True)
-        self.postgres = postgres.PostGres(
-            sessionmaker(bind=db_engine, expire_on_commit=False)
-        )
+        connect_dict = {'options': '-csearch_path={}'.format('heeler_v1')}
+        db_engine = create_engine(self.db_conn, echo=True, connect_args = connect_dict)
+        self.postgres = postgres.PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
     def file_success(self, file_name: str):
         """file was successfully processed"""
@@ -196,7 +198,10 @@ class Driver:
                 continue
 
             obs_list = parser.execute(target)
-            if len(obs_list) > 0:
+            if obs_list is None:
+                failure_counter += 1
+                self.file_failure(target)
+            else:
                 if self.dry_run is True:
                     print(f"skip database load for {target}")
                 else:
@@ -205,9 +210,6 @@ class Driver:
 
                 success_counter += 1
                 self.file_success(target)
-            else:
-                failure_counter += 1
-                self.file_failure(target)
 
         print(f"success:{success_counter} failure:{failure_counter}")
 
