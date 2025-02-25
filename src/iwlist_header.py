@@ -9,8 +9,10 @@ import json
 import sys
 import time
 import uuid
-import yaml
 
+from preamble import Preamble
+
+import yaml
 from yaml.loader import SafeLoader
 
 
@@ -23,27 +25,6 @@ class Converter(object):
 
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
-
-    def get_geoloc(self, gps_sample: gps_wrapper.GpsSample) -> dict[str, any]:
-        results = {}
-
-        if gps_sample is not None:
-            results = gps_sample.elements
-
-        results["site"] = self.site
-        return results
-
-    def get_preamble(self, gps_sample: gps_wrapper.GpsSample) -> dict[str, any]:
-        preamble = {}
-        preamble["wifi"] = []
-        preamble["project"] = "heeler"
-        preamble["version"] = 1
-        preamble["platform"] = self.host
-        preamble["zTimeMs"] = round(time.time() * 1000)
-
-        preamble["geoLoc"] = self.get_geoloc(gps_sample)
-
-        return preamble
 
     def execute(self, file_name: str):
         gps_sample = None
@@ -62,7 +43,8 @@ class Converter(object):
         except Exception as error:
             print(error)
 
-        json_preamble = json.dumps(self.get_preamble(gps_sample))
+        preamble = Preamble()
+        json_preamble = json.dumps(preamble.create_preamble(self.host, self.site, gps_sample))
 
         file_name = self.get_filename()
         print(f"filename: {file_name}")
@@ -74,7 +56,6 @@ class Converter(object):
                 outfile.writelines(buffer)
         except Exception as error:
             print(error)
-
 
 #
 # argv[1] = configuration filename
