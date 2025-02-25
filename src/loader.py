@@ -60,8 +60,13 @@ class Parser:
                     return "anderson1"
                 elif temp["site"].startswith("val"):
                     return "vallejo1"
+                elif temp["site"].startswith("mobile"):
+                    return "mobile1"
                 elif temp["site"] == "development":
                     print("skipping observation from development")
+                    return None
+                else:
+                    print(f"geoloc unknown site: {temp["site"]}")
                     return None
 
         return None
@@ -154,9 +159,10 @@ class Driver:
         self.archive_dir = configuration["archiveDir"]
         self.failure_dir = configuration["failureDir"]
         self.fresh_dir = configuration["freshDir"]
+        self.sql_echo = configuration["sqlEchoEnable"]
 
         connect_dict = {'options': '-csearch_path={}'.format('heeler_v1')}
-        db_engine = create_engine(self.db_conn, echo=True, connect_args = connect_dict)
+        db_engine = create_engine(self.db_conn, echo=self.sql_echo, connect_args = connect_dict)
         self.postgres = postgres.PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
     def file_success(self, file_name: str):

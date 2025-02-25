@@ -250,12 +250,17 @@ class PostGres:
     def load_log_select(self, file_name: str) -> LoadLog:
         """load_log select row"""
 
-        statement = select(LoadLog).filter_by(file_name=file_name)
-
         with self.Session() as session:
-            rows = session.scalars(statement).all()
+            rows = session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
             for row in rows:
                 return row
+
+#        statement = select(LoadLog).filter_by(file_name=file_name)
+
+#        with self.Session() as session:
+#            rows = session.scalars(statement).all()
+#            for row in rows:
+#                return row
 
         return None
 

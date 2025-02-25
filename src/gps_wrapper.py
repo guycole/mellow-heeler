@@ -102,7 +102,7 @@ class GpsWrapper:
             print("unable to obtain GPS datum")
             return None
 
-        if sample.get_speed() > 10.0:
+        if sample.get_speed() > 4.0: # meters per second, 9 mph
             print("speed threshold met, must take sample")
             self.idle_writer(self.idle_limit)
             return sample
