@@ -1,2 +1,0 @@
-loader/reporter writes to archive
-wombat writes to export

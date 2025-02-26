@@ -1,6 +1,6 @@
 #
-# Title: gps_wrapper.py
-# Description: gps logic
+# Title: gps_helper.py
+# Description: gps helper
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
@@ -11,7 +11,6 @@ import time
 import yaml
 
 from yaml.loader import SafeLoader
-
 
 class GpsSample:
     elements = {}
@@ -58,7 +57,6 @@ class GpsSample:
                 json.dump(self.elements, outfile, indent=4)
         except Exception as error:
             print(error)
-
 
 class GpsWrapper:
     file_name = "/tmp/gps.counter"
@@ -124,7 +122,6 @@ class GpsWrapper:
             print("skipping collection")
         else:
             print("work to do")
-
 
 #
 # argv[1] = configuration filename

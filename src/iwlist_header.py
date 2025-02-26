@@ -4,13 +4,14 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import gps_wrapper
+from gps_helper import GpsSample, GpsWrapper
+from observation import Observation, Parser
+from preamble import PreambleHelper
+
 import json
 import sys
 import time
 import uuid
-
-from preamble import Preamble
 
 import yaml
 from yaml.loader import SafeLoader
@@ -29,7 +30,7 @@ class Converter(object):
     def execute(self, file_name: str):
         gps_sample = None
         if self.gps_flag:
-            wrapper = gps_wrapper.GpsWrapper()
+            wrapper = GpsWrapper()
             gps_sample = wrapper.run_test()
             if gps_sample is None:
                 return
@@ -43,8 +44,24 @@ class Converter(object):
         except Exception as error:
             print(error)
 
-        preamble = Preamble()
-        json_preamble = json.dumps(preamble.create_preamble(self.host, self.site, gps_sample))
+        parser = Parser(buffer)
+        observations = parser.parser()
+
+        obs_list = []
+        for obs in observations:
+            temp = {}
+            temp["bssid"] = obs.bssid
+            temp["capability"] = "unknown"
+            temp["frequency_mhz"] = obs.frequency_mhz
+            temp["signal_dbm"] = obs.signal_dbm
+            temp["ssid"] = obs.ssid
+            obs_list.append(temp)
+
+        helper = PreambleHelper()
+        preamble = helper.create_preamble(self.host, self.site, gps_sample)
+        preamble['wifi'] = obs_list
+        
+        json_preamble = json.dumps(preamble)
 
         file_name = self.get_filename()
         print(f"filename: {file_name}")

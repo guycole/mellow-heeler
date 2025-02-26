@@ -4,7 +4,7 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-from preamble import Preamble
+from preamble import PreambleHelper
 
 from unittest import TestCase
 
@@ -13,7 +13,7 @@ class TestPreamble(TestCase):
     def test_bogus_geoloc(self):
         geo_loc = {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}
 
-        preamble = Preamble()
+        preamble = PreambleHelper()
 
         # missing site
         geo_loc = {}
@@ -37,7 +37,7 @@ class TestPreamble(TestCase):
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1708591321764}
  
-        preamble = Preamble()
+        preamble = PreambleHelper()
         result = preamble.validate_preamble(candidate)
         assert result is None
 
@@ -45,7 +45,7 @@ class TestPreamble(TestCase):
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
         candidate = {"wifi": [], "project": "heeler", "version": 1, "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
      
-        preamble = Preamble()
+        preamble = PreambleHelper()
         result = preamble.validate_preamble(candidate)
         assert result is None
 
@@ -53,7 +53,7 @@ class TestPreamble(TestCase):
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
         candidate = {"wifi": [], "version": 1, "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
 
-        preamble = Preamble()
+        preamble = PreambleHelper()
         result = preamble.validate_preamble(candidate)
         assert result is None
 
@@ -61,7 +61,7 @@ class TestPreamble(TestCase):
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
         candidate = {"wifi": [], "project": "heeler", "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
     
-        preamble = Preamble()
+        preamble = PreambleHelper()
         result = preamble.validate_preamble(candidate)
         assert result is None
 
@@ -69,7 +69,7 @@ class TestPreamble(TestCase):
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "zTimeMs": 1708591321764, "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
         candidate = {"wifi": [], "project": "heeler", "version": 1, "platform": "rpi", "geoLoc": {"site": "vallejo", "latitude": 38.1085, "longitude": -122.268}}
 
-        preamble = Preamble()
+        preamble = PreambleHelper()
         result = preamble.validate_preamble(candidate)
         assert result is None
 

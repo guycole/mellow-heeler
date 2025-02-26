@@ -5,13 +5,13 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import gps_wrapper
+import gps_helper
 import pytz
 import time
 
-class Preamble:
+class PreambleHelper:
 
-    def create_preamble(self, host: str, site: str, gps_sample: gps_wrapper.GpsSample) -> dict[str, any]:
+    def create_preamble(self, host: str, site: str, gps_sample: gps_helper.GpsSample) -> dict[str, any]:
         """ create a fresh heeler preamble """
 
         preamble = {}
@@ -25,7 +25,9 @@ class Preamble:
 
         return preamble
 
-    def get_geoloc(self, site: str, gps_sample: gps_wrapper.GpsSample) -> dict[str, any]:
+    def get_geoloc(self, site: str, gps_sample: gps_helper.GpsSample) -> dict[str, any]:
+        """ return geoLoc preamble element """
+        
         results = {}
 
         if site is None:
@@ -111,7 +113,7 @@ class Preamble:
                     print("skipping observation from development")
                     return None
                 else:
-                    print(f"geoloc unknown site: {temp["site"]}")
+                    print(f"geoloc unknown site: {temp['site']}")
                     return None
 
         return None

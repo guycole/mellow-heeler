@@ -22,6 +22,7 @@ class Observation:
         self.obs_time = None
         self.platform = None
         self.site = None
+        self.signal_dbm = args["signal_dbm"]
         self.ssid = args["ssid"]
 
     def __repr__(self):
@@ -98,6 +99,7 @@ class Parser:
         obs["bssid"] = "unknown"
         obs["ssid"] = "unknown"
         obs["frequency_mhz"] = 0
+        obs["signal_dbm"] = 0
         obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         for ndx in range(start_ndx, stop_ndx + 1):
@@ -117,6 +119,11 @@ class Parser:
                 temp1 = line.split()
                 temp2 = temp1[0].split(":")
                 obs["frequency_mhz"] = int(1000 * float(temp2[1]))
+            elif "Quality" in line:
+                # Quality=49/70  Signal level=-61 dBm
+                temp1 = line.split()
+                temp2 = temp1[2].split("=")
+                obs["signal_dbm"] = int(temp2[1].strip())
 
         result = Observation(obs)
         return result
