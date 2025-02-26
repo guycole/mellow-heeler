@@ -5,6 +5,7 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 from gps_helper import GpsSample, GpsWrapper
+from iwlist_converter import Converter
 from observation import Observation, Parser
 from preamble import PreambleHelper
 
@@ -17,7 +18,7 @@ import yaml
 from yaml.loader import SafeLoader
 
 
-class Converter(object):
+class Header:
     def __init__(self, fresh_dir: str, gps_flag: bool, host: str, site: str):
         self.fresh_dir = fresh_dir
         self.gps_flag = gps_flag
@@ -35,31 +36,22 @@ class Converter(object):
             if gps_sample is None:
                 return
 
-        try:
-            with open(file_name, "r") as infile:
-                buffer = infile.readlines()
-                if len(buffer) < 3:
-                    print("empty scan file noted")
-                    return
-        except Exception as error:
-            print(error)
-
-        parser = Parser(buffer)
-        observations = parser.parser()
-
-        obs_list = []
-        for obs in observations:
-            temp = {}
-            temp["bssid"] = obs.bssid
-            temp["capability"] = "unknown"
-            temp["frequency_mhz"] = obs.frequency_mhz
-            temp["signal_dbm"] = obs.signal_dbm
-            temp["ssid"] = obs.ssid
-            obs_list.append(temp)
+        converter = Converter()
+#        observations = converter(file_name)
+#
+#        obs_list = []
+#        for obs in observations:
+#            temp = {}
+#            temp["bssid"] = obs.bssid
+#            temp["capability"] = "unknown"
+#            temp["frequency_mhz"] = obs.frequency_mhz
+#            temp["signal_dbm"] = obs.signal_dbm
+#            temp["ssid"] = obs.ssid
+#            obs_list.append(temp)
 
         helper = PreambleHelper()
         preamble = helper.create_preamble(self.host, self.site, gps_sample)
-        preamble['wifi'] = obs_list
+#        preamble['wifi'] = obs_list
         
         json_preamble = json.dumps(preamble)
 
@@ -70,7 +62,7 @@ class Converter(object):
             with open(file_name, "w") as outfile:
                 outfile.write(json_preamble + "\n")
                 outfile.write("RAWBUFFER\n")
-                outfile.writelines(buffer)
+#                outfile.writelines(buffer)
         except Exception as error:
             print(error)
 
@@ -94,8 +86,8 @@ if __name__ == "__main__":
     host = configuration["host"]
     site = configuration["site"]
 
-    converter = Converter(fresh_dir, gps_flag, host, site)
-    converter.execute("/tmp/iwlist.scan")
+    header = Header(fresh_dir, gps_flag, host, site)
+    header.execute("/tmp/iwlist.scan")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

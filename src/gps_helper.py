@@ -105,7 +105,7 @@ class GpsWrapper:
             self.idle_writer(self.idle_limit)
             return sample
 
-        # must be stationary, sample every ten attempts
+        # if stationary, sample every ten attempts
         ndx = self.idle_reader()
         if ndx < 1:
             print("return idle sample")
