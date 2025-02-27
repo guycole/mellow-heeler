@@ -11,21 +11,36 @@ import sys
 import time
 import uuid
 
+
 class Converter(object):
+    raw_buffer = []
+
+    def file_name(self, dir_name: str) -> str:
+        return "%s/%s" % (dir_name, str(uuid.uuid4()))
 
     def file_reader(self, file_name: str) -> list[str]:
-        buffer = []
-        
         try:
             with open(file_name, "r", encoding="utf-8") as in_file:
-                buffer = in_file.readlines()
-                if len(buffer) < 3:
+                self.raw_buffer = in_file.readlines()
+                if len(self.raw_buffer) < 3:
                     print("empty scan file noted")
-                    return []
+                    self.raw_buffer = []
         except Exception as error:
             print(error)
 
-        return buffer
+        return self.raw_buffer
+
+    def file_writer(self, dir_name: str, json_preamble: str) -> None:
+        file_name = self.file_name(dir_name)
+        print(f"output filename: {file_name}")
+
+        try:
+            with open(file_name, "w") as outfile:
+                outfile.write(json_preamble + "\n")
+                outfile.write("RAWBUFFER\n")
+                outfile.writelines(self.raw_buffer)
+        except Exception as error:
+            print(error)
 
     def converter(self, file_name: str) -> list[dict[str, any]]:
         buffer = self.file_reader(file_name)
@@ -34,7 +49,7 @@ class Converter(object):
 
         parser = Parser(buffer)
         observations = parser.parser()
-    
+
         obs_list = []
         for obs in observations:
             temp = {}
@@ -46,6 +61,7 @@ class Converter(object):
             obs_list.append(temp)
 
         return obs_list
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

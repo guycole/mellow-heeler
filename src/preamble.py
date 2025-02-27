@@ -9,13 +9,16 @@ import gps_helper
 import pytz
 import time
 
+
 class PreambleHelper:
 
-    def create_preamble(self, host: str, site: str, gps_sample: gps_helper.GpsSample) -> dict[str, any]:
-        """ create a fresh heeler preamble """
+    def create_preamble(
+        self, host: str, site: str, gps_sample: gps_helper.GpsSample
+    ) -> dict[str, any]:
+        """create a fresh heeler preamble"""
 
         preamble = {}
-   
+
         preamble["geoLoc"] = self.get_geoloc(site, gps_sample)
         preamble["platform"] = host
         preamble["project"] = "heeler"
@@ -26,8 +29,8 @@ class PreambleHelper:
         return preamble
 
     def get_geoloc(self, site: str, gps_sample: gps_helper.GpsSample) -> dict[str, any]:
-        """ return geoLoc preamble element """
-        
+        """return geoLoc preamble element"""
+
         results = {}
 
         if site is None:
@@ -42,7 +45,7 @@ class PreambleHelper:
         return results
 
     def validate_preamble(self, candidate: dict[str, any]) -> dict[str, any]:
-        """ validate and normalize heeler preamble """
+        """validate and normalize heeler preamble"""
 
         result = {}
 
@@ -98,7 +101,7 @@ class PreambleHelper:
         return file_type
 
     def validate_geoloc(self, preamble: dict[str, any]) -> str:
-        """ test/normalize geographic location """
+        """test/normalize geographic location"""
 
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
@@ -119,7 +122,7 @@ class PreambleHelper:
         return None
 
     def validate_platform(self, preamble: dict[str, any]) -> str:
-        """ test/normalize platform """
+        """test/normalize platform"""
 
         if "platform" in preamble:
             return preamble["platform"]
@@ -127,15 +130,15 @@ class PreambleHelper:
         return None
 
     def validate_project(self, preamble: dict[str, any]) -> str:
-        """ test/normalize project """
+        """test/normalize project"""
 
         if "project" in preamble:
             return preamble["project"]
 
         return None
-    
+
     def validate_version(self, preamble: dict[str, any]) -> int:
-        """ test/normalize version """
+        """test/normalize version"""
 
         if "version" in preamble:
             return preamble["version"]
@@ -143,7 +146,7 @@ class PreambleHelper:
         return None
 
     def validate_ztime_ms(self, preamble: dict[str, any]) -> datetime.datetime:
-        """ extract observation time """
+        """extract observation time"""
 
         if "zTimeMs" in preamble:
             seconds = int(preamble["zTimeMs"]) / 1000
@@ -151,6 +154,7 @@ class PreambleHelper:
             return dt
 
         return None
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

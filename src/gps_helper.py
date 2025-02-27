@@ -12,6 +12,7 @@ import yaml
 
 from yaml.loader import SafeLoader
 
+
 class GpsSample:
     elements = {}
     file_name = "/tmp/gps.json"
@@ -58,6 +59,7 @@ class GpsSample:
         except Exception as error:
             print(error)
 
+
 class GpsWrapper:
     file_name = "/tmp/gps.counter"
     idle_limit = 10
@@ -100,7 +102,7 @@ class GpsWrapper:
             print("unable to obtain GPS datum")
             return None
 
-        if sample.get_speed() > 4.0: # meters per second, 9 mph
+        if sample.get_speed() > 4.0:  # meters per second, 9 mph
             print("speed threshold met, must take sample")
             self.idle_writer(self.idle_limit)
             return sample
@@ -122,6 +124,7 @@ class GpsWrapper:
             print("skipping collection")
         else:
             print("work to do")
+
 
 #
 # argv[1] = configuration filename

@@ -31,40 +31,23 @@ class Header:
     def execute(self, file_name: str):
         gps_sample = None
         if self.gps_flag:
+            # must have a GPS location to run
             wrapper = GpsWrapper()
             gps_sample = wrapper.run_test()
             if gps_sample is None:
                 return
 
         converter = Converter()
-#        observations = converter(file_name)
-#
-#        obs_list = []
-#        for obs in observations:
-#            temp = {}
-#            temp["bssid"] = obs.bssid
-#            temp["capability"] = "unknown"
-#            temp["frequency_mhz"] = obs.frequency_mhz
-#            temp["signal_dbm"] = obs.signal_dbm
-#            temp["ssid"] = obs.ssid
-#            obs_list.append(temp)
+        observations = converter.converter(file_name)
 
         helper = PreambleHelper()
         preamble = helper.create_preamble(self.host, self.site, gps_sample)
-#        preamble['wifi'] = obs_list
-        
+        preamble["wifi"] = observations
+
         json_preamble = json.dumps(preamble)
 
-        file_name = self.get_filename()
-        print(f"filename: {file_name}")
+        converter.file_writer(self.fresh_dir, json_preamble)
 
-        try:
-            with open(file_name, "w") as outfile:
-                outfile.write(json_preamble + "\n")
-                outfile.write("RAWBUFFER\n")
-#                outfile.writelines(buffer)
-        except Exception as error:
-            print(error)
 
 #
 # argv[1] = configuration filename
