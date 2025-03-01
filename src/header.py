@@ -42,6 +42,7 @@ class Header:
         # convert iwlist scan to observations
         converter = Converter()
         observations = converter.converter(file_name)
+        print(f"observations: {len(observations)}")
 
         # create json preamble 
         helper = PreambleHelper()
