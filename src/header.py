@@ -1,6 +1,6 @@
 #
 # Title: iwlist_header.py
-# Description: append a json header to iwlist scan output
+# Description: add a json header to iwlist scan output
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
@@ -21,26 +21,31 @@ from yaml.loader import SafeLoader
 class Header:
     """make the iwlist observation file"""
 
-    def __init__(self, fresh_dir: str):
-        self.fresh_dir = fresh_dir
+    def __init__(self, args: dict[str, any]):
+        self.fresh_dir = configuration["freshDir"]
+        self.gps_flag = configuration["gpsEnable"]
+        self.host = configuration["host"]
+        self.site = configuration["site"]
 
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
 
-    def execute(self, gps_flag: bool, file_name: str, host: str, site: str):
+    def execute(self, file_name: str) -> None:
         gps_sample = None
-        if gps_flag:
+        if self.gps_flag:
             # must have a GPS location to run
             wrapper = GpsWrapper()
             gps_sample = wrapper.run_test()
             if gps_sample is None:
                 return
 
+        # convert iwlist scan to observations
         converter = Converter()
         observations = converter.converter(file_name)
 
+        # create json preamble 
         helper = PreambleHelper()
-        preamble = helper.create_preamble(host, site, gps_sample)
+        preamble = helper.create_preamble(self.host, self.site, gps_sample)
         preamble["wifi"] = observations
 
         # save preamble to file for skunk and wombat
@@ -48,7 +53,6 @@ class Header:
 
         # iwlist observation to archive file
         converter.file_writer(self.fresh_dir, json.dumps(preamble))
-
 
 #
 # argv[1] = configuration filename
@@ -65,13 +69,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    fresh_dir = configuration["freshDir"]
-    gps_flag = configuration["gpsEnable"]
-    host = configuration["host"]
-    site = configuration["site"]
-
-    header = Header(fresh_dir)
-    header.execute(gps_flag, "/tmp/iwlist.scan", host, site)
+    header = Header(configuration)
+    header.execute("/tmp/iwlist.scan")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
