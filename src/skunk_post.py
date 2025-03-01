@@ -34,6 +34,7 @@ class Skunk:
 
         self.skunk_post(buffer["wifi"])
 
+
 #
 # argv[1] = configuration filename
 #

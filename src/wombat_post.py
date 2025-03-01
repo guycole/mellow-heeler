@@ -35,20 +35,13 @@ class Wombat:
         # print(response.text)
 
     def execute(self, file_name: str) -> None:
-        buffer = []
+        converter = Converter()
+        buffer = converter.json_reader(file_name)
+        if len(buffer) < 1:
+            print("empty preamble file")
+            return
 
-        with open(file_name, "r") as infile:
-            try:
-                buffer = infile.readlines()
-                if len(buffer) < 3:
-                    print("empty file noted")
-                    return
-            except Exception as error:
-                print(error)
-
-        parser = Parser(buffer)
-        obs_list = parser.parser()
-        self.wombat_post(obs_list)
+        self.wombat_post(buffer["wifi"])
 
 #
 # argv[1] = configuration filename

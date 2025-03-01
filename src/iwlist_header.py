@@ -19,18 +19,17 @@ from yaml.loader import SafeLoader
 
 
 class Header:
-    def __init__(self, fresh_dir: str, gps_flag: bool, host: str, site: str):
+    """ make the iwlist observation file """
+
+    def __init__(self, fresh_dir: str):
         self.fresh_dir = fresh_dir
-        self.gps_flag = gps_flag
-        self.host = host
-        self.site = site
 
     def get_filename(self) -> str:
         return "%s/%s" % (self.fresh_dir, str(uuid.uuid4()))
 
-    def execute(self, file_name: str):
+    def execute(self, gps_flag: bool, file_name: str, host: str, site: str):
         gps_sample = None
-        if self.gps_flag:
+        if gps_flag:
             # must have a GPS location to run
             wrapper = GpsWrapper()
             gps_sample = wrapper.run_test()
@@ -41,15 +40,14 @@ class Header:
         observations = converter.converter(file_name)
 
         helper = PreambleHelper()
-        preamble = helper.create_preamble(self.host, self.site, gps_sample)
+        preamble = helper.create_preamble(host, site, gps_sample)
         preamble["wifi"] = observations
 
+        # save preamble to file for skunk and wombat
         converter.json_writer("/tmp/preamble.json", preamble)
 
-        json_preamble = json.dumps(preamble)
-
-        converter.file_writer(self.fresh_dir, json_preamble)
-
+        # iwlist observation to archive file
+        converter.file_writer(self.fresh_dir, json.dumps(preamble))
 
 #
 # argv[1] = configuration filename
@@ -70,9 +68,9 @@ if __name__ == "__main__":
     gps_flag = configuration["gpsEnable"]
     host = configuration["host"]
     site = configuration["site"]
-
-    header = Header(fresh_dir, gps_flag, host, site)
-    header.execute("/tmp/iwlist.scan")
+    
+    header = Header(fresh_dir)
+    header.execute(gps_flag, "/tmp/iwlist.scan", host, site)
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

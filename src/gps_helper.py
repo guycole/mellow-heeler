@@ -47,15 +47,15 @@ class GpsSample:
 
     def reader(self) -> None:
         try:
-            with open(self.file_name, "r") as infile:
-                self.elements = json.load(infile)
+            with open(self.file_name, "r") as in_file:
+                self.elements = json.load(in_file)
         except Exception as error:
             print(error)
 
     def writer(self) -> None:
         try:
-            with open(self.file_name, "w") as outfile:
-                json.dump(self.elements, outfile, indent=4)
+            with open(self.file_name, "w") as out_file:
+                json.dump(self.elements, out_file, indent=4)
         except Exception as error:
             print(error)
 
@@ -69,8 +69,8 @@ class GpsWrapper:
 
     def idle_reader(self) -> int:
         try:
-            with open(self.file_name, "r") as infile:
-                buffer = infile.readline()
+            with open(self.file_name, "r") as in_file:
+                buffer = in_file.readline()
                 return int(buffer)
         except Exception as error:
             print(error)
@@ -79,8 +79,8 @@ class GpsWrapper:
 
     def idle_writer(self, arg: int) -> None:
         try:
-            with open(self.file_name, "w") as outfile:
-                outfile.write(str(arg))
+            with open(self.file_name, "w") as out_file:
+                out_file.write(str(arg))
         except Exception as error:
             print(error)
 

@@ -11,6 +11,7 @@ import sys
 import time
 import uuid
 
+
 class Converter:
     preamble = {}
     raw_buffer = []
@@ -35,19 +36,19 @@ class Converter:
         print(f"output filename: {file_name}")
 
         try:
-            with open(file_name, "w") as outfile:
-                outfile.write(json_preamble + "\n")
-                outfile.write("RAWBUFFER\n")
-                outfile.writelines(self.raw_buffer)
+            with open(file_name, "w") as out_file:
+                out_file.write(json_preamble + "\n")
+                out_file.write("RAWBUFFER\n")
+                out_file.writelines(self.raw_buffer)
         except Exception as error:
             print(error)
 
     def json_reader(self, file_name: str) -> dict[str, any]:
         results = {}
-        
+
         try:
-            with open(file_name, "r") as infile:
-                results = json.load(infile)
+            with open(file_name, "r") as in_file:
+                results = json.load(in_file)
         except Exception as error:
             print(error)
 
@@ -55,8 +56,8 @@ class Converter:
 
     def json_writer(self, file_name, payload: dict[str, any]) -> None:
         try:
-            with open(file_name, "w") as outfile:
-                json.dump(payload, outfile, indent=4)
+            with open(file_name, "w") as out_file:
+                json.dump(payload, out_file, indent=4)
         except Exception as error:
             print(error)
 
@@ -65,7 +66,7 @@ class Converter:
         if len(buffer) < 3:
             return []
 
-        self.preamble = json.loads(buffer[0])
+#        self.preamble = json.loads(buffer[0])
 
         parser = Parser(buffer)
         observations = parser.parser()

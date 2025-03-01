@@ -42,9 +42,9 @@ class Parser:
         """read a mellow heeler file into a buffer"""
 
         buffer = []
-        with open(file_name, "r", encoding="utf-8") as infile:
+        with open(file_name, "r", encoding="utf-8") as in_file:
             try:
-                buffer = infile.readlines()
+                buffer = in_file.readlines()
                 if len(buffer) < 2:
                     print(f"empty file noted: {file_name}")
             except:
