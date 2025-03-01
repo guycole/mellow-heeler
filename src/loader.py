@@ -16,9 +16,11 @@ from yaml.loader import SafeLoader
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import heeler2
+# import heeler2
 import observation
 import postgres
+
+from iwlist_converter import Converter
 
 
 class Parser:
@@ -66,7 +68,7 @@ class Parser:
                     print("skipping observation from development")
                     return None
                 else:
-                    print(f"geoloc unknown site: {temp["site"]}")
+                    print(f"geoloc unknown site: {temp['site']}")
                     return None
 
         return None
@@ -131,26 +133,26 @@ class Parser:
         classifier = self.classifier(preamble)
         print(f"file:{file_name} classifier:{classifier}")
 
-#        if classifier == "heeler_1":
-#            heeler = heeler2.Heeler()
-#            obs_list = heeler.heeler_v1(buffer)
-#        elif classifier == "hound_1":
-#            pass
-#            # hound = Hound(postgres)
-#            # status = hound.hound_v1(buffer, load_log.id)
-#        else:
-#            print(f"unknown classifier:{classifier}")
-#
- #       for obs in obs_list:
- #           obs.file_name = file_name
- #           obs.obs_time = obs_time
- #           obs.platform = platform
- #           obs.site = geoloc
+        #        if classifier == "heeler_1":
+        #            heeler = heeler2.Heeler()
+        #            obs_list = heeler.heeler_v1(buffer)
+        #        elif classifier == "hound_1":
+        #            pass
+        #            # hound = Hound(postgres)
+        #            # status = hound.hound_v1(buffer, load_log.id)
+        #        else:
+        #            print(f"unknown classifier:{classifier}")
+        #
+        #       for obs in obs_list:
+        #           obs.file_name = file_name
+        #           obs.obs_time = obs_time
+        #           obs.platform = platform
+        #           obs.site = geoloc
 
         return obs_list
 
 
-class Driver:
+class Loader:
     """mellow heeler file parser and database loader"""
 
     def __init__(self, configuration: dict[str, str]):
@@ -161,9 +163,13 @@ class Driver:
         self.fresh_dir = configuration["freshDir"]
         self.sql_echo = configuration["sqlEchoEnable"]
 
-        connect_dict = {'options': '-csearch_path={}'.format('heeler_v1')}
-        db_engine = create_engine(self.db_conn, echo=self.sql_echo, connect_args = connect_dict)
-        self.postgres = postgres.PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        connect_dict = {"options": "-csearch_path={}".format("heeler_v1")}
+        db_engine = create_engine(
+            self.db_conn, echo=self.sql_echo, connect_args=connect_dict
+        )
+        self.postgres = postgres.PostGres(
+            sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
     def file_success(self, file_name: str):
         """file was successfully processed"""
@@ -182,13 +188,14 @@ class Driver:
             os.rename(file_name, self.failure_dir + "/" + file_name)
 
     def execute(self):
-        print("execute driver")
+        print("execute loader")
 
         os.chdir(self.fresh_dir)
         targets = os.listdir(".")
         print(f"{len(targets)} files noted")
 
         parser = Parser()
+        converter = Converter()
 
         failure_counter = 0
         success_counter = 0
@@ -203,24 +210,28 @@ class Driver:
                 print(f"skip duplicate file:{target}")
                 continue
 
-            obs_list = parser.execute(target)
-            if obs_list is None:
-                failure_counter += 1
-                self.file_failure(target)
-            else:
-                if self.dry_run is True:
-                    print(f"skip database load for {target}")
-                else:
-                    for obs in obs_list:
-                        inserted = self.postgres.observation_insert(obs)
+            obs_list = converter.converter(target)
+            print(len(obs_list))
 
-                success_counter += 1
-                self.file_success(target)
+            success_counter += 1
+            self.file_success(target)
 
-        print(f"success:{success_counter} failure:{failure_counter}")
+            print(f"success:{success_counter} failure:{failure_counter}")
 
 
-print("start parser")
+#            obs_list = parser.execute(target)
+#            if obs_list is None:
+#                failure_counter += 1
+#                self.file_failure(target)
+#            else:
+#                if self.dry_run is True:
+#                    print(f"skip database load for {target}")
+#                else:
+#                    for obs in obs_list:
+#                        inserted = self.postgres.observation_insert(obs)
+
+
+print("start loader")
 
 #
 # argv[1] = configuration filename
@@ -231,16 +242,16 @@ if __name__ == "__main__":
     else:
         config_name = "config.yaml"
 
-    with open(config_name, "r", encoding="utf-8") as infile:
+    with open(config_name, "r", encoding="utf-8") as in_file:
         try:
-            configuration = yaml.load(infile, Loader=SafeLoader)
+            configuration = yaml.load(in_file, Loader=SafeLoader)
         except yaml.YAMLError as error:
             print(error)
 
-    driver = Driver(configuration)
-    driver.execute()
+    loader = Loader(configuration)
+    loader.execute()
 
-print("stop parser")
+print("stop loader")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

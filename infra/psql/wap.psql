@@ -2,22 +2,22 @@
 -- Title: wap.psql
 -- Description: all the wap
 --
--- frequency is always 4 digits, either 2.xxx GHz or 5.xxx GHz
+-- frequency is in MHz
 -- 
-create table wap (
+create table heeler_v1.wap (
   id          bigserial    primary key,
   bssid       varchar(24)  not null,
   capability  varchar(80)  not null,
   frequency   smallint     not null,
   ssid        varchar(80)  not null,
   version     int          not null
-);
+) tablespace heeler;
 
-grant select, insert, update, delete on wap to heeler_py;
-grant usage, select on sequence wap_id_seq to heeler_py;
+grant select, insert, update, delete on heeler_v1.wap to heeler_client;
+grant usage, select on sequence heeler_v1.wap_id_seq to heeler_client;
 
-create index wap_ssid on wap(ssid);
-create unique index wap_bssid_version on wap(bssid, version);
+create index wap_ssid on heeler_v1.wap(ssid);
+create unique index wap_bssid_version on heeler_v1.wap(bssid, version);
 
 -- insert into wap(bssid, capability, frequency, ssid, version) values('60:38:e0:ae:ec:88', '[WPA2-PSK-CCMP][WPS][ESS]', 2452, 'powerorganics', 1);
 -- insert into wap(bssid, capability, frequency, ssid, version) values('60:a4:23:86:cf:3b', '[ESS]', 2462, 'MLG09772', 2);

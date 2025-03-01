@@ -59,9 +59,9 @@ if __name__ == "__main__":
     else:
         file_name = "config.yaml"
 
-    with open(file_name, "r") as stream:
+    with open(file_name, "r") as in_file:
         try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
+            configuration = yaml.load(in_file, Loader=SafeLoader)
         except yaml.YAMLError as error:
             print(error)
 

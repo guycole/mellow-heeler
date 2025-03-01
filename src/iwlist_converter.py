@@ -11,8 +11,8 @@ import sys
 import time
 import uuid
 
-
-class Converter():
+class Converter:
+    preamble = {}
     raw_buffer = []
 
     def file_name(self, dir_name: str) -> str:
@@ -63,7 +63,9 @@ class Converter():
     def converter(self, file_name: str) -> list[dict[str, any]]:
         buffer = self.file_reader(file_name)
         if len(buffer) < 3:
-            return
+            return []
+
+        self.preamble = json.loads(buffer[0])
 
         parser = Parser(buffer)
         observations = parser.parser()
@@ -79,7 +81,6 @@ class Converter():
             obs_list.append(temp)
 
         return obs_list
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
