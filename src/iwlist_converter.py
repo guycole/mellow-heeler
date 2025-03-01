@@ -12,7 +12,8 @@ import time
 import uuid
 
 
-class Converter(object):
+class Converter:
+    preamble = {}
     raw_buffer = []
 
     def file_name(self, dir_name: str) -> str:
@@ -45,7 +46,10 @@ class Converter(object):
     def converter(self, file_name: str) -> list[dict[str, any]]:
         buffer = self.file_reader(file_name)
         if len(buffer) < 3:
-            return
+            return []
+
+        self.preamble = json.loads(buffer[0])
+
 
         parser = Parser(buffer)
         observations = parser.parser()

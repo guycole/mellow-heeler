@@ -10,7 +10,7 @@ create table heeler_v1.load_log (
   file_name   varchar(48)  unique not null,
   file_type   varchar(16)  not null,
   time_stamp  timestamptz  not null default CURRENT_TIMESTAMP
-);
+) tablespace heeler;
 
 grant select, insert, update, delete on heeler_v1.load_log to heeler_client;
 grant usage, select on sequence heeler_v1.load_log_id_seq to heeler_client;

@@ -5,23 +5,24 @@
 -- Note that latitude and longitude are truncated by real() datatype
 -- fix_time_ms = -1 for static locations
 -- 
-create table geoloc (
+create table heeler_v1.geoloc (
   id               bigserial  primary key,
-  accuracy         real        not null,
   altitude         real        not null,
-  fix_time_ms      bigint      not null,
+  fix_time         bigint      not null,
   latitude         real        not null,
   longitude        real        not null,
-  device           varchar(16) not null
-);
+  site             varchar(16) not null,
+  speed            real        not null,
+  track            real        not null
+) tablespace heeler;
 
-grant select, insert, update, delete on geoloc to heeler_py;
-grant usage, select on sequence geoloc_id_seq to heeler_py;
+grant select, insert, update, delete on heeler_v1.geoloc to heeler_client;
+grant usage, select on sequence heeler_v1.geoloc_id_seq to heeler_client;
 
-create unique index geoloc_fix_time_device on geoloc(fix_time_ms, device);
+create unique index geoloc_fix_time on heeler_v1.geoloc(fix_time, site);
 
 -- anderson1
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, device) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'rpi4c-anderson1');
+insert into heeler_v1.geoloc(altitude, fix_time, latitude, longitude, site, speed, track) values(12.3, 1629166763219, 40.3702153, -122.2835223, 'anderson1', 12, 34);
 
 -- vallejo1
-insert into geoloc(accuracy, altitude, fix_time_ms, latitude, longitude, device) values(12.3, 4.5, 1629166763219, 40.3702153, -122.2835223, 'rpi4a-vallejo1');
+insert into heeler_v1.geoloc(altitude, fix_time, latitude, longitude, site, speed, track) values(12.3, 1629166763219, 40.3702153, -122.2835223, 'vallejo1', 43, 21);
