@@ -1,5 +1,5 @@
 #
-# Title: iwlist_converter.py
+# Title: converter.py
 # Description: parse an iwlist(8) scan file and return observations
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
@@ -73,13 +73,7 @@ class Converter:
 
         obs_list = []
         for obs in observations:
-            temp = {}
-            temp["bssid"] = obs.bssid
-            temp["capability"] = "unknown"
-            temp["frequency_mhz"] = obs.frequency_mhz
-            temp["signal_dbm"] = obs.signal_dbm
-            temp["ssid"] = obs.ssid
-            obs_list.append(temp)
+            obs_list.append(obs.to_dict())
 
         return obs_list
 

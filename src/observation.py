@@ -38,6 +38,16 @@ class Observation:
             and self.frequency_mhz == other.frequency_mhz
         )
 
+    def to_dict(self) -> dict[str, any]:
+        result = {}
+
+        result["bssid"] = self.bssid
+        result["capability"] = "unknown"
+        result["frequency_mhz"] = self.frequency_mhz
+        result["signal_dbm"] = self.signal_dbm
+        result["ssid"] = self.ssid
+
+        return result
 
 class Parser:
     def __init__(self, raw: list[str]):
