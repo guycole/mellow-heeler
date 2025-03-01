@@ -16,7 +16,7 @@ from yaml.loader import SafeLoader
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-#import heeler2
+# import heeler2
 import observation
 import postgres
 
@@ -133,21 +133,21 @@ class Parser:
         classifier = self.classifier(preamble)
         print(f"file:{file_name} classifier:{classifier}")
 
-#        if classifier == "heeler_1":
-#            heeler = heeler2.Heeler()
-#            obs_list = heeler.heeler_v1(buffer)
-#        elif classifier == "hound_1":
-#            pass
-#            # hound = Hound(postgres)
-#            # status = hound.hound_v1(buffer, load_log.id)
-#        else:
-#            print(f"unknown classifier:{classifier}")
-#
- #       for obs in obs_list:
- #           obs.file_name = file_name
- #           obs.obs_time = obs_time
- #           obs.platform = platform
- #           obs.site = geoloc
+        #        if classifier == "heeler_1":
+        #            heeler = heeler2.Heeler()
+        #            obs_list = heeler.heeler_v1(buffer)
+        #        elif classifier == "hound_1":
+        #            pass
+        #            # hound = Hound(postgres)
+        #            # status = hound.hound_v1(buffer, load_log.id)
+        #        else:
+        #            print(f"unknown classifier:{classifier}")
+        #
+        #       for obs in obs_list:
+        #           obs.file_name = file_name
+        #           obs.obs_time = obs_time
+        #           obs.platform = platform
+        #           obs.site = geoloc
 
         return obs_list
 
@@ -163,9 +163,13 @@ class Loader:
         self.fresh_dir = configuration["freshDir"]
         self.sql_echo = configuration["sqlEchoEnable"]
 
-        connect_dict = {'options': '-csearch_path={}'.format('heeler_v1')}
-        db_engine = create_engine(self.db_conn, echo=self.sql_echo, connect_args = connect_dict)
-        self.postgres = postgres.PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
+        connect_dict = {"options": "-csearch_path={}".format("heeler_v1")}
+        db_engine = create_engine(
+            self.db_conn, echo=self.sql_echo, connect_args=connect_dict
+        )
+        self.postgres = postgres.PostGres(
+            sessionmaker(bind=db_engine, expire_on_commit=False)
+        )
 
     def file_success(self, file_name: str):
         """file was successfully processed"""
@@ -208,12 +212,13 @@ class Loader:
 
             obs_list = converter.converter(target)
             print(len(obs_list))
-            
+
             success_counter += 1
             self.file_success(target)
 
             print(f"success:{success_counter} failure:{failure_counter}")
-        
+
+
 #            obs_list = parser.execute(target)
 #            if obs_list is None:
 #                failure_counter += 1
@@ -224,8 +229,6 @@ class Loader:
 #                else:
 #                    for obs in obs_list:
 #                        inserted = self.postgres.observation_insert(obs)
-
-
 
 
 print("start loader")

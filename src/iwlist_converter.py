@@ -50,7 +50,6 @@ class Converter:
 
         self.preamble = json.loads(buffer[0])
 
-
         parser = Parser(buffer)
         observations = parser.parser()
 
