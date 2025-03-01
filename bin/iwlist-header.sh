@@ -18,7 +18,7 @@ sleep 20
 echo "start conversion"
 cd $HOME_DIR/mellow-heeler/src
 source venv/bin/activate
-python3 ./iwlist_header.py
+python3 ./header.py
 echo "end conversion"
 #
 echo "start skunk post"

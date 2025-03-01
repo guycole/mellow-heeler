@@ -66,7 +66,7 @@ class Converter:
         if len(buffer) < 3:
             return []
 
-#        self.preamble = json.loads(buffer[0])
+        #        self.preamble = json.loads(buffer[0])
 
         parser = Parser(buffer)
         observations = parser.parser()
@@ -76,6 +76,7 @@ class Converter:
             obs_list.append(obs.to_dict())
 
         return obs_list
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

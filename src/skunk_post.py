@@ -10,7 +10,7 @@ import yaml
 
 from yaml.loader import SafeLoader
 
-from iwlist_converter import Converter
+from converter import Converter
 from observation import Observation, Parser
 
 
@@ -21,18 +21,32 @@ class Skunk:
     def skunk_post(self, obs_list: list[Observation]) -> None:
         """http post to mellow-skunk"""
 
-        response = requests.post(self.url, json=obs_list)
+        payload = []
+        for current in obs_list:
+            payload.append(current.args)
+
+        print(f"payload size {len(payload)}")
+
+        response = requests.post(self.url, json=payload)
         print(response)
         # print(response.text)
 
     def execute(self, file_name: str) -> None:
-        converter = Converter()
-        buffer = converter.json_reader(file_name)
-        if len(buffer) < 1:
-            print("empty preamble file")
-            return
+        buffer = []
 
-        self.skunk_post(buffer["wifi"])
+        try:
+            with open(file_name, "r") as in_file:
+                buffer = in_file.readlines()
+                if len(buffer) < 3:
+                    print("empty scan file noted")
+                    return
+        except Exception as error:
+            print(error)
+
+        parser = Parser(buffer)
+        obs_list = parser.parser()
+
+        self.skunk_post(obs_list)
 
 
 #
@@ -54,7 +68,7 @@ if __name__ == "__main__":
     url = configuration["skunkUrl"]
 
     # file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
-    file_name = "/tmp/preamble.json"
+    file_name = "/tmp/iwlist.scan"
 
     if run_flag:
         skunk = Skunk(url)

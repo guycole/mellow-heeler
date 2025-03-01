@@ -43,6 +43,7 @@ class Wombat:
 
         self.wombat_post(buffer["wifi"])
 
+
 #
 # argv[1] = configuration filename
 #
