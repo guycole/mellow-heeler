@@ -18,7 +18,7 @@ sleep 20
 echo "start conversion"
 cd $HOME_DIR/mellow-heeler/src
 source venv/bin/activate
-python3 ./iwlist_header.py
+python3 ./header.py
 echo "end conversion"
 #
 echo "start skunk post"
@@ -26,4 +26,10 @@ cd $HOME_DIR/mellow-heeler/src
 source venv/bin/activate
 python3 ./skunk_post.py
 echo "end skunk post"
+#
+echo "start wombat post"
+cd $HOME_DIR/mellow-heeler/src
+source venv/bin/activate
+python3 ./wombat_post.py
+echo "end wombat post"
 #

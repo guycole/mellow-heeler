@@ -1,13 +1,18 @@
 #
-# repository of freshly collected observations
-freshDir: /var/mellow/heeler/fresh
-freshDir: /var/mellow/heeler/test
-#
 # repository of processed observations
 archiveDir: /var/mellow/heeler/archive
 #
+# export to AWS
+exportDir: /var/mellow/heeler/export
+#
 # repository of problem files
 failureDir: /var/mellow/heeler/failure
+#
+# repository of freshly collected observations
+freshDir: /var/mellow/heeler/fresh
+#
+# test artifacts
+testDir: /var/mellow/heeler/test
 #
 # collection host location
 #site: anderson1
@@ -20,10 +25,15 @@ site: development
 #host: rpi3c
 host: rpi3d
 #
+# true, post to mellow-skunk
 skunkEnable: false
+#
 # URL to post skunk update
 skunkUrl: "http://localhost:8000/heeler/"
 skunkUrl: "http://localhost/heeler/"
+#
+# true, post to mellow-wombat
+wombatEnable: false
 #
 # URL to update wombat
 wombatUrl: "http://localhost:8000/heeler/"
@@ -35,5 +45,9 @@ dryRun: true
 # database connection
 dbConn: "postgresql+psycopg2://heeler_py:bogus@localhost:5432/heeler_v1"
 #
+# true, echo SQL statements
+sqlEchoEnable: true
+#
+# true, there is a GPS available
 gpsEnable: false
 #

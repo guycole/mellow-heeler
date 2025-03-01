@@ -35,23 +35,14 @@ class Wombat:
         # print(response.text)
 
     def execute(self, file_name: str) -> None:
-        buffer = []
+        converter = Converter()
+        buffer = converter.json_reader(file_name)
+        if len(buffer) < 1:
+            print("empty preamble file")
+            return
 
-        with open(file_name, "r") as infile:
-            try:
-                buffer = infile.readlines()
-                if len(buffer) < 3:
-                    print("empty file noted")
-                    return
-            except Exception as error:
-                print(error)
+        self.wombat_post(buffer["wifi"])
 
-        parser = Parser(buffer)
-        obs_list = parser.parser()
-        self.wombat_post(obs_list)
-
-
-print("start wombat post")
 
 #
 # argv[1] = configuration filename
@@ -62,21 +53,23 @@ if __name__ == "__main__":
     else:
         file_name = "config.yaml"
 
-    with open(file_name, "r") as stream:
+    with open(file_name, "r") as in_file:
         try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
+            configuration = yaml.load(in_file, Loader=SafeLoader)
         except yaml.YAMLError as error:
             print(error)
 
-    url = configuration["wombat_url"]
+    run_flag = configuration["wombatEnable"]
+    url = configuration["wombatUrl"]
 
     file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
     #    file_name = "/tmp/iwlist.scan"
 
-    wombat = Wombat(url)
-    wombat.execute(file_name)
-
-print("stop wombat post")
+    if run_flag:
+        wombat = Wombat(url)
+        wombat.execute(file_name)
+    else:
+        print("wombat post is disabled")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

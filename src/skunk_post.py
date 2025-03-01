@@ -10,6 +10,7 @@ import yaml
 
 from yaml.loader import SafeLoader
 
+from converter import Converter
 from observation import Observation, Parser
 
 
@@ -21,7 +22,6 @@ class Skunk:
         """http post to mellow-skunk"""
 
         payload = []
-
         for current in obs_list:
             payload.append(current.args)
 
@@ -35,8 +35,8 @@ class Skunk:
         buffer = []
 
         try:
-            with open(file_name, "r") as infile:
-                buffer = infile.readlines()
+            with open(file_name, "r") as in_file:
+                buffer = in_file.readlines()
                 if len(buffer) < 3:
                     print("empty scan file noted")
                     return
@@ -45,6 +45,7 @@ class Skunk:
 
         parser = Parser(buffer)
         obs_list = parser.parser()
+
         self.skunk_post(obs_list)
 
 
@@ -57,9 +58,9 @@ if __name__ == "__main__":
     else:
         file_name = "config.yaml"
 
-    with open(file_name, "r") as stream:
+    with open(file_name, "r") as in_file:
         try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
+            configuration = yaml.load(in_file, Loader=SafeLoader)
         except yaml.YAMLError as error:
             print(error)
 
