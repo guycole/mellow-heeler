@@ -44,6 +44,8 @@ class Header:
         preamble = helper.create_preamble(self.host, self.site, gps_sample)
         preamble["wifi"] = observations
 
+        converter.json_writer("/tmp/preamble.json", preamble)
+
         json_preamble = json.dumps(preamble)
 
         converter.file_writer(self.fresh_dir, json_preamble)

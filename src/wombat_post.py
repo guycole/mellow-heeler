@@ -50,9 +50,6 @@ class Wombat:
         obs_list = parser.parser()
         self.wombat_post(obs_list)
 
-
-print("start wombat post")
-
 #
 # argv[1] = configuration filename
 #
@@ -68,15 +65,17 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
+    run_flag = configuration["wombatEnable"]
     url = configuration["wombatUrl"]
 
     file_name = "/home/gsc/Documents/github/mellow-heeler/src/sample2.scan"
     #    file_name = "/tmp/iwlist.scan"
 
-    wombat = Wombat(url)
-    wombat.execute(file_name)
-
-print("stop wombat post")
+    if run_flag:
+        wombat = Wombat(url)
+        wombat.execute(file_name)
+    else:
+        print("wombat post is disabled")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

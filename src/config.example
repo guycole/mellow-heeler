@@ -32,6 +32,9 @@ skunkEnable: false
 skunkUrl: "http://localhost:8000/heeler/"
 skunkUrl: "http://localhost/heeler/"
 #
+# true, post to mellow-wombat
+wombatEnable: false
+#
 # URL to update wombat
 wombatUrl: "http://localhost:8000/heeler/"
 wombatUrl: "http://rpi5a/heeler/"

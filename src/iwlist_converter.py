@@ -12,7 +12,7 @@ import time
 import uuid
 
 
-class Converter(object):
+class Converter():
     raw_buffer = []
 
     def file_name(self, dir_name: str) -> str:
@@ -39,6 +39,24 @@ class Converter(object):
                 outfile.write(json_preamble + "\n")
                 outfile.write("RAWBUFFER\n")
                 outfile.writelines(self.raw_buffer)
+        except Exception as error:
+            print(error)
+
+    def json_reader(self, file_name: str) -> dict[str, any]:
+        results = {}
+        
+        try:
+            with open(file_name, "r") as infile:
+                results = json.load(infile)
+        except Exception as error:
+            print(error)
+
+        return results
+
+    def json_writer(self, file_name, payload: dict[str, any]) -> None:
+        try:
+            with open(file_name, "w") as outfile:
+                json.dump(payload, outfile, indent=4)
         except Exception as error:
             print(error)
 

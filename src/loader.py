@@ -231,9 +231,9 @@ if __name__ == "__main__":
     else:
         config_name = "config.yaml"
 
-    with open(config_name, "r", encoding="utf-8") as stream:
+    with open(config_name, "r", encoding="utf-8") as infile:
         try:
-            configuration = yaml.load(stream, Loader=SafeLoader)
+            configuration = yaml.load(infile, Loader=SafeLoader)
         except yaml.YAMLError as error:
             print(error)
 
