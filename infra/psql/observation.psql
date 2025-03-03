@@ -7,8 +7,8 @@
 -- 
 create table heeler_v1.observation (
   id           bigserial    primary key,
-  geoloc_id    bigint       not null,
-  constraint   geoloc_id    foreign key(geoloc_id) references heeler_v1.geoloc(id),
+  geo_loc_id   bigint       not null,
+  constraint   geoloc_id    foreign key(geo_loc_id) references heeler_v1.geo_loc(id),
   level        smallint     not null,
   load_log_id  bigint       not null,
   constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id),

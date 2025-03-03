@@ -253,6 +253,7 @@ class PostGres:
         with self.Session() as session:
             rows = session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
             for row in rows:
+                print(row)
                 return row
 
         #        statement = select(LoadLog).filter_by(file_name=file_name)

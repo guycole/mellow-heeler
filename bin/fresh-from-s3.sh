@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Title: fresh-from-s3.sh
-# Description: move fresh s3 files to local
+# Description: move fresh s3 files to local for database import
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #

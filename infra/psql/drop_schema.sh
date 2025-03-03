@@ -13,7 +13,7 @@ export PGUSER=heeler_admin
 psql $PGDATABASE -c "drop table heeler_v1.observation"
 psql $PGDATABASE -c "drop table heeler_v1.load_log"
 #psql $PGDATABASE -c "drop table box_score"
-psql $PGDATABASE -c "drop table heeler_v1.geoloc"
+psql $PGDATABASE -c "drop table heeler_v1.geo_loc"
 #psql $PGDATABASE -c "drop table cooked"
 psql $PGDATABASE -c "drop table heeler_v1.wap"
 #

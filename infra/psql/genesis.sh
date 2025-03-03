@@ -20,7 +20,8 @@ batabat
 
 # as pg superuser
 # create tablespace heeler location '/mnt/pp1/postgres/heeler';
-
+# create tablespace heeler location '/Library/PostgreSQL/pg_tablespace/heeler';
+# create tablespace heeler location '/usr/local/opt/postgresql@15/pg_tablespace/heeler';
 #
 createdb heeler -O heeler_admin -D heeler -E UTF8 -T template0 -l C
 createdb heeler -O heeler_admin -E UTF8 -T template0 -l C

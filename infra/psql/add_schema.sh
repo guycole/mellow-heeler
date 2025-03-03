@@ -13,7 +13,7 @@ export PGPASSWORD=woofwoof
 export PGUSER=heeler_admin
 #
 #psql < box_score.psql
-psql < geoloc.psql
+psql < geo_loc.psql
 psql < load_log.psql
 psql < wap.psql
 #psql < cooked.psql

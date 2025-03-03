@@ -9,7 +9,6 @@ import gps_helper
 import pytz
 import time
 
-
 class PreambleHelper:
 
     def create_preamble(
@@ -50,7 +49,7 @@ class PreambleHelper:
         result = {}
 
         temp = self.validate_geoloc(candidate)
-        if temp is None:
+        if len(temp) < 1:
             print("geoLoc not found")
             return None
         else:
@@ -103,23 +102,38 @@ class PreambleHelper:
     def validate_geoloc(self, preamble: dict[str, any]) -> str:
         """test/normalize geographic location"""
 
+        print(f"preamble:{preamble}")
+
+        results = {}
+
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" in temp:
-                if temp["site"].startswith("and"):
-                    return "anderson1"
-                elif temp["site"].startswith("val"):
-                    return "vallejo1"
-                elif temp["site"].startswith("mobile"):
-                    return "mobile1"
-                elif temp["site"] == "development":
+                print(temp)
+                print(temp["site"])
+
+                if temp["site"] == "development":
                     print("skipping observation from development")
-                    return None
+                    return results
+                elif temp["site"].startswith("and"):
+                    # fixed location site
+                    results['site'] = 'anderson1'
+                elif temp["site"].startswith("val"):
+                    # fixed location site
+                    results['site'] = 'vallejo1'
+                elif temp["site"].startswith("mobile"):
+                    # mobile location
+                    results['altitude'] = temp['altitude']
+                    results['fix_time'] = temp['fixTime']
+                    results['latitude'] = temp['latitude']
+                    results['longitude'] = temp['longitude']
+                    results['site'] = 'mobile1'
+                    results['speed'] = temp['speed']
+                    results['track'] = temp['track']
                 else:
                     print(f"geoloc unknown site: {temp['site']}")
-                    return None
 
-        return None
+        return results
 
     def validate_platform(self, preamble: dict[str, any]) -> str:
         """test/normalize platform"""

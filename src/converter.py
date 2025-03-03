@@ -11,7 +11,6 @@ import sys
 import time
 import uuid
 
-
 class Converter:
     preamble = {}
     raw_buffer = []
@@ -20,6 +19,8 @@ class Converter:
         return "%s/%s" % (dir_name, str(uuid.uuid4()))
 
     def file_reader(self, file_name: str) -> list[str]:
+        self.preamble = {}
+
         try:
             with open(file_name, "r", encoding="utf-8") as in_file:
                 self.raw_buffer = in_file.readlines()
@@ -28,6 +29,11 @@ class Converter:
                     self.raw_buffer = []
         except Exception as error:
             print(error)
+
+        try:
+            self.preamble = json.loads(self.raw_buffer[0])
+        except Exception as error:
+            print("missing preamble")
 
         return self.raw_buffer
 
@@ -66,8 +72,6 @@ class Converter:
         if len(buffer) < 3:
             return []
 
-        #        self.preamble = json.loads(buffer[0])
-
         parser = Parser(buffer)
         observations = parser.parser()
 
@@ -76,8 +80,7 @@ class Converter:
             obs_list.append(obs.to_dict())
 
         return obs_list
-
-
+                
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***

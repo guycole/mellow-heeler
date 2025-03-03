@@ -9,6 +9,7 @@ create table heeler_v1.load_log (
   id          bigserial    primary key,
   file_name   varchar(48)  unique not null,
   file_type   varchar(16)  not null,
+  population  smallint     not null,
   time_stamp  timestamptz  not null default CURRENT_TIMESTAMP
 ) tablespace heeler;
 
