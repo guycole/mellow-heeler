@@ -109,44 +109,51 @@ class GeoLoc(Base):
     __tablename__ = "geoloc"
 
     id = Column(Integer, primary_key=True)
-    accuracy = Column(Float)
     altitude = Column(Float)
     fix_time_ms = Column(BigInteger)
     latitude = Column(Float)
     longitude = Column(Float)
-    device = Column(String)
+    site = Column(String)
+    speed = Column(Float)
+    track = Column(Float)
+    load_log_id = Column(BigInteger)
 
     def __eq__(self, other):
         return (
-            self.accuracy == other.accuracy
-            and self.altitude == other.altitude
+            self.altitude == other.altitude
             and self.fix_time_ms == other.fix_time_ms
             and self.latitude == other.latitude
             and self.longitude == other.longitude
-            and self.device == other.device
+            and self.site == other.site
+            and self.speed == other.speed
+            and self.track == other.track
         )
 
     def __init__(
         self,
-        accuracy: float,
         altitude: float,
         fix_time_ms: int,
         latitude: float,
         longitude: float,
-        device: str,
+        site: str,
+        speed: float,
+        track: float,
+        load_log_id: int,
     ):
-        self.accuracy = accuracy
         self.altitude = altitude
         self.fix_time_ms = fix_time_ms
         self.latitude = latitude
         self.longitude = longitude
-        self.device = device
+        self.site = site
+        self.speed = speed
+        self.track = track
+        self.load_log_id = load_log_id
 
     def __repr__(self):
         if self.id is None:
             self.id = 0
 
-        return f"<geoloc({self.id}, {self.fix_time_ms}, {self.device})>"
+        return f"<geoloc({self.id}, {self.fix_time_ms}, {self.site})>"
 
 
 class LoadLog(Base):
@@ -157,11 +164,13 @@ class LoadLog(Base):
     id = Column(Integer, primary_key=True)
     file_name = Column(String)
     file_type = Column(String)
+    obs_population = Column(Integer)
     time_stamp = Column(DateTime)
 
-    def __init__(self, file_name, file_type):
+    def __init__(self, file_name, file_type, obs_population):
         self.file_name = file_name
         self.file_type = file_type
+        self.obs_population = obs_population
         self.time_stamp = datetime.now(timezone.utc)
 
     def __repr__(self):

@@ -31,11 +31,18 @@ class Heeler1:
         self.postgres = postgres
         self.preamble = preamble
 
-    def store_location(self, location: dict[str, any]) -> None:
+    def store_geo_loc(self) -> None:
         print(f"write location {location}")
+
 
     def execute(self, obs_list: list[Observation]) -> bool:
         print(f"========> heeler1 execute {self.preamble}")
+
+        load_log = self.postgres.load_log_insert(self.file_name, self.file_type, len(obs_list))
+
+        # store geo location
+        # store wap
+        # store observation
         return True
 
 # ;;; Local Variables: ***

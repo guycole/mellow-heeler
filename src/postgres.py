@@ -235,10 +235,10 @@ class PostGres:
 
         return None
 
-    def load_log_insert(self, file_name: str, file_type: str) -> LoadLog:
+    def load_log_insert(self, file_name: str, file_type: str, obs_population: int) -> LoadLog:
         """load_log insert row"""
 
-        candidate = LoadLog(file_name, file_type)
+        candidate = LoadLog(file_name, file_type, obs_population)
 
         session = self.Session()
         session.add(candidate)
@@ -253,15 +253,7 @@ class PostGres:
         with self.Session() as session:
             rows = session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
             for row in rows:
-                print(row)
                 return row
-
-        #        statement = select(LoadLog).filter_by(file_name=file_name)
-
-        #        with self.Session() as session:
-        #            rows = session.scalars(statement).all()
-        #            for row in rows:
-        #                return row
 
         return None
 
