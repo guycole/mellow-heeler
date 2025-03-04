@@ -106,11 +106,11 @@ class Cooked(Base):
 class GeoLoc(Base):
     """geoloc table definition"""
 
-    __tablename__ = "geoloc"
+    __tablename__ = "geo_loc"
 
     id = Column(Integer, primary_key=True)
     altitude = Column(Float)
-    fix_time_ms = Column(BigInteger)
+    fix_time = Column(BigInteger)
     latitude = Column(Float)
     longitude = Column(Float)
     site = Column(String)
@@ -120,19 +120,14 @@ class GeoLoc(Base):
 
     def __eq__(self, other):
         return (
-            self.altitude == other.altitude
-            and self.fix_time_ms == other.fix_time_ms
-            and self.latitude == other.latitude
-            and self.longitude == other.longitude
+            self.fix_time == other.fix_time
             and self.site == other.site
-            and self.speed == other.speed
-            and self.track == other.track
         )
 
     def __init__(
         self,
         altitude: float,
-        fix_time_ms: int,
+        fix_time: int,
         latitude: float,
         longitude: float,
         site: str,
@@ -141,7 +136,7 @@ class GeoLoc(Base):
         load_log_id: int,
     ):
         self.altitude = altitude
-        self.fix_time_ms = fix_time_ms
+        self.fix_time = fix_time
         self.latitude = latitude
         self.longitude = longitude
         self.site = site
@@ -153,7 +148,7 @@ class GeoLoc(Base):
         if self.id is None:
             self.id = 0
 
-        return f"<geoloc({self.id}, {self.fix_time_ms}, {self.site})>"
+        return f"<geoloc({self.id}, {self.fix_time}, {self.site})>"
 
 
 class LoadLog(Base):
@@ -217,13 +212,15 @@ class Wap(Base):
     frequency = Column(Integer)
     ssid = Column(String)
     version = Column(Integer)
+    load_log_id = Column(BigInteger)
 
-    def __init__(self, bssid, capability, frequency, ssid, version):
+    def __init__(self, bssid, capability, frequency, ssid, version, load_log_id):
         self.bssid = bssid
         self.capability = capability
         self.frequency = frequency
         self.ssid = ssid
         self.version = version
+        self.load_log_id = load_log_id
 
     def __repr__(self):
         if self.id is None:

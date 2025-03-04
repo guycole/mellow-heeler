@@ -181,20 +181,18 @@ class PostGres:
         session.commit()
         session.close()
 
-    def geoloc_insert(self, geoloc: Dict[str, str]) -> GeoLoc:
-        """geoloc row insert"""
-
-        lat = round(geoloc["latitude"], 5)
-        lng = round(geoloc["longitude"], 5)
+    def geo_loc_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
+        """geo_loc row insert"""
 
         candidate = GeoLoc(
-            geoloc["accuracy"],
-            geoloc["altitude"],
-            geoloc["fixTimeMs"],
-            lat,
-            lng,
-            geoloc["device"],
-        )
+            args["altitude"],
+            args["fix_time"],
+            args["latitude"],
+            args["longitude"],
+            args["site"],
+            args['speed'],
+            args["track"],
+            load_log_id)
 
         # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
         session = self.Session()
@@ -205,13 +203,10 @@ class PostGres:
 
         return candidate
 
-    def geoloc_select_by_device(self, device: str) -> GeoLoc:
-        """geoloc select row for a device"""
+    def geo_loc_select_by_site(self, site: str) -> GeoLoc:
+        """geoloc select row for a site"""
 
-        if device not in ["rpi4c-anderson1", "rpi4a-vallejo1"]:
-            raise ValueError(f"invalid device:{device}")
-
-        statement = select(GeoLoc).filter_by(device=device)
+        statement = select(GeoLoc).filter_by(site=site)
 
         row = None
         with self.Session() as session:
@@ -324,7 +319,7 @@ class PostGres:
 
         return None
 
-    def wap_insert(self, wap: Dict[str, str]) -> Wap:
+    def wap_insert(self, wap: dict[str, any], load_log_id: int) -> Wap:
         """wap insert row"""
 
         candidate = Wap(
@@ -333,6 +328,7 @@ class PostGres:
             wap["frequency"],
             wap["ssid"],
             wap["version"],
+            load_log_id
         )
 
         # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
@@ -344,7 +340,7 @@ class PostGres:
 
         return candidate
 
-    def wap_select(self, wap: Dict[str, str]) -> Wap:
+    def wap_select(self, wap: dict[str, any]) -> Wap:
         """wap select row"""
 
         statement = (
@@ -363,7 +359,7 @@ class PostGres:
 
         return None
 
-    def wap_select_or_insert(self, wap: Dict[str, str]) -> Wap:
+    def wap_select_or_insert(self, wap: dict[str, any], load_log_id: int) -> Wap:
         """discover if wap exists or if not, max version for insert"""
 
         statement = (
@@ -392,7 +388,7 @@ class PostGres:
             insert_flag = False
             update_flag = True
 
-        result = self.wap_insert(wap)
+        result = self.wap_insert(wap, load_log_id)
         result.insert_flag = insert_flag
         result.update_flag = update_flag
         return result

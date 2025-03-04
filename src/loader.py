@@ -39,7 +39,7 @@ class Eclectic:
         print(f"file:{self.file_name} type:{file_type}")
 
         if file_type == "heeler_1":
-            heelerx = heeler.Heeler1(file_type, self.preamble, self.postgres)
+            heelerx = heeler.Heeler1(self.file_name, self.preamble, self.postgres)
             return heelerx.execute(obs_list)
         else:
             print(f"unknown file type:{file_type}")

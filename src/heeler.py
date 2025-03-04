@@ -22,6 +22,7 @@ from preamble import PreambleHelper
 import postgres
 
 from converter import Converter
+from sql_table import GeoLoc
 
 class Heeler1:
     file_type = "heeler_1"
@@ -31,16 +32,36 @@ class Heeler1:
         self.postgres = postgres
         self.preamble = preamble
 
-    def store_geo_loc(self) -> None:
-        print(f"write location {location}")
+    def store_geo_loc(self, load_log_id:int) -> GeoLoc:
+        geo_loc = self.preamble['geoLoc']
+        site = geo_loc['site']
+
+    # replace this with "select or insert"?
+        location = None
+        if site.startswith("mobile"):
+            location = self.postgres.geo_loc_insert(geo_loc, load_log_id)
+        else:
+            location = self.postgres.geo_loc_select_by_site(site)
+            if location is None:
+                raise Exception(f"unknown geo_loc site:{site}") 
+            
+        return location
 
 
     def execute(self, obs_list: list[Observation]) -> bool:
         print(f"========> heeler1 execute {self.preamble}")
 
         load_log = self.postgres.load_log_insert(self.file_name, self.file_type, len(obs_list))
+        print(f"load log {load_log}")
 
-        # store geo location
+        location = self.store_geo_loc(load_log.id) 
+        print(f"location:{location}")
+
+        for obs in obs_list:
+            print(obs)
+
+#        wap = self.postgres.wap_select_or_insert()
+
         # store wap
         # store observation
         return True
