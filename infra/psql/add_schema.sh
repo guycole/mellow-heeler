@@ -14,8 +14,8 @@ export PGUSER=heeler_admin
 #
 #psql < box_score.psql
 psql < load_log.psql
-psql < geo_loc.psql
-psql < wap.psql
+#psql < geo_loc.psql
+#psql < wap.psql
 #psql < cooked.psql
-psql < observation.psql
+#psql < observation.psql
 #

@@ -158,14 +158,19 @@ class LoadLog(Base):
 
     id = Column(Integer, primary_key=True)
     file_name = Column(String)
+    file_time = Column(DateTime)
     file_type = Column(String)
+    load_time = Column(DateTime)
     obs_population = Column(Integer)
-    time_stamp = Column(DateTime)
+    platform = Column(String)
+    site = Column(String)
 
-    def __init__(self, file_name, file_type, obs_population):
+    def __init__(self, args: dict[str, any], file_name: str, file_type: str):
         self.file_name = file_name
+        self.file_time = args['zTimeMs']
         self.file_type = file_type
-        self.obs_population = obs_population
+        self.obs_population = len(args['wifi'])
+        self.platform = args['platform']
         self.time_stamp = datetime.now(timezone.utc)
 
     def __repr__(self):
