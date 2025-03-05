@@ -31,10 +31,10 @@ class PostGres:
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
-    def load_log_insert(self, args: dict[str, any]) -> LoadLog:
+    def load_log_insert(self, args: dict[str, any], obs_list_population:int) -> LoadLog:
         """load_log insert row"""
 
-        candidate = LoadLog(args)
+        candidate = LoadLog(args, obs_list_population)
 
         session = self.Session()
         session.add(candidate)
@@ -43,7 +43,7 @@ class PostGres:
 
         return candidate
 
-    def load_log_select_by_name(self, file_name: str) -> LoadLog:
+    def load_log_select_by_file_name(self, file_name: str) -> LoadLog:
         """load_log select row"""
 
         with self.Session() as session:
@@ -53,7 +53,25 @@ class PostGres:
 
         return None
 
+    #            location  self.postgres.geoloc_select_or_insert(self.preamble, load_log.id)
 
+    def geoloc_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
+        candidate = GeoLoc(args, load_log_id)
+
+        session = self.Session()
+        session.add(candidate)
+        session.commit()
+        session.close()
+
+        return candidate
+    
+    def geoloc_select_or_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
+        site = args['geoLoc']['site']
+
+        if site.startswith('mobile'):
+            return self.geoloc_insert(args, load_log_id)
+        else:
+            pass
 
 ############# old below
         

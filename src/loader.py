@@ -145,19 +145,21 @@ class Loader:
                 self.file_failure(target)
                 continue
 
+            # successful iwlist(8) scan file parse, now load into postgres
+
             file_type = preamble_helper.classifier(valid_preamble)
             print(f"file:{target} type:{file_type}")
-            self.preamble['file_name'] = target
-            self.preamble['file_type'] = file_type
+            valid_preamble['file_name'] = target
+            valid_preamble['file_type'] = file_type
 
-            ret_flag = False
+            result_flag = False
             if file_type == "heeler_1":
-                heelerx = heeler.Heeler1(self.preamble, self.postgres)
-                ret_flag = heelerx.execute(obs_list)
+                heelerx = heeler.Heeler1(self.postgres, valid_preamble)
+                result_flag = heelerx.execute(converter.obs_list)
             else:
                 print(f"unknown file type:{file_type}")
 
-            if ret_flag is True:
+            if result_flag is True:
                 self.file_success(target)
             else:
                 self.file_failure(target)

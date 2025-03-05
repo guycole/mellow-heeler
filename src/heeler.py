@@ -27,8 +27,7 @@ from sql_table import GeoLoc
 class Heeler1:
     file_type = "heeler_1"
 
-    def __init__(self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres):
-        self.file_name = file_name
+    def __init__(self, postgres: postgres.PostGres, preamble: dict[str, any]):
         self.postgres = postgres
         self.preamble = preamble
 
@@ -51,14 +50,17 @@ class Heeler1:
     def execute(self, obs_list: list[Observation]) -> bool:
         print(f"========> heeler1 execute {self.preamble}")
 
-        load_log = self.postgres.load_log_insert(self.file_name, self.file_type, len(obs_list))
+        load_log = self.postgres.load_log_insert(self.preamble, len(obs_list))
         print(f"load log {load_log}")
 
-        location = self.store_geo_loc(load_log.id) 
-        print(f"location:{location}")
+        location = self.postgres.geoloc_select_or_insert(self.preamble, load_log.id)
+        print(f"location {location}")
 
-        for obs in obs_list:
-            print(obs)
+#        location = self.store_geo_loc(load_log.id) 
+#        print(f"location:{location}")
+
+#        for obs in obs_list:
+#            print(obs)
 
 #        wap = self.postgres.wap_select_or_insert()
 

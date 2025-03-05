@@ -75,14 +75,17 @@ class Converter:
         if self.file_reader(file_name) is False:
             return False
 
-        parser = Parser(buffer)
+        parser = Parser(self.raw_buffer)
         observations = parser.parser()
         if len(observations) < 1:
             print("empty observation list")
             return False
 
+        self.obs_list = []
         for obs in observations:
-            obs_list.append(obs.to_dict())
+            self.obs_list.append(obs.to_dict())
+
+#        self.preamble['wifi'] = self.obs_list
 
         return True
                 

@@ -24,6 +24,47 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
+class GeoLoc(Base):
+    """geoloc table definition"""
+
+    __tablename__ = "geo_loc"
+
+    id = Column(Integer, primary_key=True)
+    altitude = Column(Float)
+    fix_time = Column(DateTime)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    site = Column(String)
+    speed = Column(Float)
+    track = Column(Float)
+    load_log_id = Column(BigInteger)
+
+    def __eq__(self, other):
+        return (
+            self.fix_time == other.fix_time
+            and self.site == other.site
+        )
+
+    def __init__(self, args: dict[str, any], load_log_id: int):
+        print(";;;;;;;;;;;;;;")
+        print(args)
+        print(";;;;;;;;;;;;;;")
+        
+        self.altitude = args['geoLoc']['altitude']
+        self.fix_time = args['geoLoc']['fix_time']
+        self.latitude = args['geoLoc']['latitude']
+        self.longitude = args['geoLoc']['longitude']
+        self.site = args['geoLoc']['site']
+        self.speed = args['geoLoc']['speed']
+        self.track = args['geoLoc']['track']
+        self.load_log_id = load_log_id
+
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"<geoloc({self.id}, {self.fix_time}, {self.site})>"
+
 class LoadLog(Base):
     """load_log table definition"""
 
@@ -38,13 +79,14 @@ class LoadLog(Base):
     platform = Column(String)
     site = Column(String)
 
-    def __init__(self, args: dict[str, any], file_name: str, file_type: str):
-        self.file_name = file_name
-        self.file_time = args['zTimeMs']
-        self.file_type = file_type
-        self.obs_population = len(args['wifi'])
+    def __init__(self, args: dict[str, any], obs_population: int):
+        self.file_name = args['file_name']
+        self.file_time = args['file_time']
+        self.file_type = args['file_type']
+        self.load_time = datetime.now(timezone.utc)
+        self.obs_population = obs_population
         self.platform = args['platform']
-        self.time_stamp = datetime.now(timezone.utc)
+        self.site = args['geoLoc']['site']
 
     def __repr__(self):
         if self.id is None:
@@ -133,52 +175,6 @@ class Cooked(Base):
         return "<cooked(%d)>" % (self.id)
 
 
-class GeoLoc(Base):
-    """geoloc table definition"""
-
-    __tablename__ = "geo_loc"
-
-    id = Column(Integer, primary_key=True)
-    altitude = Column(Float)
-    fix_time = Column(BigInteger)
-    latitude = Column(Float)
-    longitude = Column(Float)
-    site = Column(String)
-    speed = Column(Float)
-    track = Column(Float)
-    load_log_id = Column(BigInteger)
-
-    def __eq__(self, other):
-        return (
-            self.fix_time == other.fix_time
-            and self.site == other.site
-        )
-
-    def __init__(
-        self,
-        altitude: float,
-        fix_time: int,
-        latitude: float,
-        longitude: float,
-        site: str,
-        speed: float,
-        track: float,
-        load_log_id: int,
-    ):
-        self.altitude = altitude
-        self.fix_time = fix_time
-        self.latitude = latitude
-        self.longitude = longitude
-        self.site = site
-        self.speed = speed
-        self.track = track
-        self.load_log_id = load_log_id
-
-    def __repr__(self):
-        if self.id is None:
-            self.id = 0
-
-        return f"<geoloc({self.id}, {self.fix_time}, {self.site})>"
 
 
 

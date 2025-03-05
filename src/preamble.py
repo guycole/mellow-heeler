@@ -23,7 +23,7 @@ class PreambleHelper:
         preamble["project"] = "heeler"
         preamble["version"] = 1
         preamble["wifi"] = []
-        preamble["zTimeMs"] = round(time.time() * 1000)
+        preamble["zTime"] = round(time.time()) # collection hosts are always UTC
 
         return preamble
 
@@ -76,12 +76,12 @@ class PreambleHelper:
         else:
             result["version"] = temp
 
-        temp = self.validate_ztime_ms(candidate)
+        temp = self.validate_ztime(candidate)
         if temp is None:
-            print("ztime_ms not found")
+            print("zTime not found")
             return None
         else:
-            result["zTimeMs"] = temp
+            result["file_time"] = temp
 
         return result
 
@@ -109,9 +109,6 @@ class PreambleHelper:
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" in temp:
-                print(temp)
-                print(temp["site"])
-
                 if temp["site"] == "development":
                     print("skipping observation from development")
                     return results
@@ -124,7 +121,7 @@ class PreambleHelper:
                 elif temp["site"].startswith("mobile"):
                     # mobile location
                     results['altitude'] = temp['altitude']
-                    results['fix_time'] = temp['fixTime']
+                    results['fix_time'] = datetime.datetime.fromtimestamp(temp['fixTime'], pytz.utc)
                     results['latitude'] = temp['latitude']
                     results['longitude'] = temp['longitude']
                     results['site'] = 'mobile1'
@@ -159,16 +156,19 @@ class PreambleHelper:
 
         return None
 
-    def validate_ztime_ms(self, preamble: dict[str, any]) -> datetime.datetime:
+    def validate_ztime(self, preamble: dict[str, any]) -> datetime.datetime:
         """extract observation time"""
 
-        if "zTimeMs" in preamble:
+        seconds = 0
+
+        if "zTime" in preamble:
+            seconds = int(preamble["zTimeMs"])
+        elif "zTimeMs" in preamble:
             seconds = int(preamble["zTimeMs"]) / 1000
-            dt = datetime.datetime.fromtimestamp(seconds, pytz.utc)
-            return dt
+        else:
+            return None
 
-        return None
-
+        return datetime.datetime.fromtimestamp(seconds, pytz.utc)
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
