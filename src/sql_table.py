@@ -24,6 +24,36 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
+class LoadLog(Base):
+    """load_log table definition"""
+
+    __tablename__ = "load_log"
+
+    id = Column(Integer, primary_key=True)
+    file_name = Column(String)
+    file_time = Column(DateTime)
+    file_type = Column(String)
+    load_time = Column(DateTime)
+    obs_population = Column(Integer)
+    platform = Column(String)
+    site = Column(String)
+
+    def __init__(self, args: dict[str, any], file_name: str, file_type: str):
+        self.file_name = file_name
+        self.file_time = args['zTimeMs']
+        self.file_type = file_type
+        self.obs_population = len(args['wifi'])
+        self.platform = args['platform']
+        self.time_stamp = datetime.now(timezone.utc)
+
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"<load_log({self.id}, {self.file_name}, {self.file_type})>"
+
+############# old below
+
 
 class BoxScore(Base):
     """box_score table definition"""
@@ -150,34 +180,6 @@ class GeoLoc(Base):
 
         return f"<geoloc({self.id}, {self.fix_time}, {self.site})>"
 
-
-class LoadLog(Base):
-    """load_log table definition"""
-
-    __tablename__ = "load_log"
-
-    id = Column(Integer, primary_key=True)
-    file_name = Column(String)
-    file_time = Column(DateTime)
-    file_type = Column(String)
-    load_time = Column(DateTime)
-    obs_population = Column(Integer)
-    platform = Column(String)
-    site = Column(String)
-
-    def __init__(self, args: dict[str, any], file_name: str, file_type: str):
-        self.file_name = file_name
-        self.file_time = args['zTimeMs']
-        self.file_type = file_type
-        self.obs_population = len(args['wifi'])
-        self.platform = args['platform']
-        self.time_stamp = datetime.now(timezone.utc)
-
-    def __repr__(self):
-        if self.id is None:
-            self.id = 0
-
-        return f"<load_log({self.id}, {self.file_name}, {self.file_type})>"
 
 
 class Observation(Base):

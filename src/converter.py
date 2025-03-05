@@ -12,13 +12,15 @@ import time
 import uuid
 
 class Converter:
+    obs_list = []
     preamble = {}
     raw_buffer = []
 
     def file_name(self, dir_name: str) -> str:
         return "%s/%s" % (dir_name, str(uuid.uuid4()))
 
-    def file_reader(self, file_name: str) -> list[str]:
+    def file_reader(self, file_name: str) -> bool:
+        self.obs_list = []
         self.preamble = {}
 
         try:
@@ -29,13 +31,15 @@ class Converter:
                     self.raw_buffer = []
         except Exception as error:
             print(error)
+            return False
 
         try:
             self.preamble = json.loads(self.raw_buffer[0])
         except Exception as error:
             print("missing preamble")
+            return False
 
-        return self.raw_buffer
+        return True
 
     def file_writer(self, dir_name: str, json_preamble: str) -> None:
         file_name = self.file_name(dir_name)
@@ -67,19 +71,20 @@ class Converter:
         except Exception as error:
             print(error)
 
-    def converter(self, file_name: str) -> list[dict[str, any]]:
-        buffer = self.file_reader(file_name)
-        if len(buffer) < 3:
-            return []
+    def converter(self, file_name: str) -> bool:
+        if self.file_reader(file_name) is False:
+            return False
 
         parser = Parser(buffer)
         observations = parser.parser()
+        if len(observations) < 1:
+            print("empty observation list")
+            return False
 
-        obs_list = []
         for obs in observations:
             obs_list.append(obs.to_dict())
 
-        return obs_list
+        return True
                 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

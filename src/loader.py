@@ -25,21 +25,23 @@ import postgres
 from converter import Converter
 
 class Eclectic:
-    
+
     def __init__(self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres):
         self.file_name = file_name
         self.postgres = postgres
         self.preamble = preamble
 
-    def execute(self, obs_list: list[Observation]) -> bool:
+    def dispatch(self, obs_list: list[Observation]) -> bool:
         """dispatch to approprate file parser"""
 
         preamble_helper = PreambleHelper()
         file_type = preamble_helper.classifier(self.preamble)
         print(f"file:{self.file_name} type:{file_type}")
+        self.preamble['file_name'] = self.file_name
+        self.preamble['file_type'] = file_type
 
         if file_type == "heeler_1":
-            heelerx = heeler.Heeler1(self.file_name, self.preamble, self.postgres)
+            heelerx = heeler.Heeler1(self.preamble, self.postgres)
             return heelerx.execute(obs_list)
         else:
             print(f"unknown file type:{file_type}")
@@ -110,7 +112,7 @@ class Loader:
 #        else:
 #            os.rename(file_name, self.failure_dir + "/" + file_name)
 
-    def execute(self):
+    def execute(self) -> None:
         print("execute loader")
 
         os.chdir(self.fresh_dir)
@@ -125,28 +127,37 @@ class Loader:
                 continue
 
             # test for duplicate file
-            selected = self.postgres.load_log_select(target)
-            if selected is not None:
-                print(f"skip duplicate file:{target}")
-                self.file_failure(target)
-                continue
+#            selected = self.postgres.load_log_select(target)
+#            if selected is not None:
+#                print(f"skip duplicate file:{target}")
+#                self.file_failure(target)
+#                continue
 
             # test for parsed observations
-            obs_list = converter.converter(target)
-            print(f"obs_list:{len(obs_list)}")
-            if len(obs_list) < 1:
+            if converter.converter(target) is False:
+                print(f"converter failure noted:{target}")
                 self.file_failure(target)
                 continue
-
+                
             # test for valid json preamble
             valid_preamble = preamble_helper.validate_preamble(converter.preamble)
             if valid_preamble is None:
                 self.file_failure(target)
                 continue
 
-            # write observations to postgres
-            eclectic = Eclectic(target, valid_preamble, self.postgres)
-            if eclectic.execute(obs_list) is True:
+            file_type = preamble_helper.classifier(valid_preamble)
+            print(f"file:{target} type:{file_type}")
+            self.preamble['file_name'] = target
+            self.preamble['file_type'] = file_type
+
+            ret_flag = False
+            if file_type == "heeler_1":
+                heelerx = heeler.Heeler1(self.preamble, self.postgres)
+                ret_flag = heelerx.execute(obs_list)
+            else:
+                print(f"unknown file type:{file_type}")
+
+            if ret_flag is True:
                 self.file_success(target)
             else:
                 self.file_failure(target)

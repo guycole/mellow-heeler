@@ -31,6 +31,32 @@ class PostGres:
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
+    def load_log_insert(self, args: dict[str, any]) -> LoadLog:
+        """load_log insert row"""
+
+        candidate = LoadLog(args)
+
+        session = self.Session()
+        session.add(candidate)
+        session.commit()
+        session.close()
+
+        return candidate
+
+    def load_log_select_by_name(self, file_name: str) -> LoadLog:
+        """load_log select row"""
+
+        with self.Session() as session:
+            rows = session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
+            for row in rows:
+                return row
+
+        return None
+
+
+
+############# old below
+        
     def box_score_insert(
         self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
     ) -> BoxScore:
@@ -225,28 +251,6 @@ class PostGres:
 
         with self.Session() as session:
             rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return None
-
-    def load_log_insert(self, file_name: str, file_type: str, obs_population: int) -> LoadLog:
-        """load_log insert row"""
-
-        candidate = LoadLog(file_name, file_type, obs_population)
-
-        session = self.Session()
-        session.add(candidate)
-        session.commit()
-        session.close()
-
-        return candidate
-
-    def load_log_select(self, file_name: str) -> LoadLog:
-        """load_log select row"""
-
-        with self.Session() as session:
-            rows = session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
             for row in rows:
                 return row
 
