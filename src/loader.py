@@ -24,9 +24,12 @@ import postgres
 
 from converter import Converter
 
+
 class Eclectic:
 
-    def __init__(self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres):
+    def __init__(
+        self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres
+    ):
         self.file_name = file_name
         self.postgres = postgres
         self.preamble = preamble
@@ -37,32 +40,15 @@ class Eclectic:
         preamble_helper = PreambleHelper()
         file_type = preamble_helper.classifier(self.preamble)
         print(f"file:{self.file_name} type:{file_type}")
-        self.preamble['file_name'] = self.file_name
-        self.preamble['file_type'] = file_type
+        self.preamble["file_name"] = self.file_name
+        self.preamble["file_type"] = file_type
 
         if file_type == "heeler_1":
-            heelerx = heeler.Heeler1(self.preamble, self.postgres)
-            return heelerx.execute(obs_list)
+            heeler1 = heeler.Heeler1(self.preamble, self.postgres)
+            return heeler1.execute(obs_list)
         else:
             print(f"unknown file type:{file_type}")
             return False
-
-#        selected = self.postgres.load_log_select(self.file_name)
-#        print("xxxxxx")
-#        print(selected)
-#load_log_insert(self, file_name: str, file_type: str) -> LoadLog:
-
-        #            obs_list = heeler.heeler_v1(buffer)
-        #        elif classifier == "hound_1":
-        #            pass
-        #            # hound = Hound(postgres)
-        #            # status = hound.hound_v1(buffer, load_log.id)
-     
-        #for obs in obs_list:
-        #           obs.file_name = file_name
-        #           obs.obs_time = obs_time
-        #           obs.platform = platform
-        #           obs.site = geoloc
 
         return True
 
@@ -96,10 +82,10 @@ class Loader:
         self.success_counter += 1
         print("success")
 
-#        if self.dry_run is True:
-#            print(f"skip archive move for {file_name}")
-#        else:
-#            os.rename(file_name, self.archive_dir + "/" + file_name)
+    #        if self.dry_run is True:
+    #            print(f"skip archive move for {file_name}")
+    #        else:
+    #            os.rename(file_name, self.archive_dir + "/" + file_name)
 
     def file_failure(self, file_name: str):
         """problem file, retain for review"""
@@ -107,10 +93,10 @@ class Loader:
         self.failure_counter += 1
         print("failure")
 
-#        if self.dry_run is True:
-#            print(f"skip failure move for {file_name}")
-#        else:
-#            os.rename(file_name, self.failure_dir + "/" + file_name)
+    #        if self.dry_run is True:
+    #            print(f"skip failure move for {file_name}")
+    #        else:
+    #            os.rename(file_name, self.failure_dir + "/" + file_name)
 
     def execute(self) -> None:
         print("execute loader")
@@ -127,18 +113,18 @@ class Loader:
                 continue
 
             # test for duplicate file
-#            selected = self.postgres.load_log_select(target)
-#            if selected is not None:
-#                print(f"skip duplicate file:{target}")
-#                self.file_failure(target)
-#                continue
+            #            selected = self.postgres.load_log_select(target)
+            #            if selected is not None:
+            #                print(f"skip duplicate file:{target}")
+            #                self.file_failure(target)
+            #                continue
 
             # test for parsed observations
             if converter.converter(target) is False:
                 print(f"converter failure noted:{target}")
                 self.file_failure(target)
                 continue
-                
+
             # test for valid json preamble
             valid_preamble = preamble_helper.validate_preamble(converter.preamble)
             if valid_preamble is None:
@@ -149,8 +135,8 @@ class Loader:
 
             file_type = preamble_helper.classifier(valid_preamble)
             print(f"file:{target} type:{file_type}")
-            valid_preamble['file_name'] = target
-            valid_preamble['file_type'] = file_type
+            valid_preamble["file_name"] = target
+            valid_preamble["file_type"] = file_type
 
             result_flag = False
             if file_type == "heeler_1":
@@ -165,6 +151,7 @@ class Loader:
                 self.file_failure(target)
 
         print(f"success:{self.success_counter} failure:{self.failure_counter}")
+
 
 print("start loader")
 

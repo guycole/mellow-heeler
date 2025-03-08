@@ -24,7 +24,6 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
-
 class GeoLoc(Base):
     """geoloc table definition"""
 
@@ -40,20 +39,27 @@ class GeoLoc(Base):
     track = Column(Float)
     load_log_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any], load_log_id: int):
-        self.altitude = args["altitude"]
-        self.fix_time = args["fix_time"]
-        self.latitude = args["latitude"]
-        self.longitude = args["longitude"]
-        self.site = args["site"]
-        self.speed = args["speed"]
-        self.track = args["track"]
+    def __eq__(self, other):
+        return (
+            self.fix_time == other.fix_time
+            and self.site == other.site
+        )
 
+    def __init__(self, args: dict[str, any], load_log_id: int):
+        self.altitude = args['geoLoc']['altitude']
+        self.fix_time = args['geoLoc']['fix_time']
+        self.latitude = args['geoLoc']['latitude']
+        self.longitude = args['geoLoc']['longitude']
+        self.site = args['geoLoc']['site']
+        self.speed = args['geoLoc']['speed']
+        self.track = args['geoLoc']['track']
         self.load_log_id = load_log_id
 
-    def __eq__(self, other):
-        return self.fix_time == other.fix_time and self.site == other.site
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
 
+        return f"<geoloc({self.id}, {self.fix_time}, {self.site})>"
 
 class LoadLog(Base):
     """load_log table definition"""
@@ -69,32 +75,21 @@ class LoadLog(Base):
     platform = Column(String)
     site = Column(String)
 
-    def __init__(self, args: dict[str, any], obs_population: int, site: str):
-        self.file_name = args["file_name"]
-        self.file_time = args["file_time"]
-        self.file_type = args["file_type"]
+    def __init__(self, args: dict[str, any], obs_population: int):
+        self.file_name = args['file_name']
+        self.file_time = args['file_time']
+        self.file_type = args['file_type']
         self.load_time = datetime.now(timezone.utc)
         self.obs_population = obs_population
-        self.platform = args["platform"]
-        self.site = site
+        self.platform = args['platform']
+        self.site = args['geoLoc']['site']
 
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
 
-class Observation(Base):
-    """observation table definition"""
-
-    __tablename__ = "observation"
-
-    id = Column(Integer, primary_key=True)
-    bssid = Column(String)
-    signal_dbm = Column(Integer)
-    load_log_id = Column(BigInteger)
-
-    def __init__(self, args: dict[str, any], load_log_id: int):
-        self.bssid = args["bssid"]
-        self.signal_dbm = args["signal_dbm"]
-        self.load_log_id = load_log_id
-
-
+        return f"<load_log({self.id}, {self.file_name}, {self.file_type})>"
+    
 class Wap(Base):
     """wap table definition"""
 
@@ -109,13 +104,18 @@ class Wap(Base):
     load_log_id = Column(BigInteger)
 
     def __init__(self, args: dict[str, any], version: int, load_log_id: int):
-        self.bssid = args["bssid"]
-        self.capability = args["capability"]
-        self.frequency_mhz = args["frequency_mhz"]
-        self.ssid = args["ssid"]
+        self.bssid = args['bssid']
+        self.capability = args['capability']
+        self.frequency_mhz = args['frequency_mhz']
+        self.ssid = args['ssid']
         self.version = version
         self.load_log_id = load_log_id
 
+#    def __repr__(self):
+#        if self.id is None:
+#            self.id = 0
+#
+#        return "<wap(%d, %s, %d, %s)>" % (self.id, self.bssid, self.version, self.ssid)
 
 ############# old below
 
@@ -196,6 +196,35 @@ class Cooked(Base):
             self.id = 0
 
         return "<cooked(%d)>" % (self.id)
+
+
+
+
+
+class Observation(Base):
+    """observation table definition"""
+
+    __tablename__ = "observation"
+
+    id = Column(Integer, primary_key=True)
+    fix_time_ms = Column(BigInteger)
+    geoloc_id = Column(BigInteger)
+    level = Column(Integer)
+    load_log_id = Column(BigInteger)
+    wap_id = Column(BigInteger)
+
+    def __init__(self, fix_time_ms, geoloc_id, level, load_log_id, wap_id):
+        self.fix_time_ms = fix_time_ms
+        self.geoloc_id = geoloc_id
+        self.level = level
+        self.load_log_id = load_log_id
+        self.wap_id = wap_id
+
+    def __repr__(self):
+        if self.id is None:
+            self.id = 0
+
+        return f"<observation({self.id}, {self.fix_time_ms}, {self.load_log_id})>"
 
 
 # ;;; Local Variables: ***

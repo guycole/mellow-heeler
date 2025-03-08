@@ -2,20 +2,15 @@
 -- Title: observation.psql
 -- Description: WAP observation
 --
--- level = signal strength
--- fix_time_ms = same as geoloc.time_stamp
--- 
 create table heeler_v1.observation (
   id           bigserial    primary key,
-  geo_loc_id   bigint       not null,
-  constraint   geoloc_id    foreign key(geo_loc_id) references heeler_v1.geo_loc(id),
-  level        smallint     not null,
+  bssid        varchar(24)  not null,
+  signal_dbm   smallint     not null,
   load_log_id  bigint       not null,
-  constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id),
-  fix_time     bigint       not null,
-  wap_id       bigint       not null,
-  constraint   wap_id       foreign key(wap_id) references heeler_v1.wap(id)
+  constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id)
 ); 
 
 grant select, insert, update, delete on heeler_v1.observation to heeler_client;
 grant usage, select on sequence heeler_v1.observation_id_seq to heeler_client;
+
+create index observation_bssid on heeler_v1.observation(bssid);

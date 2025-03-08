@@ -9,6 +9,7 @@ import gps_helper
 import pytz
 import time
 
+
 class PreambleHelper:
 
     def create_preamble(
@@ -23,7 +24,7 @@ class PreambleHelper:
         preamble["project"] = "heeler"
         preamble["version"] = 1
         preamble["wifi"] = []
-        preamble["zTime"] = round(time.time()) # collection hosts are always UTC
+        preamble["zTime"] = round(time.time())  # collection hosts are always UTC
 
         return preamble
 
@@ -102,35 +103,46 @@ class PreambleHelper:
     def validate_geoloc(self, preamble: dict[str, any]) -> str:
         """test/normalize geographic location"""
 
-        print(f"preamble:{preamble}")
+        # print(f"preamble:{preamble}")
 
         results = {}
+        results["altitude"] = 0
+        results["fix_time"] = datetime.datetime.fromtimestamp(946684800, pytz.utc)
+        results["latitude"] = 0
+        results["longitude"] = 0
+        results["site"] = "unknown"
+        results["speed"] = 0
+        results["track"] = 0
 
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" in temp:
                 if temp["site"] == "development":
                     print("skipping observation from development")
-                    return results
                 elif temp["site"].startswith("and"):
                     # fixed location site
-                    results['site'] = 'anderson1'
+                    results["site"] = "anderson1"
+                    return results
                 elif temp["site"].startswith("val"):
                     # fixed location site
-                    results['site'] = 'vallejo1'
+                    results["site"] = "vallejo1"
+                    return results
                 elif temp["site"].startswith("mobile"):
                     # mobile location
-                    results['altitude'] = temp['altitude']
-                    results['fix_time'] = datetime.datetime.fromtimestamp(temp['fixTime'], pytz.utc)
-                    results['latitude'] = temp['latitude']
-                    results['longitude'] = temp['longitude']
-                    results['site'] = 'mobile1'
-                    results['speed'] = temp['speed']
-                    results['track'] = temp['track']
+                    results["altitude"] = temp["altitude"]
+                    results["fix_time"] = datetime.datetime.fromtimestamp(
+                        temp["fixTime"], pytz.utc
+                    )
+                    results["latitude"] = temp["latitude"]
+                    results["longitude"] = temp["longitude"]
+                    results["site"] = "mobile1"
+                    results["speed"] = temp["speed"]
+                    results["track"] = temp["track"]
+                    return results
                 else:
                     print(f"geoloc unknown site: {temp['site']}")
 
-        return results
+        return {}
 
     def validate_platform(self, preamble: dict[str, any]) -> str:
         """test/normalize platform"""
@@ -169,6 +181,7 @@ class PreambleHelper:
             return None
 
         return datetime.datetime.fromtimestamp(seconds, pytz.utc)
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

@@ -10,7 +10,7 @@ create table heeler_v1.wap (
   capability     varchar(80)  not null,
   frequency_mhz  smallint     not null,
   ssid           varchar(80)  not null,
-  version        int          not null,
+  version        smallint     not null,
   load_log_id    bigint       not null,
   constraint     load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id)
 ) tablespace heeler;

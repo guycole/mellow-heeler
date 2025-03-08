@@ -1,6 +1,6 @@
 #
 # Title: heeler1.py
-# Description: 
+# Description:
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
@@ -24,6 +24,7 @@ import postgres
 from converter import Converter
 from sql_table import GeoLoc
 
+
 class Heeler1:
     file_type = "heeler_1"
 
@@ -31,42 +32,45 @@ class Heeler1:
         self.postgres = postgres
         self.preamble = preamble
 
-    def store_geo_loc(self, load_log_id:int) -> GeoLoc:
-        geo_loc = self.preamble['geoLoc']
-        site = geo_loc['site']
+    def store_geo_loc(self, load_log_id: int) -> GeoLoc:
+        geo_loc = self.preamble["geoLoc"]
+        site = geo_loc["site"]
 
-    # replace this with "select or insert"?
+        # replace this with "select or insert"?
         location = None
         if site.startswith("mobile"):
             location = self.postgres.geo_loc_insert(geo_loc, load_log_id)
         else:
             location = self.postgres.geo_loc_select_by_site(site)
             if location is None:
-                raise Exception(f"unknown geo_loc site:{site}") 
-            
-        return location
+                raise Exception(f"unknown geo_loc site:{site}")
 
+        return location
 
     def execute(self, obs_list: list[Observation]) -> bool:
         print(f"========> heeler1 execute {self.preamble}")
 
-        load_log = self.postgres.load_log_insert(self.preamble, len(obs_list))
-        print(f"load log {load_log}")
+        load_log = self.postgres.load_log_insert(
+            self.preamble, len(obs_list), self.preamble["geoLoc"]["site"]
+        )
+        print(f"load log {load_log.id}")
 
-        location = self.postgres.geoloc_select_or_insert(self.preamble, load_log.id)
+        location = self.postgres.geo_loc_select_or_insert(
+            self.preamble["geoLoc"], load_log.id
+        )
         print(f"location {location}")
 
-#        location = self.store_geo_loc(load_log.id) 
-#        print(f"location:{location}")
+        for obs in obs_list:
+            print(obs)
 
-#        for obs in obs_list:
-#            print(obs)
+            wap = self.postgres.wap_select_or_insert(obs, load_log.id)
+            print(wap)
 
-#        wap = self.postgres.wap_select_or_insert()
+            xxx = self.postgres.observation_insert(obs, load_log.id)
+            print(xxx)
 
-        # store wap
-        # store observation
         return True
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

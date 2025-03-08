@@ -12,36 +12,37 @@ from unittest import TestCase
 class TestConverter(TestCase):
 
     def test1(self):
-        file_name = "../ffe08060-3068-4424-bd9d-d23507d53c87"
+        """scan file without preamble is a failure"""
+
         file_name = "sample1.scan"
 
         converter = Converter()
-        observations = converter.converter(file_name)
-        assert len(observations) == 20
-
-        for obs in observations:
-            if obs["ssid"] == "Gate K":
-                assert len(obs) == 5
-                assert obs["bssid"] == "3e:8c:f8:f9:2b:bb"
-                assert obs["frequency_mhz"] == 2412
-                assert obs["signal_dbm"] == -57
-                assert obs["ssid"] == "Gate K"
+        assert converter.converter(file_name) is False
 
     def test2(self):
-        file_name = "sample2.scan"
+        """short file without iwlist(8) scan is a failure"""
+
+        file_name = "../samples/ff948343-0167-45f6-89de-d6691cea9109"
 
         converter = Converter()
-        observations = converter.converter(file_name)
-        assert len(observations) == 10
+        assert converter.converter(file_name) is False
 
-        for obs in observations:
-            if obs["ssid"] == "SunPower21450":
-                print(obs)
+    def test3(self):
+        """success with one observation"""
+
+        file_name = "../samples/8755869d-471f-460a-a2eb-ff8eb667629f"
+
+        converter = Converter()
+        assert converter.converter(file_name) is True
+        assert len(converter.obs_list) == 1
+
+        for obs in converter.obs_list:
+            if obs["ssid"] == "braingang2_2GEXT":
                 assert len(obs) == 5
-                assert obs["bssid"] == "6e:21:a2:a4:cd:94"
-                assert obs["frequency_mhz"] == 2412
-                assert obs["signal_dbm"] == -91
-                assert obs["ssid"] == "SunPower21450"
+                assert obs["bssid"] == "6c:cd:d6:2a:62:06"
+                assert obs["frequency_mhz"] == 2437
+                assert obs["signal_dbm"] == -65
+                assert obs["ssid"] == "braingang2_2GEXT"
 
 
 # ;;; Local Variables: ***
