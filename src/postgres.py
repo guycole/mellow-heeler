@@ -36,7 +36,9 @@ class PostGres:
     ) -> LoadLog:
         """load_log insert row"""
 
-        args['file_date'] = args['file_time'].date()
+        # must create date this way to avoid timezone issues
+        temp1 = args['file_time']
+        args['file_date'] = datetime.date(temp1.year, temp1.month, temp1.day)
 
         candidate = LoadLog(args, obs_list_population, site)
 
