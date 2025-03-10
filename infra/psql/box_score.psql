@@ -5,13 +5,13 @@
 -- bssid_new = new AP discovered today
 -- bssid_total = total AP heard today
 -- bssid_updated = total AP updated today
--- device = rpi4 anderson, vallejo, android, etc
+-- device = rpi3d, etc
 -- file_population = total files uploaded
 -- refresh_flag = true, must recalculate stats
 -- score_date = date
--- device = anderson, vallejo, android, etc
+-- site = anderson1, vallejo1, mobile1, etc
 -- 
-create table box_score (
+create table heeler_v1.box_score (
   id               bigserial    primary key,
   bssid_new        smallint     not null, 
   bssid_total      smallint     not null,
@@ -19,10 +19,11 @@ create table box_score (
   device           varchar(16)  not null,
   file_population  smallint     not null, 
   refresh_flag     boolean      not null,
-  score_date       date         not null
-);
+  score_date       date         not null,
+  site             varchar(16)  not null
+) tablespace heeler;
 
-grant select, insert, update, delete on box_score to heeler_py;
-grant usage, select on sequence box_score_id_seq to heeler_py;
+grant select, insert, update, delete on heeler_v1.box_score to heeler_client;
+grant usage, select on sequence heeler_v1.box_score_id_seq to heeler_client;
 
-create index boxscore_date_device on box_score(score_date, device);
+create index boxscore_date_device_site on heeler_v1.box_score(score_date, device, site);

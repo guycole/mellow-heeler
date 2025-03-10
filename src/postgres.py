@@ -36,6 +36,8 @@ class PostGres:
     ) -> LoadLog:
         """load_log insert row"""
 
+        args['file_date'] = args['file_time'].date()
+
         candidate = LoadLog(args, obs_list_population, site)
 
         try:
@@ -48,10 +50,31 @@ class PostGres:
         return candidate
 
     def load_log_select_by_file_name(self, file_name: str) -> list[LoadLog]:
-        """load_log select row"""
+        """load_log select by file name"""
 
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
+
+    def load_log_select_by_date(self, start: datetime.datetime, stop: datetime.datetime) -> list[LoadLog]:
+        """ return all load_log rows for a date """
+
+        pass
+
+#        arg = select(LoadLog).filter(LoadLog.file_time.between(start, stop))
+
+#        with self.Session() as session:
+#            return session.scalars(arg).all()
+#            return session.scalars(select(LoadLog).filter_by(LoadLog.file_time>start)).all()
+#            return session.scalars(select(LoadLog).filter(LoadLog.file_time.between(start, stop))).all()
+
+#qry = DBSession.query(User).filter(User.birthday.between('1985-01-17', '1988-01-17'))
+#        # Query events within the datetime range
+#events_in_range = session.query(Event).filter(Event.timestamp >= start_datetime, Event.timestamp <= end_datetime).all()
+#
+# Print the results
+#for event in events_in_range:
+#    print(f"Event ID: {event.id}, Timestamp: {event.timestamp}")
+
 
     def geo_loc_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
         """geoloc insert row"""
@@ -86,26 +109,19 @@ class PostGres:
     def geo_loc_select_or_insert(
         self, args: dict[str, any], load_log_id: int
     ) -> GeoLoc:
-
-        print("-----------")
-        print(args)
-        site = args["site"]
-        print(site)
-        print("-----------")
-
-        if site.startswith("mobile"):
-            return self.geoloc_insert(args, load_log_id)
+        if args['site'].startswith("mobile"):
+            return self.geo_loc_insert(args, load_log_id)
         else:
-            candidate = self.geo_loc_select_by_site(site)
+            candidate = self.geo_loc_select_by_site(args['site'])
             if len(candidate) < 1:
                 return None
             else:
                 return candidate[0]
 
-    def observation_insert(self, args: dict[str, any], load_log_id: int) -> Observation:
+    def observation_insert(self, args: dict[str, any], load_log_id: int, wap_id: int) -> Observation:
         """observation insert row"""
 
-        candidate = Observation(args, load_log_id)
+        candidate = Observation(args, load_log_id, wap_id)
 
         try:
             with self.Session() as session:

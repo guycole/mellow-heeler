@@ -7,8 +7,10 @@ create table heeler_v1.observation (
   bssid        varchar(24)  not null,
   signal_dbm   smallint     not null,
   load_log_id  bigint       not null,
-  constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id)
-); 
+  constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id),
+  wap_id       bigint       not null,
+  constraint   wap_id       foreign key(wap_id) references heeler_v1.wap(id)
+);
 
 grant select, insert, update, delete on heeler_v1.observation to heeler_client;
 grant usage, select on sequence heeler_v1.observation_id_seq to heeler_client;

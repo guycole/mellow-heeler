@@ -85,8 +85,7 @@ class Converter:
         self.obs_list = []
         for obs in observations:
             self.obs_list.append(obs.to_dict())
-
-        #        self.preamble['wifi'] = self.obs_list
+            self.preamble['wifi'] = self.obs_list
 
         return True
 

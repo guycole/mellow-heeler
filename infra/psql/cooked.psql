@@ -8,7 +8,7 @@
 -- observed_last = most recent AP observation
 -- observed_counter = total population of AP observations
 --
-create table cooked (
+create table heeler_v1.cooked (
   id                bigserial    primary key,
   confidence        smallint     not null,
   latitude          real         not null,
@@ -18,8 +18,8 @@ create table cooked (
   observed_first    timestamptz  not null default CURRENT_TIMESTAMP,
   observed_last     timestamptz  not null default CURRENT_TIMESTAMP,
   wap_id            bigint       unique not null,
-  constraint        wap_id       foreign key(wap_id) references wap(id)
-);
+  constraint        wap_id       foreign key(wap_id) references heeler_v1.wap(id)
+) tablespace heeler;
 
-grant select, insert, update, delete on cooked to heeler_py;
-grant usage, select on sequence cooked_id_seq to heeler_py;
+grant select, insert, update, delete on heeler_v1.cooked to heeler_client;
+grant usage, select on sequence heeler_v1.cooked_id_seq to heeler_client;

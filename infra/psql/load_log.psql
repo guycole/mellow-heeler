@@ -12,6 +12,7 @@
 --
 create table heeler_v1.load_log (
   id              bigserial    primary key,
+  file_date       date         not null,
   file_name       varchar(48)  unique not null,
   file_time       timestamptz  not null,
   file_type       varchar(16)  not null,
@@ -24,7 +25,8 @@ create table heeler_v1.load_log (
 grant select, insert, update, delete on heeler_v1.load_log to heeler_client;
 grant usage, select on sequence heeler_v1.load_log_id_seq to heeler_client;
 
+create index load_log_date on heeler_v1.load_log(file_date);
 create unique index load_log_time_platform on heeler_v1.load_log(file_time, platform);
 
-insert into heeler_v1.load_log(file_name, file_time, file_type, obs_population, platform, site) values('a89039a4-f75d-4bdc-af24-fcd8aadf3c09', '2000-1-1', 'synthetic', 0, 'dummy1', 'anderson1');
-insert into heeler_v1.load_log(file_name, file_time, file_type, obs_population, platform, site) values('5e7eb394-7ecd-40aa-b1c1-7527ea3a9e4f', '2000-1-1', 'synthetic', 0, 'dummy2', 'vallejo1');
+insert into heeler_v1.load_log(file_date, file_name, file_time, file_type, obs_population, platform, site) values('2000-1-1', 'a89039a4-f75d-4bdc-af24-fcd8aadf3c09', '2000-1-1', 'synthetic', 0, 'dummy1', 'anderson1');
+insert into heeler_v1.load_log(file_date, file_name, file_time, file_type, obs_population, platform, site) values('2000-1-1', '5e7eb394-7ecd-40aa-b1c1-7527ea3a9e4f', '2000-1-1', 'synthetic', 0, 'dummy2', 'vallejo1');

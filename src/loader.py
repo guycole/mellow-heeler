@@ -80,27 +80,24 @@ class Loader:
         """file was successfully processed"""
 
         self.success_counter += 1
-        print("success")
 
-    #        if self.dry_run is True:
-    #            print(f"skip archive move for {file_name}")
-    #        else:
-    #            os.rename(file_name, self.archive_dir + "/" + file_name)
+        if self.dry_run is True:
+            print(f"skip archive move for {file_name}")
+        else:
+            os.rename(file_name, self.archive_dir + "/" + file_name)
 
     def file_failure(self, file_name: str):
         """problem file, retain for review"""
 
         self.failure_counter += 1
-        print("failure")
 
-    #        if self.dry_run is True:
-    #            print(f"skip failure move for {file_name}")
-    #        else:
-    #            os.rename(file_name, self.failure_dir + "/" + file_name)
+        if self.dry_run is True:
+            print(f"skip failure move for {file_name}")
+        else:
+            os.rename(file_name, self.failure_dir + "/" + file_name)
 
     def execute(self) -> None:
-        print("execute loader")
-
+        print(f"fresh dir:{self.fresh_dir}")
         os.chdir(self.fresh_dir)
         targets = os.listdir(".")
         print(f"{len(targets)} files noted")
@@ -113,11 +110,11 @@ class Loader:
                 continue
 
             # test for duplicate file
-            #            selected = self.postgres.load_log_select(target)
-            #            if selected is not None:
-            #                print(f"skip duplicate file:{target}")
-            #                self.file_failure(target)
-            #                continue
+            selected = self.postgres.load_log_select_by_file_name(target)
+            if len(selected) > 0:
+                print(f"skip duplicate file:{target}")
+                self.file_failure(target)
+                continue
 
             # test for parsed observations
             if converter.converter(target) is False:
@@ -140,8 +137,12 @@ class Loader:
 
             result_flag = False
             if file_type == "heeler_1":
-                heelerx = heeler.Heeler1(self.postgres, valid_preamble)
-                result_flag = heelerx.execute(converter.obs_list)
+                if self.dry_run is True:
+                    print(f"skip heeler1 for {target}")
+                    result_flag = True
+                else:
+                    heelerx = heeler.Heeler1(self.postgres, valid_preamble)
+                    result_flag = heelerx.execute(converter.obs_list)
             else:
                 print(f"unknown file type:{file_type}")
 

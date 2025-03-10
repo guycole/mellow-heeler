@@ -53,12 +53,10 @@ class Heeler1:
         load_log = self.postgres.load_log_insert(
             self.preamble, len(obs_list), self.preamble["geoLoc"]["site"]
         )
-        print(f"load log {load_log.id}")
 
         location = self.postgres.geo_loc_select_or_insert(
             self.preamble["geoLoc"], load_log.id
         )
-        print(f"location {location}")
 
         for obs in obs_list:
             print(obs)
@@ -66,7 +64,7 @@ class Heeler1:
             wap = self.postgres.wap_select_or_insert(obs, load_log.id)
             print(wap)
 
-            xxx = self.postgres.observation_insert(obs, load_log.id)
+            xxx = self.postgres.observation_insert(obs, load_log.id, wap.id)
             print(xxx)
 
         return True

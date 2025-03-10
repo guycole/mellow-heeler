@@ -24,6 +24,30 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     pass
 
+class BoxScore(Base):
+    """box_score table definition"""
+
+    __tablename__ = "box_score"
+
+    id = Column(Integer, primary_key=True)
+    bssid_new = Column(Integer)
+    bssid_total = Column(Integer)
+    bssid_updated = Column(Integer)
+    device = Column(String)
+    file_population = Column(Integer)
+    refresh_flag = Column(Boolean)
+    score_date = Column(Date)
+    site = Column(String)
+
+    def __init__(self, args: dict[str, any]):
+        self.bssid_new = args['bssid_new']
+        self.bssid_total = args['bssid_total']
+        self.bssid_updated = args['bssid_updated']
+        self.device = args['device']
+        self.file_population = args['file_population']
+        self.refresh_flag = args['refresh_flag']
+        self.score_date = args['score_date']
+        self.site = args['site']
 
 class GeoLoc(Base):
     """geoloc table definition"""
@@ -61,6 +85,7 @@ class LoadLog(Base):
     __tablename__ = "load_log"
 
     id = Column(Integer, primary_key=True)
+    file_date = Column(Date)
     file_name = Column(String)
     file_time = Column(DateTime)
     file_type = Column(String)
@@ -70,6 +95,7 @@ class LoadLog(Base):
     site = Column(String)
 
     def __init__(self, args: dict[str, any], obs_population: int, site: str):
+        self.file_date = args["file_date"]
         self.file_name = args["file_name"]
         self.file_time = args["file_time"]
         self.file_type = args["file_type"]
@@ -88,12 +114,13 @@ class Observation(Base):
     bssid = Column(String)
     signal_dbm = Column(Integer)
     load_log_id = Column(BigInteger)
+    wap_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any], load_log_id: int):
+    def __init__(self, args: dict[str, any], load_log_id: int, wap_id: int):
         self.bssid = args["bssid"]
         self.signal_dbm = args["signal_dbm"]
         self.load_log_id = load_log_id
-
+        self.wap_id = wap_id
 
 class Wap(Base):
     """wap table definition"""
@@ -119,41 +146,6 @@ class Wap(Base):
 
 ############# old below
 
-
-class BoxScore(Base):
-    """box_score table definition"""
-
-    __tablename__ = "box_score"
-
-    id = Column(Integer, primary_key=True)
-    bssid_new = Column(Integer)
-    bssid_total = Column(Integer)
-    bssid_updated = Column(Integer)
-    device = Column(String)
-    file_population = Column(Integer)
-    refresh_flag = Column(Boolean)
-    score_date = Column(Date)
-
-    def __init__(
-        self,
-        bssid_new,
-        bssid_total,
-        bssid_updated,
-        device,
-        file_population,
-        refresh_flag,
-        score_date,
-    ):
-        self.bssid_new = bssid_new
-        self.bssid_total = bssid_total
-        self.bssid_updated = bssid_updated
-        self.device = device
-        self.file_population = file_population
-        self.refresh_flag = refresh_flag
-        self.score_date = score_date
-
-    def __repr__(self):
-        return f"<box_score({self.id}, {self.score_date}, {self.device})>"
 
 
 class Cooked(Base):

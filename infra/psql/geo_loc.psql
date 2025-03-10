@@ -24,7 +24,7 @@ grant usage, select on sequence heeler_v1.geo_loc_id_seq to heeler_client;
 create unique index geo_loc_fix_time on heeler_v1.geo_loc(fix_time, site);
 
 -- anderson1
-insert into heeler_v1.geo_loc(altitude, fix_time, latitude, longitude, site, speed, track, load_log_id) values(12.3, '2001-1-1', 40.3702153, -122.2835223, 'anderson1', 0, 0, 1);
+insert into heeler_v1.geo_loc(altitude, fix_time, latitude, longitude, site, speed, track, load_log_id) values(12.3, '2000-1-1', 40.41746, -122.24048, 'anderson1', 0, 0, 1);
 
 -- vallejo1
-insert into heeler_v1.geo_loc(altitude, fix_time, latitude, longitude, site, speed, track, load_log_id) values(12.3, '2001-1-1', 40.3702153, -122.2835223, 'vallejo1', 0, 0, 2);
+insert into heeler_v1.geo_loc(altitude, fix_time, latitude, longitude, site, speed, track, load_log_id) values(12.3, '2000-1-1', 38.10812, -122.26794, 'vallejo1', 0, 0, 2);
