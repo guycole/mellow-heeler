@@ -65,14 +65,16 @@ class Converter:
         except Exception as error:
             print(error)
 
-    def converter(self, file_name: str) -> bool:
+    def converter(self, file_name: str, preamble_flag: bool) -> bool:
         if self.file_reader(file_name) is False:
             return False
 
-        try:
-            self.preamble = json.loads(self.raw_buffer[0])
-        except Exception as error:
-            print(error)
+        if preamble_flag is True:
+            try:
+                self.preamble = json.loads(self.raw_buffer[0])
+            except Exception as error:
+                print(error)
+                return False
 
         parser = Parser(self.raw_buffer)
         observations = parser.parser()

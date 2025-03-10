@@ -41,7 +41,7 @@ class Header:
 
         # convert iwlist scan to observations
         converter = Converter()
-        ret_flag = converter.converter(file_name)
+        ret_flag = converter.converter(file_name, False)
         if ret_flag is True:
             # create json preamble
             helper = PreambleHelper()
