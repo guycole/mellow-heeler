@@ -41,19 +41,20 @@ class Header:
 
         # convert iwlist scan to observations
         converter = Converter()
-        observations = converter.converter(file_name)
-        print(f"observations: {len(observations)}")
+        ret_flag = converter.converter(file_name)
+        if ret_flag is True:
+            # create json preamble
+            helper = PreambleHelper()
+            preamble = helper.create_preamble(self.host, self.site, gps_sample)
+            preamble["wifi"] = converter.obs_list
 
-        # create json preamble
-        helper = PreambleHelper()
-        preamble = helper.create_preamble(self.host, self.site, gps_sample)
-        preamble["wifi"] = observations
+            # save preamble to file for skunk and wombat
+            converter.json_writer("/tmp/preamble.json", preamble)
 
-        # save preamble to file for skunk and wombat
-        converter.json_writer("/tmp/preamble.json", preamble)
-
-        # iwlist observation to archive file
-        converter.file_writer(self.fresh_dir, json.dumps(preamble))
+            # iwlist observation to archive file
+            converter.file_writer(self.fresh_dir, json.dumps(preamble))
+        else: 
+            print("converter failure")
 
 
 #
