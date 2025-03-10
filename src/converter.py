@@ -21,7 +21,6 @@ class Converter:
         return "%s/%s" % (dir_name, str(uuid.uuid4()))
 
     def file_reader(self, file_name: str) -> bool:
-        self.obs_list = []
         self.preamble = {}
 
         try:
@@ -32,12 +31,6 @@ class Converter:
                     self.raw_buffer = []
         except Exception as error:
             print(error)
-            return False
-
-        try:
-            self.preamble = json.loads(self.raw_buffer[0])
-        except Exception as error:
-            print("missing preamble")
             return False
 
         return True
@@ -75,6 +68,11 @@ class Converter:
     def converter(self, file_name: str) -> bool:
         if self.file_reader(file_name) is False:
             return False
+
+        try:
+            self.preamble = json.loads(self.raw_buffer[0])
+        except Exception as error:
+            print(error)
 
         parser = Parser(self.raw_buffer)
         observations = parser.parser()
