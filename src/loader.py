@@ -117,7 +117,7 @@ class Loader:
                 continue
 
             # test for parsed observations
-            if converter.converter(target) is False:
+            if converter.converter(target, True) is False:
                 print(f"converter failure noted:{target}")
                 self.file_failure(target)
                 continue

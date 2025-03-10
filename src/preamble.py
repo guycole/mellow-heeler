@@ -174,7 +174,7 @@ class PreambleHelper:
         seconds = 0
 
         if "zTime" in preamble:
-            seconds = int(preamble["zTimeMs"])
+            seconds = int(preamble["zTime"])
         elif "zTimeMs" in preamble:
             seconds = int(preamble["zTimeMs"]) / 1000
         else:
