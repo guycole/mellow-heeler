@@ -16,14 +16,14 @@ create table heeler_v1.box_score (
   bssid_new        smallint     not null, 
   bssid_total      smallint     not null,
   bssid_updated    smallint     not null, 
-  device           varchar(16)  not null,
+  file_date        date         not null,
   file_population  smallint     not null, 
+  platform         varchar(16)  not null,
   refresh_flag     boolean      not null,
-  score_date       date         not null,
   site             varchar(16)  not null
 ) tablespace heeler;
 
 grant select, insert, update, delete on heeler_v1.box_score to heeler_client;
 grant usage, select on sequence heeler_v1.box_score_id_seq to heeler_client;
 
-create index boxscore_date_device_site on heeler_v1.box_score(score_date, device, site);
+create index boxscore_date_platform_site on heeler_v1.box_score(file_date, platform, site);

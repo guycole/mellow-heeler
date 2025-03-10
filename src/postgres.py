@@ -31,14 +31,66 @@ class PostGres:
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
+    def box_score_insert(self, args: dict[str, any]) -> BoxScore:
+        """box_score row insert"""
+
+        candidate = BoxScore(args)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def box_score_select(self, file_date: datetime.date, platform: str, site: str) -> BoxScore:
+        """box_score row select"""
+
+        statement = select(BoxScore).filter_by(file_date=file_date, platform=platform, site=site)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def box_score_update(self, args: dict[str, any]) -> BoxScore:
+#        selected = self.box_score_select(args['file_date'], args['platform'], args['site'])
+#        if len(selected) < 1:
+        
+        self.box_score_insert(args)
+
+
+    def cooked_insert(self, args: dict[str, any], wap_id: int) -> Cooked:
+        """cooked insert row"""
+
+        candidate = Cooked(args, wap_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+    
+    def cooked_select_by_wap_id(self, wap_id: int) -> Cooked:
+        """cooked select row for a wap id"""
+
+        with self.Session() as session:
+            return session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
+
+    def cooked_update2(self, args: dict[str, any], wap_id: int) -> Cooked:
+        rows = self.cooked_select_by_wap_id(wap_id)
+        if len(rows) < 1:
+            self.cooked_insert(args, wap_id)
+
     def load_log_insert(
         self, args: dict[str, any], obs_list_population: int, site: str
     ) -> LoadLog:
         """load_log insert row"""
 
-        # must create date this way to avoid timezone issues
-        temp1 = args['file_time']
-        args['file_date'] = datetime.date(temp1.year, temp1.month, temp1.day)
+        args['file_date'] = args['file_time'].date()
 
         candidate = LoadLog(args, obs_list_population, site)
 
@@ -57,26 +109,11 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
 
-    def load_log_select_by_date(self, start: datetime.datetime, stop: datetime.datetime) -> list[LoadLog]:
+    def load_log_select_by_date(self, target: datetime.date) -> list[LoadLog]:
         """ return all load_log rows for a date """
 
-        pass
-
-#        arg = select(LoadLog).filter(LoadLog.file_time.between(start, stop))
-
-#        with self.Session() as session:
-#            return session.scalars(arg).all()
-#            return session.scalars(select(LoadLog).filter_by(LoadLog.file_time>start)).all()
-#            return session.scalars(select(LoadLog).filter(LoadLog.file_time.between(start, stop))).all()
-
-#qry = DBSession.query(User).filter(User.birthday.between('1985-01-17', '1988-01-17'))
-#        # Query events within the datetime range
-#events_in_range = session.query(Event).filter(Event.timestamp >= start_datetime, Event.timestamp <= end_datetime).all()
-#
-# Print the results
-#for event in events_in_range:
-#    print(f"Event ID: {event.id}, Timestamp: {event.timestamp}")
-
+        with self.Session() as session:
+            return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
 
     def geo_loc_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
         """geoloc insert row"""
@@ -120,10 +157,10 @@ class PostGres:
             else:
                 return candidate[0]
 
-    def observation_insert(self, args: dict[str, any], load_log_id: int, wap_id: int) -> Observation:
+    def observation_insert(self, args: dict[str, any], file_date: datetime.date, load_log_id: int, wap_id: int) -> Observation:
         """observation insert row"""
 
-        candidate = Observation(args, load_log_id, wap_id)
+        candidate = Observation(args, file_date, load_log_id, wap_id)
 
         try:
             with self.Session() as session:
@@ -144,6 +181,14 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
+    def observation_select_by_wap_id(self, wap_id: int) -> list[Observation]:
+        """observation select row"""
+
+        statement = select(Observation).filter_by(wap_id=wap_id).order_by(Observation.file_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
     def wap_insert(self, args: dict[str, any], version: int, load_log_id: int) -> Wap:
         """wap insert row"""
 
@@ -157,6 +202,12 @@ class PostGres:
             print(error)
 
         return candidate
+
+    def wap_select_all(self) -> list[Wap]:
+        """select all wap rows"""
+
+        with self.Session() as session:
+            return session.scalars(select(Wap)).all()
 
     def wap_select_by_bssid(self, args: dict[str, any]) -> Wap:
         """wap select row"""
@@ -216,38 +267,7 @@ class PostGres:
 
     ############# old below
 
-    def box_score_insert(
-        self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
-    ) -> BoxScore:
-        """box_score row insert"""
-
-        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
-
-        candidate = BoxScore(fresh_wap, 0, updated_wap, device, 1, True, tweaked_date)
-
-        session = self.Session()
-
-        session.add(candidate)
-        session.commit()
-        session.close()
-
-        return candidate
-
-    def box_score_select(self, fix_time_ms: int, device: str) -> BoxScore:
-        """box_score row select"""
-
-        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
-
-        statement = select(BoxScore).filter_by(score_date=tweaked_date, device=device)
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return None
-
-    def box_score_select_daily(self, target_date: str) -> List[BoxScore]:
+    def box_score_select_daily2(self, target_date: str) -> List[BoxScore]:
         """return all rows for a specific date"""
 
         statement = (
@@ -263,7 +283,7 @@ class PostGres:
 
         return results
 
-    def box_score_select_refresh(self) -> List[BoxScore]:
+    def box_score_select_refresh2(self) -> List[BoxScore]:
         """return all rows with active refresh flag"""
 
         statement = select(BoxScore).filter_by(refresh_flag=True)
@@ -276,7 +296,7 @@ class PostGres:
 
         return results
 
-    def box_score_refresh(self, candidate: BoxScore) -> BoxScore:
+    def box_score_refresh2(self, candidate: BoxScore) -> BoxScore:
         """box_score row refresh"""
 
         session = self.Session()
@@ -286,7 +306,7 @@ class PostGres:
 
         return candidate
 
-    def box_score_update(
+    def box_score_update2(
         self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
     ) -> BoxScore:
         """box_score row update"""
@@ -306,7 +326,7 @@ class PostGres:
 
         return candidate
 
-    def cooked_insert(self, cooked: Dict[str, str]) -> Cooked:
+    def xcooked_insert(self, cooked: Dict[str, str]) -> Cooked:
         """cooked row insert"""
 
         # convert from ms to calendar date
@@ -333,7 +353,7 @@ class PostGres:
 
         return candidate
 
-    def cooked_select(self, wap_id: int) -> Cooked:
+    def xcooked_select(self, wap_id: int) -> Cooked:
         """cooked row select"""
 
         statement = select(Cooked).filter_by(wap_id=wap_id)
@@ -345,7 +365,7 @@ class PostGres:
 
         return None
 
-    def cooked_update(self, cooked: Dict[str, str]) -> Cooked:
+    def xcooked_update(self, cooked: Dict[str, str]) -> Cooked:
         """cooked row update"""
 
         tweaked_seconds = cooked["fixTimeMs"] / 1000

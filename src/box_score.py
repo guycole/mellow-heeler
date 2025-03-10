@@ -18,10 +18,11 @@ from sqlalchemy.orm import sessionmaker
 
 import postgres
 
-from converter import Converter
-
 class BoxScore:
     """daily station statistics"""
+
+    # key = date_platform_site
+    box_scores = {}
 
     def __init__(self, configuration: dict[str, str]):
         self.db_conn = configuration["dbConn"]
@@ -37,37 +38,46 @@ class BoxScore:
             sessionmaker(bind=db_engine, expire_on_commit=False)
         )
 
-    def origin_day_start(self) -> datetime.datetime:
-        return datetime.datetime(2024, 2, 15, 0, 0, tzinfo=datetime.timezone.utc)
+    def fresh_box_score(self, file_date: datetime.date, platform: str, site: str) -> dict[str, any]:
+        return {
+            "bssid_new": 0,
+            "bssid_total": 0,
+            "bssid_updated": 0,
+            "file_date": file_date,
+            "file_population": 0,
+            "platform": platform,
+            "refresh_flag": False,
+            "site": site,
+        }
 
-    def origin_day_stop(self) -> datetime.datetime:
-        start = self.origin_day_start()
+    def process_daily(self, current_day: datetime.date) -> None:
+        # select files loaded for today
+        load_log_rows = self.postgres.load_log_select_by_date(current_day)
 
-        year = start.year
-        month = start.month
-        day = start.day
-        hour = 23
-        minute = 59
-        second = 59
-        microsecond = 999999
+        # discover platform and sites for today
+        for row in load_log_rows:
+            box_scores_key = f"{row.file_date}_{row.platform}_{row.site}"
 
-        return datetime.datetime(year, month, day, hour, minute, second, microsecond, pytz.utc)
-    
+            if box_scores_key in self.box_scores:
+                self.box_scores[box_scores_key]["bssid_total"] += row.obs_population
+            else:
+                fresh = self.fresh_box_score(row.file_date, row.platform, row.site)
+                fresh["bssid_total"] = row.obs_population
+                self.box_scores[box_scores_key] = fresh
+
+        for value in self.box_scores.values():
+            self.postgres.box_score_update(value)
+
     def execute(self) -> None:
         today = datetime.datetime.now(pytz.utc)
+        current_day = datetime.date(2024, 1, 1)
 
-        current_day_start = self.origin_day_start()
-        current_day_stop = self.origin_day_stop()
+        while current_day < today.date():
+            print(f"{current_day}")
 
-        while current_day_start < today:
-            print(f"{current_day_start} {current_day_stop}")
+            self.process_daily(current_day)
 
-            current_day_start = current_day_start + datetime.timedelta(days=1)
-            current_day_stop = current_day_stop + datetime.timedelta(days=1)
-
-            load_log_rows = self.postgres.load_log_select_by_date(current_day_start, current_day_stop)
-            for row in load_log_rows:
-                print(row.id, row.file_time)
+            current_day = current_day + datetime.timedelta(days=1)
 
 print("start scorer")
 

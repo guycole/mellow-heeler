@@ -33,21 +33,48 @@ class BoxScore(Base):
     bssid_new = Column(Integer)
     bssid_total = Column(Integer)
     bssid_updated = Column(Integer)
-    device = Column(String)
+    file_date = Column(Date)
     file_population = Column(Integer)
+    platform = Column(String)
     refresh_flag = Column(Boolean)
-    score_date = Column(Date)
     site = Column(String)
 
     def __init__(self, args: dict[str, any]):
+        print(args)
+        print("x0x0x0x0x0")
         self.bssid_new = args['bssid_new']
         self.bssid_total = args['bssid_total']
         self.bssid_updated = args['bssid_updated']
-        self.device = args['device']
+        self.file_date = args['file_date']
         self.file_population = args['file_population']
+        self.platform = args['platform']
         self.refresh_flag = args['refresh_flag']
-        self.score_date = args['score_date']
         self.site = args['site']
+
+class Cooked(Base):
+    """cooked table definition"""
+
+    __tablename__ = "cooked"
+
+    id = Column(Integer, primary_key=True)
+    confidence = Column(Integer)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    note = Column(String)
+    observed_count = Column(BigInteger)
+    observed_first = Column(DateTime)
+    observed_last = Column(DateTime)
+    wap_id = Column(BigInteger)
+
+    def __init__(self, args: dict[str, any], wap_id: int):
+        self.confidence = args['confidence']
+        self.latitude = args['latitude']
+        self.longitude = args['longitude']
+        self.note = args['note']
+        self.observed_count = args['observed_count']
+        self.observed_first = args['observed_first']
+        self.observed_last = args['observed_last']
+        self.wap_id = wap_id
 
 class GeoLoc(Base):
     """geoloc table definition"""
@@ -112,12 +139,14 @@ class Observation(Base):
 
     id = Column(Integer, primary_key=True)
     bssid = Column(String)
+    file_date = Column(Date)
     signal_dbm = Column(Integer)
     load_log_id = Column(BigInteger)
     wap_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any], load_log_id: int, wap_id: int):
+    def __init__(self, args: dict[str, any], file_date: datetime.date, load_log_id: int, wap_id: int):
         self.bssid = args["bssid"]
+        self.file_date = file_date
         self.signal_dbm = args["signal_dbm"]
         self.load_log_id = load_log_id
         self.wap_id = wap_id
@@ -142,53 +171,6 @@ class Wap(Base):
         self.ssid = args["ssid"]
         self.version = version
         self.load_log_id = load_log_id
-
-
-############# old below
-
-
-
-class Cooked(Base):
-    """cooked table definition"""
-
-    __tablename__ = "cooked"
-
-    id = Column(Integer, primary_key=True)
-    confidence = Column(Integer)
-    latitude = Column(Float)
-    longitude = Column(Float)
-    note = Column(String)
-    observed_counter = Column(BigInteger)
-    observed_first = Column(DateTime)
-    observed_last = Column(DateTime)
-    wap_id = Column(BigInteger)
-
-    def __init__(
-        self,
-        confidence,
-        latitude,
-        longitude,
-        note,
-        observed_counter,
-        observed_first,
-        observed_last,
-        wap_id,
-    ):
-        self.confidence = confidence
-        self.latitude = latitude
-        self.longitude = longitude
-        self.note = note
-        self.observed_counter = observed_counter
-        self.observed_first = observed_first
-        self.observed_last = observed_last
-        self.wap_id = wap_id
-
-    def __repr__(self):
-        if self.id is None:
-            self.id = 0
-
-        return "<cooked(%d)>" % (self.id)
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
