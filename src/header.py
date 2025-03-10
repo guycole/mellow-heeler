@@ -44,7 +44,7 @@ class Header:
         observations = converter.converter(file_name)
         print(f"observations: {len(observations)}")
 
-        # create json preamble 
+        # create json preamble
         helper = PreambleHelper()
         preamble = helper.create_preamble(self.host, self.site, gps_sample)
         preamble["wifi"] = observations
@@ -54,6 +54,7 @@ class Header:
 
         # iwlist observation to archive file
         converter.file_writer(self.fresh_dir, json.dumps(preamble))
+
 
 #
 # argv[1] = configuration filename

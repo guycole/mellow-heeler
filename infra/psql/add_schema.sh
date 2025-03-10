@@ -12,10 +12,10 @@ export PGHOST=localhost
 export PGPASSWORD=woofwoof
 export PGUSER=heeler_admin
 #
-#psql < box_score.psql
-psql < geoloc.psql
+psql < box_score.psql
 psql < load_log.psql
+psql < geo_loc.psql
 psql < wap.psql
-#psql < cooked.psql
+psql < cooked.psql
 psql < observation.psql
 #

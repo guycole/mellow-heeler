@@ -16,140 +16,41 @@ from yaml.loader import SafeLoader
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# import heeler2
-import observation
+from observation import Observation
+from preamble import PreambleHelper
+
+import heeler
 import postgres
 
-from iwlist_converter import Converter
+from converter import Converter
 
 
-class Parser:
-    def classifier(self, preamble: dict[str, str]) -> str:
-        """discover file format, i.e. heeler_v1, etc"""
+class Eclectic:
 
-        project = None
-        if "project" in preamble:
-            project = preamble["project"]
+    def __init__(
+        self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres
+    ):
+        self.file_name = file_name
+        self.postgres = postgres
+        self.preamble = preamble
 
-        version = None
-        if "version" in preamble:
-            version = preamble["version"]
-
-        file_type = f"{project}_{version}"
-        return file_type
-
-    def file_reader(self, file_name: str) -> list[str]:
-        """read a mellow heeler file into a buffer"""
-
-        buffer = []
-        with open(file_name, "r", encoding="utf-8") as in_file:
-            try:
-                buffer = in_file.readlines()
-                if len(buffer) < 2:
-                    print(f"empty file noted: {file_name}")
-            except:
-                print(f"file read error: {file_name}")
-
-        return buffer
-
-    def geo_location(self, preamble: dict[str, str]) -> str:
-        """extract geolocation from the file"""
-
-        if "geoLoc" in preamble:
-            temp = preamble["geoLoc"]
-            if "site" in temp:
-                if temp["site"].startswith("and"):
-                    return "anderson1"
-                elif temp["site"].startswith("val"):
-                    return "vallejo1"
-                elif temp["site"].startswith("mobile"):
-                    return "mobile1"
-                elif temp["site"] == "development":
-                    print("skipping observation from development")
-                    return None
-                else:
-                    print(f"geoloc unknown site: {temp['site']}")
-                    return None
-
-        return None
-
-    def obs_time(self, preamble: dict[str, str]) -> datetime.datetime:
-        """extract observation time"""
-
-        if "zTimeMs" in preamble:
-            seconds = int(preamble["zTimeMs"]) / 1000
-            dt = datetime.datetime.fromtimestamp(seconds, pytz.utc)
-            return dt
-
-    def platform(self, preamble: dict[str, str]) -> str:
-        """extract platform"""
-
-        if "platform" in preamble:
-            return preamble["platform"]
-
-        return "unknown"
-
-    def preamble(self, buffer: list[str]) -> dict[str, str]:
-        """extract the preamble from the file"""
-
-        preamble = {}
-
-        try:
-            preamble = json.loads(buffer[0])
-        except Exception as error:
-            print(error)
-
-        return preamble
-
-    def execute(self, file_name: str) -> list[observation.Observation]:
+    def dispatch(self, obs_list: list[Observation]) -> bool:
         """dispatch to approprate file parser"""
 
-        obs_list = []
+        preamble_helper = PreambleHelper()
+        file_type = preamble_helper.classifier(self.preamble)
+        print(f"file:{self.file_name} type:{file_type}")
+        self.preamble["file_name"] = self.file_name
+        self.preamble["file_type"] = file_type
 
-        buffer = self.file_reader(file_name)
-        if len(buffer) < 2:
-            return None
+        if file_type == "heeler_1":
+            heeler1 = heeler.Heeler1(self.preamble, self.postgres)
+            return heeler1.execute(obs_list)
+        else:
+            print(f"unknown file type:{file_type}")
+            return False
 
-        preamble = self.preamble(buffer)
-        if len(preamble) < 1:
-            print("preamble not found")
-            return None
-
-        geoloc = self.geo_location(preamble)
-        if geoloc is None:
-            print("geoloc not found")
-            return None
-
-        obs_time = self.obs_time(preamble)
-        if obs_time is None:
-            print("obs_time not found")
-            return None
-
-        platform = self.platform(preamble)
-        if platform is None:
-            print("platform not found")
-            return None
-
-        classifier = self.classifier(preamble)
-        print(f"file:{file_name} classifier:{classifier}")
-
-        #        if classifier == "heeler_1":
-        #            heeler = heeler2.Heeler()
-        #            obs_list = heeler.heeler_v1(buffer)
-        #        elif classifier == "hound_1":
-        #            pass
-        #            # hound = Hound(postgres)
-        #            # status = hound.hound_v1(buffer, load_log.id)
-        #        else:
-        #            print(f"unknown classifier:{classifier}")
-        #
-        #       for obs in obs_list:
-        #           obs.file_name = file_name
-        #           obs.obs_time = obs_time
-        #           obs.platform = platform
-        #           obs.site = geoloc
-
-        return obs_list
+        return True
 
 
 class Loader:
@@ -167,12 +68,18 @@ class Loader:
         db_engine = create_engine(
             self.db_conn, echo=self.sql_echo, connect_args=connect_dict
         )
+
         self.postgres = postgres.PostGres(
             sessionmaker(bind=db_engine, expire_on_commit=False)
         )
 
+        self.failure_counter = 0
+        self.success_counter = 0
+
     def file_success(self, file_name: str):
         """file was successfully processed"""
+
+        self.success_counter += 1
 
         if self.dry_run is True:
             print(f"skip archive move for {file_name}")
@@ -182,53 +89,69 @@ class Loader:
     def file_failure(self, file_name: str):
         """problem file, retain for review"""
 
+        self.failure_counter += 1
+
         if self.dry_run is True:
             print(f"skip failure move for {file_name}")
         else:
             os.rename(file_name, self.failure_dir + "/" + file_name)
 
-    def execute(self):
-        print("execute loader")
-
+    def execute(self) -> None:
+        print(f"fresh dir:{self.fresh_dir}")
         os.chdir(self.fresh_dir)
         targets = os.listdir(".")
         print(f"{len(targets)} files noted")
 
-        parser = Parser()
         converter = Converter()
-
-        failure_counter = 0
-        success_counter = 0
+        preamble_helper = PreambleHelper()
 
         for target in targets:
             if os.path.isfile(target) is False:
                 continue
 
             # test for duplicate file
-            selected = self.postgres.load_log_select(target)
-            if selected is not None:
+            selected = self.postgres.load_log_select_by_file_name(target)
+            if len(selected) > 0:
                 print(f"skip duplicate file:{target}")
+                self.file_failure(target)
                 continue
 
-            obs_list = converter.converter(target)
-            print(len(obs_list))
+            # test for parsed observations
+            if converter.converter(target) is False:
+                print(f"converter failure noted:{target}")
+                self.file_failure(target)
+                continue
 
-            success_counter += 1
-            self.file_success(target)
+            # test for valid json preamble
+            valid_preamble = preamble_helper.validate_preamble(converter.preamble)
+            if valid_preamble is None:
+                self.file_failure(target)
+                continue
 
-            print(f"success:{success_counter} failure:{failure_counter}")
+            # successful iwlist(8) scan file parse, now load into postgres
 
+            file_type = preamble_helper.classifier(valid_preamble)
+            print(f"file:{target} type:{file_type}")
+            valid_preamble["file_name"] = target
+            valid_preamble["file_type"] = file_type
 
-#            obs_list = parser.execute(target)
-#            if obs_list is None:
-#                failure_counter += 1
-#                self.file_failure(target)
-#            else:
-#                if self.dry_run is True:
-#                    print(f"skip database load for {target}")
-#                else:
-#                    for obs in obs_list:
-#                        inserted = self.postgres.observation_insert(obs)
+            result_flag = False
+            if file_type == "heeler_1":
+                if self.dry_run is True:
+                    print(f"skip heeler1 for {target}")
+                    result_flag = True
+                else:
+                    heelerx = heeler.Heeler1(self.postgres, valid_preamble)
+                    result_flag = heelerx.execute(converter.obs_list)
+            else:
+                print(f"unknown file type:{file_type}")
+
+            if result_flag is True:
+                self.file_success(target)
+            else:
+                self.file_failure(target)
+
+        print(f"success:{self.success_counter} failure:{self.failure_counter}")
 
 
 print("start loader")

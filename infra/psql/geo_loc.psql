@@ -1,0 +1,30 @@
+--
+-- Title: geo_loc.psql
+-- Description: time and location
+--
+-- Note that latitude and longitude are truncated by real() datatype
+-- fix_time_ms = -1 for static locations
+-- 
+create table heeler_v1.geo_loc (
+  id           bigserial    primary key,
+  altitude     real         not null,
+  fix_time     timestamptz  not null,
+  latitude     real         not null,
+  longitude    real         not null,
+  site         varchar(16)  not null,
+  speed        real         not null,
+  track        real         not null,
+  load_log_id  bigint       not null,
+  constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id)
+) tablespace heeler;
+
+grant select, insert, update, delete on heeler_v1.geo_loc to heeler_client;
+grant usage, select on sequence heeler_v1.geo_loc_id_seq to heeler_client;
+
+create unique index geo_loc_fix_time on heeler_v1.geo_loc(fix_time, site);
+
+-- anderson1
+insert into heeler_v1.geo_loc(altitude, fix_time, latitude, longitude, site, speed, track, load_log_id) values(12.3, '2000-1-1', 40.41746, -122.24048, 'anderson1', 0, 0, 1);
+
+-- vallejo1
+insert into heeler_v1.geo_loc(altitude, fix_time, latitude, longitude, site, speed, track, load_log_id) values(12.3, '2000-1-1', 38.10812, -122.26794, 'vallejo1', 0, 0, 2);

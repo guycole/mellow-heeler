@@ -24,7 +24,7 @@ class PreambleHelper:
         preamble["project"] = "heeler"
         preamble["version"] = 1
         preamble["wifi"] = []
-        preamble["zTimeMs"] = round(time.time() * 1000)
+        preamble["zTime"] = round(time.time())  # collection hosts are always UTC
 
         return preamble
 
@@ -50,7 +50,7 @@ class PreambleHelper:
         result = {}
 
         temp = self.validate_geoloc(candidate)
-        if temp is None:
+        if len(temp) < 1:
             print("geoLoc not found")
             return None
         else:
@@ -77,12 +77,12 @@ class PreambleHelper:
         else:
             result["version"] = temp
 
-        temp = self.validate_ztime_ms(candidate)
+        temp = self.validate_ztime(candidate)
         if temp is None:
-            print("ztime_ms not found")
+            print("zTime not found")
             return None
         else:
-            result["zTimeMs"] = temp
+            result["file_time"] = temp
 
         return result
 
@@ -103,23 +103,46 @@ class PreambleHelper:
     def validate_geoloc(self, preamble: dict[str, any]) -> str:
         """test/normalize geographic location"""
 
+        # print(f"preamble:{preamble}")
+
+        results = {}
+        results["altitude"] = 0
+        results["fix_time"] = datetime.datetime.fromtimestamp(946684800, pytz.utc)
+        results["latitude"] = 0
+        results["longitude"] = 0
+        results["site"] = "unknown"
+        results["speed"] = 0
+        results["track"] = 0
+
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" in temp:
-                if temp["site"].startswith("and"):
-                    return "anderson1"
-                elif temp["site"].startswith("val"):
-                    return "vallejo1"
-                elif temp["site"].startswith("mobile"):
-                    return "mobile1"
-                elif temp["site"] == "development":
+                if temp["site"] == "development":
                     print("skipping observation from development")
-                    return None
+                elif temp["site"].startswith("and"):
+                    # fixed location site
+                    results["site"] = "anderson1"
+                    return results
+                elif temp["site"].startswith("val"):
+                    # fixed location site
+                    results["site"] = "vallejo1"
+                    return results
+                elif temp["site"].startswith("mobile"):
+                    # mobile location
+                    results["altitude"] = temp["altitude"]
+                    results["fix_time"] = datetime.datetime.fromtimestamp(
+                        temp["fixTime"], pytz.utc
+                    )
+                    results["latitude"] = temp["latitude"]
+                    results["longitude"] = temp["longitude"]
+                    results["site"] = "mobile1"
+                    results["speed"] = temp["speed"]
+                    results["track"] = temp["track"]
+                    return results
                 else:
                     print(f"geoloc unknown site: {temp['site']}")
-                    return None
 
-        return None
+        return {}
 
     def validate_platform(self, preamble: dict[str, any]) -> str:
         """test/normalize platform"""
@@ -145,15 +168,19 @@ class PreambleHelper:
 
         return None
 
-    def validate_ztime_ms(self, preamble: dict[str, any]) -> datetime.datetime:
+    def validate_ztime(self, preamble: dict[str, any]) -> datetime.datetime:
         """extract observation time"""
 
-        if "zTimeMs" in preamble:
-            seconds = int(preamble["zTimeMs"]) / 1000
-            dt = datetime.datetime.fromtimestamp(seconds, pytz.utc)
-            return dt
+        seconds = 0
 
-        return None
+        if "zTime" in preamble:
+            seconds = int(preamble["zTimeMs"])
+        elif "zTimeMs" in preamble:
+            seconds = int(preamble["zTimeMs"]) / 1000
+        else:
+            return None
+
+        return datetime.datetime.fromtimestamp(seconds, pytz.utc)
 
 
 # ;;; Local Variables: ***

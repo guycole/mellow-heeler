@@ -19,3 +19,6 @@ device = collection device and optional site location
 geoLoc = optional geographic location stanza
 
 android is "no activity"
+
+database...
+all files have a "load_log" entry

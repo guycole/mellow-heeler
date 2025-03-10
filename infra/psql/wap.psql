@@ -5,12 +5,14 @@
 -- frequency is in MHz
 -- 
 create table heeler_v1.wap (
-  id          bigserial    primary key,
-  bssid       varchar(24)  not null,
-  capability  varchar(80)  not null,
-  frequency   smallint     not null,
-  ssid        varchar(80)  not null,
-  version     int          not null
+  id             bigserial    primary key,
+  bssid          varchar(24)  not null,
+  capability     varchar(80)  not null,
+  frequency_mhz  smallint     not null,
+  ssid           varchar(80)  not null,
+  version        smallint     not null,
+  load_log_id    bigint       not null,
+  constraint     load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id)
 ) tablespace heeler;
 
 grant select, insert, update, delete on heeler_v1.wap to heeler_client;

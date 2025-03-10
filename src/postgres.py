@@ -31,38 +31,243 @@ class PostGres:
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
 
-    def box_score_insert(
-        self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
-    ) -> BoxScore:
+    def box_score_insert(self, args: dict[str, any]) -> BoxScore:
         """box_score row insert"""
 
-        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
+        candidate = BoxScore(args)
 
-        candidate = BoxScore(fresh_wap, 0, updated_wap, device, 1, True, tweaked_date)
-
-        session = self.Session()
-
-        session.add(candidate)
-        session.commit()
-        session.close()
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
 
         return candidate
 
-    def box_score_select(self, fix_time_ms: int, device: str) -> BoxScore:
+    def box_score_select(self, file_date: datetime.date, platform: str, site: str) -> BoxScore:
         """box_score row select"""
 
-        tweaked_date = time.strftime("%Y-%m-%d", time.gmtime(fix_time_ms / 1000))
+        statement = select(BoxScore).filter_by(file_date=file_date, platform=platform, site=site)
 
-        statement = select(BoxScore).filter_by(score_date=tweaked_date, device=device)
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def box_score_update(self, args: dict[str, any]) -> BoxScore:
+#        selected = self.box_score_select(args['file_date'], args['platform'], args['site'])
+#        if len(selected) < 1:
+        
+        self.box_score_insert(args)
+
+
+    def cooked_insert(self, args: dict[str, any], wap_id: int) -> Cooked:
+        """cooked insert row"""
+
+        candidate = Cooked(args, wap_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+    
+    def cooked_select_by_wap_id(self, wap_id: int) -> Cooked:
+        """cooked select row for a wap id"""
+
+        with self.Session() as session:
+            return session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
+
+    def cooked_update2(self, args: dict[str, any], wap_id: int) -> Cooked:
+        rows = self.cooked_select_by_wap_id(wap_id)
+        if len(rows) < 1:
+            self.cooked_insert(args, wap_id)
+
+    def load_log_insert(
+        self, args: dict[str, any], obs_list_population: int, site: str
+    ) -> LoadLog:
+        """load_log insert row"""
+
+        args['file_date'] = args['file_time'].date()
+
+        candidate = LoadLog(args, obs_list_population, site)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def load_log_select_by_file_name(self, file_name: str) -> list[LoadLog]:
+        """load_log select by file name"""
+
+        with self.Session() as session:
+            return session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
+
+    def load_log_select_by_date(self, target: datetime.date) -> list[LoadLog]:
+        """ return all load_log rows for a date """
+
+        with self.Session() as session:
+            return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
+
+    def geo_loc_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
+        """geoloc insert row"""
+
+        candidate = GeoLoc(args, load_log_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def geo_loc_select_by_load_log(self, id: int) -> list[GeoLoc]:
+        """geoloc select row for a load log"""
+
+        statement = select(GeoLoc).filter_by(load_log_id=id).order_by(GeoLoc.fix_time)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def geo_loc_select_by_site(self, site: str) -> list[GeoLoc]:
+        """geoloc select row for a site"""
+
+        statement = select(GeoLoc).filter_by(site=site).order_by(GeoLoc.fix_time)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def geo_loc_select_or_insert(
+        self, args: dict[str, any], load_log_id: int
+    ) -> GeoLoc:
+        if args['site'].startswith("mobile"):
+            return self.geo_loc_insert(args, load_log_id)
+        else:
+            candidate = self.geo_loc_select_by_site(args['site'])
+            if len(candidate) < 1:
+                return None
+            else:
+                return candidate[0]
+
+    def observation_insert(self, args: dict[str, any], file_date: datetime.date, load_log_id: int, wap_id: int) -> Observation:
+        """observation insert row"""
+
+        candidate = Observation(args, file_date, load_log_id, wap_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def observation_select_by_bssid_and_load_log(
+        self, bssid: str, load_log_id: int
+    ) -> list[Observation]:
+        """observation select row"""
+
+        statement = select(Observation).filter_by(bssid=bssid, load_log_id=load_log_id)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def observation_select_by_wap_id(self, wap_id: int) -> list[Observation]:
+        """observation select row"""
+
+        statement = select(Observation).filter_by(wap_id=wap_id).order_by(Observation.file_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def wap_insert(self, args: dict[str, any], version: int, load_log_id: int) -> Wap:
+        """wap insert row"""
+
+        candidate = Wap(args, version, load_log_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def wap_select_all(self) -> list[Wap]:
+        """select all wap rows"""
+
+        with self.Session() as session:
+            return session.scalars(select(Wap)).all()
+
+    def wap_select_by_bssid(self, args: dict[str, any]) -> Wap:
+        """wap select row"""
+
+        statement = (
+            select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
+        )
 
         with self.Session() as session:
             rows = session.scalars(statement).all()
+
             for row in rows:
-                return row
+                if (
+                    row.capability == args["capability"]
+                    and row.frequency == args["frequency_mhz"]
+                    and row.ssid == args["ssid"]
+                ):
+                    return row
 
         return None
 
-    def box_score_select_daily(self, target_date: str) -> List[BoxScore]:
+    def wap_select_or_insert(self, args: dict[str, any], load_log_id: int) -> Wap:
+        """discover if wap exists or if not, max version for insert"""
+
+        statement = (
+            select(Wap).filter_by(bssid=args["bssid"].lower()).order_by(Wap.version)
+        )
+
+        row = None
+        with self.Session() as session:
+            rows = session.scalars(statement).all()
+            for row in rows:
+                if (
+                    row.capability == args["capability"]
+                    and row.frequency_mhz == args["frequency_mhz"]
+                    and row.ssid == args["ssid"]
+                ):
+                    row.insert_flag = False
+                    row.update_flag = False
+                    return row
+
+        if row is None:
+            version = 1
+            print(f"insert version {version}")
+            insert_flag = True
+            update_flag = False
+        else:
+            version = row.version + 1
+            print(f"insert version {version}")
+            insert_flag = False
+            update_flag = True
+
+        result = self.wap_insert(args, version, load_log_id)
+        result.insert_flag = insert_flag
+        result.update_flag = update_flag
+        return result
+
+    ############# old below
+
+    def box_score_select_daily2(self, target_date: str) -> List[BoxScore]:
         """return all rows for a specific date"""
 
         statement = (
@@ -78,7 +283,7 @@ class PostGres:
 
         return results
 
-    def box_score_select_refresh(self) -> List[BoxScore]:
+    def box_score_select_refresh2(self) -> List[BoxScore]:
         """return all rows with active refresh flag"""
 
         statement = select(BoxScore).filter_by(refresh_flag=True)
@@ -91,7 +296,7 @@ class PostGres:
 
         return results
 
-    def box_score_refresh(self, candidate: BoxScore) -> BoxScore:
+    def box_score_refresh2(self, candidate: BoxScore) -> BoxScore:
         """box_score row refresh"""
 
         session = self.Session()
@@ -101,7 +306,7 @@ class PostGres:
 
         return candidate
 
-    def box_score_update(
+    def box_score_update2(
         self, device: str, fresh_wap: int, updated_wap: int, fix_time_ms: int
     ) -> BoxScore:
         """box_score row update"""
@@ -121,7 +326,7 @@ class PostGres:
 
         return candidate
 
-    def cooked_insert(self, cooked: Dict[str, str]) -> Cooked:
+    def xcooked_insert(self, cooked: Dict[str, str]) -> Cooked:
         """cooked row insert"""
 
         # convert from ms to calendar date
@@ -148,7 +353,7 @@ class PostGres:
 
         return candidate
 
-    def cooked_select(self, wap_id: int) -> Cooked:
+    def xcooked_select(self, wap_id: int) -> Cooked:
         """cooked row select"""
 
         statement = select(Cooked).filter_by(wap_id=wap_id)
@@ -160,7 +365,7 @@ class PostGres:
 
         return None
 
-    def cooked_update(self, cooked: Dict[str, str]) -> Cooked:
+    def xcooked_update(self, cooked: Dict[str, str]) -> Cooked:
         """cooked row update"""
 
         tweaked_seconds = cooked["fixTimeMs"] / 1000
@@ -181,46 +386,6 @@ class PostGres:
         session.commit()
         session.close()
 
-    def geoloc_insert(self, geoloc: Dict[str, str]) -> GeoLoc:
-        """geoloc row insert"""
-
-        lat = round(geoloc["latitude"], 5)
-        lng = round(geoloc["longitude"], 5)
-
-        candidate = GeoLoc(
-            geoloc["accuracy"],
-            geoloc["altitude"],
-            geoloc["fixTimeMs"],
-            lat,
-            lng,
-            geoloc["device"],
-        )
-
-        # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-        session = self.Session()
-
-        session.add(candidate)
-        session.commit()
-        session.close()
-
-        return candidate
-
-    def geoloc_select_by_device(self, device: str) -> GeoLoc:
-        """geoloc select row for a device"""
-
-        if device not in ["rpi4c-anderson1", "rpi4a-vallejo1"]:
-            raise ValueError(f"invalid device:{device}")
-
-        statement = select(GeoLoc).filter_by(device=device)
-
-        row = None
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                pass
-
-        return row
-
     def geoloc_select_by_time(self, geoloc: Dict[str, str]) -> GeoLoc:
         """geoloc select row for a time"""
 
@@ -232,35 +397,6 @@ class PostGres:
             rows = session.scalars(statement).all()
             for row in rows:
                 return row
-
-        return None
-
-    def load_log_insert(self, file_name: str, file_type: str) -> LoadLog:
-        """load_log insert row"""
-
-        candidate = LoadLog(file_name, file_type)
-
-        session = self.Session()
-        session.add(candidate)
-        session.commit()
-        session.close()
-
-        return candidate
-
-    def load_log_select(self, file_name: str) -> LoadLog:
-        """load_log select row"""
-
-        with self.Session() as session:
-            rows = session.scalars(select(LoadLog).filter_by(file_name=file_name)).all()
-            for row in rows:
-                return row
-
-        #        statement = select(LoadLog).filter_by(file_name=file_name)
-
-        #        with self.Session() as session:
-        #            rows = session.scalars(statement).all()
-        #            for row in rows:
-        #                return row
 
         return None
 
@@ -296,113 +432,6 @@ class PostGres:
                 kludge[row[0].wap_id] = "kludge"
 
         return len(kludge)
-
-    def observation_insert(self, observation: Dict[str, str]) -> Observation:
-        """observation insert row"""
-
-        candidate = Observation(
-            observation["fixTimeMs"],
-            observation["geolocId"],
-            observation["level"],
-            observation["loadlogId"],
-            observation["wapId"],
-        )
-
-        session = self.Session()
-        session.add(candidate)
-        session.commit()
-        session.close()
-
-        return candidate
-
-    def observation_select(self, observation: Dict[str, str]) -> Observation:
-        """observation select row"""
-
-        statement = select(Observation).filter_by(
-            geoloc_id=observation["geolocId"],
-            fix_time_ms=observation["fixTimeMs"],
-            wap_id=observation["wapId"],
-        )
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                return row
-
-        return None
-
-    def wap_insert(self, wap: Dict[str, str]) -> Wap:
-        """wap insert row"""
-
-        candidate = Wap(
-            wap["bssid"].lower(),
-            wap["capability"],
-            wap["frequency"],
-            wap["ssid"],
-            wap["version"],
-        )
-
-        # Session = sessionmaker(bind=self.db_engine, expire_on_commit=False)
-        session = self.Session()
-
-        session.add(candidate)
-        session.commit()
-        session.close()
-
-        return candidate
-
-    def wap_select(self, wap: Dict[str, str]) -> Wap:
-        """wap select row"""
-
-        statement = (
-            select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
-        )
-
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                if (
-                    row.capability == wap["capability"]
-                    and row.frequency == wap["frequency"]
-                    and row.ssid == wap["ssid"]
-                ):
-                    return row
-
-        return None
-
-    def wap_select_or_insert(self, wap: Dict[str, str]) -> Wap:
-        """discover if wap exists or if not, max version for insert"""
-
-        statement = (
-            select(Wap).filter_by(bssid=wap["bssid"].lower()).order_by(Wap.version)
-        )
-
-        row = None
-        with self.Session() as session:
-            rows = session.scalars(statement).all()
-            for row in rows:
-                if (
-                    row.capability == wap["capability"]
-                    and row.frequency == wap["frequency"]
-                    and row.ssid == wap["ssid"]
-                ):
-                    row.insert_flag = False
-                    row.update_flag = False
-                    return row
-
-        if row is None:
-            wap["version"] = 1
-            insert_flag = True
-            update_flag = False
-        else:
-            wap["version"] = row.version + 1
-            insert_flag = False
-            update_flag = True
-
-        result = self.wap_insert(wap)
-        result.insert_flag = insert_flag
-        result.update_flag = update_flag
-        return result
 
 
 # ;;; Local Variables: ***
