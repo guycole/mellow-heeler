@@ -73,12 +73,14 @@ class PostGres:
             print(error)
 
         return candidate
-    
+   
     def cooked_select_by_wap_id(self, wap_id: int) -> Cooked:
         """cooked select row for a wap id"""
 
         with self.Session() as session:
-            return session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
+            rows = session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
+            # there can only be one
+            return rows[0]
 
     def cooked_update2(self, args: dict[str, any], wap_id: int) -> Cooked:
         rows = self.cooked_select_by_wap_id(wap_id)
@@ -228,6 +230,16 @@ class PostGres:
                     return row
 
         return None
+
+    def wap_select_by_load_log(self, load_log_id: int) -> list[Wap]:
+        """wap select row"""
+
+        statement = (
+            select(Wap).filter_by(load_log_id=load_log_id).order_by(Wap.bssid)
+        )
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
 
     def wap_select_or_insert(self, args: dict[str, any], load_log_id: int) -> Wap:
         """discover if wap exists or if not, max version for insert"""

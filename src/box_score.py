@@ -42,12 +42,13 @@ class BoxScore:
         return {
             "bssid_new": 0,
             "bssid_total": 0,
-            "bssid_updated": 0,
+            "bssid_unique": 0,
             "file_date": file_date,
-            "file_population": 0,
+            "file_population": 1,
             "platform": platform,
             "refresh_flag": False,
             "site": site,
+            "wap_list": []
         }
 
     def process_daily(self, current_day: datetime.date) -> None:
@@ -56,17 +57,43 @@ class BoxScore:
 
         # discover platform and sites for today
         for row in load_log_rows:
-            box_scores_key = f"{row.file_date}_{row.platform}_{row.site}"
+            box_scores_key = f"{row.file_date}-{row.platform}-{row.site}"
+            #2025-03-13-rpi3a-vallejo1
 
             if box_scores_key in self.box_scores:
                 self.box_scores[box_scores_key]["bssid_total"] += row.obs_population
+                self.box_scores[box_scores_key]["file_population"] += 1
             else:
-                fresh = self.fresh_box_score(row.file_date, row.platform, row.site)
-                fresh["bssid_total"] = row.obs_population
-                self.box_scores[box_scores_key] = fresh
+                self.box_scores[box_scores_key] = self.fresh_box_score(row.file_date, row.platform, row.site)
+                self.box_scores[box_scores_key]["bssid_total"] = row.obs_population
 
-        for value in self.box_scores.values():
-            self.postgres.box_score_update(value)
+            # list of all observed wap for today
+            wap_list = self.box_scores[box_scores_key]["wap_list"]
+            candidates = self.postgres.wap_select_by_load_log(row.id)
+            for candidate in candidates:
+                if candidate not in wap_list:
+                    wap_list.append(candidate.id)
+
+        #
+        # all platform and sites for each day now have an entry
+        # determine new and unique scores
+        #
+        for key, value in self.box_scores.items():
+            self.box_scores[key]['bssid_unique'] = len(value["wap_list"])
+
+            for wap_id in value["wap_list"]:
+                cooked = self.postgres.cooked_select_by_wap_id(wap_id)
+                obs_first_date = cooked.observed_first.date()
+                obs_last_date = cooked.observed_last.date()
+                if obs_first_date == obs_last_date:
+                    self.box_scores[key]['bssid_new'] += 1
+
+        #
+        # now write to postgres
+        #
+        for key, value in self.box_scores.items():
+            # pass
+
 
     def execute(self) -> None:
         today = datetime.datetime.now(pytz.utc)
