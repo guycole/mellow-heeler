@@ -53,6 +53,14 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
+    def box_score_select_all(self) -> list[BoxScore]:
+        """box_score row select"""
+
+        statement = select(BoxScore).order_by(BoxScore.file_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
     def box_score_update(self, args: dict[str, any]) -> BoxScore:
 #        selected = self.box_score_select(args['file_date'], args['platform'], args['site'])
 #        if len(selected) < 1:
@@ -73,16 +81,20 @@ class PostGres:
             print(error)
 
         return candidate
-    
+   
     def cooked_select_by_wap_id(self, wap_id: int) -> Cooked:
         """cooked select row for a wap id"""
 
         with self.Session() as session:
-            return session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
+            rows = session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
+            if len(rows) != 1:
+                return None
+            else:
+                return rows[0]
 
     def cooked_update2(self, args: dict[str, any], wap_id: int) -> Cooked:
         rows = self.cooked_select_by_wap_id(wap_id)
-        if len(rows) < 1:
+        if rows is None:
             self.cooked_insert(args, wap_id)
 
     def load_log_insert(
@@ -228,6 +240,16 @@ class PostGres:
                     return row
 
         return None
+
+    def wap_select_by_load_log(self, load_log_id: int) -> list[Wap]:
+        """wap select row"""
+
+        statement = (
+            select(Wap).filter_by(load_log_id=load_log_id).order_by(Wap.bssid)
+        )
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
 
     def wap_select_or_insert(self, args: dict[str, any], load_log_id: int) -> Wap:
         """discover if wap exists or if not, max version for insert"""
@@ -386,7 +408,7 @@ class PostGres:
         session.commit()
         session.close()
 
-    def geoloc_select_by_time(self, geoloc: Dict[str, str]) -> GeoLoc:
+    def geoloc_select_by_time2(self, geoloc: Dict[str, str]) -> GeoLoc:
         """geoloc select row for a time"""
 
         statement = select(GeoLoc).filter_by(
@@ -400,7 +422,7 @@ class PostGres:
 
         return None
 
-    def observation_count(
+    def observation_count2(
         self, start_time_ms: int, stop_time_ms: int, device: str
     ) -> int:
         """count observations between times"""

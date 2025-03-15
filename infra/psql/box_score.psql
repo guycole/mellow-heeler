@@ -15,7 +15,7 @@ create table heeler_v1.box_score (
   id               bigserial    primary key,
   bssid_new        smallint     not null, 
   bssid_total      smallint     not null,
-  bssid_updated    smallint     not null, 
+  bssid_unique     smallint     not null, 
   file_date        date         not null,
   file_population  smallint     not null, 
   platform         varchar(16)  not null,
