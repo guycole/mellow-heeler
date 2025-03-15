@@ -1,7 +1,7 @@
 mellow-heeler collection scores
 ===============================
 
-generated on 14 March, 2025
+updated on 14 March, 2025
 
 | Year                                                                          |
 |------------------------------------------------------------------------------:|

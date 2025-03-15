@@ -14,6 +14,9 @@ freshDir: /var/mellow/heeler/fresh
 # test artifacts
 testDir: /var/mellow/heeler/test
 #
+# box scores
+boxScoreDir: /home/gsc/Documents/github/mellow-heeler/box-scores
+#
 # collection host location
 #site: anderson1
 site: development
