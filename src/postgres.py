@@ -79,12 +79,14 @@ class PostGres:
 
         with self.Session() as session:
             rows = session.scalars(select(Cooked).filter_by(wap_id=wap_id)).all()
-            # there can only be one
-            return rows[0]
+            if len(rows) != 1:
+                return None
+            else:
+                return rows[0]
 
     def cooked_update2(self, args: dict[str, any], wap_id: int) -> Cooked:
         rows = self.cooked_select_by_wap_id(wap_id)
-        if len(rows) < 1:
+        if rows is None:
             self.cooked_insert(args, wap_id)
 
     def load_log_insert(
@@ -398,7 +400,7 @@ class PostGres:
         session.commit()
         session.close()
 
-    def geoloc_select_by_time(self, geoloc: Dict[str, str]) -> GeoLoc:
+    def geoloc_select_by_time2(self, geoloc: Dict[str, str]) -> GeoLoc:
         """geoloc select row for a time"""
 
         statement = select(GeoLoc).filter_by(
@@ -412,7 +414,7 @@ class PostGres:
 
         return None
 
-    def observation_count(
+    def observation_count2(
         self, start_time_ms: int, stop_time_ms: int, device: str
     ) -> int:
         """count observations between times"""

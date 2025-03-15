@@ -92,7 +92,7 @@ class BoxScore:
         # now write to postgres
         #
         for key, value in self.box_scores.items():
-            # pass
+            self.postgres.box_score_insert(value)
 
 
     def execute(self) -> None:

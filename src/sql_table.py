@@ -32,7 +32,7 @@ class BoxScore(Base):
     id = Column(Integer, primary_key=True)
     bssid_new = Column(Integer)
     bssid_total = Column(Integer)
-    bssid_updated = Column(Integer)
+    bssid_unique = Column(Integer)
     file_date = Column(Date)
     file_population = Column(Integer)
     platform = Column(String)
@@ -41,10 +41,9 @@ class BoxScore(Base):
 
     def __init__(self, args: dict[str, any]):
         print(args)
-        print("x0x0x0x0x0")
         self.bssid_new = args['bssid_new']
         self.bssid_total = args['bssid_total']
-        self.bssid_updated = args['bssid_updated']
+        self.bssid_unique = args['bssid_unique']
         self.file_date = args['file_date']
         self.file_population = args['file_population']
         self.platform = args['platform']
