@@ -59,9 +59,11 @@ class Reporter:
 
         time_now = datetime.datetime.now(pytz.utc)
         banner2 = f"created at {time_now}\n\n"
+        banner3 = f"|date|site|platform|file total|bssid total|bssid unique|bssid new|\n"
+        banner4 = f"|--|--|--|--|--|--|--|\n"        
 
         for key, values in self.box_scores.items():
-            file_name = f"{self.box_score_dir}/{key}.mdx"
+            file_name = f"{self.box_score_dir}/{key}.md"
             print(f"creating file: {file_name}")
 
             banner1 = f"mellow-heeler collection scores for {key}\n\n"
@@ -70,7 +72,9 @@ class Reporter:
                 with open(file_name, "w", encoding="utf-8") as out_file:
                     out_file.write(banner1)
                     out_file.write(banner2)
-
+                    out_file.write(banner3)
+                    out_file.write(banner4)
+                    
                     for value in values:
                         out_file.write(value)
             except Exception as error:
