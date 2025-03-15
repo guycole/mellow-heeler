@@ -34,15 +34,12 @@ class Reporter:
         )
 
     def execute(self) -> None:
-        today = datetime.datetime.now(pytz.utc)
-        current_day = datetime.date(2021, 1, 1)
+        selected = self.postgres.box_score_select_all()
 
-        while current_day < today.date():
-            print(f"{current_day}")
+        for row in selected:
+            print(f"|{row.file_date}|{row.site}|{row.platform}|{row.file_population}|{row.bssid_total}|{row.bssid_unique}|{row.bssid_new}|")
 
-#            self.process_daily(current_day)
-
-            current_day = current_day + datetime.timedelta(days=1)
+            
 
 print("start reporter")
 

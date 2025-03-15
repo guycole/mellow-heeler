@@ -53,6 +53,14 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
+    def box_score_select_all(self) -> list[BoxScore]:
+        """box_score row select"""
+
+        statement = select(BoxScore).order_by(BoxScore.file_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
     def box_score_update(self, args: dict[str, any]) -> BoxScore:
 #        selected = self.box_score_select(args['file_date'], args['platform'], args['site'])
 #        if len(selected) < 1:
