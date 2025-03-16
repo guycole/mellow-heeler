@@ -59,18 +59,10 @@ class Heeler1:
         )
 
         for obs in obs_list:
-            print(obs)
-
             wap = self.postgres.wap_select_or_insert(obs, load_log.id)
-            print(wap)
-
-            xxx = self.postgres.observation_insert(
-                obs, load_log.file_date, load_log.id, wap.id
-            )
-            print(xxx)
+            self.postgres.observation_insert(obs, load_log.file_date, load_log.id, wap.id)
 
         return True
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

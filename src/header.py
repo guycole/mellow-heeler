@@ -49,7 +49,7 @@ class Header:
             # save preamble to file for skunk and wombat
             converter.json_writer("/tmp/preamble.json", preamble)
 
-            # iwlist observation to archive file
+            # iwlist observation to fresh dir
             converter.file_writer(self.fresh_dir, json.dumps(preamble))
         else:
             print("converter failure")
