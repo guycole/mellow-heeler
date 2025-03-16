@@ -14,15 +14,15 @@ from sqlalchemy import Column
 from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
 
 from sqlalchemy.orm import registry
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.declarative import declared_attr
 
 mapper_registry = registry()
 
-from sqlalchemy.orm import DeclarativeBase
-
 
 class Base(DeclarativeBase):
     pass
+
 
 class BoxScore(Base):
     """box_score table definition"""
@@ -41,14 +41,15 @@ class BoxScore(Base):
 
     def __init__(self, args: dict[str, any]):
         print(args)
-        self.bssid_new = args['bssid_new']
-        self.bssid_total = args['bssid_total']
-        self.bssid_unique = args['bssid_unique']
-        self.file_date = args['file_date']
-        self.file_population = args['file_population']
-        self.platform = args['platform']
-        self.refresh_flag = args['refresh_flag']
-        self.site = args['site']
+        self.bssid_new = args["bssid_new"]
+        self.bssid_total = args["bssid_total"]
+        self.bssid_unique = args["bssid_unique"]
+        self.file_date = args["file_date"]
+        self.file_population = args["file_population"]
+        self.platform = args["platform"]
+        self.refresh_flag = args["refresh_flag"]
+        self.site = args["site"]
+
 
 class Cooked(Base):
     """cooked table definition"""
@@ -66,14 +67,15 @@ class Cooked(Base):
     wap_id = Column(BigInteger)
 
     def __init__(self, args: dict[str, any], wap_id: int):
-        self.confidence = args['confidence']
-        self.latitude = args['latitude']
-        self.longitude = args['longitude']
-        self.note = args['note']
-        self.observed_count = args['observed_count']
-        self.observed_first = args['observed_first']
-        self.observed_last = args['observed_last']
+        self.confidence = args["confidence"]
+        self.latitude = args["latitude"]
+        self.longitude = args["longitude"]
+        self.note = args["note"]
+        self.observed_count = args["observed_count"]
+        self.observed_first = args["observed_first"]
+        self.observed_last = args["observed_last"]
         self.wap_id = wap_id
+
 
 class GeoLoc(Base):
     """geoloc table definition"""
@@ -143,12 +145,19 @@ class Observation(Base):
     load_log_id = Column(BigInteger)
     wap_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any], file_date: datetime.date, load_log_id: int, wap_id: int):
+    def __init__(
+        self,
+        args: dict[str, any],
+        file_date: datetime.date,
+        load_log_id: int,
+        wap_id: int,
+    ):
         self.bssid = args["bssid"]
         self.file_date = file_date
         self.signal_dbm = args["signal_dbm"]
         self.load_log_id = load_log_id
         self.wap_id = wap_id
+
 
 class Wap(Base):
     """wap table definition"""
@@ -170,6 +179,7 @@ class Wap(Base):
         self.ssid = args["ssid"]
         self.version = version
         self.load_log_id = load_log_id
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

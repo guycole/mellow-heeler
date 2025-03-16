@@ -4,14 +4,12 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-from gps_helper import GpsSample, GpsWrapper
+from gps_helper import GpsWrapper
 from converter import Converter
-from observation import Observation, Parser
 from preamble import PreambleHelper
 
 import json
 import sys
-import time
 import uuid
 
 import yaml
@@ -45,7 +43,7 @@ class Header:
         if ret_flag is True:
             # create json preamble
             helper = PreambleHelper()
-            preamble = helper.create_preamble(self.host, self.site, gps_sample)
+            preamble = helper.preamble_factory(self.host, self.site, gps_sample)
             preamble["wifi"] = converter.obs_list
 
             # save preamble to file for skunk and wombat
@@ -53,7 +51,7 @@ class Header:
 
             # iwlist observation to archive file
             converter.file_writer(self.fresh_dir, json.dumps(preamble))
-        else: 
+        else:
             print("converter failure")
 
 

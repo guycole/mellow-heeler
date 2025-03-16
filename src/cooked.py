@@ -4,9 +4,6 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import datetime
-import json
-import os
 import pytz
 import sys
 
@@ -17,6 +14,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import postgres
+
 
 class Cooked:
     """WAP history"""
@@ -51,7 +49,7 @@ class Cooked:
 
     def select_observations(self, wap_id: int) -> None:
         obs_list = self.postgres.observation_select_by_wap_id(wap_id)
-        #print(f"{wap_id} {len(obs_list)}")
+        # print(f"{wap_id} {len(obs_list)}")
 
         self.cooked[wap_id]["observed_count"] = len(obs_list)
         self.cooked[wap_id]["observed_first"] = obs_list[0].file_date
@@ -67,6 +65,7 @@ class Cooked:
             self.postgres.cooked_update2(self.cooked[key], key)
 
         print(len(wap_rows))
+
 
 print("start cooked")
 

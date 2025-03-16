@@ -12,14 +12,14 @@ import time
 
 class PreambleHelper:
 
-    def create_preamble(
+    def preamble_factory(
         self, host: str, site: str, gps_sample: gps_helper.GpsSample
     ) -> dict[str, any]:
         """create a fresh heeler preamble"""
 
         preamble = {}
 
-        preamble["geoLoc"] = self.get_geoloc(site, gps_sample)
+        preamble["geoLoc"] = self.geoloc_factory(site, gps_sample)
         preamble["platform"] = host
         preamble["project"] = "heeler"
         preamble["version"] = 1
@@ -28,7 +28,9 @@ class PreambleHelper:
 
         return preamble
 
-    def get_geoloc(self, site: str, gps_sample: gps_helper.GpsSample) -> dict[str, any]:
+    def geoloc_factory(
+        self, site: str, gps_sample: gps_helper.GpsSample
+    ) -> dict[str, any]:
         """return geoLoc preamble element"""
 
         results = {}
