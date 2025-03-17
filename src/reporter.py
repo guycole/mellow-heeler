@@ -49,7 +49,7 @@ class Reporter:
 
             temp = self.box_scores[row_year]
 
-            candidate = f"|{row.file_date}|{row.site}|{row.platform}|{row.file_population}|{row.bssid_total}|{row.bssid_unique}|{row.bssid_new}|\n"
+            candidate = f"|{row.file_date}|{row.site}|{row.platform}|{row.file_quantity}|{row.bssid_total}|{row.bssid_unique}|{row.bssid_new}|\n"
 
             temp.append(candidate)
 

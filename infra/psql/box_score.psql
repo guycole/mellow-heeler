@@ -16,7 +16,7 @@ create table heeler_v1.box_score (
   bssid_total    int          not null,
   bssid_unique   int          not null, 
   file_date      date         not null,
-  file_quantity  smallint     not null, 
+  file_quantity  int          not null, 
   platform       varchar(16)  not null,
   site           varchar(16)  not null
 ) tablespace heeler;
