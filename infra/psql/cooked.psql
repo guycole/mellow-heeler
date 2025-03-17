@@ -4,9 +4,9 @@
 -- 
 -- confidence = location confidence scale 1 (worst) to 10 (best)
 -- latitude/longitude = ap location
--- observed_first = AP first observation
--- observed_last = most recent AP observation
--- observed_count = total population of AP observations
+-- obs_first = AP first observation
+-- obs_last = most recent AP observation
+-- obs_quantity = total population of AP observations
 --
 create table heeler_v1.cooked (
   id              bigserial    primary key,
@@ -14,12 +14,16 @@ create table heeler_v1.cooked (
   latitude        real         not null,
   longitude       real         not null,
   note            varchar(132) not null default 'default',
-  observed_count  bigint       not null,
-  observed_first  timestamptz  not null default CURRENT_TIMESTAMP,
-  observed_last   timestamptz  not null default CURRENT_TIMESTAMP,
+  obs_quantity    bigint       not null,
+  obs_first       timestamptz  not null default CURRENT_TIMESTAMP,
+  obs_last        timestamptz  not null default CURRENT_TIMESTAMP,
+  street_address  varchar(132) not null default 'unknown',
+  street_zip      varchar(32)  not null default 'zip',
   wap_id          bigint       unique not null,
   constraint      wap_id       foreign key(wap_id) references heeler_v1.wap(id)
 ) tablespace heeler;
 
 grant select, insert, update, delete on heeler_v1.cooked to heeler_client;
 grant usage, select on sequence heeler_v1.cooked_id_seq to heeler_client;
+
+insert into heeler_v1.cooked(confidence, latitude, longitude, obs_quantity, obs_first, obs_last, wap_id) values(1, 12.34, 123.45, 1, '2000-1-1', '2000-1-1', 2);

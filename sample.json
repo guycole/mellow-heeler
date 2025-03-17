@@ -1,0 +1,18 @@
+{
+  "geoLoc": {
+    "site": "anderson1"
+  },
+  "platform": "rpi3c",
+  "project": "heeler",
+  "version": 1,
+  "wifi": [
+    {
+      "bssid": "00:22:6b:81:03:d9",
+      "capability": "unknown",
+      "frequency_mhz": 2437,
+      "signal_dbm": -86,
+      "ssid": "braingang2"
+    }
+  ],
+  "zTime": 1742095222
+}
