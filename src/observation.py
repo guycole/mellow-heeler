@@ -57,34 +57,34 @@ class Parser:
     def parse_capability(self, start_ndx: int, stop_ndx: int) -> str:
         results = {}
 
-    #    for temp in range(start_ndx, stop_ndx + 1):
-    #        if "Encryption key" in self.raw[temp]:
-    #            if "Encryption key:on" in self.raw[temp]:
-    #                results["encryption"] = True
-    #            else:
-    #                results["encryption"] = False
+        #    for temp in range(start_ndx, stop_ndx + 1):
+        #        if "Encryption key" in self.raw[temp]:
+        #            if "Encryption key:on" in self.raw[temp]:
+        #                results["encryption"] = True
+        #            else:
+        #                results["encryption"] = False
 
-    #        if "Mode:Master" in self.raw[temp]:
-    #            results["mode"] = "master"
+        #        if "Mode:Master" in self.raw[temp]:
+        #            results["mode"] = "master"
 
-    #        if "IE: WPA Version 1" in self.raw[temp]:
-    #            results["wpa"] = "wpa1v1"
+        #        if "IE: WPA Version 1" in self.raw[temp]:
+        #            results["wpa"] = "wpa1v1"
 
-    #        if "IE: IEEE 802.11i/WPA2 Version 1" in self.raw[temp]:
-    #            results["wpa"] = "wpa2v1"
+        #        if "IE: IEEE 802.11i/WPA2 Version 1" in self.raw[temp]:
+        #            results["wpa"] = "wpa2v1"
 
-    #        if "Authentication Suites" in self.raw[temp]:
-    #            results["authentication_suite"] = self.raw[temp].split(":")[1].strip()
+        #        if "Authentication Suites" in self.raw[temp]:
+        #            results["authentication_suite"] = self.raw[temp].split(":")[1].strip()
 
-    #        if "Group Cipher" in self.raw[temp]:
-    #            results["group_cipher"] = self.raw[temp].split(":")[1].strip()
+        #        if "Group Cipher" in self.raw[temp]:
+        #            results["group_cipher"] = self.raw[temp].split(":")[1].strip()
 
-    #        if "Pairwise Ciphers" in self.raw[temp]:
-    #            results["pair_cipher"] = self.raw[temp].split(":")[1].strip()
+        #        if "Pairwise Ciphers" in self.raw[temp]:
+        #            results["pair_cipher"] = self.raw[temp].split(":")[1].strip()
 
         capabilities = "unknown"
 
-        #if "wpa" in results:
+        # if "wpa" in results:
         #    if results["wpa"] == "wpa1v1":
         #        pass
         #    else:

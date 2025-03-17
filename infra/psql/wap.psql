@@ -21,7 +21,5 @@ grant usage, select on sequence heeler_v1.wap_id_seq to heeler_client;
 create index wap_ssid on heeler_v1.wap(ssid);
 create unique index wap_bssid_version on heeler_v1.wap(bssid, version);
 
--- insert into wap(bssid, capability, frequency, ssid, version) values('60:38:e0:ae:ec:88', '[WPA2-PSK-CCMP][WPS][ESS]', 2452, 'powerorganics', 1);
--- insert into wap(bssid, capability, frequency, ssid, version) values('60:a4:23:86:cf:3b', '[ESS]', 2462, 'MLG09772', 2);
--- insert into wap(bssid, capability, frequency, ssid, version) values('56:20:5f:fd:06:15', '[IBSS]', 2457, 'airportthru', 3);
--- insert into wap(bssid, capability, frequency, ssid, version) values('56:20:5f:fd:06:15', '[IBSS]', 2457, 'airportthru2', 4);
+insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version, load_log_id) values('11:22:33:44:55:66', 'magick', 1234, 'pytest1', 1, 3);
+insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version, load_log_id) values('11:22:33:44:55:66', 'magick', 1234, 'pytest2', 2, 3);

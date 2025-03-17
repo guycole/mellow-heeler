@@ -4,8 +4,6 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import datetime
-import json
 import os
 import pytz
 import sys
@@ -94,6 +92,7 @@ class Loader:
         if self.dry_run is True:
             print(f"skip failure move for {file_name}")
         else:
+            print(f"failure move for {file_name}")
             os.rename(file_name, self.failure_dir + "/" + file_name)
 
     def execute(self) -> None:

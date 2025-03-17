@@ -8,8 +8,8 @@ import json
 import pygpsd
 import sys
 import time
-import yaml
 
+import yaml
 from yaml.loader import SafeLoader
 
 

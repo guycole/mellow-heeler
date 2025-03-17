@@ -18,3 +18,5 @@ grant usage, select on sequence heeler_v1.observation_id_seq to heeler_client;
 
 create index observation_bssid on heeler_v1.observation(bssid);
 create index observation_date_wap on heeler_v1.observation(file_date, wap_id);
+
+insert into heeler_v1.observation(bssid, file_date, signal_dbm, load_log_id, wap_id) values('11:22:33:44:55:66', '2000-1-1', -12, 3, 2);

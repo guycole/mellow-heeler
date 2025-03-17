@@ -4,9 +4,6 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import datetime
-import json
-import os
 import pytz
 import sys
 
@@ -16,7 +13,9 @@ from yaml.loader import SafeLoader
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+import datetime
 import postgres
+
 
 class Cooked:
     """WAP history"""
@@ -44,18 +43,28 @@ class Cooked:
             "latitude": 0,
             "longitude": 0,
             "note": "noNote",
-            "observed_count": 0,
+            "observed_quantity": 0,
             "observed_first": None,
             "observed_last": None,
+            "street_address": "noAddress",
+            "street_zip": "noZip",
         }
 
     def select_observations(self, wap_id: int) -> None:
         obs_list = self.postgres.observation_select_by_wap_id(wap_id)
-        #print(f"{wap_id} {len(obs_list)}")
-
-        self.cooked[wap_id]["observed_count"] = len(obs_list)
-        self.cooked[wap_id]["observed_first"] = obs_list[0].file_date
-        self.cooked[wap_id]["observed_last"] = obs_list[-1].file_date
+        # print(f"{wap_id} {len(obs_list)}")
+        if len(obs_list) < 1:
+            self.cooked[wap_id]["obs_quantity"] = 0
+            self.cooked[wap_id]["obs_first"] = datetime.datetime(
+                2000, 1, 1, 0, 0, tzinfo=datetime.timezone.utc
+            )
+            self.cooked[wap_id]["obs_last"] = datetime.datetime(
+                2000, 1, 1, 0, 0, tzinfo=datetime.timezone.utc
+            )
+        else:
+            self.cooked[wap_id]["obs_quantity"] = len(obs_list)
+            self.cooked[wap_id]["obs_first"] = obs_list[0].file_date
+            self.cooked[wap_id]["obs_last"] = obs_list[-1].file_date
 
     def execute(self) -> None:
         wap_rows = self.postgres.wap_select_all()
@@ -64,9 +73,10 @@ class Cooked:
             self.select_observations(wap.id)
 
         for key in self.cooked:
-            self.postgres.cooked_update2(self.cooked[key], key)
+            self.postgres.cooked_update_by_wap_id(self.cooked[key], key)
 
         print(len(wap_rows))
+
 
 print("start cooked")
 

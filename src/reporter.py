@@ -5,8 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import json
-import os
 import pytz
 import sys
 
@@ -17,6 +15,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import postgres
+
 
 class Reporter:
     box_scores = {}
@@ -36,8 +35,8 @@ class Reporter:
         )
 
     def converter(self):
-        """ convert from postgres boxscore to markdown"""
-        
+        """convert from postgres boxscore to markdown"""
+
         selected = self.postgres.box_score_select_all()
         if len(selected) < 1:
             print("empty box score select")
@@ -50,17 +49,19 @@ class Reporter:
 
             temp = self.box_scores[row_year]
 
-            candidate = f"|{row.file_date}|{row.site}|{row.platform}|{row.file_population}|{row.bssid_total}|{row.bssid_unique}|{row.bssid_new}|\n"
+            candidate = f"|{row.file_date}|{row.site}|{row.platform}|{row.file_quantity}|{row.bssid_total}|{row.bssid_unique}|{row.bssid_new}|\n"
 
             temp.append(candidate)
-        
+
     def execute(self) -> None:
         self.converter()
 
         time_now = datetime.datetime.now(pytz.utc)
         banner2 = f"created at {time_now}\n\n"
-        banner3 = f"|date|site|platform|file total|bssid total|bssid unique|bssid new|\n"
-        banner4 = f"|--|--|--|--|--|--|--|\n"        
+        banner3 = (
+            f"|date|site|platform|file total|bssid total|bssid unique|bssid new|\n"
+        )
+        banner4 = f"|--|--|--|--|--|--|--|\n"
 
         for key, values in self.box_scores.items():
             file_name = f"{self.box_score_dir}/{key}.md"
@@ -74,12 +75,13 @@ class Reporter:
                     out_file.write(banner2)
                     out_file.write(banner3)
                     out_file.write(banner4)
-                    
+
                     for value in values:
                         out_file.write(value)
             except Exception as error:
                 print(error)
                 return None
+
 
 print("start reporter")
 
