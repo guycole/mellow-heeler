@@ -42,9 +42,9 @@ class TestPostgres(TestCase):
         args["bssid_total"] = 54
         args["bssid_unique"] = 21
         args["file_date"] = "2000-2-2"
-        args["file_population"] = 66
-        args["platform"] = 'pytest'
-        args["site"] = 'pytest'
+        args["file_quantity"] = 66
+        args["platform"] = "pytest"
+        args["site"] = "pytest"
 
         return args
 
@@ -53,14 +53,13 @@ class TestPostgres(TestCase):
 
         self.pg_setup()
 
-        box_score1 = self.postgres.box_score_select('2000-3-3', 'pytest', 'pytest')
+        box_score1 = self.postgres.box_score_select("2000-3-3", "pytest", "pytest")
         print(box_score1)
         assert box_score1 is None
-        
-        box_score2 = self.postgres.box_score_select('2000-1-1', 'pytest', 'pytest')
-        assert box_score2 is not None
-        assert box_score2.file_population == 78
 
+        box_score2 = self.postgres.box_score_select("2000-1-1", "pytest", "pytest")
+        assert box_score2 is not None
+        assert box_score2.file_quantity == 78
 
     def test2(self):
         """observation insert"""
@@ -74,6 +73,7 @@ class TestPostgres(TestCase):
         args["file_population"] = 77
         box_score2 = self.postgres.box_score_update(args)
         assert box_score2 is not None
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

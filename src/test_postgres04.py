@@ -56,7 +56,9 @@ class TestPostgres(TestCase):
         obs1 = self.postgres.observation_select_by_bssid_and_load_log("bogus", 3)
         assert len(obs1) < 1
 
-        obs2 = self.postgres.observation_select_by_bssid_and_load_log("11:22:33:44:55:66", 3)
+        obs2 = self.postgres.observation_select_by_bssid_and_load_log(
+            "11:22:33:44:55:66", 3
+        )
         assert len(obs2) > 0
         assert obs2[0].bssid == "11:22:33:44:55:66"
 

@@ -44,11 +44,11 @@ class TestPostgres(TestCase):
 
         args["altitude"] = random.randint(1, 999)
         args["fix_time"] = datetime.datetime.now(pytz.utc)
-        args["latitude"] = random.randint(1, 900)/10.0
-        args["longitude"] = random.randint(1, 1800)/10.0
+        args["latitude"] = random.randint(1, 900) / 10.0
+        args["longitude"] = random.randint(1, 1800) / 10.0
         args["site"] = "pytest"
-        args["speed"] = random.randint(1, 999)/10.0
-        args["track"] = random.randint(1, 3609)/10.0
+        args["speed"] = random.randint(1, 999) / 10.0
+        args["track"] = random.randint(1, 3609) / 10.0
 
         return args
 
@@ -79,6 +79,7 @@ class TestPostgres(TestCase):
         print(geo_loc1)
         assert geo_loc1 is not None
         assert geo_loc1.id > 1
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

@@ -23,7 +23,7 @@ class TestConverter(TestCase):
         file_name = "../samples/sample1.scan"
 
         converter = Converter()
-        
+
         # must have JSON preamble
         assert converter.converter(file_name, True) is False
 
@@ -54,6 +54,7 @@ class TestConverter(TestCase):
                 assert obs["frequency_mhz"] == 2437
                 assert obs["signal_dbm"] == -65
                 assert obs["ssid"] == "braingang2_2GEXT"
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

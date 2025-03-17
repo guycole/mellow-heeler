@@ -57,11 +57,10 @@ class TestPostgres(TestCase):
 
         cooked1 = self.postgres.cooked_select_by_wap_id(1)
         assert cooked1 is None
-        
+
         cooked2 = self.postgres.cooked_select_by_wap_id(2)
         assert cooked2 is not None
         assert cooked2.note == "default"
-
 
     def test2(self):
         """observation insert"""
@@ -75,6 +74,7 @@ class TestPostgres(TestCase):
         args["note"] = "updated note"
         cooked2 = self.postgres.cooked_update_by_wap_id(args, 3)
         assert cooked2 is not None
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

@@ -57,7 +57,7 @@ class TestPostgres(TestCase):
         assert len(load_log1) == 1
         assert load_log1[0].id == 1
         assert load_log1[0].file_name == self.load_log_anderson1
-#        assert load_log1[0].file_time == self.new_day_2000
+        #        assert load_log1[0].file_time == self.new_day_2000
         assert load_log1[0].load_time is not None
         assert type(load_log1[0].load_time) == datetime.datetime
         assert load_log1[0].file_type == "synthetic"
@@ -69,7 +69,7 @@ class TestPostgres(TestCase):
         assert len(load_log2) == 1
         assert load_log2[0].id == 2
         assert load_log2[0].file_name == self.load_log_vallejo1
-#        assert load_log2[0].file_time == self.new_day_2000
+        #        assert load_log2[0].file_time == self.new_day_2000
         assert load_log2[0].load_time is not None
         assert type(load_log2[0].load_time) == datetime.datetime
         assert load_log2[0].file_type == "synthetic"
@@ -77,13 +77,11 @@ class TestPostgres(TestCase):
         assert load_log2[0].platform == "dummy2"
         assert load_log2[0].site == "vallejo1"
 
-        
         load_log3 = self.postgres.load_log_select_by_file_date(self.new_day_2000)
         assert len(load_log3) > 2
-        
+
         load_log4 = self.postgres.load_log_select_by_file_name("obviously broken")
         assert len(load_log4) == 0
-        
 
     def test2(self):
         """load log insert"""
@@ -99,6 +97,7 @@ class TestPostgres(TestCase):
         # second insert should fail as duplicate
         load_log2 = self.postgres.load_log_insert(args, 11, "pytest")
         assert load_log2.id is None
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

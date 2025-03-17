@@ -66,6 +66,7 @@ class Heeler1:
 
         return True
 
+
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***

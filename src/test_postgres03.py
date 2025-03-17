@@ -82,16 +82,17 @@ class TestPostgres(TestCase):
         assert wap1.id == 1
 
         # new wap version
-        args['ssid'] = "pytest" + str(random.randint(1, 999))
+        args["ssid"] = "pytest" + str(random.randint(1, 999))
         wap2 = self.postgres.wap_select_or_insert(args, 3)
         assert wap2 is not None
 
         # new wap
-        args['bssid'] = "a" + str(random.randint(1, 999))
-        args['ssid'] = "pytest" + str(random.randint(1, 999))
+        args["bssid"] = "a" + str(random.randint(1, 999))
+        args["ssid"] = "pytest" + str(random.randint(1, 999))
         wap3 = self.postgres.wap_select_or_insert(args, 3)
         assert wap3 is not None
         assert wap3.version == 1
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

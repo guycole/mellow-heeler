@@ -34,7 +34,7 @@ class BoxScore(Base):
     bssid_total = Column(Integer)
     bssid_unique = Column(Integer)
     file_date = Column(Date)
-    file_population = Column(Integer)
+    file_quantity = Column(Integer)
     platform = Column(String)
     site = Column(String)
 
@@ -43,9 +43,10 @@ class BoxScore(Base):
         self.bssid_total = args["bssid_total"]
         self.bssid_unique = args["bssid_unique"]
         self.file_date = args["file_date"]
-        self.file_population = args["file_population"]
+        self.file_quantity = args["file_quantity"]
         self.platform = args["platform"]
         self.site = args["site"]
+
 
 class Cooked(Base):
     """cooked table definition"""
@@ -131,6 +132,7 @@ class LoadLog(Base):
         self.obs_quantity = args["obs_quantity"]
         self.platform = args["platform"]
         self.site = args["site"]
+
 
 class Observation(Base):
     """observation table definition"""

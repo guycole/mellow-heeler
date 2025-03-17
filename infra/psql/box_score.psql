@@ -11,14 +11,14 @@
 -- site = anderson1, vallejo1, mobile1, etc
 -- 
 create table heeler_v1.box_score (
-  id               bigserial    primary key,
-  bssid_new        smallint     not null, 
-  bssid_total      smallint     not null,
-  bssid_unique     smallint     not null, 
-  file_date        date         not null,
-  file_population  smallint     not null, 
-  platform         varchar(16)  not null,
-  site             varchar(16)  not null
+  id             bigserial    primary key,
+  bssid_new      int          not null, 
+  bssid_total    int          not null,
+  bssid_unique   int          not null, 
+  file_date      date         not null,
+  file_quantity  smallint     not null, 
+  platform       varchar(16)  not null,
+  site           varchar(16)  not null
 ) tablespace heeler;
 
 grant select, insert, update, delete on heeler_v1.box_score to heeler_client;
@@ -26,4 +26,4 @@ grant usage, select on sequence heeler_v1.box_score_id_seq to heeler_client;
 
 create index boxscore_date_platform_site on heeler_v1.box_score(file_date, platform, site);
 
-insert into heeler_v1.box_score(bssid_new, bssid_total, bssid_unique, file_date, file_population, platform, site) values(12, 34, 56, '2000-1-1', 78, 'pytest', 'pytest');
+insert into heeler_v1.box_score(bssid_new, bssid_total, bssid_unique, file_date, file_quantity, platform, site) values(12, 34, 56, '2000-1-1', 78, 'pytest', 'pytest');

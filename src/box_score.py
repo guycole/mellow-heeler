@@ -5,8 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import json
-import os
 import pytz
 import sys
 
@@ -47,7 +45,7 @@ class BoxScore:
             "bssid_total": 0,
             "bssid_unique": 0,
             "file_date": file_date,
-            "file_population": 1,
+            "file_quantity": 1,
             "platform": platform,
             "refresh_flag": False,
             "site": site,
@@ -56,7 +54,7 @@ class BoxScore:
 
     def process_daily(self, current_day: datetime.date) -> None:
         # select files loaded for today
-        load_log_rows = self.postgres.load_log_select_by_date(current_day)
+        load_log_rows = self.postgres.load_log_select_by_file_date(current_day)
 
         # discover platform and sites for today
         for row in load_log_rows:
@@ -64,13 +62,13 @@ class BoxScore:
             # 2025-03-13-rpi3a-vallejo1
 
             if box_scores_key in self.box_scores:
-                self.box_scores[box_scores_key]["bssid_total"] += row.obs_population
-                self.box_scores[box_scores_key]["file_population"] += 1
+                self.box_scores[box_scores_key]["bssid_total"] += row.obs_quantity
+                self.box_scores[box_scores_key]["file_quantity"] += 1
             else:
                 self.box_scores[box_scores_key] = self.fresh_box_score(
                     row.file_date, row.platform, row.site
                 )
-                self.box_scores[box_scores_key]["bssid_total"] = row.obs_population
+                self.box_scores[box_scores_key]["bssid_total"] = row.obs_quantity
 
             # list of all observed wap for today
             wap_list = self.box_scores[box_scores_key]["wap_list"]
@@ -88,8 +86,8 @@ class BoxScore:
 
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
-                obs_first_date = cooked.observed_first.date()
-                obs_last_date = cooked.observed_last.date()
+                obs_first_date = cooked.obs_first.date()
+                obs_last_date = cooked.obs_last.date()
                 if obs_first_date == obs_last_date:
                     self.box_scores[key]["bssid_new"] += 1
 
@@ -97,7 +95,7 @@ class BoxScore:
         # now write to postgres
         #
         for key, value in self.box_scores.items():
-            self.postgres.box_score_insert(value)
+            self.postgres.box_score_update(value)
 
     def execute(self) -> None:
         today = datetime.datetime.now(pytz.utc)

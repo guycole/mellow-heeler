@@ -92,6 +92,7 @@ class Loader:
         if self.dry_run is True:
             print(f"skip failure move for {file_name}")
         else:
+            print(f"failure move for {file_name}")
             os.rename(file_name, self.failure_dir + "/" + file_name)
 
     def execute(self) -> None:
