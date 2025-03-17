@@ -288,8 +288,6 @@ class PostGres:
     def wap_select_or_insert(self, args: dict[str, any], load_log_id: int) -> Wap:
         """discover if wap exists or if not, max version for insert"""
 
-        print(args)
-
         rows = self.wap_select_by_bssid(args['bssid'])
         for row in rows:
             if (
@@ -297,7 +295,6 @@ class PostGres:
                 and row.frequency_mhz == args["frequency_mhz"]
                 and row.ssid == args["ssid"]
             ):
-                print(f"wap match noted {row.id}")
                 return row
 
         if len(rows) < 1:

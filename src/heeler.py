@@ -60,7 +60,9 @@ class Heeler1:
 
         for obs in obs_list:
             wap = self.postgres.wap_select_or_insert(obs, load_log.id)
-            self.postgres.observation_insert(obs, load_log.file_date, load_log.id, wap.id)
+
+            obs["file_date"] = load_log.file_date
+            self.postgres.observation_insert(obs, load_log.id, wap.id)
 
         return True
 
