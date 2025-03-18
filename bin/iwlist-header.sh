@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Title: iwlist-header.sh
-# Description: process output from iwlist(8) scan
+# Description: process output from iwlist(8) scan (not with gps)
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
 #
@@ -13,7 +13,7 @@ FILENAME="/tmp/iwlist.scan"
 HOME_DIR="/home/gsc/Documents/github"
 #
 echo "sleeping for iwlist"
-sleep 20 
+sleep 5
 #
 echo "start conversion"
 cd $HOME_DIR/mellow-heeler/src
