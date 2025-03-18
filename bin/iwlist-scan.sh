@@ -12,15 +12,9 @@ PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 FILENAME="/tmp/iwlist.scan"
 #
-counter=1
-while [ $counter -le 4 ]
-do
-    echo "start scan"
-    unlink $FILENAME
-    /sbin/iwlist scan > $FILENAME
-    chmod 666 $FILENAME
-    echo "end scan"
-    sleep 15
-    ((counter++))
-done
+echo "start scan"
+unlink $FILENAME
+/sbin/iwlist scan > $FILENAME
+chmod 666 $FILENAME
+echo "end scan"
 #
