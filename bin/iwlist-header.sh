@@ -13,7 +13,7 @@ FILENAME="/tmp/iwlist.scan"
 HOME_DIR="/home/gsc/Documents/github"
 #
 echo "sleeping for iwlist"
-sleep 5
+sleep 10
 #
 echo "start conversion"
 cd $HOME_DIR/mellow-heeler/src
