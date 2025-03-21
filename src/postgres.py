@@ -247,6 +247,16 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
+    def observation_select_by_load_log(self, load_log_id: int) -> list[Observation]:
+        """observation select rows for a load log"""
+
+        statement = (
+            select(Observation).filter_by(load_log_id=load_log_id).order_by(Observation.bssid)
+        )
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+        
     def observation_select_by_wap_id(self, wap_id: int) -> list[Observation]:
         """observation select row"""
 
