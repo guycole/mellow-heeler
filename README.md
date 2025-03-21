@@ -12,10 +12,8 @@ Back end processing reads collected observations from AWS S3 and loads the resul
 
 ## Features
 1. Autonomous collection of wireless beacons. 
-
-2. Beacon database.
-
-3. Markdown based summary of observations.
+1. Beacon database.
+1. Markdown based summary of observations.
 
 ## Notes
 1.  All times UTC
@@ -37,3 +35,10 @@ Back end processing reads collected observations from AWS S3 and loads the resul
 1. Mellow Hound original WAP collector.  Based on Android, the output report is json formatted.  Sadly, modern Android makes it difficult to run background applications and this project is abandoned.  There are legacy files, and the format is reported as "hound_1".  Most (if not all) of these observations are 2.4 GHz and will include a GPS location and timestamp.  It turned out that if stationary, the GPS time stamp does not update so this was not a good choice for observation time. 
 1. Mellow Heeler "heeler_1" has fixed location collection stations based on rPi4 using iwlist(8) scan output.  Uses default rPi hardware and a TP-Link AC-1300, which offers 2.4 and 5.0 GHz coverage.  There is a json header to identify observation time and site and the raw iwlist(8) output.  Since these are static location collection stations, there is not much variety in observations.
 1. Mellow Heeler mobile collection is a rPi augmented w/a GPS HAT.  
+
+| Date       | Device | Site      | Version |
+| ---------- | ------ | --------- | ------- |
+| 2025-01-05 | rpi3c  | anderson1 | xxx     |
+| 2025-02-14 | rpi3d  | mobile1   | xxx     |
+| 2025-02-19 | rpi3a  | vallejo1  | xxx     |
+
