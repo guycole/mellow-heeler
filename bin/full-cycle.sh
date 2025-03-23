@@ -10,9 +10,9 @@ PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 HOME_DIR="/home/gsc/Documents/github"
 #HOME_DIR="/Users/gsc/Documents/github"
 #
-$HOME_DIR/mellow-heeler/bin/fresh-from-s3.sh
-$HOME_DIR/mellow-heeler/bin/loader.sh
-$HOME_DIR/mellow-heeler/bin/cooker.sh
-$HOME_DIR/mellow-heeler/bin/box-score.sh
-$HOME_DIR/mellow-heeler/bin/reporter.sh
+time $HOME_DIR/mellow-heeler/bin/fresh-from-s3.sh
+time $HOME_DIR/mellow-heeler/bin/loader.sh
+time $HOME_DIR/mellow-heeler/bin/cooker.sh
+time $HOME_DIR/mellow-heeler/bin/box-score.sh
+time $HOME_DIR/mellow-heeler/bin/reporter.sh
 #
