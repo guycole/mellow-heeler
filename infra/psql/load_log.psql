@@ -14,9 +14,9 @@ create table heeler_v1.load_log (
   id            bigserial    primary key,
   file_date     date         not null,
   file_name     varchar(48)  unique not null,
-  file_time     timestamptz  not null,
+  file_time     timestamp    not null,
   file_type     varchar(16)  not null,
-  load_time     timestamptz  not null default CURRENT_TIMESTAMP,
+  load_time     timestamp    not null default CURRENT_TIMESTAMP,
   obs_quantity  smallint     not null,
   platform      varchar(16)  not null,
   site          varchar(16)  not null

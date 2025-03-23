@@ -5,7 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import pytz
 import random
 import uuid
 
@@ -43,7 +42,7 @@ class TestPostgres(TestCase):
         args = {}
 
         args["altitude"] = random.randint(1, 999)
-        args["fix_time"] = datetime.datetime.now(pytz.utc)
+        args["fix_time"] = datetime.datetime.now()
         args["latitude"] = random.randint(1, 900) / 10.0
         args["longitude"] = random.randint(1, 1800) / 10.0
         args["site"] = "pytest"
@@ -65,8 +64,8 @@ class TestPostgres(TestCase):
         assert geo_loc2[0].site == "anderson1"
 
         geo_loc3 = self.postgres.geo_loc_select_by_load_log(2)
-        assert len(geo_loc3) > 0
-        assert geo_loc3[0].site == "vallejo1"
+        assert geo_loc3 is not None
+        assert geo_loc3.site == "vallejo1"
 
     def test2(self):
         """geo_loc insert"""

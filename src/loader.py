@@ -25,9 +25,7 @@ from converter import Converter
 
 class Eclectic:
 
-    def __init__(
-        self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres
-    ):
+    def __init__(self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres):
         self.file_name = file_name
         self.postgres = postgres
         self.preamble = preamble
@@ -110,7 +108,7 @@ class Loader:
 
             # test for duplicate file
             selected = self.postgres.load_log_select_by_file_name(target)
-            if len(selected) > 0:
+            if selected is not None:
                 print(f"skip duplicate file:{target}")
                 self.file_failure(target)
                 continue
@@ -127,6 +125,10 @@ class Loader:
                 self.file_failure(target)
                 continue
 
+            # add parsed observations to preamble
+            print(valid_preamble)
+            valid_preamble["wifi"] = converter.get_obs_list(valid_preamble['file_time'])
+
             # successful iwlist(8) scan file parse, now load into postgres
 
             file_type = preamble_helper.classifier(valid_preamble)
@@ -141,7 +143,7 @@ class Loader:
                     result_flag = True
                 else:
                     heelerx = heeler.Heeler1(self.postgres, valid_preamble)
-                    result_flag = heelerx.execute(converter.obs_list)
+                    result_flag = heelerx.execute()
             else:
                 print(f"unknown file type:{file_type}")
 

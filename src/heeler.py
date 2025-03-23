@@ -47,8 +47,10 @@ class Heeler1:
 
         return location
 
-    def execute(self, obs_list: list[Observation]) -> bool:
+    def execute(self) -> bool:
         print(f"========> heeler1 execute {self.preamble}")
+
+        obs_list = self.preamble['wifi']
 
         load_log = self.postgres.load_log_insert(
             self.preamble, len(obs_list), self.preamble["geoLoc"]["site"]

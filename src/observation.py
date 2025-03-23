@@ -16,10 +16,10 @@ class Observation:
         self.bssid = args["bssid"]
         self.capability = None
         self.file_name = None
+        self.file_time = None
         self.frequency_mhz = args["frequency_mhz"]
         self.latitude = None
         self.longitude = None
-        self.obs_time = None
         self.platform = None
         self.site = None
         self.signal_dbm = args["signal_dbm"]
@@ -38,11 +38,12 @@ class Observation:
             and self.frequency_mhz == other.frequency_mhz
         )
 
-    def to_dict(self) -> dict[str, any]:
+    def to_dict(self, file_time: datetime.datetime) -> dict[str, any]:
         result = {}
-
+        
         result["bssid"] = self.bssid
         result["capability"] = "unknown"
+        result["file_time"] = file_time
         result["frequency_mhz"] = self.frequency_mhz
         result["signal_dbm"] = self.signal_dbm
         result["ssid"] = self.ssid
@@ -112,7 +113,7 @@ class Parser:
         obs["ssid"] = "unknown"
         obs["frequency_mhz"] = 0
         obs["signal_dbm"] = 0
-        obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+#        obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         for ndx in range(start_ndx, stop_ndx + 1):
             line = self.raw[ndx].strip()

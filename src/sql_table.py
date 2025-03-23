@@ -8,7 +8,7 @@
 # from sqlalchemy import and_
 # from sqlalchemy import select
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Column
 from sqlalchemy import BigInteger, Boolean, Date, DateTime, Float, Integer, String
@@ -128,7 +128,7 @@ class LoadLog(Base):
         self.file_name = args["file_name"]
         self.file_time = args["file_time"]
         self.file_type = args["file_type"]
-        self.load_time = datetime.now(timezone.utc)
+        self.load_time = datetime.now()
         self.obs_quantity = args["obs_quantity"]
         self.platform = args["platform"]
         self.site = args["site"]
@@ -141,7 +141,7 @@ class Observation(Base):
 
     id = Column(Integer, primary_key=True)
     bssid = Column(String)
-    file_date = Column(Date)
+    file_time = Column(DateTime)
     signal_dbm = Column(Integer)
     load_log_id = Column(BigInteger)
     wap_id = Column(BigInteger)
@@ -153,7 +153,7 @@ class Observation(Base):
         wap_id: int,
     ):
         self.bssid = args["bssid"]
-        self.file_date = args["file_date"]
+        self.file_time = args["file_time"]
         self.signal_dbm = args["signal_dbm"]
         self.load_log_id = load_log_id
         self.wap_id = wap_id

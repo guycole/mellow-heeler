@@ -5,7 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import pytz
 import sys
 
 import yaml
@@ -69,37 +68,43 @@ class BoxScore:
                 # print(f"fresh key {box_scores_key}")
                 self.box_scores[box_scores_key] = self.fresh_box_score(row.file_date, row.platform, row.site)
 
-            # unique wap id for today
+            # observed wap for today
             wap_list = self.box_scores[box_scores_key]["wap_list"]
 
+            # observations for this load log file
             raw_obs_list = self.postgres.observation_select_by_load_log(row.id)
             self.box_scores[box_scores_key]["bssid_total"] += len(raw_obs_list)
 
+            # add missing for today
             for obs in raw_obs_list:
                 if obs.wap_id not in wap_list:
                     wap_list.append(obs.wap_id)
             
         #
-        # all platform and sites for each day now have an entry
-        # determine new and unique scores
+        # all platform and sites for each day now within box_scores
+        # determine new and unique wap
         #
         for key, value in self.box_scores.items():
             value['bssid_unique'] = len(value['wap_list'])
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
                 obs_first_date = cooked.obs_first.date()
-                obs_last_date = cooked.obs_last.date()
-                if obs_first_date == obs_last_date:
+                if obs_first_date == value['file_date']:
                     value["bssid_new"] += 1
 
         #
         # now write to postgres
         #
         for key, value in self.box_scores.items():
-            self.postgres.box_score_update(value)
+            if value['bssid_total'] > 0:
+                selected = self.postgres.box_score_select(value['file_date'], value['platform'], value['site'])
+                if selected is None:
+                    self.postgres.box_score_insert(value)
+                else:
+                    self.postgres.box_score_update(value)
 
     def execute(self) -> None:
-        today = datetime.datetime.now(pytz.utc)
+        today = datetime.datetime.now()
         current_day = datetime.date(2024, 2, 18)
         current_day = datetime.date(2022, 1, 1)        
         limit_day = datetime.date(2024, 2, 22)

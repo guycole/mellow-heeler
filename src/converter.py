@@ -6,6 +6,7 @@
 #
 from observation import Observation, Parser
 
+import datetime
 import json
 import sys
 import time
@@ -13,9 +14,9 @@ import uuid
 
 
 class Converter:
-    obs_list = []
     preamble = {}
     raw_buffer = []
+    raw_obs_list = []
 
     def file_name(self, dir_name: str) -> str:
         return "%s/%s" % (dir_name, str(uuid.uuid4()))
@@ -65,6 +66,14 @@ class Converter:
         except Exception as error:
             print(error)
 
+    def get_obs_list(self, file_time:datetime.datetime) -> list[Observation]:
+        result = []
+
+        for obs in self.raw_obs_list:
+            result.append(obs.to_dict(file_time))
+
+        return result
+    
     def converter(self, file_name: str, preamble_flag: bool) -> bool:
         if self.file_reader(file_name) is False:
             return False
@@ -77,18 +86,12 @@ class Converter:
                 return False
 
         parser = Parser(self.raw_buffer)
-        observations = parser.parser()
-        if len(observations) < 1:
+        self.raw_obs_list = parser.parser()
+        if len(self.raw_obs_list) < 1:
             print("empty observation list")
             return False
 
-        self.obs_list = []
-        for obs in observations:
-            self.obs_list.append(obs.to_dict())
-            self.preamble["wifi"] = self.obs_list
-
         return True
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

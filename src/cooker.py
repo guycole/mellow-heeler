@@ -1,10 +1,9 @@
 #
-# Title: cooked.py
+# Title: cooker.py
 # Description: update cooked history
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-import pytz
 import sys
 
 import yaml
@@ -52,19 +51,15 @@ class Cooked:
 
     def select_observations(self, wap_id: int) -> None:
         obs_list = self.postgres.observation_select_by_wap_id(wap_id)
-        # print(f"{wap_id} {len(obs_list)}")
+        print(f"{wap_id} {len(obs_list)}")
         if len(obs_list) < 1:
             self.cooked[wap_id]["obs_quantity"] = 0
-            self.cooked[wap_id]["obs_first"] = datetime.datetime(
-                2000, 1, 1, 0, 0, tzinfo=datetime.timezone.utc
-            )
-            self.cooked[wap_id]["obs_last"] = datetime.datetime(
-                2000, 1, 1, 0, 0, tzinfo=datetime.timezone.utc
-            )
+            self.cooked[wap_id]["obs_first"] = datetime.datetime(2000, 1, 1, 0, 0)
+            self.cooked[wap_id]["obs_last"] = datetime.datetime(2000, 1, 1, 0, 0)
         else:
             self.cooked[wap_id]["obs_quantity"] = len(obs_list)
-            self.cooked[wap_id]["obs_first"] = obs_list[0].file_date
-            self.cooked[wap_id]["obs_last"] = obs_list[-1].file_date
+            self.cooked[wap_id]["obs_first"] = obs_list[0].file_time
+            self.cooked[wap_id]["obs_last"] = obs_list[-1].file_time
 
     def execute(self) -> None:
         wap_rows = self.postgres.wap_select_all()
@@ -73,7 +68,11 @@ class Cooked:
             self.select_observations(wap.id)
 
         for key in self.cooked:
-            self.postgres.cooked_update_by_wap_id(self.cooked[key], key)
+            temp = self.postgres.cooked_select_by_wap_id(key)
+            if temp is None:
+                self.postgres.cooked_insert(self.cooked[key], key)
+            else:
+                self.postgres.cooked_update_by_wap_id(self.cooked[key], key)
 
         print(len(wap_rows))
 
