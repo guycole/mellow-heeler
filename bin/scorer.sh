@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Title: box-score.sh
+# Title: scorer.sh
 # Description: create collection statistics
 # Development Environment: Ubuntu 22.04.05 LTS
 # Author: Guy Cole (guycole at gmail dot com)
@@ -13,6 +13,6 @@ HOME_DIR="/home/gsc/Documents/github"
 echo "start box-score"
 cd $HOME_DIR/mellow-heeler/src
 source venv/bin/activate
-python3 ./box_score.py
+python3 ./scorer.py
 echo "end box-score"
 #

@@ -41,7 +41,7 @@ class Heeler1:
             self.preamble, len(obs_list), self.preamble["geoLoc"]["site"]
         )
 
-        if load_log is None:
+        if load_log.id is None:
             print(f"load log insert failure for {self.preamble['file_name']}")
             return False
 

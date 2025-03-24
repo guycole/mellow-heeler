@@ -13,6 +13,6 @@ HOME_DIR="/home/gsc/Documents/github"
 time $HOME_DIR/mellow-heeler/bin/fresh-from-s3.sh
 time $HOME_DIR/mellow-heeler/bin/loader.sh
 time $HOME_DIR/mellow-heeler/bin/cooker.sh
-time $HOME_DIR/mellow-heeler/bin/box-score.sh
+time $HOME_DIR/mellow-heeler/bin/scorer.sh
 time $HOME_DIR/mellow-heeler/bin/reporter.sh
 #
