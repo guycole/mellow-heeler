@@ -36,19 +36,17 @@ class TestPostgres(TestCase):
         )
 
     def fresh_cooked(self) -> dict[str, any]:
-        args = {}
-
-        args["confidence"] = 5
-        args["latitude"] = 43.21
-        args["longitude"] = 12.34
-        args["note"] = "fresh note"
-        args["obs_first"] = datetime.datetime.now(pytz.utc)
-        args["obs_last"] = datetime.datetime.now(pytz.utc)
-        args["obs_quantity"] = 3
-        args["street_address"] = "123 nowhere"
-        args["street_zip"] = "54321"
-
-        return args
+        return {
+            "confidence": 5,
+            "latitude": 43.21,
+            "longitude": 12.34,
+            "note": "fresh note",
+            "obs_first": datetime.datetime.now(),
+            "obs_last": datetime.datetime.now(),
+            "obs_quantity": 3,
+            "street_address": "123 nowhere",
+            "street_zip": "54321"
+        }
 
     def test1(self):
         """cooked select"""
@@ -68,13 +66,12 @@ class TestPostgres(TestCase):
         self.pg_setup()
 
         args = self.fresh_cooked()
-        cooked1 = self.postgres.cooked_insert(args, 3)
+        cooked1 = self.postgres.cooked_insert(args, 2)
         assert cooked1 is not None
 
         args["note"] = "updated note"
-        cooked2 = self.postgres.cooked_update_by_wap_id(args, 3)
+        cooked2 = self.postgres.cooked_update_by_wap_id(args, 2)
         assert cooked2 is not None
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

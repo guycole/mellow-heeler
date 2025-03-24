@@ -5,14 +5,12 @@
 -- frequency is in MHz
 -- 
 create table heeler_v1.wap (
-  id             bigserial    primary key,
-  bssid          varchar(24)  not null,
-  capability     varchar(80)  not null,
-  frequency_mhz  smallint     not null,
-  ssid           varchar(80)  not null,
-  version        smallint     not null,
-  load_log_id    bigint       not null,
-  constraint     load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id)
+  id             bigserial     primary key,
+  bssid          varchar(24)   not null,
+  capability     varchar(80)   not null,
+  frequency_mhz  smallint      not null,
+  ssid           varchar(132)  not null,
+  version        int           not null
 ) tablespace heeler;
 
 grant select, insert, update, delete on heeler_v1.wap to heeler_client;
@@ -21,5 +19,5 @@ grant usage, select on sequence heeler_v1.wap_id_seq to heeler_client;
 create index wap_ssid on heeler_v1.wap(ssid);
 create unique index wap_bssid_version on heeler_v1.wap(bssid, version);
 
-insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version, load_log_id) values('11:22:33:44:55:66', 'magick', 1234, 'pytest1', 1, 3);
-insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version, load_log_id) values('11:22:33:44:55:66', 'magick', 1234, 'pytest2', 2, 3);
+insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version) values('11:22:33:44:55:66', 'magick', 1234, 'pytest1', 1);
+insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version) values('11:22:33:44:55:66', 'magick', 1234, 'pytest2', 2);

@@ -5,7 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import datetime
-import pytz
 import sys
 
 import yaml
@@ -56,7 +55,7 @@ class Reporter:
     def execute(self) -> None:
         self.converter()
 
-        time_now = datetime.datetime.now(pytz.utc)
+        time_now = datetime.datetime.now()
         banner2 = f"created at {time_now}\n\n"
         banner3 = (
             f"|date|site|platform|file total|bssid total|bssid unique|bssid new|\n"

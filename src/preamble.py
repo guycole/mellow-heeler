@@ -6,9 +6,7 @@
 #
 import datetime
 import gps_helper
-import pytz
 import time
-
 
 class PreambleHelper:
 
@@ -105,11 +103,9 @@ class PreambleHelper:
     def validate_geoloc(self, preamble: dict[str, any]) -> str:
         """test/normalize geographic location"""
 
-        # print(f"preamble:{preamble}")
-
         results = {}
         results["altitude"] = 0
-        results["fix_time"] = datetime.datetime.fromtimestamp(946684800, pytz.utc)
+        results["fix_time"] = datetime.datetime.fromtimestamp(946684800)
         results["latitude"] = 0
         results["longitude"] = 0
         results["site"] = "unknown"
@@ -132,9 +128,7 @@ class PreambleHelper:
                 elif temp["site"].startswith("mobile"):
                     # mobile location
                     results["altitude"] = temp["altitude"]
-                    results["fix_time"] = datetime.datetime.fromtimestamp(
-                        temp["fixTime"], pytz.utc
-                    )
+                    results["fix_time"] = datetime.datetime.fromtimestamp(temp["fixTime"])
                     results["latitude"] = temp["latitude"]
                     results["longitude"] = temp["longitude"]
                     results["site"] = "mobile1"
@@ -182,7 +176,7 @@ class PreambleHelper:
         else:
             return None
 
-        return datetime.datetime.fromtimestamp(seconds, pytz.utc)
+        return datetime.datetime.fromtimestamp(seconds)
 
 
 # ;;; Local Variables: ***

@@ -4,6 +4,8 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
+import datetime
+
 from converter import Converter
 
 from unittest import TestCase
@@ -45,12 +47,17 @@ class TestConverter(TestCase):
 
         converter = Converter()
         assert converter.converter(file_name, True) is True
-        assert len(converter.obs_list) == 1
 
-        for obs in converter.obs_list:
+        file_time = datetime.datetime.now()
+
+        obs_list = converter.get_obs_list(file_time)
+        assert len(obs_list) == 1
+
+        for obs in obs_list:
             if obs["ssid"] == "braingang2_2GEXT":
-                assert len(obs) == 5
+                assert len(obs) == 6
                 assert obs["bssid"] == "6c:cd:d6:2a:62:06"
+                assert obs["file_time"] == file_time
                 assert obs["frequency_mhz"] == 2437
                 assert obs["signal_dbm"] == -65
                 assert obs["ssid"] == "braingang2_2GEXT"
