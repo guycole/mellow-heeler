@@ -51,7 +51,7 @@ class Cooked:
 
     def select_observations(self, wap_id: int) -> None:
         obs_list = self.postgres.observation_select_by_wap_id(wap_id)
-        print(f"{wap_id} {len(obs_list)}")
+        # print(f"{wap_id} {len(obs_list)}")
         if len(obs_list) < 1:
             self.cooked[wap_id]["obs_quantity"] = 0
             self.cooked[wap_id]["obs_first"] = datetime.datetime(2000, 1, 1, 0, 0)
@@ -77,7 +77,7 @@ class Cooked:
         print(len(wap_rows))
 
 
-print("start cooked")
+print("start cooker")
 
 #
 # argv[1] = configuration filename
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     cooked = Cooked(configuration)
     cooked.execute()
 
-print("stop cooked")
+print("stop cooker")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

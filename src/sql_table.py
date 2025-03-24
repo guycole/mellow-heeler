@@ -170,16 +170,13 @@ class Wap(Base):
     frequency_mhz = Column(Integer)
     ssid = Column(String)
     version = Column(Integer)
-    load_log_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any], version: int, load_log_id: int):
+    def __init__(self, args: dict[str, any], version: int):
         self.bssid = args["bssid"]
         self.capability = args["capability"]
         self.frequency_mhz = args["frequency_mhz"]
         self.ssid = args["ssid"]
         self.version = version
-        self.load_log_id = load_log_id
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

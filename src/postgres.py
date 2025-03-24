@@ -13,8 +13,6 @@ import time
 
 from typing import List, Dict
 
-import pytz
-
 import sqlalchemy
 from sqlalchemy import and_
 from sqlalchemy import select
@@ -123,6 +121,10 @@ class PostGres:
 
         return candidate
 
+    def load_log_select_all(self) -> list[LoadLog]:
+        with self.Session() as session:
+            return session.scalars(select(LoadLog)).all()
+
     def load_log_select_by_file_name(self, file_name: str) -> LoadLog:
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_name=file_name)).first()
@@ -156,6 +158,9 @@ class PostGres:
             return session.scalars(statement).all()
 
     def geo_loc_select_or_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
+        if args["site"].startswith("mobile"):
+            return self.geo_loc_insert(args, load_log_id)
+
         candidate = self.geo_loc_select_by_site(args["site"])
         if len(candidate) < 1:
             return self.geo_loc_insert(args, load_log_id)
@@ -192,8 +197,8 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
-    def wap_insert(self, args: dict[str, any], version: int, load_log_id: int) -> Wap:
-        candidate = Wap(args, version, load_log_id)
+    def wap_insert(self, args: dict[str, any], version: int) -> Wap:
+        candidate = Wap(args, version)
 
         try:
             with self.Session() as session:
@@ -214,13 +219,11 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
-    def wap_select_by_load_log(self, load_log_id: int) -> list[Wap]:
-        statement = select(Wap).filter_by(load_log_id=load_log_id).order_by(Wap.bssid)
-
+    def wap_select_by_id(self, wap_id: int) -> Wap:
         with self.Session() as session:
-            return session.scalars(statement).all()
+            return session.scalars(select(Wap).filter_by(id=wap_id)).first()
 
-    def wap_select_or_insert(self, args: dict[str, any], load_log_id: int) -> Wap:
+    def wap_select_or_insert(self, args: dict[str, any]) -> Wap:
         rows = self.wap_select_by_bssid(args["bssid"])
         for row in rows:
             if (
@@ -235,7 +238,7 @@ class PostGres:
         else:
             version = 1 + row.version
 
-        result = self.wap_insert(args, version, load_log_id)
+        result = self.wap_insert(args, version)
         return result
 
 

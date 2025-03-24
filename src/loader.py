@@ -5,7 +5,6 @@
 # Author: G.S. Cole (guycole at gmail dot com)
 #
 import os
-import pytz
 import sys
 
 import yaml
@@ -126,7 +125,7 @@ class Loader:
                 continue
 
             # add parsed observations to preamble
-            print(valid_preamble)
+            #print(valid_preamble)
             valid_preamble["wifi"] = converter.get_obs_list(valid_preamble['file_time'])
 
             # successful iwlist(8) scan file parse, now load into postgres

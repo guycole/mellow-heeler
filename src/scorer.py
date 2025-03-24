@@ -1,5 +1,5 @@
 #
-# Title: box_score.py
+# Title: scorer.py
 # Description: calculate daily box score
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
@@ -51,7 +51,7 @@ class BoxScore:
             "wap_list": [],
         }
 
-    def process_daily(self, current_day: datetime.date) -> None:
+    def pass1(self, current_day: datetime.date) -> None:
         # select files loaded for today
         load_log_rows = self.postgres.load_log_select_by_file_date(current_day)
         print(f"load log quantity {len(load_log_rows)} for {current_day}")
@@ -74,16 +74,16 @@ class BoxScore:
             # observations for this load log file
             raw_obs_list = self.postgres.observation_select_by_load_log(row.id)
             self.box_scores[box_scores_key]["bssid_total"] += len(raw_obs_list)
+            if len(raw_obs_list) != row.obs_quantity:
+                print(f"mismatch {row.id} {row.obs_quantity} {len(raw_obs_list)}")
 
-            # add missing for today
+            # add wap for today
             for obs in raw_obs_list:
                 if obs.wap_id not in wap_list:
                     wap_list.append(obs.wap_id)
-            
-        #
-        # all platform and sites for each day now within box_scores
-        # determine new and unique wap
-        #
+
+    # determine new and unique wap
+    def pass2(self) -> None:
         for key, value in self.box_scores.items():
             value['bssid_unique'] = len(value['wap_list'])
             for wap_id in value["wap_list"]:
@@ -92,30 +92,30 @@ class BoxScore:
                 if obs_first_date == value['file_date']:
                     value["bssid_new"] += 1
 
-        #
-        # now write to postgres
-        #
+    # write to postgres
+    def pass3(self) -> None:
         for key, value in self.box_scores.items():
-            if value['bssid_total'] > 0:
-                selected = self.postgres.box_score_select(value['file_date'], value['platform'], value['site'])
-                if selected is None:
-                    self.postgres.box_score_insert(value)
-                else:
-                    self.postgres.box_score_update(value)
+            selected = self.postgres.box_score_select(value['file_date'], value['platform'], value['site'])
+            if selected is None:
+                self.postgres.box_score_insert(value)
+            else:
+                self.postgres.box_score_update(value)
 
     def execute(self) -> None:
         today = datetime.datetime.now()
-        current_day = datetime.date(2024, 2, 18)
-        current_day = datetime.date(2022, 1, 1)        
-        limit_day = datetime.date(2024, 2, 22)
+        current_day = datetime.date(2024, 2, 18)  
+        limit_day = datetime.date(2024, 2, 25)
         limit_day = today.date()
 
         while current_day < limit_day:
-            print(f"{current_day}")
-
-            self.process_daily(current_day)
-
+            self.pass1(current_day)
             current_day = current_day + datetime.timedelta(days=1)
+
+        self.pass2()
+        self.pass3()
+
+        print(self.box_scores)
+        print(self.box_scores.keys())
 
 print("start scorer")
 
