@@ -7,10 +7,25 @@
 #
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
-DEST_BUCKET=s3://mellow-heeler-uw2-k2718.braingang.net/fresh/
+TODAY=$(date '+%Y-%m-%d')
+FILE_NAME="heeler-${TODAY}.tgz"
 #
-echo "start move"
-#cd /var/mellow/heeler/export; gzip *
-cd /mnt/pp1/gsc/mellow/heeler/export; gzip *
-aws s3 mv . $DEST_BUCKET --recursive --profile=wombat03
-echo "end move"
+DEST_BUCKET=s3://mellow-heeler-uw2-k2718.braingang.net/archive/
+#
+SOURCE_DIR="archive"
+WORK_DIR="/var/mellow/heeler"
+#
+echo "start archive"
+#
+cd ${WORK_DIR}
+tar -cvzf ${FILE_NAME} ${SOURCE_DIR}
+#
+echo "start s3 transfer" 
+aws s3 mv ${FILE_NAME} $DEST_BUCKET --profile=cli_braingang
+#
+echo "cleanup"
+rm -rf ${SOURCE_DIR}
+mkdir ${SOURCE_DIR}
+#
+echo "end archive"
+#
