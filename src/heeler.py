@@ -36,6 +36,8 @@ class Heeler1:
 #        print(f"========> heeler1 execute {self.preamble}")
 
         obs_list = self.preamble['wifi']
+        if len(obs_list) < 1:
+            print(f"skipping file with no observations {self.preamble['file_name']}")
 
         load_log = self.postgres.load_log_insert(
             self.preamble, len(obs_list), self.preamble["geoLoc"]["site"]

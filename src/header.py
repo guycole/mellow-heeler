@@ -8,6 +8,7 @@ from gps_helper import GpsWrapper
 from converter import Converter
 from preamble import PreambleHelper
 
+import datetime
 import json
 import sys
 import uuid
@@ -44,7 +45,15 @@ class Header:
             # create json preamble
             helper = PreambleHelper()
             preamble = helper.preamble_factory(self.host, self.site, gps_sample)
-            preamble["wifi"] = converter.obs_list
+
+            file_time = datetime.datetime.fromtimestamp(preamble['zTime']).isoformat()
+
+            #preamble["wifi"] = converter.get_obs_list(obs_time)
+            obs_list = converter.get_obs_list(datetime.datetime.now())
+            for obs in obs_list:
+                obs['file_time'] = file_time
+
+            preamble["wifi"] = obs_list
 
             # save preamble to file for skunk and wombat
             converter.json_writer("/tmp/preamble.json", preamble)
