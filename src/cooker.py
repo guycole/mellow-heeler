@@ -16,7 +16,7 @@ import datetime
 import postgres
 
 
-class Cooked:
+class Cooker:
     """WAP history"""
 
     # key = wap_id
@@ -94,8 +94,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    cooked = Cooked(configuration)
-    cooked.execute()
+    cooker = Cooker(configuration)
+    cooker.execute()
 
 print("stop cooker")
 

@@ -88,6 +88,9 @@ class BoxScore:
             value['bssid_unique'] = len(value['wap_list'])
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
+                if cooked is None:
+                    print(f"cooked select falure for wap id {wap_id} on {key}")
+                    continue
                 obs_first_date = cooked.obs_first.date()
                 if obs_first_date == value['file_date']:
                     value["bssid_new"] += 1
@@ -107,15 +110,15 @@ class BoxScore:
         limit_day = datetime.date(2024, 2, 25)
         limit_day = today.date()
 
-        while current_day < limit_day:
+        while current_day <= limit_day:
             self.pass1(current_day)
             current_day = current_day + datetime.timedelta(days=1)
 
         self.pass2()
         self.pass3()
 
-        print(self.box_scores)
-        print(self.box_scores.keys())
+#        print(self.box_scores)
+#        print(self.box_scores.keys())
 
 print("start scorer")
 
