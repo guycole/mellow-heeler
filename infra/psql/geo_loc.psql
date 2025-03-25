@@ -8,7 +8,7 @@
 create table heeler_v1.geo_loc (
   id           bigserial    primary key,
   altitude     real         not null,
-  fix_time     timestamptz  not null,
+  fix_time     timestamp    not null,
   latitude     real         not null,
   longitude    real         not null,
   site         varchar(16)  not null,

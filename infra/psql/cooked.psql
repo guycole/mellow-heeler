@@ -15,8 +15,8 @@ create table heeler_v1.cooked (
   longitude       real         not null,
   note            varchar(132) not null default 'default',
   obs_quantity    bigint       not null,
-  obs_first       timestamptz  not null default CURRENT_TIMESTAMP,
-  obs_last        timestamptz  not null default CURRENT_TIMESTAMP,
+  obs_first       timestamp    not null default CURRENT_TIMESTAMP,
+  obs_last        timestamp    not null default CURRENT_TIMESTAMP,
   street_address  varchar(132) not null default 'unknown',
   street_zip      varchar(32)  not null default 'zip',
   wap_id          bigint       unique not null,
@@ -25,5 +25,7 @@ create table heeler_v1.cooked (
 
 grant select, insert, update, delete on heeler_v1.cooked to heeler_client;
 grant usage, select on sequence heeler_v1.cooked_id_seq to heeler_client;
+
+create index cooked_wap on heeler_v1.cooked(wap_id);
 
 insert into heeler_v1.cooked(confidence, latitude, longitude, obs_quantity, obs_first, obs_last, wap_id) values(1, 12.34, 123.45, 1, '2000-1-1', '2000-1-1', 2);

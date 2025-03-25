@@ -20,7 +20,7 @@ class TestPostgres(TestCase):
 
     load_log_anderson1 = "a89039a4-f75d-4bdc-af24-fcd8aadf3c09"
     load_log_vallejo1 = "5e7eb394-7ecd-40aa-b1c1-7527ea3a9e4f"
-    new_day_2000 = datetime.datetime(2000, 1, 1, 0, 0, tzinfo=datetime.timezone.utc)
+    new_day_2000 = datetime.datetime(2000, 1, 1, 0, 0)
 
     def pg_setup(self):
         sql_echo = False
@@ -54,34 +54,34 @@ class TestPostgres(TestCase):
         self.pg_setup()
 
         load_log1 = self.postgres.load_log_select_by_file_name(self.load_log_anderson1)
-        assert len(load_log1) == 1
-        assert load_log1[0].id == 1
-        assert load_log1[0].file_name == self.load_log_anderson1
-        #        assert load_log1[0].file_time == self.new_day_2000
-        assert load_log1[0].load_time is not None
-        assert type(load_log1[0].load_time) == datetime.datetime
-        assert load_log1[0].file_type == "synthetic"
-        assert load_log1[0].obs_quantity == 0
-        assert load_log1[0].platform == "dummy1"
-        assert load_log1[0].site == "anderson1"
+        assert load_log1 is not None
+        assert load_log1.id == 1
+        assert load_log1.file_name == self.load_log_anderson1
+        assert load_log1.file_time == self.new_day_2000
+        assert load_log1.load_time is not None
+        assert type(load_log1.load_time) == datetime.datetime
+        assert load_log1.file_type == "synthetic"
+        assert load_log1.obs_quantity == 0
+        assert load_log1.platform == "dummy1"
+        assert load_log1.site == "anderson1"
 
         load_log2 = self.postgres.load_log_select_by_file_name(self.load_log_vallejo1)
-        assert len(load_log2) == 1
-        assert load_log2[0].id == 2
-        assert load_log2[0].file_name == self.load_log_vallejo1
-        #        assert load_log2[0].file_time == self.new_day_2000
-        assert load_log2[0].load_time is not None
-        assert type(load_log2[0].load_time) == datetime.datetime
-        assert load_log2[0].file_type == "synthetic"
-        assert load_log2[0].obs_quantity == 0
-        assert load_log2[0].platform == "dummy2"
-        assert load_log2[0].site == "vallejo1"
+        assert load_log2 is not None
+        assert load_log2.id == 2
+        assert load_log2.file_name == self.load_log_vallejo1
+        assert load_log2.file_time == self.new_day_2000
+        assert load_log2.load_time is not None
+        assert type(load_log2.load_time) == datetime.datetime
+        assert load_log2.file_type == "synthetic"
+        assert load_log2.obs_quantity == 0
+        assert load_log2.platform == "dummy2"
+        assert load_log2.site == "vallejo1"
 
         load_log3 = self.postgres.load_log_select_by_file_date(self.new_day_2000)
         assert len(load_log3) > 2
 
         load_log4 = self.postgres.load_log_select_by_file_name("obviously broken")
-        assert len(load_log4) == 0
+        assert load_log4 is None
 
     def test2(self):
         """load log insert"""

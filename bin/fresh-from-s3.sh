@@ -12,6 +12,7 @@ PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 SRC_BUCKET=s3://mellow-heeler-uw2-k2718.braingang.net/fresh/
 #SRC_BUCKET=s3://mellow-heeler.braingang.net/vallejo1/
 WORK_DIR="/var/mellow/heeler/fresh"
+WORK_DIR="/mnt/pp1/gsc/mellow/heeler/fresh"
 #
 echo "start move"
 cd $WORK_DIR
