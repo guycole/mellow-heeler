@@ -33,32 +33,28 @@ class Heeler1:
         self.preamble = preamble
 
     def execute(self) -> bool:
-#        print(f"========> heeler1 execute {self.preamble}")
+        print(f"========> heeler1 execute {self.preamble}")
 
         obs_list = self.preamble['wifi']
         if len(obs_list) < 1:
             print(f"skipping file with no observations {self.preamble['file_name']}")
+            return False
 
-        load_log = self.postgres.load_log_insert(
-            self.preamble, len(obs_list), self.preamble["geoLoc"]["site"]
-        )
+        geo_loc = self.postgres.geo_loc_select_or_insert(self.preamble['geoLoc'])
+        print(f"geo loc: {geo_loc.id} {geo_loc}")
 
+        load_log = self.postgres.load_log_insert(self.preamble, len(obs_list), geo_loc.id)
         if load_log.id is None:
             print(f"load log insert failure for {self.preamble['file_name']}")
             return False
 
-        location = self.postgres.geo_loc_select_or_insert(
-            self.preamble["geoLoc"], load_log.id
-        )
-
         for obs in obs_list:
             wap = self.postgres.wap_select_or_insert(obs)
 
-            obs["file_date"] = load_log.file_date
+            obs["file_time"] = load_log.file_time
             self.postgres.observation_insert(obs, load_log.id, wap.id)
 
         return True
-
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

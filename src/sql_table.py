@@ -47,6 +47,8 @@ class BoxScore(Base):
         self.platform = args["platform"]
         self.site = args["site"]
 
+    def __repr__(self):
+        return f"box_score({self.file_date} {self.platform} {self.site})"
 
 class Cooked(Base):
     """cooked table definition"""
@@ -77,6 +79,8 @@ class Cooked(Base):
         self.street_zip = args["street_zip"]
         self.wap_id = wap_id
 
+    def __repr__(self):
+        return f"cooked({self.wap_id})"
 
 class GeoLoc(Base):
     """geoloc table definition"""
@@ -91,9 +95,8 @@ class GeoLoc(Base):
     site = Column(String)
     speed = Column(Float)
     track = Column(Float)
-    load_log_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any], load_log_id: int):
+    def __init__(self, args: dict[str, any]):
         self.altitude = args["altitude"]
         self.fix_time = args["fix_time"]
         self.latitude = args["latitude"]
@@ -102,11 +105,11 @@ class GeoLoc(Base):
         self.speed = args["speed"]
         self.track = args["track"]
 
-        self.load_log_id = load_log_id
-
     def __eq__(self, other):
         return self.fix_time == other.fix_time and self.site == other.site
 
+    def __repr__(self):
+        return f"geo_loc({self.site} {self.fix_time})"
 
 class LoadLog(Base):
     """load_log table definition"""
@@ -121,9 +124,10 @@ class LoadLog(Base):
     load_time = Column(DateTime)
     obs_quantity = Column(Integer)
     platform = Column(String)
-    site = Column(String)
+    
+    geo_loc_id = Column(BigInteger)
 
-    def __init__(self, args: dict[str, any]):
+    def __init__(self, args: dict[str, any], geo_loc_id: int):
         self.file_date = args["file_date"]
         self.file_name = args["file_name"]
         self.file_time = args["file_time"]
@@ -131,8 +135,11 @@ class LoadLog(Base):
         self.load_time = datetime.now()
         self.obs_quantity = args["obs_quantity"]
         self.platform = args["platform"]
-        self.site = args["site"]
+        
+        self.geo_loc_id = geo_loc_id
 
+    def __repr__(self):
+        return f"load_log({self.file_name} {self.file_time})"
 
 class Observation(Base):
     """observation table definition"""
@@ -158,6 +165,8 @@ class Observation(Base):
         self.load_log_id = load_log_id
         self.wap_id = wap_id
 
+    def __repr__(self):
+        return f"observation({self.wap_id} {self.load_log_id} {self.bssid})"
 
 class Wap(Base):
     """wap table definition"""
@@ -177,7 +186,10 @@ class Wap(Base):
         self.frequency_mhz = args["frequency_mhz"]
         self.ssid = args["ssid"]
         self.version = version
-
+        
+    def __repr__(self):
+        return f"wap({self.bssid} {self.version})"
+    
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***

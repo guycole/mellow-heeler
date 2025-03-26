@@ -112,6 +112,13 @@ class PreambleHelper:
         results["speed"] = 0
         results["track"] = 0
 
+        # kludge for missing site in early mobile collection
+        if "geoLoc" in preamble:
+            temp = preamble["geoLoc"]
+            if "site" not in temp:
+                if preamble['platform'] == 'rpi3d':
+                    temp['site'] = 'mobile1'
+
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" in temp:
@@ -137,6 +144,8 @@ class PreambleHelper:
                     return results
                 else:
                     print(f"geoloc unknown site: {temp['site']}")
+            else:
+                print("missing geoLoc.site")
 
         return {}
 
