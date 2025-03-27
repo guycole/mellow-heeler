@@ -58,7 +58,9 @@ class BoxScore:
 
         # discover platform and sites for today
         for row in load_log_rows:
-            box_scores_key = f"{row.file_date}-{row.platform}-{row.site}"
+            geo_loc_row = self.postgres.geo_loc_select_by_id(row.geo_loc_id)
+
+            box_scores_key = f"{row.file_date}-{row.platform}-{geo_loc_row.site}"
             # 2025-03-13-rpi3a-vallejo1
 
             if box_scores_key in self.box_scores:
@@ -66,7 +68,7 @@ class BoxScore:
                 self.box_scores[box_scores_key]["file_quantity"] += 1
             else:
                 # print(f"fresh key {box_scores_key}")
-                self.box_scores[box_scores_key] = self.fresh_box_score(row.file_date, row.platform, row.site)
+                self.box_scores[box_scores_key] = self.fresh_box_score(row.file_date, row.platform, geo_loc_row.site)
 
             # observed wap for today
             wap_list = self.box_scores[box_scores_key]["wap_list"]

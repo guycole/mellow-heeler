@@ -15,6 +15,7 @@ from typing import List, Dict
 
 import sqlalchemy
 from sqlalchemy import and_
+from sqlalchemy import func
 from sqlalchemy import select
 
 from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
@@ -104,13 +105,51 @@ class PostGres:
                 session.commit()
 
                 return candidate
+
     
-    def load_log_insert(self, args: dict[str, any], obs_quantity: int, site: str) -> LoadLog:
+    def geo_loc_insert(self, args: dict[str, any]) -> GeoLoc:
+        candidate = GeoLoc(args)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def geo_loc_select_by_id(self, id: int) -> Wap:
+        with self.Session() as session:
+            return session.scalars(select(GeoLoc).filter_by(id=id)).first()
+    
+#    def geo_loc_select_by_load_log(self, load_log_id: int) -> GeoLoc:
+#        statement = (select(GeoLoc).filter_by(load_log_id=load_log_id).order_by(GeoLoc.fix_time))
+#
+#        with self.Session() as session:
+#            return session.scalars(statement).first()
+
+    def geo_loc_select_by_site(self, site: str) -> list[GeoLoc]:
+        statement = select(GeoLoc).filter_by(site=site).order_by(GeoLoc.fix_time)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def geo_loc_select_or_insert(self, args: dict[str, any]) -> GeoLoc:
+        if args["site"].startswith("mobile"):
+            return self.geo_loc_insert(args, load_log_id)
+
+        candidate = self.geo_loc_select_by_site(args["site"])
+        if len(candidate) < 1:
+            return self.geo_loc_insert(args)
+        else:
+            return candidate[0]
+            
+    def load_log_insert(self, args: dict[str, any], obs_quantity: int, geo_loc_id: int) -> LoadLog:
         args["file_date"] = args["file_time"].date()
         args["obs_quantity"] = obs_quantity
-        args["site"] = site
 
-        candidate = LoadLog(args)
+        candidate = LoadLog(args, geo_loc_id)
 
         try:
             with self.Session() as session:
@@ -132,40 +171,6 @@ class PostGres:
     def load_log_select_by_file_date(self, target: datetime) -> list[LoadLog]:
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
-
-    def geo_loc_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
-        candidate = GeoLoc(args, load_log_id)
-
-        try:
-            with self.Session() as session:
-                session.add(candidate)
-                session.commit()
-        except Exception as error:
-            print(error)
-
-        return candidate
-
-    def geo_loc_select_by_load_log(self, load_log_id: int) -> GeoLoc:
-        statement = (select(GeoLoc).filter_by(load_log_id=load_log_id).order_by(GeoLoc.fix_time))
-
-        with self.Session() as session:
-            return session.scalars(statement).first()
-
-    def geo_loc_select_by_site(self, site: str) -> list[GeoLoc]:
-        statement = select(GeoLoc).filter_by(site=site).order_by(GeoLoc.fix_time)
-
-        with self.Session() as session:
-            return session.scalars(statement).all()
-
-    def geo_loc_select_or_insert(self, args: dict[str, any], load_log_id: int) -> GeoLoc:
-        if args["site"].startswith("mobile"):
-            return self.geo_loc_insert(args, load_log_id)
-
-        candidate = self.geo_loc_select_by_site(args["site"])
-        if len(candidate) < 1:
-            return self.geo_loc_insert(args, load_log_id)
-        else:
-            return candidate[0]
 
     def observation_insert(self, args: dict[str, any], load_log_id: int, wap_id: int) -> Observation:
         candidate = Observation(args, load_log_id, wap_id)

@@ -31,16 +31,13 @@ class PreambleHelper:
     ) -> dict[str, any]:
         """return geoLoc preamble element"""
 
-        results = {}
-
-        if site is None:
-            print("site not found")
-            return None
-        else:
-            results["site"] = site
+        results = {
+            "site": site
+        }
 
         if gps_sample is not None:
-            results = gps_sample.elements
+            for key, value in gps_sample.elements.items():
+                results[key] = value
 
         return results
 
@@ -112,6 +109,13 @@ class PreambleHelper:
         results["speed"] = 0
         results["track"] = 0
 
+        # kludge for missing site in early mobile collection
+        if "geoLoc" in preamble:
+            temp = preamble["geoLoc"]
+            if "site" not in temp:
+                if preamble['platform'] == 'rpi3d':
+                    temp['site'] = 'mobile1'
+
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" in temp:
@@ -137,6 +141,8 @@ class PreambleHelper:
                     return results
                 else:
                     print(f"geoloc unknown site: {temp['site']}")
+            else:
+                print("missing geoLoc.site")
 
         return {}
 

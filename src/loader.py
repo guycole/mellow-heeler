@@ -125,7 +125,6 @@ class Loader:
                 continue
 
             # add parsed observations to preamble
-            #print(valid_preamble)
             valid_preamble["wifi"] = converter.get_obs_list(valid_preamble['file_time'])
 
             # successful iwlist(8) scan file parse, now load into postgres
@@ -145,12 +144,12 @@ class Loader:
                     result_flag = heelerx.execute()
             else:
                 print(f"unknown file type:{file_type}")
-
-            if result_flag is True:
-                self.file_success(target)
-            else:
-                self.file_failure(target)
-
+#
+#            if result_flag is True:
+#                self.file_success(target)
+#            else:
+#                self.file_failure(target)
+ 
         print(f"success:{self.success_counter} failure:{self.failure_counter}")
 
 
