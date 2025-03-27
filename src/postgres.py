@@ -137,7 +137,7 @@ class PostGres:
 
     def geo_loc_select_or_insert(self, args: dict[str, any]) -> GeoLoc:
         if args["site"].startswith("mobile"):
-            return self.geo_loc_insert(args, load_log_id)
+            return self.geo_loc_insert(args)
 
         candidate = self.geo_loc_select_by_site(args["site"])
         if len(candidate) < 1:

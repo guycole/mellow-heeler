@@ -144,11 +144,11 @@ class Loader:
                     result_flag = heelerx.execute()
             else:
                 print(f"unknown file type:{file_type}")
-#
-#            if result_flag is True:
-#                self.file_success(target)
-#            else:
-#                self.file_failure(target)
+
+            if result_flag is True:
+                self.file_success(target)
+            else:
+                self.file_failure(target)
  
         print(f"success:{self.success_counter} failure:{self.failure_counter}")
 
