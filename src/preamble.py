@@ -31,16 +31,13 @@ class PreambleHelper:
     ) -> dict[str, any]:
         """return geoLoc preamble element"""
 
-        results = {}
-
-        if site is None:
-            print("site not found")
-            return None
-        else:
-            results["site"] = site
+        results = {
+            "site": site
+        }
 
         if gps_sample is not None:
-            results = gps_sample.elements
+            for key, value in gps_sample.elements.items():
+                results[key] = value
 
         return results
 
