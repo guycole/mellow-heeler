@@ -33,7 +33,7 @@ class Heeler1:
         self.preamble = preamble
 
     def execute(self) -> bool:
-        print(f"========> heeler1 execute {self.preamble}")
+#        print(f"========> heeler1 execute {self.preamble}")
 
         obs_list = self.preamble['wifi']
         if len(obs_list) < 1:

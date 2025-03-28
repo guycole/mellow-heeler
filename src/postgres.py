@@ -135,9 +135,15 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(statement).all()
 
+    def geo_loc_select_by_time_and_site(self, fix_time: datetime, site: str) -> GeoLoc:
+        statement = select(GeoLoc).filter_by(site=site, fix_time=fix_time).order_by(GeoLoc.fix_time)
+
+        with self.Session() as session:
+            return session.scalars(statement).first()
+
     def geo_loc_select_or_insert(self, args: dict[str, any]) -> GeoLoc:
         if args["site"].startswith("mobile"):
-            return self.geo_loc_insert(args, load_log_id)
+            return self.geo_loc_insert(args)
 
         candidate = self.geo_loc_select_by_site(args["site"])
         if len(candidate) < 1:

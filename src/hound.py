@@ -33,6 +33,7 @@ class Loader:
         self.archive_dir = configuration["archiveDir"]
         self.failure_dir = configuration["failureDir"]
         self.fresh_dir = "/var/mellow/heeler/rawap"
+        self.fresh_dir = "/var/mellow/heeler/hound"
         self.sql_echo = configuration["sqlEchoEnable"]
 
         connect_dict = {"options": "-csearch_path={}".format("heeler_v1")}
@@ -74,7 +75,7 @@ class Loader:
             wap['signal_dbm'] = wap['level']
 
             obs1 = Observation(wap)
-            obs2 = obs1.to_dict()
+            obs2 = obs1.to_dict(preamble['file_time'])
             obs2['capability'] = wap['capability']
             results.append(obs2)
 
@@ -125,17 +126,19 @@ class Loader:
         converter = Converter()
         preamble_helper = PreambleHelper()
 
+#        targets = ['/tmp/5cd120f9-d494-45c9-b8d2-d5f033182110']
+
         for target in targets:
             if os.path.isfile(target) is False:
                 continue
 
             # test for duplicate file
             selected = self.postgres.load_log_select_by_file_name(target)
-            if len(selected) > 0:
+            if selected is not None:
                 print(f"skip duplicate file:{target}")
                 self.file_failure(target)
                 continue
-            
+ 
             if self.file_reader(target) is False:
                 print(f"skip heeler file:{target}")
                 self.file_failure(target)
@@ -151,26 +154,29 @@ class Loader:
             preamble['zTime'] = int(preamble['geoLoc']['fixTime'])//1000
             print(preamble)
 
-            load_log = self.postgres.load_log_insert(preamble, len(preamble['wifi']), "mobile2")
-            if load_log.id is None:
-                print("bad load log")
-                self.file_failure(target)
-                continue
+#            geo_loc = self.postgres.geo_loc_select_by_time_and_site(self, fix_time: datetime, site: str) -> list[GeoLoc]:
+            location = self.postgres.geo_loc_select_by_time_and_site(preamble['geoLoc']['fix_time'], preamble['geoLoc']['site'])
+            if location is None:
+                location = self.postgres.geo_loc_insert(preamble['geoLoc'])
 
-            location = self.postgres.geo_loc_select_or_insert(preamble["geoLoc"], load_log.id)
+#            location = self.postgres.geo_loc_select_or_insert(preamble["geoLoc"])
             if location.id is None:
                 print("bad location")
                 self.file_failure(target)
                 continue
 
+            load_log = self.postgres.load_log_insert(preamble, len(preamble['wifi']), location.id)
+            if load_log.id is None:
+                print("bad load log")
+                self.file_failure(target)
+                continue
+
             wifi = preamble['wifi']
             for obs in wifi:
-                wap = self.postgres.wap_select_or_insert(obs, load_log.id)
+                wap = self.postgres.wap_select_or_insert(obs)
 
                 obs["file_date"] = load_log.file_date
                 self.postgres.observation_insert(obs, load_log.id, wap.id)
-
-
 
 #            if result_flag is True:
 #                self.file_success(target)

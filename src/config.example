@@ -11,6 +11,9 @@ failureDir: /var/mellow/heeler/failure
 # repository of freshly collected observations
 freshDir: /var/mellow/heeler/fresh
 #
+# obsolete hound files have dedicated loader
+houndDir: /var/mellow/heeler/hound
+#
 # test artifacts
 testDir: /var/mellow/heeler/test
 #
