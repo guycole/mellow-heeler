@@ -109,6 +109,7 @@ class BoxScore:
     def execute(self) -> None:
         today = datetime.datetime.now()
         current_day = datetime.date(2024, 2, 18)  
+        current_day = datetime.date(2021, 7, 4)  
         limit_day = datetime.date(2024, 2, 25)
         limit_day = today.date()
 
