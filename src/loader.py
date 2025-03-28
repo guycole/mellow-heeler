@@ -24,7 +24,9 @@ from converter import Converter
 
 class Eclectic:
 
-    def __init__(self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres):
+    def __init__(
+        self, file_name: str, preamble: dict[str, any], postgres: postgres.PostGres
+    ):
         self.file_name = file_name
         self.postgres = postgres
         self.preamble = preamble
@@ -125,7 +127,7 @@ class Loader:
                 continue
 
             # add parsed observations to preamble
-            valid_preamble["wifi"] = converter.get_obs_list(valid_preamble['file_time'])
+            valid_preamble["wifi"] = converter.get_obs_list(valid_preamble["file_time"])
 
             # successful iwlist(8) scan file parse, now load into postgres
 
@@ -149,7 +151,7 @@ class Loader:
                 self.file_success(target)
             else:
                 self.file_failure(target)
- 
+
         print(f"success:{self.success_counter} failure:{self.failure_counter}")
 
 

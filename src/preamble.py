@@ -8,6 +8,7 @@ import datetime
 import gps_helper
 import time
 
+
 class PreambleHelper:
 
     def preamble_factory(
@@ -31,9 +32,7 @@ class PreambleHelper:
     ) -> dict[str, any]:
         """return geoLoc preamble element"""
 
-        results = {
-            "site": site
-        }
+        results = {"site": site}
 
         if gps_sample is not None:
             for key, value in gps_sample.elements.items():
@@ -113,8 +112,8 @@ class PreambleHelper:
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
             if "site" not in temp:
-                if preamble['platform'] == 'rpi3d':
-                    temp['site'] = 'mobile1'
+                if preamble["platform"] == "rpi3d":
+                    temp["site"] = "mobile1"
 
         if "geoLoc" in preamble:
             temp = preamble["geoLoc"]
@@ -132,7 +131,9 @@ class PreambleHelper:
                 elif temp["site"].startswith("mobile"):
                     # mobile location
                     results["altitude"] = temp["altitude"]
-                    results["fix_time"] = datetime.datetime.fromtimestamp(temp["fixTime"])
+                    results["fix_time"] = datetime.datetime.fromtimestamp(
+                        temp["fixTime"]
+                    )
                     results["latitude"] = temp["latitude"]
                     results["longitude"] = temp["longitude"]
                     results["site"] = "mobile1"

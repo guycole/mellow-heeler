@@ -40,7 +40,7 @@ class Observation:
 
     def to_dict(self, file_time: datetime.datetime) -> dict[str, any]:
         result = {}
-        
+
         result["bssid"] = self.bssid
         result["capability"] = "unknown"
         result["file_time"] = file_time
@@ -113,7 +113,7 @@ class Parser:
         obs["ssid"] = "unknown"
         obs["frequency_mhz"] = 0
         obs["signal_dbm"] = 0
-#        obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        #        obs["time_stamp_z"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         for ndx in range(start_ndx, stop_ndx + 1):
             line = self.raw[ndx].strip()

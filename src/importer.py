@@ -21,6 +21,7 @@ from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
 
 import postgres
 
+
 class Importer:
 
     def __init__(self, configuration: dict[str, str]):
@@ -49,27 +50,27 @@ class Importer:
         return results
 
     def get_geo_loc(self, args: dict[str, any]) -> GeoLoc:
-        stanza = args['geoLoc']
-        stanza['fix_time'] = datetime.datetime.fromtimestamp(stanza['fix_time'])
-        
+        stanza = args["geoLoc"]
+        stanza["fix_time"] = datetime.datetime.fromtimestamp(stanza["fix_time"])
+
         geo_loc = self.postgres.geo_loc_select_or_insert(stanza)
         return geo_loc
 
     def get_load_log(self, args: dict[str, any], geo_loc_id: int) -> LoadLog:
-        stanza = args['wifi']
-        args['file_time'] = datetime.datetime.fromtimestamp(args['zTime'])
+        stanza = args["wifi"]
+        args["file_time"] = datetime.datetime.fromtimestamp(args["zTime"])
 
         load_log = self.postgres.load_log_insert(args, len(stanza), geo_loc_id)
         return load_log
 
-    def get_obs(self, args: dict[str, any], load_log_id:int) -> None:
-        file_time = datetime.datetime.fromtimestamp(args['zTime'])
-                
-        for obs in args['wifi']:
+    def get_obs(self, args: dict[str, any], load_log_id: int) -> None:
+        file_time = datetime.datetime.fromtimestamp(args["zTime"])
+
+        for obs in args["wifi"]:
             wap = self.postgres.wap_select_or_insert(obs)
 
-            obs['file_time'] = file_time
-            obs = self.postgres.observation_insert(obs, load_log_id, wap.id)      
+            obs["file_time"] = file_time
+            obs = self.postgres.observation_insert(obs, load_log_id, wap.id)
 
     def execute(self) -> None:
         os.chdir(self.export_dir)
@@ -102,6 +103,7 @@ class Importer:
                 continue
 
             self.get_obs(buffer, load_log.id)
+
 
 print("start importer")
 

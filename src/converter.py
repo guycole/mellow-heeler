@@ -66,14 +66,14 @@ class Converter:
         except Exception as error:
             print(error)
 
-    def get_obs_list(self, file_time:datetime.datetime) -> list[Observation]:
+    def get_obs_list(self, file_time: datetime.datetime) -> list[Observation]:
         result = []
 
         for obs in self.raw_obs_list:
             result.append(obs.to_dict(file_time))
 
         return result
-    
+
     def converter(self, file_name: str, preamble_flag: bool) -> bool:
         if self.file_reader(file_name) is False:
             return False
@@ -92,6 +92,7 @@ class Converter:
             return False
 
         return True
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

@@ -21,6 +21,7 @@ from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
 
 import postgres
 
+
 class Exporter:
 
     def __init__(self, configuration: dict[str, str]):
@@ -37,7 +38,9 @@ class Exporter:
             sessionmaker(bind=db_engine, expire_on_commit=False)
         )
 
-    def fresh_file(self, file_name: str, platform: str, ztime: datetime) -> dict[str, any]:
+    def fresh_file(
+        self, file_name: str, platform: str, ztime: datetime
+    ) -> dict[str, any]:
         return {
             "file_name": file_name,
             "file_type": "heeler_1",
@@ -46,14 +49,14 @@ class Exporter:
             "project": "heeler",
             "wifi": [],
             "version": 1,
-            "zTime": int(ztime.timestamp())
+            "zTime": int(ztime.timestamp()),
         }
 
     def geo_loc(self, id: int) -> dict[str, any]:
         row = self.postgres.geo_loc_select_by_id(id)
         if row is None:
             print(f"empty geoloc for {load_log_id}")
-        
+
         return {
             "altitude": row.altitude,
             "fix_time": int(row.fix_time.timestamp()),
@@ -61,7 +64,7 @@ class Exporter:
             "longitude": row.longitude,
             "site": row.site,
             "speed": row.speed,
-            "track": row.track
+            "track": row.track,
         }
 
     def wifi(self, load_log_id: int) -> dict[str, any]:
@@ -74,21 +77,21 @@ class Exporter:
             temp = {
                 "bssid": obs.bssid,
                 "capability": wap.capability,
-#               "file_time": obs.file_time,
+                #               "file_time": obs.file_time,
                 "frequency_mhz": wap.frequency_mhz,
                 "signal_dbm": obs.signal_dbm,
-                "ssid": wap.ssid
+                "ssid": wap.ssid,
             }
 
             result.append(temp)
-        
+
         return result
 
     def assembler(self, load_log: LoadLog) -> dict[str, any]:
         print(f"{load_log.id} {load_log.file_name}")
         ff = self.fresh_file(load_log.file_name, load_log.platform, load_log.file_time)
-        ff['geoLoc'] = self.geo_loc(load_log.geo_loc_id)
-        ff['wifi'] = self.wifi(load_log.id)
+        ff["geoLoc"] = self.geo_loc(load_log.geo_loc_id)
+        ff["wifi"] = self.wifi(load_log.id)
         return ff
 
     def json_writer(self, payload: dict[str, any]) -> None:
@@ -108,6 +111,7 @@ class Exporter:
         for row in load_log_rows:
             payload = self.assembler(row)
             self.json_writer(payload)
+
 
 print("start exporter")
 

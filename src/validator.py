@@ -19,6 +19,7 @@ from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
 
 import postgres
 
+
 class Validator:
     """mellow heeler file parser and database loader"""
 
@@ -36,7 +37,9 @@ class Validator:
         )
 
     def file_validator(self, candidate: LoadLog) -> None:
-        print(f"file_validator {candidate.id} {candidate.site} {candidate.platform} {candidate.file_date}")
+        print(
+            f"file_validator {candidate.id} {candidate.site} {candidate.platform} {candidate.file_date}"
+        )
 
         if candidate.site.startswith("mobile"):
             geo_loc = self.postgres.geo_loc_select_by_load_log(candidate.id)
@@ -45,7 +48,9 @@ class Validator:
 
         obs_list = self.postgres.observation_select_by_load_log(candidate.id)
         if len(obs_list) != candidate.obs_quantity:
-            print(f"failure obs_list {candidate.id} {candidate.site} {len(obs_list)} {candidate.obs_quantity}")
+            print(
+                f"failure obs_list {candidate.id} {candidate.site} {len(obs_list)} {candidate.obs_quantity}"
+            )
 
         for obs in obs_list:
             wap = self.postgres.wap_select_by_id(obs.wap_id)
@@ -62,6 +67,7 @@ class Validator:
                 continue
 
             self.file_validator(row)
+
 
 print("start validator")
 

@@ -68,7 +68,9 @@ class BoxScore:
                 self.box_scores[box_scores_key]["file_quantity"] += 1
             else:
                 # print(f"fresh key {box_scores_key}")
-                self.box_scores[box_scores_key] = self.fresh_box_score(row.file_date, row.platform, geo_loc_row.site)
+                self.box_scores[box_scores_key] = self.fresh_box_score(
+                    row.file_date, row.platform, geo_loc_row.site
+                )
 
             # observed wap for today
             wap_list = self.box_scores[box_scores_key]["wap_list"]
@@ -87,20 +89,22 @@ class BoxScore:
     # determine new and unique wap
     def pass2(self) -> None:
         for key, value in self.box_scores.items():
-            value['bssid_unique'] = len(value['wap_list'])
+            value["bssid_unique"] = len(value["wap_list"])
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
                 if cooked is None:
                     print(f"cooked select falure for wap id {wap_id} on {key}")
                     continue
                 obs_first_date = cooked.obs_first.date()
-                if obs_first_date == value['file_date']:
+                if obs_first_date == value["file_date"]:
                     value["bssid_new"] += 1
 
     # write to postgres
     def pass3(self) -> None:
         for key, value in self.box_scores.items():
-            selected = self.postgres.box_score_select(value['file_date'], value['platform'], value['site'])
+            selected = self.postgres.box_score_select(
+                value["file_date"], value["platform"], value["site"]
+            )
             if selected is None:
                 self.postgres.box_score_insert(value)
             else:
@@ -108,8 +112,8 @@ class BoxScore:
 
     def execute(self) -> None:
         today = datetime.datetime.now()
-        current_day = datetime.date(2024, 2, 18)  
-        current_day = datetime.date(2021, 7, 4)  
+        current_day = datetime.date(2024, 2, 18)
+        current_day = datetime.date(2021, 7, 4)
         limit_day = datetime.date(2024, 2, 25)
         limit_day = today.date()
 
@@ -119,6 +123,7 @@ class BoxScore:
 
         self.pass2()
         self.pass3()
+
 
 #        print(self.box_scores)
 #        print(self.box_scores.keys())

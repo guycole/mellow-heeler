@@ -32,7 +32,7 @@ class PostGres:
 
     def box_score_insert(self, args: dict[str, any]) -> BoxScore:
         candidate = BoxScore(args)
-#        print(f"insert {candidate.id} {candidate.site} {candidate.file_date} {candidate.bssid_new}")
+        #        print(f"insert {candidate.id} {candidate.site} {candidate.file_date} {candidate.bssid_new}")
 
         try:
             with self.Session() as session:
@@ -43,8 +43,12 @@ class PostGres:
 
         return candidate
 
-    def box_score_select(self, file_date: datetime.date, platform: str, site: str) -> BoxScore:
-        statement = select(BoxScore).filter_by(file_date=file_date, platform=platform, site=site)
+    def box_score_select(
+        self, file_date: datetime.date, platform: str, site: str
+    ) -> BoxScore:
+        statement = select(BoxScore).filter_by(
+            file_date=file_date, platform=platform, site=site
+        )
 
         with self.Session() as session:
             return session.scalars(statement).first()
@@ -57,8 +61,14 @@ class PostGres:
 
     def box_score_update(self, args: dict[str, any]) -> BoxScore:
         with self.Session() as session:
-            candidate = session.scalars(select(BoxScore).filter_by(file_date=args["file_date"], platform=args["platform"], site=args["site"])).first()
-            
+            candidate = session.scalars(
+                select(BoxScore).filter_by(
+                    file_date=args["file_date"],
+                    platform=args["platform"],
+                    site=args["site"],
+                )
+            ).first()
+
             if candidate is not None:
                 candidate.bssid_new = args["bssid_new"]
                 candidate.bssid_total = args["bssid_total"]
@@ -106,7 +116,6 @@ class PostGres:
 
                 return candidate
 
-    
     def geo_loc_insert(self, args: dict[str, any]) -> GeoLoc:
         candidate = GeoLoc(args)
 
@@ -122,12 +131,12 @@ class PostGres:
     def geo_loc_select_by_id(self, id: int) -> Wap:
         with self.Session() as session:
             return session.scalars(select(GeoLoc).filter_by(id=id)).first()
-    
-#    def geo_loc_select_by_load_log(self, load_log_id: int) -> GeoLoc:
-#        statement = (select(GeoLoc).filter_by(load_log_id=load_log_id).order_by(GeoLoc.fix_time))
-#
-#        with self.Session() as session:
-#            return session.scalars(statement).first()
+
+    #    def geo_loc_select_by_load_log(self, load_log_id: int) -> GeoLoc:
+    #        statement = (select(GeoLoc).filter_by(load_log_id=load_log_id).order_by(GeoLoc.fix_time))
+    #
+    #        with self.Session() as session:
+    #            return session.scalars(statement).first()
 
     def geo_loc_select_by_site(self, site: str) -> list[GeoLoc]:
         statement = select(GeoLoc).filter_by(site=site).order_by(GeoLoc.fix_time)
@@ -136,7 +145,11 @@ class PostGres:
             return session.scalars(statement).all()
 
     def geo_loc_select_by_time_and_site(self, fix_time: datetime, site: str) -> GeoLoc:
-        statement = select(GeoLoc).filter_by(site=site, fix_time=fix_time).order_by(GeoLoc.fix_time)
+        statement = (
+            select(GeoLoc)
+            .filter_by(site=site, fix_time=fix_time)
+            .order_by(GeoLoc.fix_time)
+        )
 
         with self.Session() as session:
             return session.scalars(statement).first()
@@ -150,8 +163,10 @@ class PostGres:
             return self.geo_loc_insert(args)
         else:
             return candidate[0]
-            
-    def load_log_insert(self, args: dict[str, any], obs_quantity: int, geo_loc_id: int) -> LoadLog:
+
+    def load_log_insert(
+        self, args: dict[str, any], obs_quantity: int, geo_loc_id: int
+    ) -> LoadLog:
         args["file_date"] = args["file_time"].date()
         args["obs_quantity"] = obs_quantity
 
@@ -172,13 +187,17 @@ class PostGres:
 
     def load_log_select_by_file_name(self, file_name: str) -> LoadLog:
         with self.Session() as session:
-            return session.scalars(select(LoadLog).filter_by(file_name=file_name)).first()
+            return session.scalars(
+                select(LoadLog).filter_by(file_name=file_name)
+            ).first()
 
     def load_log_select_by_file_date(self, target: datetime) -> list[LoadLog]:
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
 
-    def observation_insert(self, args: dict[str, any], load_log_id: int, wap_id: int) -> Observation:
+    def observation_insert(
+        self, args: dict[str, any], load_log_id: int, wap_id: int
+    ) -> Observation:
         candidate = Observation(args, load_log_id, wap_id)
 
         try:
@@ -190,20 +209,28 @@ class PostGres:
 
         return candidate
 
-    def observation_select_by_bssid_and_load_log(self, bssid: str, load_log_id: int) -> list[Observation]:
+    def observation_select_by_bssid_and_load_log(
+        self, bssid: str, load_log_id: int
+    ) -> list[Observation]:
         statement = select(Observation).filter_by(bssid=bssid, load_log_id=load_log_id)
 
         with self.Session() as session:
             return session.scalars(statement).all()
 
     def observation_select_by_load_log(self, load_log_id: int) -> list[Observation]:
-        statement = (select(Observation).filter_by(load_log_id=load_log_id).order_by(Observation.bssid))
+        statement = (
+            select(Observation)
+            .filter_by(load_log_id=load_log_id)
+            .order_by(Observation.bssid)
+        )
 
         with self.Session() as session:
             return session.scalars(statement).all()
-        
+
     def observation_select_by_wap_id(self, wap_id: int) -> list[Observation]:
-        statement = (select(Observation).filter_by(wap_id=wap_id).order_by(Observation.file_time))
+        statement = (
+            select(Observation).filter_by(wap_id=wap_id).order_by(Observation.file_time)
+        )
 
         with self.Session() as session:
             return session.scalars(statement).all()

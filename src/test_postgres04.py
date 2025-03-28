@@ -26,7 +26,9 @@ class TestPostgres(TestCase):
     def pg_setup(self):
         sql_echo = False
 
-        self.db_conn = ("postgresql+psycopg2://heeler_client:batabat@localhost:5432/heeler")
+        self.db_conn = (
+            "postgresql+psycopg2://heeler_client:batabat@localhost:5432/heeler"
+        )
 
         connect_dict = {"options": "-csearch_path={}".format("heeler_v1")}
         db_engine = create_engine(
@@ -54,7 +56,9 @@ class TestPostgres(TestCase):
         obs1 = self.postgres.observation_select_by_bssid_and_load_log("bogus", 3)
         assert len(obs1) < 1
 
-        obs2 = self.postgres.observation_select_by_bssid_and_load_log("11:22:33:44:55:66", 3)
+        obs2 = self.postgres.observation_select_by_bssid_and_load_log(
+            "11:22:33:44:55:66", 3
+        )
         assert len(obs2) > 0
         assert obs2[0].bssid == "11:22:33:44:55:66"
 

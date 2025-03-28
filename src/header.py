@@ -46,12 +46,12 @@ class Header:
             helper = PreambleHelper()
             preamble = helper.preamble_factory(self.host, self.site, gps_sample)
 
-            file_time = datetime.datetime.fromtimestamp(preamble['zTime']).isoformat()
+            file_time = datetime.datetime.fromtimestamp(preamble["zTime"]).isoformat()
 
-            #preamble["wifi"] = converter.get_obs_list(obs_time)
+            # preamble["wifi"] = converter.get_obs_list(obs_time)
             obs_list = converter.get_obs_list(datetime.datetime.now())
             for obs in obs_list:
-                obs['file_time'] = file_time
+                obs["file_time"] = file_time
 
             preamble["wifi"] = obs_list
 

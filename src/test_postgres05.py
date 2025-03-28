@@ -45,7 +45,7 @@ class TestPostgres(TestCase):
             "obs_last": datetime.datetime.now(),
             "obs_quantity": 3,
             "street_address": "123 nowhere",
-            "street_zip": "54321"
+            "street_zip": "54321",
         }
 
     def test1(self):
@@ -72,6 +72,7 @@ class TestPostgres(TestCase):
         args["note"] = "updated note"
         cooked2 = self.postgres.cooked_update_by_wap_id(args, 2)
         assert cooked2 is not None
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

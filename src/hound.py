@@ -24,6 +24,7 @@ import postgres
 
 from converter import Converter
 
+
 class Loader:
     """mellow heeler file parser and database loader"""
 
@@ -47,39 +48,41 @@ class Loader:
 
         self.failure_counter = 0
         self.success_counter = 0
-        
+
     def add_geoloc(self, preamble: dict[str, any]) -> None:
         result = {}
 
         result["mode"] = 3
-        result["altitude"] = self.json_datum['geoLoc']['altitude']
+        result["altitude"] = self.json_datum["geoLoc"]["altitude"]
         result["errors"] = None
-        result["latitude"] = self.json_datum['geoLoc']['latitude']
-        result["longitude"] = self.json_datum['geoLoc']['longitude']
+        result["latitude"] = self.json_datum["geoLoc"]["latitude"]
+        result["longitude"] = self.json_datum["geoLoc"]["longitude"]
         result["site"] = "mobile2"
         result["speed"] = 0
-        result["fixTime"] = int(self.json_datum['geoLoc']['fixTimeMs'])//1000
-        result["fix_time"] = datetime.datetime.fromtimestamp(result["fixTime"], pytz.utc)
+        result["fixTime"] = int(self.json_datum["geoLoc"]["fixTimeMs"]) // 1000
+        result["fix_time"] = datetime.datetime.fromtimestamp(
+            result["fixTime"], pytz.utc
+        )
         result["track"] = 0
 
-        preamble['geoLoc'] = result
+        preamble["geoLoc"] = result
 
-        preamble['file_time'] = result["fix_time"]
+        preamble["file_time"] = result["fix_time"]
 
     def add_wifi(self, preamble: dict[str, any]) -> None:
         results = []
-        
-        wifi = self.json_datum['wiFi']
+
+        wifi = self.json_datum["wiFi"]
         for wap in wifi:
-            wap['frequency_mhz'] = wap['frequency']
-            wap['signal_dbm'] = wap['level']
+            wap["frequency_mhz"] = wap["frequency"]
+            wap["signal_dbm"] = wap["level"]
 
             obs1 = Observation(wap)
-            obs2 = obs1.to_dict(preamble['file_time'])
-            obs2['capability'] = wap['capability']
+            obs2 = obs1.to_dict(preamble["file_time"])
+            obs2["capability"] = wap["capability"]
             results.append(obs2)
 
-        preamble['wifi'] = results
+        preamble["wifi"] = results
 
     def file_reader(self, file_name: str) -> bool:
         try:
@@ -126,7 +129,7 @@ class Loader:
         converter = Converter()
         preamble_helper = PreambleHelper()
 
-#        targets = ['/tmp/5cd120f9-d494-45c9-b8d2-d5f033182110']
+        #        targets = ['/tmp/5cd120f9-d494-45c9-b8d2-d5f033182110']
 
         for target in targets:
             if os.path.isfile(target) is False:
@@ -138,7 +141,7 @@ class Loader:
                 print(f"skip duplicate file:{target}")
                 self.file_failure(target)
                 continue
- 
+
             if self.file_reader(target) is False:
                 print(f"skip heeler file:{target}")
                 self.file_failure(target)
@@ -148,40 +151,44 @@ class Loader:
             self.add_geoloc(preamble)
             self.add_wifi(preamble)
 
-            preamble['file_name'] = target
-            preamble['file_type'] = "hound_1"
-            preamble['project'] = 'hound'
-            preamble['zTime'] = int(preamble['geoLoc']['fixTime'])//1000
+            preamble["file_name"] = target
+            preamble["file_type"] = "hound_1"
+            preamble["project"] = "hound"
+            preamble["zTime"] = int(preamble["geoLoc"]["fixTime"]) // 1000
             print(preamble)
 
-#            geo_loc = self.postgres.geo_loc_select_by_time_and_site(self, fix_time: datetime, site: str) -> list[GeoLoc]:
-            location = self.postgres.geo_loc_select_by_time_and_site(preamble['geoLoc']['fix_time'], preamble['geoLoc']['site'])
+            #            geo_loc = self.postgres.geo_loc_select_by_time_and_site(self, fix_time: datetime, site: str) -> list[GeoLoc]:
+            location = self.postgres.geo_loc_select_by_time_and_site(
+                preamble["geoLoc"]["fix_time"], preamble["geoLoc"]["site"]
+            )
             if location is None:
-                location = self.postgres.geo_loc_insert(preamble['geoLoc'])
+                location = self.postgres.geo_loc_insert(preamble["geoLoc"])
 
-#            location = self.postgres.geo_loc_select_or_insert(preamble["geoLoc"])
+            #            location = self.postgres.geo_loc_select_or_insert(preamble["geoLoc"])
             if location.id is None:
                 print("bad location")
                 self.file_failure(target)
                 continue
 
-            load_log = self.postgres.load_log_insert(preamble, len(preamble['wifi']), location.id)
+            load_log = self.postgres.load_log_insert(
+                preamble, len(preamble["wifi"]), location.id
+            )
             if load_log.id is None:
                 print("bad load log")
                 self.file_failure(target)
                 continue
 
-            wifi = preamble['wifi']
+            wifi = preamble["wifi"]
             for obs in wifi:
                 wap = self.postgres.wap_select_or_insert(obs)
 
                 obs["file_date"] = load_log.file_date
                 self.postgres.observation_insert(obs, load_log.id, wap.id)
 
-#            if result_flag is True:
-#                self.file_success(target)
-#            else:
-#                self.file_failure(target)
+        #            if result_flag is True:
+        #                self.file_success(target)
+        #            else:
+        #                self.file_failure(target)
 
         print(f"success:{self.success_counter} failure:{self.failure_counter}")
 
