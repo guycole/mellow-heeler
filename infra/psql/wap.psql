@@ -10,6 +10,7 @@ create table heeler_v1.wap (
   capability     varchar(80)   not null,
   frequency_mhz  smallint      not null,
   ssid           varchar(132)  not null,
+  update_flag    boolean       not null,
   version        int           not null
 ) tablespace heeler;
 
@@ -19,5 +20,5 @@ grant usage, select on sequence heeler_v1.wap_id_seq to heeler_client;
 create index wap_ssid on heeler_v1.wap(ssid);
 create unique index wap_bssid_version on heeler_v1.wap(bssid, version);
 
-insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version) values('11:22:33:44:55:66', 'magick', 1234, 'pytest1', 1);
-insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, version) values('11:22:33:44:55:66', 'magick', 1234, 'pytest2', 2);
+insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, update_flag, version) values('11:22:33:44:55:66', 'magick', 1234, 'pytest1', False, 1);
+insert into heeler_v1.wap(bssid, capability, frequency_mhz, ssid, update_flag, version) values('11:22:33:44:55:66', 'magick', 1234, 'pytest2', False, 2);

@@ -1,6 +1,6 @@
 --
--- Title: box_score.psql
--- Description: daily boxscore, for 24 hour period 00:00 to 23:59 UTC
+-- Title: daily_score.psql
+-- Description: daily daily score, for 24 hour period 00:00 to 23:59 UTC
 --
 -- bssid_new = new AP discovered today
 -- bssid_total = total AP heard today
@@ -10,7 +10,7 @@
 -- score_date = date
 -- site = anderson1, vallejo1, mobile1, etc
 -- 
-create table heeler_v1.box_score (
+create table heeler_v1.daily_score (
   id             bigserial    primary key,
   bssid_new      int          not null, 
   bssid_total    int          not null,
@@ -21,9 +21,9 @@ create table heeler_v1.box_score (
   site           varchar(16)  not null
 ) tablespace heeler;
 
-grant select, insert, update, delete on heeler_v1.box_score to heeler_client;
-grant usage, select on sequence heeler_v1.box_score_id_seq to heeler_client;
+grant select, insert, update, delete on heeler_v1.daily_score to heeler_client;
+grant usage, select on sequence heeler_v1.daily_score_id_seq to heeler_client;
 
-create index boxscore_date_platform_site on heeler_v1.box_score(file_date, platform, site);
+create index daily_score_date_platform_site on heeler_v1.daily_score(file_date, platform, site);
 
-insert into heeler_v1.box_score(bssid_new, bssid_total, bssid_unique, file_date, file_quantity, platform, site) values(12, 34, 56, '2000-1-1', 78, 'pytest', 'pytest');
+insert into heeler_v1.daily_score(bssid_new, bssid_total, bssid_unique, file_date, file_quantity, platform, site) values(12, 34, 56, '2000-1-1', 78, 'pytest', 'pytest');

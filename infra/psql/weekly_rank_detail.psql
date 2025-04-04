@@ -1,0 +1,15 @@
+--
+-- Title: weekly_rank_detail.psql
+-- Description:
+--
+create table heeler_v1.weekly_rank_detail (
+  id              bigserial       primary key,
+  obs_quantity    smallint        not null, 
+  wap_id          bigint          not null,
+  constraint      wap_id          foreign key(wap_id) references heeler_v1.wap(id),
+  weekly_rank_id  bigint          not null,
+  constraint      weekly_rank_id  foreign key(weekly_rank_id) references heeler_v1.weekly_rank(id)
+) tablespace heeler;
+
+grant select, insert, update, delete on heeler_v1.weekly_rank_detail to heeler_client;
+grant usage, select on sequence heeler_v1.weekly_rank_detail_id_seq to heeler_client;
