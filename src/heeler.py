@@ -82,12 +82,12 @@ class Heeler1:
             current_day = current_day - datetime.timedelta(days=1)
 
         return current_day
-    
-    def weekly(self, file_date: datetime.date, platform: str, site: str, wap_id:int) -> None:
+
+    def weekly(self, file_date, geo_loc_id, platform, wap_id) -> None:
         start_date = self.find_monday(file_date)
 #        print(f"monday: {start_date} file_date: {file_date}")
 
-        weekly_rank = self.postgres.weekly_rank_select_or_insert(platform, site, start_date)
+        weekly_rank = self.postgres.weekly_rank_select_or_insert(platform, geo_loc_id, start_date)
 #        print(weekly_rank)
 
         detail = self.postgres.weekly_rank_detail_bump(wap_id, weekly_rank.id)
@@ -129,7 +129,7 @@ class Heeler1:
 
                 cooked = self.cooked(load_log.file_time, wap.id)
 
-                weekly = self.weekly(load_log.file_date, load_log.platform, "site", wap.id)
+                weekly = self.weekly(load_log.file_date, load_log.geo_loc_id, load_log.platform, wap.id)
 
         stop_time = datetime.datetime.now()
         duration = stop_time - start_time

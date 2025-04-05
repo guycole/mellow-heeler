@@ -130,7 +130,7 @@ class PostGres:
 
         return candidate
 
-    def geo_loc_select_by_id(self, id: int) -> Wap:
+    def geo_loc_select_by_id(self, id: int) -> GeoLoc:
         with self.Session() as session:
             return session.scalars(select(GeoLoc).filter_by(id=id)).first()
 
@@ -335,17 +335,22 @@ class PostGres:
         except Exception as error:
             print(error)
 
-        return candidate        
+        return candidate
 
-    def weekly_rank_insert(self, platform: str, site: str, start_date: datetime.date) -> WeeklyRank:
+    def weekly_rank_detail_select(self, weekly_rank_id: int) -> list[WeeklyRankDetail]:
+        statement = select(WeeklyRankDetail).filter_by(weekly_rank_id=weekly_rank_id).order_by(WeeklyRankDetail.obs_quantity)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def weekly_rank_insert(self, geo_loc_id: int, platform: str, start_date: datetime.date) -> WeeklyRank:
         args = {
             "platform": platform,
-            "site": site,
             "start_date": start_date,
             "stop_date": start_date + datetime.timedelta(days=6),
         }
         
-        candidate = WeeklyRank(args)
+        candidate = WeeklyRank(args, geo_loc_id)
 
         try:
             with self.Session() as session:
@@ -355,16 +360,22 @@ class PostGres:
             print(error)
 
         return candidate
-            
-    def weekly_rank_select_or_insert(self, platform: str, site: str, start_date: datetime.date) -> WeeklyRank:
+
+    def weekly_rank_select_or_insert(self, platform: str, geo_loc_id: int, start_date: datetime.date) -> WeeklyRank:
         with self.Session() as session:
-            candidate = session.scalars(select(WeeklyRank).filter_by(platform=platform, site=site, start_date=start_date)).first()
+            candidate = session.scalars(select(WeeklyRank).filter_by(platform=platform, geo_loc_id=geo_loc_id, start_date=start_date)).first()
 
             if candidate is None:
-                return self.weekly_rank_insert(platform, site, start_date)
+                return self.weekly_rank_insert(geo_loc_id, platform, start_date)
 
             return candidate
 
+    def weekly_rank_select_all(self) -> list[WeeklyRank]:
+        statement = select(WeeklyRank).order_by(WeeklyRank.start_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+    
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***
