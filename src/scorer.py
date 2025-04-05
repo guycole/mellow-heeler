@@ -16,7 +16,7 @@ from sqlalchemy.orm import sessionmaker
 import postgres
 
 
-class BoxScore:
+class DailyScore:
     """daily station statistics"""
 
     # key = date_platform_site
@@ -88,27 +88,29 @@ class BoxScore:
 
     # determine new and unique wap
     def pass2(self) -> None:
-        for key, value in self.box_scores.items():
+        for key, value in self.daily_scores.items():
             value["bssid_unique"] = len(value["wap_list"])
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
                 if cooked is None:
                     print(f"cooked select falure for wap id {wap_id} on {key}")
                     continue
+                
                 obs_first_date = cooked.obs_first.date()
                 if obs_first_date == value["file_date"]:
                     value["bssid_new"] += 1
 
     # write to postgres
     def pass3(self) -> None:
-        for key, value in self.box_scores.items():
-            selected = self.postgres.box_score_select(
+        for key, value in self.daily_scores.items():
+            selected = self.postgres.daily_score_select(
                 value["file_date"], value["platform"], value["site"]
             )
+            
             if selected is None:
-                self.postgres.box_score_insert(value)
+                self.postgres.daily_score_insert(value)
             else:
-                self.postgres.box_score_update(value)
+                self.postgres.daily_score_update(value)
 
     def execute(self) -> None:
         today = datetime.datetime.now()
@@ -121,9 +123,8 @@ class BoxScore:
             self.pass1(current_day)
             current_day = current_day + datetime.timedelta(days=1)
 
-
-#        self.pass2()
-#        self.pass3()
+        self.pass2()
+        self.pass3()
 
 print("start scorer")
 
@@ -142,7 +143,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    scorer = BoxScore(configuration)
+    scorer = DailyScore(configuration)
     scorer.execute()
 
 print("stop scorer")

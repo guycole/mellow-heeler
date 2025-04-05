@@ -17,10 +17,10 @@ import postgres
 
 
 class Reporter:
-    box_scores = {}
+    daily_scores = {}
 
     def __init__(self, configuration: dict[str, str]):
-        self.box_score_dir = configuration["boxScoreDir"]
+        self.report_dir = configuration["reportDir"]
         self.db_conn = configuration["dbConn"]
         self.sql_echo = configuration["sqlEchoEnable"]
 
@@ -34,19 +34,19 @@ class Reporter:
         )
 
     def converter(self):
-        """convert from postgres boxscore to markdown"""
+        """convert from postgres daily score to markdown"""
 
-        selected = self.postgres.box_score_select_all()
+        selected = self.postgres.daily_score_select_all()
         if len(selected) < 1:
-            print("empty box score select")
+            print("empty daily score select")
             return
 
         for row in selected:
             row_year = row.file_date.year
-            if row_year not in self.box_scores:
-                self.box_scores[row_year] = []
+            if row_year not in self.daily_scores:
+                self.daily_scores[row_year] = []
 
-            temp = self.box_scores[row_year]
+            temp = self.daily_scores[row_year]
 
             candidate = f"|{row.file_date}|{row.site}|{row.platform}|{row.file_quantity}|{row.bssid_total}|{row.bssid_unique}|{row.bssid_new}|\n"
 
@@ -62,8 +62,8 @@ class Reporter:
         )
         banner4 = f"|--|--|--|--|--|--|--|\n"
 
-        for key, values in self.box_scores.items():
-            file_name = f"{self.box_score_dir}/{key}.md"
+        for key, values in self.daily_scores.items():
+            file_name = f"{self.report_dir}/{key}.md"
             print(f"creating file: {file_name}")
 
             banner1 = f"mellow-heeler collection scores for {key}\n\n"
