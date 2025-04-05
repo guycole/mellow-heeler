@@ -83,8 +83,15 @@ class Heeler1:
 
         return current_day
     
-    def weekly(self, file_date: date, platform: str, site: str, wap_id:int):
-        pass
+    def weekly(self, file_date: datetime.date, platform: str, site: str, wap_id:int) -> None:
+        start_date = self.find_monday(file_date)
+#        print(f"monday: {start_date} file_date: {file_date}")
+
+        weekly_rank = self.postgres.weekly_rank_select_or_insert(platform, site, start_date)
+#        print(weekly_rank)
+
+        detail = self.postgres.weekly_rank_detail_bump(wap_id, weekly_rank.id)
+#        print(detail)
 
     def execute(self) -> bool:
         #        print(f"========> heeler1 execute {self.preamble}")
@@ -95,7 +102,7 @@ class Heeler1:
             return False
 
         geo_loc = self.postgres.geo_loc_select_or_insert(self.preamble["geoLoc"])
-        print(f"geo loc: {geo_loc.id} {geo_loc}")
+#        print(f"geo loc: {geo_loc.id} {geo_loc}")
 
         load_log = self.postgres.load_log_insert(
             self.preamble, len(obs_list), geo_loc.id
@@ -104,6 +111,8 @@ class Heeler1:
         if load_log.id is None:
             print(f"load log insert failure for {self.preamble['file_name']}")
             return False
+
+        start_time = datetime.datetime.now()
 
         for obs in obs_list:
             wap = self.postgres.wap_select_or_insert(obs)
@@ -121,6 +130,11 @@ class Heeler1:
                 cooked = self.cooked(load_log.file_time, wap.id)
 
                 weekly = self.weekly(load_log.file_date, load_log.platform, "site", wap.id)
+
+        stop_time = datetime.datetime.now()
+        duration = stop_time - start_time
+
+        self.postgres.load_log_update_duration(duration.microseconds, load_log.id)
 
         return True
 

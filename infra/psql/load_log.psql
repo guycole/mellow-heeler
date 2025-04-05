@@ -12,6 +12,7 @@
 --
 create table heeler_v1.load_log (
   id            bigserial    primary key,
+  duration_ms	bigint	     not null default 0,
   file_date     date         not null default CURRENT_DATE,
   file_name     varchar(48)  unique not null,
   file_time     timestamp    not null,

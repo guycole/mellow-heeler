@@ -118,6 +118,7 @@ class LoadLog(Base):
     __tablename__ = "load_log"
 
     id = Column(Integer, primary_key=True)
+    duration_ms = Column(BigInteger)
     file_date = Column(Date)
     file_name = Column(String)
     file_time = Column(DateTime)
@@ -129,6 +130,7 @@ class LoadLog(Base):
     geo_loc_id = Column(BigInteger)
 
     def __init__(self, args: dict[str, any], geo_loc_id: int):
+        self.duration_ms = args["duration_ms"]
         self.file_date = args["file_date"]
         self.file_name = args["file_name"]
         self.file_time = args["file_time"]
@@ -201,15 +203,15 @@ class WeeklyRank(Base):
 
     id = Column(Integer, primary_key=True)
     platform = Column(String)
-    site = Column(Site)
+    site = Column(String)
     start_date = Column(Date)
     stop_date = Column(Date)
 
     def __init__(self, args: dict[str, any]):
         self.platform = args["platform"]
         self.site = args["site"]
-        self.start_date = args["bssid"]
-        self.stop_date = args["capability"]
+        self.start_date = args["start_date"]
+        self.stop_date = args["stop_date"]
 
     def __repr__(self):
         return f"weekly_rank({self.platform} {self.site} {self.start_date})"
@@ -223,7 +225,7 @@ class WeeklyRankDetail(Base):
     wap_id = Column(BigInteger)
     weekly_rank_id = Column(BigInteger)
 
-    def __init__(self, quantity: int, wap_id, int, weekly_rank_id: int):
+    def __init__(self, quantity: int, wap_id: int, weekly_rank_id: int):
         self.obs_quantity = quantity
         self.wap_id = wap_id
         self.weekly_rank_id = weekly_rank_id
