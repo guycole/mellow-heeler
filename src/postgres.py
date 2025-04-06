@@ -18,7 +18,7 @@ from sqlalchemy import and_
 from sqlalchemy import func
 from sqlalchemy import select
 
-from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
+from sql_table import Cooked, DailyScore, GeoLoc, LoadLog, Observation, Wap, WeeklyRank, WeeklyRankDetail
 
 
 class PostGres:
@@ -29,56 +29,6 @@ class PostGres:
 
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
-
-    def box_score_insert(self, args: dict[str, any]) -> BoxScore:
-        candidate = BoxScore(args)
-        #        print(f"insert {candidate.id} {candidate.site} {candidate.file_date} {candidate.bssid_new}")
-
-        try:
-            with self.Session() as session:
-                session.add(candidate)
-                session.commit()
-        except Exception as error:
-            print(error)
-
-        return candidate
-
-    def box_score_select(
-        self, file_date: datetime.date, platform: str, site: str
-    ) -> BoxScore:
-        statement = select(BoxScore).filter_by(
-            file_date=file_date, platform=platform, site=site
-        )
-
-        with self.Session() as session:
-            return session.scalars(statement).first()
-
-    def box_score_select_all(self) -> list[BoxScore]:
-        statement = select(BoxScore).order_by(BoxScore.file_date)
-
-        with self.Session() as session:
-            return session.scalars(statement).all()
-
-    def box_score_update(self, args: dict[str, any]) -> BoxScore:
-        with self.Session() as session:
-            candidate = session.scalars(
-                select(BoxScore).filter_by(
-                    file_date=args["file_date"],
-                    platform=args["platform"],
-                    site=args["site"],
-                )
-            ).first()
-
-            if candidate is not None:
-                candidate.bssid_new = args["bssid_new"]
-                candidate.bssid_total = args["bssid_total"]
-                candidate.bssid_unique = args["bssid_unique"]
-                candidate.file_quantity = args["file_quantity"]
-
-                session.add(candidate)
-                session.commit()
-
-                return candidate
 
     def cooked_insert(self, args: dict[str, any], wap_id: int) -> Cooked:
         candidate = Cooked(args, wap_id)
@@ -100,7 +50,9 @@ class PostGres:
         with self.Session() as session:
             candidate = session.scalars(select(Cooked).filter_by(wap_id=wap_id)).first()
 
-            if candidate is not None:
+            if candidate is None:
+                print(f"skipping cooked update for wap {wap_id}")
+            else:
                 candidate.confidence = args["confidence"]
                 candidate.latitude = args["latitude"]
                 candidate.longitude = args["longitude"]
@@ -110,6 +62,56 @@ class PostGres:
                 candidate.obs_last = args["obs_last"]
                 candidate.street_address = args["street_address"]
                 candidate.street_zip = args["street_zip"]
+
+                session.add(candidate)
+                session.commit()
+
+                return candidate
+
+    def daily_score_insert(self, args: dict[str, any]) -> DailyScore:
+        candidate = DailyScore(args)
+        #        print(f"insert {candidate.id} {candidate.site} {candidate.file_date} {candidate.bssid_new}")
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def daily_score_select(
+        self, file_date: datetime.date, platform: str, site: str
+    ) -> DailyScore:
+        statement = select(DailyScore).filter_by(
+            file_date=file_date, platform=platform, site=site
+        )
+
+        with self.Session() as session:
+            return session.scalars(statement).first()
+
+    def daily_score_select_all(self) -> list[DailyScore]:
+        statement = select(DailyScore).order_by(DailyScore.file_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def daily_score_update(self, args: dict[str, any]) -> DailyScore:
+        with self.Session() as session:
+            candidate = session.scalars(
+                select(DailyScore).filter_by(
+                    file_date=args["file_date"],
+                    platform=args["platform"],
+                    site=args["site"],
+                )
+            ).first()
+
+            if candidate is not None:
+                candidate.bssid_new = args["bssid_new"]
+                candidate.bssid_total = args["bssid_total"]
+                candidate.bssid_unique = args["bssid_unique"]
+                candidate.file_quantity = args["file_quantity"]
 
                 session.add(candidate)
                 session.commit()
@@ -128,7 +130,7 @@ class PostGres:
 
         return candidate
 
-    def geo_loc_select_by_id(self, id: int) -> Wap:
+    def geo_loc_select_by_id(self, id: int) -> GeoLoc:
         with self.Session() as session:
             return session.scalars(select(GeoLoc).filter_by(id=id)).first()
 
@@ -167,6 +169,7 @@ class PostGres:
     def load_log_insert(
         self, args: dict[str, any], obs_quantity: int, geo_loc_id: int
     ) -> LoadLog:
+        args["duration_ms"] = 0
         args["file_date"] = args["file_time"].date()
         args["obs_quantity"] = obs_quantity
 
@@ -194,7 +197,21 @@ class PostGres:
     def load_log_select_by_file_date(self, target: datetime) -> list[LoadLog]:
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
+        
+    def load_log_update_duration(self, duration: int, load_log_id: int) -> LoadLog:
+        with self.Session() as session:
+            candidate = session.scalars(select(LoadLog).filter_by(id=load_log_id)).first()
 
+            if candidate is None:
+                print(f"skipping update duration for load log id {load_log_id}")
+            else:
+                candidate.duration_ms = duration
+
+                session.add(candidate)
+                session.commit()
+
+                return candidate
+        
     def observation_insert(
         self, args: dict[str, any], load_log_id: int, wap_id: int
     ) -> Observation:
@@ -236,6 +253,7 @@ class PostGres:
             return session.scalars(statement).all()
 
     def wap_insert(self, args: dict[str, any], version: int) -> Wap:
+        args["update_flag"] = True
         candidate = Wap(args, version)
 
         try:
@@ -279,7 +297,85 @@ class PostGres:
         result = self.wap_insert(args, version)
         return result
 
+    def wap_update_flag(self, update_flag: bool, wap_id: int) -> Wap:
+        with self.Session() as session:
+            candidate = session.scalars(select(Wap).filter_by(id=wap_id)).first()
 
+            if candidate is None:
+                print(f"skipping update flag for wap id {wap_id}")
+            else:
+                candidate.update_flag = update_flag
+
+                session.add(candidate)
+                session.commit()
+
+                return candidate
+
+    def weekly_rank_detail_bump(self, wap_id: int, weekly_rank_id: int) -> WeeklyRankDetail:
+        with self.Session() as session:
+            candidate = session.scalars(select(WeeklyRankDetail).filter_by(wap_id=wap_id, weekly_rank_id=weekly_rank_id)).first()
+
+            if candidate is None:
+                return self.weekly_rank_detail_insert(wap_id, weekly_rank_id)
+            else:
+                candidate.obs_quantity += 1
+
+                session.add(candidate)
+                session.commit()
+
+                return candidate                
+
+    def weekly_rank_detail_insert(self, wap_id: int, weekly_rank_id: int) -> WeeklyRankDetail:
+        candidate = WeeklyRankDetail(1, wap_id, weekly_rank_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def weekly_rank_detail_select(self, weekly_rank_id: int) -> list[WeeklyRankDetail]:
+        statement = select(WeeklyRankDetail).filter_by(weekly_rank_id=weekly_rank_id).order_by(WeeklyRankDetail.obs_quantity)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+
+    def weekly_rank_insert(self, geo_loc_id: int, platform: str, start_date: datetime.date) -> WeeklyRank:
+        args = {
+            "platform": platform,
+            "start_date": start_date,
+            "stop_date": start_date + datetime.timedelta(days=6),
+        }
+        
+        candidate = WeeklyRank(args, geo_loc_id)
+
+        try:
+            with self.Session() as session:
+                session.add(candidate)
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
+
+    def weekly_rank_select_or_insert(self, platform: str, geo_loc_id: int, start_date: datetime.date) -> WeeklyRank:
+        with self.Session() as session:
+            candidate = session.scalars(select(WeeklyRank).filter_by(platform=platform, geo_loc_id=geo_loc_id, start_date=start_date)).first()
+
+            if candidate is None:
+                return self.weekly_rank_insert(geo_loc_id, platform, start_date)
+
+            return candidate
+
+    def weekly_rank_select_all(self) -> list[WeeklyRank]:
+        statement = select(WeeklyRank).order_by(WeeklyRank.start_date)
+
+        with self.Session() as session:
+            return session.scalars(statement).all()
+    
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***

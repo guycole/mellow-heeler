@@ -17,7 +17,7 @@ from sqlalchemy.orm import sessionmaker
 
 from observation import Observation
 from preamble import PreambleHelper
-from sql_table import BoxScore, Cooked, GeoLoc, LoadLog, Observation, Wap
+from sql_table import Cooked, GeoLoc, LoadLog, Observation, Wap
 
 import postgres
 

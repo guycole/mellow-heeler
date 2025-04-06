@@ -1,0 +1,17 @@
+--
+-- Title: weekly_rank.psql
+-- Description: weekly rank
+--
+create table heeler_v1.weekly_rank (
+  id          bigserial    primary key,
+  geo_loc_id  bigint       not null,
+  constraint  geo_loc_id   foreign key(geo_loc_id) references heeler_v1.geo_loc(id),
+  platform    varchar(16)  not null,
+  start_date  date         not null,
+  stop_date   date         not null
+) tablespace heeler;
+
+grant select, insert, update, delete on heeler_v1.weekly_rank to heeler_client;
+grant usage, select on sequence heeler_v1.weekly_rank_id_seq to heeler_client;
+
+create unique index weekly_rank_date_platform_loc on heeler_v1.weekly_rank(start_date, platform, geo_loc_id);

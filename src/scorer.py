@@ -16,11 +16,11 @@ from sqlalchemy.orm import sessionmaker
 import postgres
 
 
-class BoxScore:
+class DailyScore:
     """daily station statistics"""
 
     # key = date_platform_site
-    box_scores = {}
+    daily_scores = {}
 
     def __init__(self, configuration: dict[str, str]):
         self.db_conn = configuration["dbConn"]
@@ -36,7 +36,7 @@ class BoxScore:
             sessionmaker(bind=db_engine, expire_on_commit=False)
         )
 
-    def fresh_box_score(
+    def fresh_daily_score(
         self, file_date: datetime.date, platform: str, site: str
     ) -> dict[str, any]:
         return {
@@ -60,24 +60,24 @@ class BoxScore:
         for row in load_log_rows:
             geo_loc_row = self.postgres.geo_loc_select_by_id(row.geo_loc_id)
 
-            box_scores_key = f"{row.file_date}-{row.platform}-{geo_loc_row.site}"
+            daily_scores_key = f"{row.file_date}-{row.platform}-{geo_loc_row.site}"
             # 2025-03-13-rpi3a-vallejo1
 
-            if box_scores_key in self.box_scores:
+            if daily_scores_key in self.daily_scores:
                 # print(f"existing key {box_scores_key}")
-                self.box_scores[box_scores_key]["file_quantity"] += 1
+                self.daily_scores[daily_scores_key]["file_quantity"] += 1
             else:
-                # print(f"fresh key {box_scores_key}")
-                self.box_scores[box_scores_key] = self.fresh_box_score(
+                # print(f"fresh key {daily_scores_key}")
+                self.daily_scores[daily_scores_key] = self.fresh_daily_score(
                     row.file_date, row.platform, geo_loc_row.site
                 )
 
             # observed wap for today
-            wap_list = self.box_scores[box_scores_key]["wap_list"]
+            wap_list = self.daily_scores[daily_scores_key]["wap_list"]
 
             # observations for this load log file
             raw_obs_list = self.postgres.observation_select_by_load_log(row.id)
-            self.box_scores[box_scores_key]["bssid_total"] += len(raw_obs_list)
+            self.daily_scores[daily_scores_key]["bssid_total"] += len(raw_obs_list)
             if len(raw_obs_list) != row.obs_quantity:
                 print(f"mismatch {row.id} {row.obs_quantity} {len(raw_obs_list)}")
 
@@ -88,27 +88,29 @@ class BoxScore:
 
     # determine new and unique wap
     def pass2(self) -> None:
-        for key, value in self.box_scores.items():
+        for key, value in self.daily_scores.items():
             value["bssid_unique"] = len(value["wap_list"])
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
                 if cooked is None:
                     print(f"cooked select falure for wap id {wap_id} on {key}")
                     continue
+                
                 obs_first_date = cooked.obs_first.date()
                 if obs_first_date == value["file_date"]:
                     value["bssid_new"] += 1
 
     # write to postgres
     def pass3(self) -> None:
-        for key, value in self.box_scores.items():
-            selected = self.postgres.box_score_select(
+        for key, value in self.daily_scores.items():
+            selected = self.postgres.daily_score_select(
                 value["file_date"], value["platform"], value["site"]
             )
+            
             if selected is None:
-                self.postgres.box_score_insert(value)
+                self.postgres.daily_score_insert(value)
             else:
-                self.postgres.box_score_update(value)
+                self.postgres.daily_score_update(value)
 
     def execute(self) -> None:
         today = datetime.datetime.now()
@@ -123,10 +125,6 @@ class BoxScore:
 
         self.pass2()
         self.pass3()
-
-
-#        print(self.box_scores)
-#        print(self.box_scores.keys())
 
 print("start scorer")
 
@@ -145,7 +143,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    scorer = BoxScore(configuration)
+    scorer = DailyScore(configuration)
     scorer.execute()
 
 print("stop scorer")

@@ -130,7 +130,6 @@ class Loader:
             valid_preamble["wifi"] = converter.get_obs_list(valid_preamble["file_time"])
 
             # successful iwlist(8) scan file parse, now load into postgres
-
             file_type = preamble_helper.classifier(valid_preamble)
             print(f"file:{target} type:{file_type}")
             valid_preamble["file_name"] = target

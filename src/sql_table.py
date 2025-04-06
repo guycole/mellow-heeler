@@ -24,10 +24,8 @@ class Base(DeclarativeBase):
     pass
 
 
-class BoxScore(Base):
-    """box_score table definition"""
-
-    __tablename__ = "box_score"
+class DailyScore(Base):
+    __tablename__ = "daily_score"
 
     id = Column(Integer, primary_key=True)
     bssid_new = Column(Integer)
@@ -48,7 +46,7 @@ class BoxScore(Base):
         self.site = args["site"]
 
     def __repr__(self):
-        return f"box_score({self.file_date} {self.platform} {self.site})"
+        return f"daily_score({self.file_date} {self.platform} {self.site})"
 
 
 class Cooked(Base):
@@ -120,6 +118,7 @@ class LoadLog(Base):
     __tablename__ = "load_log"
 
     id = Column(Integer, primary_key=True)
+    duration_ms = Column(BigInteger)
     file_date = Column(Date)
     file_name = Column(String)
     file_time = Column(DateTime)
@@ -131,6 +130,7 @@ class LoadLog(Base):
     geo_loc_id = Column(BigInteger)
 
     def __init__(self, args: dict[str, any], geo_loc_id: int):
+        self.duration_ms = args["duration_ms"]
         self.file_date = args["file_date"]
         self.file_name = args["file_name"]
         self.file_time = args["file_time"]
@@ -183,6 +183,7 @@ class Wap(Base):
     capability = Column(String)
     frequency_mhz = Column(Integer)
     ssid = Column(String)
+    update_flag = Column(Boolean)
     version = Column(Integer)
 
     def __init__(self, args: dict[str, any], version: int):
@@ -190,11 +191,47 @@ class Wap(Base):
         self.capability = args["capability"]
         self.frequency_mhz = args["frequency_mhz"]
         self.ssid = args["ssid"]
+        self.update_flag = args["update_flag"]
         self.version = version
 
     def __repr__(self):
         return f"wap({self.bssid} {self.version})"
 
+class WeeklyRank(Base):
+
+    __tablename__ = "weekly_rank"
+
+    id = Column(Integer, primary_key=True)
+    geo_loc_id = Column(BigInteger)
+    platform = Column(String)
+    start_date = Column(Date)
+    stop_date = Column(Date)
+
+    def __init__(self, args: dict[str, any], geo_loc_id: int):
+        self.geo_loc_id = geo_loc_id
+        self.platform = args["platform"]
+        self.start_date = args["start_date"]
+        self.stop_date = args["stop_date"]
+
+    def __repr__(self):
+        return f"weekly_rank({self.platform} {self.geo_loc_id} {self.start_date})"
+
+class WeeklyRankDetail(Base):
+
+    __tablename__ = "weekly_rank_detail"
+
+    id = Column(Integer, primary_key=True)
+    obs_quantity = Column(Integer)
+    wap_id = Column(BigInteger)
+    weekly_rank_id = Column(BigInteger)
+
+    def __init__(self, quantity: int, wap_id: int, weekly_rank_id: int):
+        self.obs_quantity = quantity
+        self.wap_id = wap_id
+        self.weekly_rank_id = weekly_rank_id
+
+    def __repr__(self):
+        return f"weekly_rank_detail({self.wap_id} {self.weekly_rank_id})"
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
