@@ -72,7 +72,7 @@ class DailyScores:
             try:
                 with open(file_name, "w", encoding="utf-8") as out_file:
                     out_file.write(banner1)
-                    out_file.write(banner2)
+#                    out_file.write(banner2)
                     out_file.write(banner3)
                     out_file.write(banner4)
 
@@ -99,48 +99,66 @@ class WeeklyScores:
             sessionmaker(bind=db_engine, expire_on_commit=False)
         )
 
-    
-    def converter(self, weekly_rank: WeeklyRank):
-        self.candidates.clear()
+    def weekly_format(self, args: dict[str, any]) -> None:
+#        banner3 = (f"|date|site|platform|obs total|bssid|ssid|\n")
 
-        selected = self.postgres.weekly_rank_detail_select(weekly_rank.id)
+        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|"
 
-        limit = 5
+        return buffer
 
-        counter = 0
-        for ndx in range(len(selected)):
-            counter += 1
-            
-        
-
-    def write_weekly(self, weekly_rank: WeeklyRank) -> None:
-        time_now = datetime.datetime.now()
-
-#        banner2 = f"created at {time_now} total rows {len(selected)}\n\n"
+    def weekly_write(self, weekly_rank: WeeklyRank) -> None:
         banner3 = (f"|date|site|platform|obs total|bssid|ssid|\n")
         banner4 = f"|--|--|--|--|--|--|\n"
 
         geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
-        if geo_loc.site.startswith("mobile"):
-            print("skipping mobile report")
-            return
+#        if geo_loc.site.startswith("mobile"):
+#            print("skipping mobile report")
+#            return
 
         key = f"{weekly_rank.start_date}-{geo_loc.site}-{weekly_rank.platform}"
-        print(key)
+#        print(key)
 
         file_name = f"{self.report_dir}/{key}.md"
         print(f"creating file: {file_name}")
 
         selected = self.postgres.weekly_rank_detail_select(weekly_rank.id)
-            
+
+        buffer = []
         for row in selected:
-            print(row)
-        
+            wap = self.postgres.wap_select_by_id(row.wap_id)
+            
+            args = {
+                "bssid": wap.bssid,
+                "date": weekly_rank.start_date,
+                "obs_total": row.obs_quantity,
+                "platform": weekly_rank.platform,
+                "site": geo_loc.site,
+                "ssid": wap.ssid,
+            }
+            
+            buffer.append(self.weekly_format(args))
+
+        banner1 = f"mellow-heeler weekly score for {key}\n\n"            
+        banner3 = (f"|date|site|platform|obs total|bssid|ssid|\n")
+        banner4 = f"|--|--|--|--|--|--|\n"
+
+        try:
+            with open(file_name, "w", encoding="utf-8") as out_file:
+                out_file.write(banner1)
+                out_file.write(banner3)
+                out_file.write(banner4)
+            
+                for row in buffer:
+                    out_file.write(row)
+        except Exception as error:
+            print(error)
+            return None
+         
     def execute(self) -> None:
         rows = self.postgres.weekly_rank_select_all()
 
         for row in rows:
-            self.write_weekly(row)
+            self.weekly_write(row)
 
 print("start reporter")
 
