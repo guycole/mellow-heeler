@@ -100,10 +100,7 @@ class WeeklyScores:
         )
 
     def weekly_format(self, args: dict[str, any]) -> None:
-#        banner3 = (f"|date|site|platform|obs total|bssid|ssid|\n")
-
         buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|"
-
         return buffer
 
     def weekly_write(self, weekly_rank: WeeklyRank) -> None:
