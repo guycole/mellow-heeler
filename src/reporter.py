@@ -17,6 +17,7 @@ import postgres
 
 from sql_table import WeeklyRank, WeeklyRankDetail
 
+
 class DailyScores:
     daily_scores = {}
 
@@ -72,7 +73,7 @@ class DailyScores:
             try:
                 with open(file_name, "w", encoding="utf-8") as out_file:
                     out_file.write(banner1)
-#                    out_file.write(banner2)
+                    #                    out_file.write(banner2)
                     out_file.write(banner3)
                     out_file.write(banner4)
 
@@ -81,6 +82,7 @@ class DailyScores:
             except Exception as error:
                 print(error)
                 return None
+
 
 class WeeklyScores:
     candidates = {}
@@ -105,12 +107,12 @@ class WeeklyScores:
 
     def weekly_write(self, weekly_rank: WeeklyRank) -> None:
         geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
-#        if geo_loc.site.startswith("mobile"):
-#            print("skipping mobile report")
-#            return
+        #        if geo_loc.site.startswith("mobile"):
+        #            print("skipping mobile report")
+        #            return
 
         key = f"{weekly_rank.start_date}-{geo_loc.site}-{weekly_rank.platform}"
-#        print(key)
+        #        print(key)
 
         file_name = f"{self.report_dir}/{key}.md"
         print(f"creating file: {file_name}")
@@ -120,7 +122,7 @@ class WeeklyScores:
         buffer = []
         for row in selected:
             wap = self.postgres.wap_select_by_id(row.wap_id)
-            
+
             args = {
                 "bssid": wap.bssid,
                 "date": weekly_rank.start_date,
@@ -131,11 +133,11 @@ class WeeklyScores:
                 "site": geo_loc.site,
                 "ssid": wap.ssid,
             }
-            
+
             buffer.append(self.weekly_format(args))
 
-        banner1 = f"mellow-heeler weekly score for {key}\n\n"            
-        banner3 = (f"|date|site|platform|obs total|bssid|ssid|lat|lng|\n")
+        banner1 = f"mellow-heeler weekly score for {key}\n\n"
+        banner3 = f"|date|site|platform|obs total|bssid|ssid|lat|lng|\n"
         banner4 = f"|--|--|--|--|--|--|--|--|\n"
 
         try:
@@ -149,12 +151,13 @@ class WeeklyScores:
         except Exception as error:
             print(error)
             return None
-         
+
     def execute(self) -> None:
         rows = self.postgres.weekly_rank_select_all()
 
         for row in rows:
             self.weekly_write(row)
+
 
 print("start reporter")
 
@@ -173,8 +176,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-#    reporter = DailyScores(configuration)
-#    reporter.execute()
+    #    reporter = DailyScores(configuration)
+    #    reporter.execute()
     reporter = WeeklyScores(configuration)
     reporter.execute()
 

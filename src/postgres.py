@@ -18,7 +18,16 @@ from sqlalchemy import and_
 from sqlalchemy import func
 from sqlalchemy import select
 
-from sql_table import Cooked, DailyScore, GeoLoc, LoadLog, Observation, Wap, WeeklyRank, WeeklyRankDetail
+from sql_table import (
+    Cooked,
+    DailyScore,
+    GeoLoc,
+    LoadLog,
+    Observation,
+    Wap,
+    WeeklyRank,
+    WeeklyRankDetail,
+)
 
 
 class PostGres:
@@ -134,12 +143,6 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(select(GeoLoc).filter_by(id=id)).first()
 
-    #    def geo_loc_select_by_load_log(self, load_log_id: int) -> GeoLoc:
-    #        statement = (select(GeoLoc).filter_by(load_log_id=load_log_id).order_by(GeoLoc.fix_time))
-    #
-    #        with self.Session() as session:
-    #            return session.scalars(statement).first()
-
     def geo_loc_select_by_site(self, site: str) -> list[GeoLoc]:
         statement = select(GeoLoc).filter_by(site=site).order_by(GeoLoc.fix_time)
 
@@ -197,10 +200,12 @@ class PostGres:
     def load_log_select_by_file_date(self, target: datetime) -> list[LoadLog]:
         with self.Session() as session:
             return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
-        
+
     def load_log_update_duration(self, duration: int, load_log_id: int) -> LoadLog:
         with self.Session() as session:
-            candidate = session.scalars(select(LoadLog).filter_by(id=load_log_id)).first()
+            candidate = session.scalars(
+                select(LoadLog).filter_by(id=load_log_id)
+            ).first()
 
             if candidate is None:
                 print(f"skipping update duration for load log id {load_log_id}")
@@ -211,7 +216,7 @@ class PostGres:
                 session.commit()
 
                 return candidate
-        
+
     def observation_insert(
         self, args: dict[str, any], load_log_id: int, wap_id: int
     ) -> Observation:
@@ -311,9 +316,15 @@ class PostGres:
 
                 return candidate
 
-    def weekly_rank_detail_bump(self, wap_id: int, weekly_rank_id: int) -> WeeklyRankDetail:
+    def weekly_rank_detail_bump(
+        self, wap_id: int, weekly_rank_id: int
+    ) -> WeeklyRankDetail:
         with self.Session() as session:
-            candidate = session.scalars(select(WeeklyRankDetail).filter_by(wap_id=wap_id, weekly_rank_id=weekly_rank_id)).first()
+            candidate = session.scalars(
+                select(WeeklyRankDetail).filter_by(
+                    wap_id=wap_id, weekly_rank_id=weekly_rank_id
+                )
+            ).first()
 
             if candidate is None:
                 return self.weekly_rank_detail_insert(wap_id, weekly_rank_id)
@@ -323,9 +334,11 @@ class PostGres:
                 session.add(candidate)
                 session.commit()
 
-                return candidate                
+                return candidate
 
-    def weekly_rank_detail_insert(self, wap_id: int, weekly_rank_id: int) -> WeeklyRankDetail:
+    def weekly_rank_detail_insert(
+        self, wap_id: int, weekly_rank_id: int
+    ) -> WeeklyRankDetail:
         candidate = WeeklyRankDetail(1, wap_id, weekly_rank_id)
 
         try:
@@ -338,18 +351,24 @@ class PostGres:
         return candidate
 
     def weekly_rank_detail_select(self, weekly_rank_id: int) -> list[WeeklyRankDetail]:
-        statement = select(WeeklyRankDetail).filter_by(weekly_rank_id=weekly_rank_id).order_by(WeeklyRankDetail.obs_quantity)
+        statement = (
+            select(WeeklyRankDetail)
+            .filter_by(weekly_rank_id=weekly_rank_id)
+            .order_by(WeeklyRankDetail.obs_quantity)
+        )
 
         with self.Session() as session:
             return session.scalars(statement).all()
 
-    def weekly_rank_insert(self, geo_loc_id: int, platform: str, start_date: datetime.date) -> WeeklyRank:
+    def weekly_rank_insert(
+        self, geo_loc_id: int, platform: str, start_date: datetime.date
+    ) -> WeeklyRank:
         args = {
             "platform": platform,
             "start_date": start_date,
             "stop_date": start_date + datetime.timedelta(days=6),
         }
-        
+
         candidate = WeeklyRank(args, geo_loc_id)
 
         try:
@@ -361,9 +380,15 @@ class PostGres:
 
         return candidate
 
-    def weekly_rank_select_or_insert(self, platform: str, geo_loc_id: int, start_date: datetime.date) -> WeeklyRank:
+    def weekly_rank_select_or_insert(
+        self, platform: str, geo_loc_id: int, start_date: datetime.date
+    ) -> WeeklyRank:
         with self.Session() as session:
-            candidate = session.scalars(select(WeeklyRank).filter_by(platform=platform, geo_loc_id=geo_loc_id, start_date=start_date)).first()
+            candidate = session.scalars(
+                select(WeeklyRank).filter_by(
+                    platform=platform, geo_loc_id=geo_loc_id, start_date=start_date
+                )
+            ).first()
 
             if candidate is None:
                 return self.weekly_rank_insert(geo_loc_id, platform, start_date)
@@ -375,7 +400,8 @@ class PostGres:
 
         with self.Session() as session:
             return session.scalars(statement).all()
-    
+
+
 # ;;; Local Variables: ***
 # ;;; mode:python ***
 # ;;; End: ***

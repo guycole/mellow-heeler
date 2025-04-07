@@ -95,7 +95,7 @@ class DailyScore:
                 if cooked is None:
                     print(f"cooked select falure for wap id {wap_id} on {key}")
                     continue
-                
+
                 obs_first_date = cooked.obs_first.date()
                 if obs_first_date == value["file_date"]:
                     value["bssid_new"] += 1
@@ -106,7 +106,7 @@ class DailyScore:
             selected = self.postgres.daily_score_select(
                 value["file_date"], value["platform"], value["site"]
             )
-            
+
             if selected is None:
                 self.postgres.daily_score_insert(value)
             else:
@@ -125,6 +125,7 @@ class DailyScore:
 
         self.pass2()
         self.pass3()
+
 
 print("start scorer")
 

@@ -197,6 +197,7 @@ class Wap(Base):
     def __repr__(self):
         return f"wap({self.bssid} {self.version})"
 
+
 class WeeklyRank(Base):
 
     __tablename__ = "weekly_rank"
@@ -216,6 +217,7 @@ class WeeklyRank(Base):
     def __repr__(self):
         return f"weekly_rank({self.platform} {self.geo_loc_id} {self.start_date})"
 
+
 class WeeklyRankDetail(Base):
 
     __tablename__ = "weekly_rank_detail"
@@ -232,6 +234,7 @@ class WeeklyRankDetail(Base):
 
     def __repr__(self):
         return f"weekly_rank_detail({self.wap_id} {self.weekly_rank_id})"
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
