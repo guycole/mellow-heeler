@@ -100,13 +100,10 @@ class WeeklyScores:
         )
 
     def weekly_format(self, args: dict[str, any]) -> None:
-        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|"
+        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|{args['lat']}|{args['lng']}|\n"
         return buffer
 
     def weekly_write(self, weekly_rank: WeeklyRank) -> None:
-        banner3 = (f"|date|site|platform|obs total|bssid|ssid|\n")
-        banner4 = f"|--|--|--|--|--|--|\n"
-
         geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
 #        if geo_loc.site.startswith("mobile"):
 #            print("skipping mobile report")
@@ -127,6 +124,8 @@ class WeeklyScores:
             args = {
                 "bssid": wap.bssid,
                 "date": weekly_rank.start_date,
+                "lat": geo_loc.latitude,
+                "lng": geo_loc.longitude,
                 "obs_total": row.obs_quantity,
                 "platform": weekly_rank.platform,
                 "site": geo_loc.site,
@@ -136,15 +135,15 @@ class WeeklyScores:
             buffer.append(self.weekly_format(args))
 
         banner1 = f"mellow-heeler weekly score for {key}\n\n"            
-        banner3 = (f"|date|site|platform|obs total|bssid|ssid|\n")
-        banner4 = f"|--|--|--|--|--|--|\n"
+        banner3 = (f"|date|site|platform|obs total|bssid|ssid|lat|lng|\n")
+        banner4 = f"|--|--|--|--|--|--|--|--|\n"
 
         try:
             with open(file_name, "w", encoding="utf-8") as out_file:
                 out_file.write(banner1)
                 out_file.write(banner3)
                 out_file.write(banner4)
-            
+
                 for row in buffer:
                     out_file.write(row)
         except Exception as error:
