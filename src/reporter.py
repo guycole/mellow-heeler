@@ -102,7 +102,7 @@ class WeeklyScores:
         )
 
     def weekly_format(self, args: dict[str, any]) -> None:
-        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|{args['lat']}|{args['lng']}|\n"
+        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|\n"
         return buffer
 
     def weekly_write(self, weekly_rank: WeeklyRank) -> None:
@@ -114,18 +114,10 @@ class WeeklyScores:
         key = f"{weekly_rank.start_date}-{weekly_rank.site}-{weekly_rank.platform}"
         #        print(key)
 
-        if key == "2025-03-31-mobile1-rpi3d":
-            flag = True
-            print("hit hit hit")
-        else:
-            flag = False
-
         file_name = f"{self.report_dir}/{key}.md"
         print(f"creating file: {file_name}")
 
         selected = self.postgres.weekly_rank_detail_select(weekly_rank.id)
-        if flag:
-            print(f"selected {len(selected)}")
 
         buffer = []
         for row in selected:
@@ -134,22 +126,18 @@ class WeeklyScores:
             args = {
                 "bssid": wap.bssid,
                 "date": weekly_rank.start_date,
-                "lat": 0,
-                "lng": 0,
                 "obs_total": row.obs_quantity,
                 "platform": weekly_rank.platform,
                 "site": weekly_rank.site,
                 "ssid": wap.ssid,
             }
 
-            if flag:
-                print(args)
 
             buffer.append(self.weekly_format(args))
 
         banner1 = f"mellow-heeler weekly score for {key}\n\n"
-        banner3 = f"|date|site|platform|obs total|bssid|ssid|lat|lng|\n"
-        banner4 = f"|--|--|--|--|--|--|--|--|\n"
+        banner3 = f"|date|site|platform|obs total|bssid|ssid|\n"
+        banner4 = f"|--|--|--|--|--|--|\n"
 
         try:
             with open(file_name, "w", encoding="utf-8") as out_file:
