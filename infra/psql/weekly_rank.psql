@@ -4,9 +4,8 @@
 --
 create table heeler_v1.weekly_rank (
   id          bigserial    primary key,
-  geo_loc_id  bigint       not null,
-  constraint  geo_loc_id   foreign key(geo_loc_id) references heeler_v1.geo_loc(id),
   platform    varchar(16)  not null,
+  site        varchar(16)  not null,
   start_date  date         not null,
   stop_date   date         not null
 ) tablespace heeler;
@@ -14,4 +13,14 @@ create table heeler_v1.weekly_rank (
 grant select, insert, update, delete on heeler_v1.weekly_rank to heeler_client;
 grant usage, select on sequence heeler_v1.weekly_rank_id_seq to heeler_client;
 
-create unique index weekly_rank_date_platform_loc on heeler_v1.weekly_rank(start_date, platform, geo_loc_id);
+create unique index weekly_rank_date_platform_loc on heeler_v1.weekly_rank(start_date, platform, site);
+
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '5-JUL-2021', '11-JUL-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '12-JUL-2021', '18-JUL-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '19-JUL-2021', '25-JUL-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '26-JUL-2021', '1-AUG-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '2-AUG-2021', '8-AUG-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '9-AUG-2021', '15-AUG-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '16-AUG-2021', '22-AUG-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '23-AUG-2021', '29-AUG-2021');
+insert into heeler_v1.weekly_rank(platform, site, start_date, stop_date) values('android', 'mobile2', '6-SEP-2021', '12-SEP-2021');

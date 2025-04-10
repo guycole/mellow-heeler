@@ -203,19 +203,19 @@ class WeeklyRank(Base):
     __tablename__ = "weekly_rank"
 
     id = Column(Integer, primary_key=True)
-    geo_loc_id = Column(BigInteger)
     platform = Column(String)
+    site = Column(String)
     start_date = Column(Date)
     stop_date = Column(Date)
 
-    def __init__(self, args: dict[str, any], geo_loc_id: int):
-        self.geo_loc_id = geo_loc_id
+    def __init__(self, args: dict[str, any]):
         self.platform = args["platform"]
+        self.site = args["site"]
         self.start_date = args["start_date"]
         self.stop_date = args["stop_date"]
 
     def __repr__(self):
-        return f"weekly_rank({self.platform} {self.geo_loc_id} {self.start_date})"
+        return f"weekly_rank({self.platform} {self.site} {self.start_date})"
 
 
 class WeeklyRankDetail(Base):

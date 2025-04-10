@@ -106,18 +106,26 @@ class WeeklyScores:
         return buffer
 
     def weekly_write(self, weekly_rank: WeeklyRank) -> None:
-        geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
+        #geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
         #        if geo_loc.site.startswith("mobile"):
         #            print("skipping mobile report")
         #            return
 
-        key = f"{weekly_rank.start_date}-{geo_loc.site}-{weekly_rank.platform}"
+        key = f"{weekly_rank.start_date}-{weekly_rank.site}-{weekly_rank.platform}"
         #        print(key)
+
+        if key == "2025-03-31-mobile1-rpi3d":
+            flag = True
+            print("hit hit hit")
+        else:
+            flag = False
 
         file_name = f"{self.report_dir}/{key}.md"
         print(f"creating file: {file_name}")
 
         selected = self.postgres.weekly_rank_detail_select(weekly_rank.id)
+        if flag:
+            print(f"selected {len(selected)}")
 
         buffer = []
         for row in selected:
@@ -126,13 +134,16 @@ class WeeklyScores:
             args = {
                 "bssid": wap.bssid,
                 "date": weekly_rank.start_date,
-                "lat": geo_loc.latitude,
-                "lng": geo_loc.longitude,
+                "lat": 0,
+                "lng": 0,
                 "obs_total": row.obs_quantity,
                 "platform": weekly_rank.platform,
-                "site": geo_loc.site,
+                "site": weekly_rank.site,
                 "ssid": wap.ssid,
             }
+
+            if flag:
+                print(args)
 
             buffer.append(self.weekly_format(args))
 
@@ -176,8 +187,9 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    #    reporter = DailyScores(configuration)
-    #    reporter.execute()
+    reporter = DailyScores(configuration)
+    reporter.execute()
+    
     reporter = WeeklyScores(configuration)
     reporter.execute()
 

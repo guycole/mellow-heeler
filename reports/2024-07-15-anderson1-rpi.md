@@ -2,36 +2,30 @@ mellow-heeler weekly score for 2024-07-15-anderson1-rpi
 
 |date|site|platform|obs total|bssid|ssid|lat|lng|
 |--|--|--|--|--|--|--|--|
-|2024-07-15|anderson1|rpi|1|00:54:af:dd:54:68|Hotspot5468|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1|a6:6a:44:db:95:2b|VIZIOCastAudio1498|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1|00:0d:97:0b:d0:b7|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1|ee:0d:e1:25:0a:6d|JoshLily|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1|22:ad:56:49:98:68|Hotspot9868|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio5334|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio4777|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio7996|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio4552|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio7980|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio9483|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio5332|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|00:0d:97:0b:e2:f6|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio9216|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio5905|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio6550|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|14|00:0d:97:0b:e2:f6|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|14|8c:85:80:1c:cd:49|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|21|ac:df:9f:4b:60:08|theweef|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|32|ee:21:03:4c:ff:ee|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|35|ee:21:03:6c:ff:ee|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|42|8c:85:80:1c:cd:49|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|70|c2:d2:f3:df:aa:06|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|100|ee:21:03:2c:ff:ee|Fbi van 13|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|107|ac:df:9f:4b:60:08|theweef|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|145|ee:21:03:6c:ff:ee|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|149|ee:21:03:4c:ff:ee|empty_ssid|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|239|ee:21:03:2c:ff:ee|Fbi van 13|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|324|6e:21:a2:a4:cd:94|SunPower21450|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|942|6c:cd:d6:2a:62:05|braingang2_5GEXT|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1002|6c:cd:d6:2a:62:06|braingang2_2GEXT|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1006|e2:bb:9e:d0:b0:30|DIRECT-9ED03030|40.41746|-122.24048|
-|2024-07-15|anderson1|rpi|1008|00:22:6b:81:03:d9|braingang2|40.41746|-122.24048|
+|2024-07-15|anderson1|rpi|1|a6:6a:44:db:95:2b|VIZIOCastAudio4777|0|0|
+|2024-07-15|anderson1|rpi|1|22:ad:56:49:98:68|Hotspot9868|0|0|
+|2024-07-15|anderson1|rpi|1|00:0d:97:0b:e2:f6|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|1|a6:6a:44:db:95:2b|VIZIOCastAudio7980|0|0|
+|2024-07-15|anderson1|rpi|1|a6:6a:44:db:95:2b|VIZIOCastAudio9483|0|0|
+|2024-07-15|anderson1|rpi|1|a6:6a:44:db:95:2b|VIZIOCastAudio5334|0|0|
+|2024-07-15|anderson1|rpi|1|a6:6a:44:db:95:2b|VIZIOCastAudio5332|0|0|
+|2024-07-15|anderson1|rpi|2|a6:6a:44:db:95:2b|VIZIOCastAudio4552|0|0|
+|2024-07-15|anderson1|rpi|2|a6:6a:44:db:95:2b|VIZIOCastAudio9216|0|0|
+|2024-07-15|anderson1|rpi|3|a6:6a:44:db:95:2b|VIZIOCastAudio7996|0|0|
+|2024-07-15|anderson1|rpi|5|8c:85:80:1c:cd:49|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|6|00:0d:97:0b:e2:f6|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|8|ac:df:9f:4b:60:08|theweef|0|0|
+|2024-07-15|anderson1|rpi|11|ee:21:03:4c:ff:ee|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|12|ee:21:03:6c:ff:ee|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|14|8c:85:80:1c:cd:49|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|17|c2:d2:f3:df:aa:06|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|29|ee:21:03:2c:ff:ee|Fbi van 13|0|0|
+|2024-07-15|anderson1|rpi|40|ee:21:03:6c:ff:ee|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|40|ac:df:9f:4b:60:08|theweef|0|0|
+|2024-07-15|anderson1|rpi|49|ee:21:03:4c:ff:ee|empty_ssid|0|0|
+|2024-07-15|anderson1|rpi|64|ee:21:03:2c:ff:ee|Fbi van 13|0|0|
+|2024-07-15|anderson1|rpi|94|6e:21:a2:a4:cd:94|SunPower21450|0|0|
+|2024-07-15|anderson1|rpi|295|6c:cd:d6:2a:62:05|braingang2_5GEXT|0|0|
+|2024-07-15|anderson1|rpi|309|6c:cd:d6:2a:62:06|braingang2_2GEXT|0|0|
+|2024-07-15|anderson1|rpi|310|00:22:6b:81:03:d9|braingang2|0|0|
+|2024-07-15|anderson1|rpi|310|e2:bb:9e:d0:b0:30|DIRECT-9ED03030|0|0|
