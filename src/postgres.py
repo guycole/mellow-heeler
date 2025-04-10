@@ -361,15 +361,16 @@ class PostGres:
             return session.scalars(statement).all()
 
     def weekly_rank_insert(
-        self, geo_loc_id: int, platform: str, start_date: datetime.date
+            self, platform: str, site: str, start_date: datetime.date
     ) -> WeeklyRank:
         args = {
             "platform": platform,
+            "site": site,
             "start_date": start_date,
             "stop_date": start_date + datetime.timedelta(days=6),
         }
 
-        candidate = WeeklyRank(args, geo_loc_id)
+        candidate = WeeklyRank(args)
 
         try:
             with self.Session() as session:
@@ -380,18 +381,12 @@ class PostGres:
 
         return candidate
 
-    def weekly_rank_select_or_insert(
-        self, platform: str, geo_loc_id: int, start_date: datetime.date
-    ) -> WeeklyRank:
+    def weekly_rank_select_or_insert(self, platform: str, site: str, start_date: datetime.date) -> WeeklyRank:
         with self.Session() as session:
-            candidate = session.scalars(
-                select(WeeklyRank).filter_by(
-                    platform=platform, geo_loc_id=geo_loc_id, start_date=start_date
-                )
-            ).first()
+            candidate = session.scalars(select(WeeklyRank).filter_by(platform=platform, site=site, start_date=start_date)).first()
 
             if candidate is None:
-                return self.weekly_rank_insert(geo_loc_id, platform, start_date)
+                return self.weekly_rank_insert(platform, site, start_date)
 
             return candidate
 

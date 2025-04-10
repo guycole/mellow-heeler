@@ -102,16 +102,16 @@ class WeeklyScores:
         )
 
     def weekly_format(self, args: dict[str, any]) -> None:
-        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|{args['lat']}|{args['lng']}|\n"
+        buffer = f"|{args['date']}|{args['site']}|{args['platform']}|{args['obs_total']}|{args['bssid']}|{args['ssid']}|\n"
         return buffer
 
     def weekly_write(self, weekly_rank: WeeklyRank) -> None:
-        geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
+        #geo_loc = self.postgres.geo_loc_select_by_id(weekly_rank.geo_loc_id)
         #        if geo_loc.site.startswith("mobile"):
         #            print("skipping mobile report")
         #            return
 
-        key = f"{weekly_rank.start_date}-{geo_loc.site}-{weekly_rank.platform}"
+        key = f"{weekly_rank.start_date}-{weekly_rank.site}-{weekly_rank.platform}"
         #        print(key)
 
         file_name = f"{self.report_dir}/{key}.md"
@@ -126,19 +126,18 @@ class WeeklyScores:
             args = {
                 "bssid": wap.bssid,
                 "date": weekly_rank.start_date,
-                "lat": geo_loc.latitude,
-                "lng": geo_loc.longitude,
                 "obs_total": row.obs_quantity,
                 "platform": weekly_rank.platform,
-                "site": geo_loc.site,
+                "site": weekly_rank.site,
                 "ssid": wap.ssid,
             }
+
 
             buffer.append(self.weekly_format(args))
 
         banner1 = f"mellow-heeler weekly score for {key}\n\n"
-        banner3 = f"|date|site|platform|obs total|bssid|ssid|lat|lng|\n"
-        banner4 = f"|--|--|--|--|--|--|--|--|\n"
+        banner3 = f"|date|site|platform|obs total|bssid|ssid|\n"
+        banner4 = f"|--|--|--|--|--|--|\n"
 
         try:
             with open(file_name, "w", encoding="utf-8") as out_file:
@@ -176,8 +175,9 @@ if __name__ == "__main__":
         except yaml.YAMLError as error:
             print(error)
 
-    #    reporter = DailyScores(configuration)
-    #    reporter.execute()
+    reporter = DailyScores(configuration)
+    reporter.execute()
+    
     reporter = WeeklyScores(configuration)
     reporter.execute()
 
