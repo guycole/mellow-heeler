@@ -93,7 +93,7 @@ class DailyScore:
             for wap_id in value["wap_list"]:
                 cooked = self.postgres.cooked_select_by_wap_id(wap_id)
                 if cooked is None:
-                    print(f"cooked select falure for wap id {wap_id} on {key}")
+                    print(f"cooked select failure for wap id {wap_id} on {key}")
                     continue
 
                 obs_first_date = cooked.obs_first.date()
