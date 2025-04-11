@@ -12,7 +12,7 @@ Fixed site collectors assets use a dedicated [Raspberry Pi](https://www.raspberr
 Back end processing reads collected observations from AWS S3 and loads the results into [postgresql](https://www.postgresql.org/) for analysis and reporting.  [Here](https://github.com/guycole/mellow-heeler/tree/master/reports) are some report examples.
 
 ## Deployment
-![deployment](https://github.com/guycole/mellow-heeler/blob/main/md-uml/heeler-deployment.png)
+![deployment](https://github.com/guycole/mellow-heeler/blob/master/md-uml/heeler-deployment.png)
 
 ## Features
 1. Autonomous collection of wireless beacons. 
