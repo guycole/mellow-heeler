@@ -4,11 +4,15 @@ mellow-heeler
 [Wireless Access Point](https://en.wikipedia.org/wiki/Wireless_access_point) collection, processing and reporting applications.
 
 ## Introduction
-A Mellow Heeler client observes [wireless beacons](https://en.wikipedia.org/wiki/Beacon_frame) and shares the observation w/a Mellow Heeler backend for parsing, storage and reporting.
 
-Fixed site Mellow Heeler collection assets use a dedicated [Raspberry Pi](https://www.raspberrypi.org/) which periodically write observations to AWS S3 for storage.  Mobile collection is performed using a [Raspberry Pi](https://www.raspberrypi.org/) augmented w/a [GPS](https://en.wikipedia.org/wiki/Global_Positioning_System) [HAT](https://www.raspberrypi.com/news/introducing-raspberry-pi-hats/) for location and time reporting, and also writes observations to AWS S3.
+A Mellow Heeler collector observes [wireless beacons](https://en.wikipedia.org/wiki/Beacon_frame) and shares the observation w/a Mellow Heeler backend for parsing, storage and reporting.
 
-Back end processing reads collected observations from AWS S3 and loads the results into [postgresql](https://www.postgresql.org/) for analysis.  [Here](https://github.com/guycole/mellow-heeler/tree/master/box-scores) is an example of collection summaries.
+Fixed site collectors assets use a dedicated [Raspberry Pi](https://www.raspberrypi.org/) which periodically write WAP observations to AWS S3 for storage.  Mobile collection is performed using a [Raspberry Pi](https://www.raspberrypi.org/) augmented w/a [GPS](https://en.wikipedia.org/wiki/Global_Positioning_System) [HAT](https://www.raspberrypi.com/news/introducing-raspberry-pi-hats/) for location and time reporting, and also writes observations to AWS S3.
+
+Back end processing reads collected observations from AWS S3 and loads the results into [postgresql](https://www.postgresql.org/) for analysis and reporting.  [Here](https://github.com/guycole/mellow-heeler/tree/master/reports) are some report examples.
+
+## Deployment
+![deployment](https://github.com/guycole/mellow-heeler/blob/main/md-uml/heeler-deployment.png)
 
 ## Features
 1. Autonomous collection of wireless beacons. 
@@ -32,9 +36,6 @@ Back end processing reads collected observations from AWS S3 and loads the resul
 1.  bin/archiver.sh collects processed files into a tar(1) and save to AWS S3
  
 ## History
-1. Mellow Hound original WAP collector.  Based on Android, the output report is json formatted.  Sadly, modern Android makes it difficult to run background applications and this project is abandoned.  There are legacy files, and the format is reported as "hound_1".  Most (if not all) of these observations are 2.4 GHz and will include a GPS location and timestamp.  It turned out that if stationary, the GPS time stamp does not update so this was not a good choice for observation time. 
-1. Mellow Heeler "heeler_1" has fixed location collection stations based on rPi4 using iwlist(8) scan output.  Uses default rPi hardware and a TP-Link AC-1300, which offers 2.4 and 5.0 GHz coverage.  There is a json header to identify observation time and site and the raw iwlist(8) output.  Since these are static location collection stations, there is not much variety in observations.
-1. Mellow Heeler mobile collection is a rPi augmented w/a GPS HAT.  
 
 | Date       | Device | Site      | Version |
 | ---------- | ------ | --------- | ------- |
