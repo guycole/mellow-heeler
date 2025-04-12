@@ -57,3 +57,8 @@ sqlEchoEnable: true
 # true, there is a GPS available
 gpsEnable: false
 #
+# stations which inhibit collection
+homePlateStations:
+	- 'station1'
+	- 'station2'
+#

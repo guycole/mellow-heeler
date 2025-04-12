@@ -23,6 +23,7 @@ class Header:
     def __init__(self, args: dict[str, any]):
         self.fresh_dir = configuration["freshDir"]
         self.gps_flag = configuration["gpsEnable"]
+        self.home_plate_ssid = configuration["homePlateStations"]
         self.host = configuration["host"]
         self.site = configuration["site"]
 
@@ -52,6 +53,10 @@ class Header:
             obs_list = converter.get_obs_list(datetime.datetime.now())
             for obs in obs_list:
                 obs["file_time"] = file_time
+
+                if self.gps_flag and obs['ssid'] in self.home_plate_ssid:
+                    print(f"skipping collection, home plate ssid noted {obs['ssid']}")
+                    return
 
             preamble["wifi"] = obs_list
 
