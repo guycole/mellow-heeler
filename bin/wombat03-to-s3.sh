@@ -21,7 +21,7 @@ cd ${WORK_DIR}
 tar -cvzf ${FILE_NAME} ${SOURCE_DIR}
 #
 echo "start s3 transfer" 
-aws s3 mv ${FILE_NAME} $DEST_BUCKET --profile=cli_braingang
+aws s3 mv ${FILE_NAME} $DEST_BUCKET --profile=wombat03
 #
 echo "cleanup"
 rm -rf ${SOURCE_DIR}

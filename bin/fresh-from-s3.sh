@@ -16,7 +16,7 @@ WORK_DIR="/var/mellow/heeler/fresh"
 #
 echo "start move"
 cd $WORK_DIR
-aws s3 mv $SRC_BUCKET . --recursive --profile=cli_braingang
+aws s3 mv $SRC_BUCKET . --recursive --profile=wombat03rw
 gunzip *
 echo "end move"
 #
