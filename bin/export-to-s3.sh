@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Title: export-to-s3.sh
-# Description: move exported files to s3 archive
+# Description: move exported files to s3
 # Development Environment: macOS Monterey 12.6.9
 # Author: Guy Cole (guycole at gmail dot com)
 #
@@ -21,7 +21,7 @@ cd ${WORK_DIR}
 tar -cvzf ${FILE_NAME} ${SOURCE_DIR}
 #
 echo "start s3 transfer" 
-aws s3 mv ${FILE_NAME} $DEST_BUCKET --profile=cli_braingang
+aws s3 mv ${FILE_NAME} $DEST_BUCKET --profile=wombat03rw
 #
 echo "cleanup"
 rm -rf ${SOURCE_DIR}
