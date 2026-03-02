@@ -1,0 +1,9 @@
+black==25.11.0
+click==8.1.8
+mypy_extensions==1.1.0
+packaging==26.0
+pathspec==1.0.4
+platformdirs==4.4.0
+pytokens==0.4.1
+tomli==2.4.0
+typing_extensions==4.15.0
