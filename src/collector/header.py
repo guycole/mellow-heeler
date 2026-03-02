@@ -81,11 +81,11 @@ if __name__ == "__main__":
     with open(file_name, "r") as in_file:
         try:
             configuration = yaml.load(in_file, Loader=SafeLoader)
+
+            header = Header(configuration)
+            header.execute("/tmp/iwlist.scan")
         except yaml.YAMLError as error:
             print(error)
-
-    header = Header(configuration)
-    header.execute("/tmp/iwlist.scan")
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
