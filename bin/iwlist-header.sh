@@ -10,7 +10,7 @@
 PATH=/bin:/usr/bin:/etc:/usr/local/bin; export PATH
 #
 FILENAME="/tmp/iwlist.scan"
-HOME_DIR="/home/gsc/Documents/github"
+HOME_DIR="/home/wombat/Documents/github"
 #
 echo "sleeping for iwlist"
 sleep 10
