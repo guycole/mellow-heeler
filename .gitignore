@@ -134,6 +134,6 @@ aws_export/
 src/.DS_Store
 
 src/android/.idea
-src/config.yaml
+src/collector/config.yaml
 typescript
 *~
