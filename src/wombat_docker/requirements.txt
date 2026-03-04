@@ -7,3 +7,5 @@ platformdirs==4.4.0
 pytokens==0.4.1
 tomli==2.4.0
 typing_extensions==4.15.0
+sqlalchemy>=1.4
+psycopg2-binary>=2.9

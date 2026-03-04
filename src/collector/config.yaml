@@ -11,7 +11,7 @@ site: development
 # collection host
 #host: rpi3a
 #host: rpi3c
-host: rpi3d
+host: pi3d
 #
 # true, there is a GPS available
 gpsEnable: false
