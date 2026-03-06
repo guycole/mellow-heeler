@@ -4,10 +4,6 @@
 # Development Environment: Ubuntu 22.04.5 LTS/python 3.10.12
 # Author: G.S. Cole (guycole at gmail dot com)
 #
-# import sqlalchemy
-# from sqlalchemy import and_
-# from sqlalchemy import select
-
 from datetime import datetime
 
 from sqlalchemy import Column
@@ -19,8 +15,10 @@ from sqlalchemy.ext.declarative import declared_attr
 
 mapper_registry = registry()
 
+
 class Base(DeclarativeBase):
     pass
+
 
 class DailyScore(Base):
     __tablename__ = "heeler_daily_score"
@@ -39,6 +37,7 @@ class DailyScore(Base):
 
     def __repr__(self):
         return f"daily_score({self.score_date} {self.platform})"
+
 
 class LoadLog(Base):
     """load_log table definition"""
@@ -62,7 +61,8 @@ class LoadLog(Base):
         self.platform = args["platform"]
 
     def __repr__(self):
-        return f"load_log({self.file_name} {self.file_time})"
+        return f"load_log({self.file_name} {self.file_time} {self.platform})"
+
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

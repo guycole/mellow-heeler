@@ -19,8 +19,10 @@ from sqlalchemy import func
 from sqlalchemy import select
 
 from sql_table import (
-    DailyScore, LoadLog,
+    DailyScore,
+    LoadLog,
 )
+
 
 class PostGres:
     db_engine = None
@@ -28,6 +30,32 @@ class PostGres:
 
     def __init__(self, session: sqlalchemy.orm.session.sessionmaker):
         self.Session = session
+
+    def daily_score_insert_or_update(self, args: dict[str, any]) -> DailyScore:
+        candidate = DailyScore(args)
+
+        try:
+            with self.Session() as session:
+                existing = session.scalars(
+                    select(DailyScore).filter(
+                        and_(
+                            DailyScore.score_date == candidate.score_date,
+                            DailyScore.platform == candidate.platform,
+                        )
+                    )
+                ).first()
+
+                if existing is None:
+                    session.add(candidate)
+                else:
+                    existing.file_quantity = candidate.file_quantity
+                    existing.obs_quantity = candidate.obs_quantity
+
+                session.commit()
+        except Exception as error:
+            print(error)
+
+        return candidate
 
     def load_log_insert(self, args: dict[str, any]) -> LoadLog:
         args["duration_ms"] = 0
@@ -47,15 +75,18 @@ class PostGres:
         with self.Session() as session:
             return session.scalars(select(LoadLog)).all()
 
+    def load_log_select_all_by_date(self, target: datetime.date) -> list[LoadLog]:
+        with self.Session() as session:
+            return session.scalars(
+                select(LoadLog).filter(func.date(LoadLog.file_time) == target)
+            ).all()
+
     def load_log_select_by_file_name(self, file_name: str) -> LoadLog:
         with self.Session() as session:
             return session.scalars(
                 select(LoadLog).filter_by(file_name=file_name)
             ).first()
 
-    def load_log_select_by_file_date(self, target: datetime) -> list[LoadLog]:
-        with self.Session() as session:
-            return session.scalars(select(LoadLog).filter_by(file_date=target)).all()
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***
