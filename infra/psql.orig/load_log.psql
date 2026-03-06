@@ -1,0 +1,35 @@
+--
+-- Title: load_log.psql
+-- Description: file load history
+--
+-- file_name within fresh_dir
+-- file_time is from preamble zTimeMs
+-- file_type is from preamble project and version i.e. heeler_v1
+-- load_time is when file was processed
+-- obs_quantity is population of observations in file
+-- platform is from preamble platform
+-- site is from preamble geoLoc.site
+--
+create table heeler_v1.load_log (
+  id            bigserial    primary key,
+  duration_ms	bigint	     not null default 0,
+  file_date     date         not null default CURRENT_DATE,
+  file_name     varchar(48)  unique not null,
+  file_time     timestamp    not null,
+  file_type     varchar(16)  not null,
+  geo_loc_id    bigint       not null,
+  constraint    geo_loc_id   foreign key(geo_loc_id) references heeler_v1.geo_loc(id),
+  load_time     timestamp    not null default CURRENT_TIMESTAMP,
+  obs_quantity  smallint     not null,
+  platform      varchar(16)  not null
+) tablespace heeler;
+
+grant select, insert, update, delete on heeler_v1.load_log to heeler_client;
+grant usage, select on sequence heeler_v1.load_log_id_seq to heeler_client;
+
+create index load_log_date on heeler_v1.load_log(file_date);
+create unique index load_log_time_platform on heeler_v1.load_log(file_time, platform);
+
+insert into heeler_v1.load_log(file_name, file_time, file_type, geo_loc_id, obs_quantity, platform) values('a89039a4-f75d-4bdc-af24-fcd8aadf3c09', '2000-1-1', 'synthetic', 1, 0, 'dummy1');
+insert into heeler_v1.load_log(file_name, file_time, file_type, geo_loc_id, obs_quantity, platform) values('5e7eb394-7ecd-40aa-b1c1-7527ea3a9e4f', '2000-1-1', 'synthetic', 2, 0, 'dummy2');
+insert into heeler_v1.load_log(file_name, file_time, file_type, geo_loc_id, obs_quantity, platform) values('c4b1b876-f483-4ffd-9e5a-00426cac94aa', '2000-1-1', 'synthetic', 1, 0, 'pytest');

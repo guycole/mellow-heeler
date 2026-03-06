@@ -1,0 +1,23 @@
+--
+-- Title: observation.psql
+-- Description: WAP observation
+--
+create table heeler_v1.observation (
+  id           bigserial    primary key,
+  bssid        varchar(24)  not null,
+  file_time    timestamp    not null,
+  signal_dbm   smallint     not null,
+  load_log_id  bigint       not null,
+  constraint   load_log_id  foreign key(load_log_id) references heeler_v1.load_log(id),
+  wap_id       bigint       not null,
+  constraint   wap_id       foreign key(wap_id) references heeler_v1.wap(id)
+);
+
+grant select, insert, update, delete on heeler_v1.observation to heeler_client;
+grant usage, select on sequence heeler_v1.observation_id_seq to heeler_client;
+
+create index observation_bssid on heeler_v1.observation(bssid);
+create unique index observation_date_wap on heeler_v1.observation(file_time, wap_id);
+create index observation_load_log on heeler_v1.observation(load_log_id);
+
+insert into heeler_v1.observation(bssid, file_time, signal_dbm, load_log_id, wap_id) values('11:22:33:44:55:66', '2000-1-1', -12, 3, 2);
