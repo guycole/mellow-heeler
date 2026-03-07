@@ -34,7 +34,7 @@ class Validator:
         # logger.info(f"file success:{file_name}")
 
         self.success += 1
-        # os.rename(file_name, self.success_dir + "/" + file_name)
+        os.rename(file_name, self.success_dir + "/" + file_name)
 
     def file_reader(self, file_name: str) -> bool:
         self.file_name = file_name

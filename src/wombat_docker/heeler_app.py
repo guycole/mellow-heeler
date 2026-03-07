@@ -41,11 +41,12 @@ class HeelerApp:
             logger.error(f"invalid stunt_box option:{self.stunt_box}")
             return
 
+
 if __name__ == "__main__":
     # stunt_box options: "score" and "validate"
     score_limit = os.environ.get("limit", -1)
     stunt_box = os.environ.get("stuntbox", "validate")
-  
+
     app = HeelerApp(int(score_limit), stunt_box)
     app.execute()
 
