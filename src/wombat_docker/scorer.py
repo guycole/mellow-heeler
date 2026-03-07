@@ -64,12 +64,18 @@ class Scorer:
         except Exception as error:
             logger.error(f"postgres update failed: {error}")
 
-    def scorer(self):
+    def scorer(self, limit:int) -> None:
         logger.info("scorer")
-        dates = self.select_dates()
-        for date in dates:
-            self.score_date(date)
 
+        dates = self.select_dates()
+
+        if limit > 0:
+            limit_dates = dates[:limit]
+        else:
+            limit_dates = dates
+
+        for date in limit_dates:
+            self.score_date(date)
 
 # ;;; Local Variables: ***
 # ;;; mode:python ***

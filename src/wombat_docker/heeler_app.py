@@ -20,31 +20,33 @@ logger = logging.getLogger("heeler")
 
 class HeelerApp:
 
-    def __init__(self, stuntbox: str):
-        self.stuntbox = stuntbox
+    def __init__(self, score_limit, stunt_box: str):
+        self.score_limit = score_limit
+        self.stunt_box = stunt_box
 
         self.db_conn = "postgresql+psycopg2://wombat_client:batabat@host.docker.internal:5432/wombat"
         db_engine = create_engine(self.db_conn, echo=False)
         self.postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 
     def execute(self) -> None:
-        logger.info(f"heeler execute:{self.stuntbox}")
+        logger.info(f"heeler execute:{self.stunt_box}")
 
-        if self.stuntbox == "score":
+        if self.stunt_box == "score":
             scorer = Scorer(self.postgres)
-            scorer.scorer()
-        elif self.stuntbox == "validate":
+            scorer.scorer(self.score_limit)
+        elif self.stunt_box == "validate":
             validator = Validator(self.postgres)
             validator.validate()
         else:
-            logger.error(f"invalid stuntbox option:{self.stuntbox}")
+            logger.error(f"invalid stunt_box option:{self.stunt_box}")
             return
 
-
 if __name__ == "__main__":
-    # stuntbox options: "score" and "validate"
-    stuntbox = os.environ.get("stuntbox", "validate")
-    app = HeelerApp(stuntbox)
+    # stunt_box options: "score" and "validate"
+    score_limit = os.environ.get("limit", -1)
+    stunt_box = os.environ.get("stuntbox", "validate")
+  
+    app = HeelerApp(int(score_limit), stunt_box)
     app.execute()
 
 # ;;; Local Variables: ***

@@ -2,6 +2,7 @@
 # docker build -t heeler:latest .
 # docker run -v /var/wombat:/mnt/wombat --name heeler heeler:latest
 # docker run -e stuntbox=score -v /var/wombat:/mnt/wombat --name heeler heeler:latest
+# docker run -e stuntbox=score -e limit=5 -v /var/wombat:/mnt/wombat --name heeler heeler:latest
 #
 FROM python:3.11-slim
 

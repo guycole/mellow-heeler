@@ -105,7 +105,7 @@ class Validator:
         else:
             self.file_failure(file_name)
 
-    def validate(self):
+    def validate(self) -> None:
         logger.info("validator")
         logger.info(f"fresh dir:{self.fresh_dir}")
 
