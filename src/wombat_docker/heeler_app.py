@@ -24,7 +24,8 @@ class HeelerApp:
         self.score_limit = score_limit
         self.stunt_box = stunt_box
 
-        self.db_conn = "postgresql+psycopg2://wombat_client:batabat@host.docker.internal:5432/wombat"
+#        self.db_conn = "postgresql+psycopg2://wombat_client:batabat@host.docker.internal:5432/wombat"
+        self.db_conn = "postgresql+psycopg2://wombat_client:batabat@172.17.0.1:5432/wombat"
         db_engine = create_engine(self.db_conn, echo=False)
         self.postgres = PostGres(sessionmaker(bind=db_engine, expire_on_commit=False))
 

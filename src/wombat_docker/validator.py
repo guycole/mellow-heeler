@@ -17,6 +17,7 @@ class Validator:
     def __init__(self, postgres: PostGres):
         self.postgres = postgres
 
+        # path is from inside docker container
         self.failure_dir = "/mnt/wombat/heeler/failure/"
         self.fresh_dir = "/mnt/wombat/fresh/heeler"
         self.success_dir = "/mnt/wombat/heeler/success/"
