@@ -20,6 +20,7 @@ class Validator:
         # path is from inside docker container
         self.failure_dir = "/mnt/wombat/heeler/failure/"
         self.fresh_dir = "/mnt/wombat/fresh/heeler"
+        self.koala_dir = "/mnt/wombat/fresh/koala"
         self.success_dir = "/mnt/wombat/heeler/success/"
 
         self.failure = 0
@@ -52,6 +53,13 @@ class Validator:
             return False
 
         return True
+    
+    def json_writer(self, file_name, payload: dict[str, any]) -> None:
+        try:
+            with open(file_name, "w") as out_file:
+                json.dump(payload, out_file, indent=4)
+        except Exception as error:
+            print(error)
 
     def converter(self, file_name: str) -> bool:
         if self.file_reader(file_name) is False:
@@ -80,7 +88,11 @@ class Validator:
             logger.error(
                 f"invalid version:{self.json_preamble['version']} for file:{self.file_name}"
             )
-            return {}
+
+        return {}
+    
+    def koala_writer(self) -> None:
+        print("koala writer")
 
     def file_processor(self, file_name: str) -> None:
         if os.path.isfile(file_name) is False:
@@ -88,18 +100,21 @@ class Validator:
             return
 
         if self.converter(file_name):
+            self.koala_writer()
+
             db_args = self.load_log()
             if len(db_args) > 0:
-                try:
-                    candidate = self.postgres.load_log_select_by_file_name(file_name)
-                    if candidate is not None:
-                        logger.info(f"skippping already processed:{file_name}")
-                    else:
-                        self.postgres.load_log_insert(db_args)
-                    self.file_success(file_name)
-                except Exception as error:
-                    logger.error(f"postgres insert failed for {file_name}: {error}")
-                    self.file_failure(file_name)
+                print("skipping load log db insert")
+#                try:
+#                    candidate = self.postgres.load_log_select_by_file_name(file_name)
+#                    if candidate is not None:
+#                        logger.info(f"skippping already processed:{file_name}")
+#                    else:
+#                        self.postgres.load_log_insert(db_args)
+#                    self.file_success(file_name)
+#                except Exception as error:
+#                    logger.error(f"postgres insert failed for {file_name}: {error}")
+#                    self.file_failure(file_name)
             else:
                 logger.error(f"invalid db_args for file:{file_name}")
                 self.file_failure(file_name)
