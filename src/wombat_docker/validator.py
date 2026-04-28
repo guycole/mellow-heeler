@@ -20,7 +20,7 @@ class Validator:
         # path is from inside docker container
         self.failure_dir = "/mnt/wombat/heeler/failure/"
         self.fresh_dir = "/mnt/wombat/fresh/heeler"
-        self.koala_dir = "/mnt/wombat/fresh/koala"
+        self.koala_dir = "/mnt/wombat/heeler/koala"
         self.success_dir = "/mnt/wombat/heeler/success/"
 
         self.failure = 0
